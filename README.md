@@ -10,12 +10,16 @@ Spielwelt: die Multiversum-Akademie. Fähigkeiten und Outfits sind eigene Entwü
 - Chibi-Spielfigur (ca. 32 × 48 Pixel, in Ebenen gezeichnet) mit Laufen, Doppelsprung, Dash und Durch-Plattform-Fallen
 - Kampfsystem (Prototyp): Leicht, Schwer und Spezial, jeweils mit Richtung (neutral, vor, oben, unten, Luft), Leicht-Kette mit 3 Hieben, Griff, Abbrechen in stärkere Angriffe nach einem Treffer, Puppen lassen sich hochschleudern. Angriffswerte stehen als Bilder-Daten (60 fps) in `assets/combat/movesets/`, siehe `docs/kampfsystem.md`
 - Testfigur 2 (Manga-Chibi-Stil) als Kämpfer; T schaltet auf die Figur aus der Sammlung
-- Vier Fähigkeiten als Spezial-Richtungen: Flammenschnitt, Frostlanze, Kettenblitz, Sturmklinge
+- Erster Kampfstil **Glutatem** (Feueratmung, Thema Schmiede, Design: `assets/combat/styles/glutatem.json`): eigenes J/K-Moveset, 6 Züge auf der Spezial-Taste (4 Slots), jeder mit 3 Alternativen, Meisterzug mit 3 Varianten. Atemrhythmus: verschiedene Züge im Combo heizen die Klinge (Rot, Orange, Weiß), bei Weiß bekommt der nächste Zug einen Extra-Treffer. Legendenleiste mit 3 Stufen (L halten = verstärkter Zug, P = Meisterzug). Effekte im M.U.G.E.N-Stil, weich gezeichnet (Funken, Glut, Rauch, Lautwörter, Lichtblitze)
+- Abendlicht im Trainingswald: Dämmerungs-Tönung, echte 2D-Lichter (Laternen, Schmiede-Esse, Kristalle, Glühwürmchen, jedes Feuer leuchtet), Pixel-Licht-Shader mit runden Normalen für die Figuren, Parallax-Diorama. Das ist die Start-Ansicht „Licht“; N springt zwischen Licht und flach, `?abend=0` in der Web-URL startet flach
+- Sparringspfahl, der zurückschlägt und Holzscheite wirft (zum Testen von Konter, Zurückwerfen und Funkenschild)
 - Element-Reaktionen: Dampfexplosion, Überladung, Kristallbruch, Feuersturm
 - Trainingswald mit Trainingspuppen, Schaden pro Sekunde, Gesamtschaden und Reaktions-Quest
 - HUD: Leisten oben links, Minikarte und Quests oben rechts, Fähigkeiten-Leiste und Menüleiste unten
 - Tastatur und Gamepad
 - Kampfeffekte im Stil klassischer 2D-Fighter: Trefferpause (Hit-Stop), Screenshake, leuchtende Treffer-Funken je Element, große Reaktions-Explosionen und der Super „Legendenstrahl“ (Bildschirm-Abdunkeln, Cut-in, Energiestrahl, Finale). Stärke per V umschaltbar.
+
+![Glutatem: Meisterzug „Letzte Esse“ im Abendlicht](docs/screenshots/glutatem-meisterzug.png)
 
 ## Steuerung
 
@@ -28,12 +32,15 @@ Spielwelt: die Multiversum-Akademie. Fähigkeiten und Outfits sind eigene Entwü
 | Dash (in der Luft 1x pro Sprung) | Shift | RB |
 | Leicht (3er-Kette, mit Richtung: vor, oben, unten, Luft) | J | X |
 | Schwer (mit Richtung) | K | Y |
-| Spezial: neutral, vor, oben, unten = Fähigkeit 1–4 | L | B |
+| Zug von Glutatem: neutral, vor, oben, unten = Slot 1–4 | L | B |
+| Verstärkter Zug (kostet 1 Stufe Legendenleiste) | L halten | B halten |
 | Griff (Wurf) | J + K zusammen | X + Y |
-| Super „Legendenstrahl“ | P | LT |
+| Meisterzug (3 Stufen Legendenleiste) | P | LT |
+| Kampfstil: Alternativen, Slots, Meisterzug wählen | Tab oder M | LB |
+| Abendlicht an/aus (Ansicht Licht / flach) | N | – |
 | Figur wechseln (Testfigur / Sammlung) | T | – |
 | Effekt-Stärke (Dezent / Kräftig / Maximal) | V | – |
-| Unendlich Aura / Abklingzeiten zurücksetzen | U / R | – / Back |
+| Unendlich Legendenleiste / Abklingzeiten zurücksetzen | U / R | – / Back |
 | Charaktere (Sammlung) | C | Start |
 | Hilfe ein/aus | H | – |
 | Look-Test: Ansicht wechseln (flach / HD-2D A / HD-2D B / Licht) | B | – |
@@ -58,14 +65,14 @@ Im Web-Build lässt sich die Ansicht per URL wählen: `?view=flat`, `?view=a`, `
 
 ## Licht-Look (Test)
 
-Vierte Ansicht: moderne Pixel-Art mit dynamischem 2D-Licht in der Abenddämmerung, vor einem Parallax-Diorama. Reines 2D und damit deutlich sparsamer als die HD-2D-Varianten.
+Vierte Ansicht und seit Glutatem die Start-Ansicht: moderne Pixel-Art mit dynamischem 2D-Licht in der Abenddämmerung, vor einem Parallax-Diorama. Reines 2D und damit deutlich sparsamer als die HD-2D-Varianten. Im Trainingswald baut `DuskStage` (`scripts/glutatem/dusk_stage.gd`) diesen Look, mit Schmiede-Esse und Licht für jedes Feuer; der ursprüngliche Test `scripts/lightlook/light_look.gd` wird nicht mehr geladen.
 
-- Dämmerungsfarbe auf der Spielebene, tiefe warme Sonne, Laternen am Trainingsplatz (mit Schattenwurf auf „Hoch“), pulsierende Kristalle und Glühwürmchen
-- Jede Fähigkeit trägt ein Licht in ihrer Elementfarbe, Treffer und Reaktionen blitzen auf
+- Dämmerungsfarbe auf der Spielebene, tiefe warme Sonne, Laternen am Trainingsplatz, Schmiede-Esse, pulsierende Kristalle und Glühwürmchen
+- Jedes Feuer trägt ein echtes Licht, Funken und Treffer blitzen auf, die heiße Klinge beleuchtet die Figur
 - Figuren bekommen automatisch gerundete Normalen, das Licht wird in harte Stufen gerastert (Pixel-Art statt weicher Verläufe)
 - Sechs Parallax-Ebenen (Himmel, Berge, drei Waldebenen, unscharfer Vordergrund), erzeugt von `tools/lightlook/gen_parallax.py`
 
-Web-Build: `?view=licht`.
+Web-Build: `?view=licht` (Standard) oder `?abend=0` für flach.
 
 ![Licht-Look in der Dämmerung](docs/screenshots/licht-daemmerung.png)
 
@@ -86,6 +93,11 @@ scripts/
   combat/reactions.gd      Reaktionsregeln (reine Logik, später auch auf dem Server)
   combat/attack.gd         Hitboxen und Geschosse
   combat/super_beam.gd     Super-Angriff mit Super-Flash, Strahl und Finale
+  combat/fighting_style.gd Kampfstil aus JSON: Züge, Alternativen, Slots, Meisterzug, Speicherstand
+  glutatem/                Kampfstil Glutatem: Züge und Atemrhythmus (glut_caster), Meisterzug
+                           (glut_super), Feuer-Effekte (glut_fx), Glut am Boden (glut_hazard),
+                           Abendlicht (dusk_stage), Sparringspfahl, Skill-Icons
+  ui/glutatem_menu.gd      Kampfstil-Menü (Tab)
   entities/                Spieler, Chibi-Grafik, Trainingspuppe
   world/                   Trainingswald und Parallax-Hintergrund
   fx/                      Schadenszahlen und Pixel-Effekte
