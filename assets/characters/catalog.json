@@ -1,0 +1,427 @@
+{
+ "_info": "Automatisch erzeugt von tools/sprites/build_catalog.py. Nicht von Hand bearbeiten.",
+ "version": 1,
+ "cell": 64,
+ "columns": 8,
+ "origin": [
+  28,
+  56
+ ],
+ "fixed_colors": [
+  "1a1020",
+  "ffffff",
+  "ff9aa2",
+  "7a2a2a",
+  "f2c14e",
+  "e8eef2",
+  "3a2a46",
+  "3a2a26"
+ ],
+ "layers": [
+  "acc_back",
+  "hair_back",
+  "body",
+  "face",
+  "pants",
+  "shoes",
+  "top",
+  "hair_front",
+  "acc_front",
+  "headgear",
+  "weapon"
+ ],
+ "slots": {
+  "body": [
+   "body"
+  ],
+  "face": [
+   "face"
+  ],
+  "hair": [
+   "hair_back",
+   "hair_front"
+  ],
+  "top": [
+   "top"
+  ],
+  "pants": [
+   "pants"
+  ],
+  "shoes": [
+   "shoes"
+  ],
+  "accessory": [
+   "acc_back",
+   "acc_front"
+  ],
+  "headgear": [
+   "headgear"
+  ],
+  "weapon": [
+   "weapon"
+  ]
+ },
+ "anims": {
+  "idle": {
+   "row": 0,
+   "frames": 4,
+   "fps": 4,
+   "loop": true
+  },
+  "run": {
+   "row": 1,
+   "frames": 8,
+   "fps": 12,
+   "loop": true
+  },
+  "jump": {
+   "row": 2,
+   "frames": 2,
+   "fps": 8,
+   "loop": true
+  },
+  "fall": {
+   "row": 3,
+   "frames": 2,
+   "fps": 8,
+   "loop": true
+  },
+  "dash": {
+   "row": 4,
+   "frames": 2,
+   "fps": 12,
+   "loop": true
+  },
+  "attack_1": {
+   "row": 5,
+   "frames": 4,
+   "fps": 16,
+   "loop": false
+  },
+  "attack_2": {
+   "row": 6,
+   "frames": 4,
+   "fps": 16,
+   "loop": false
+  },
+  "attack_3": {
+   "row": 7,
+   "frames": 4,
+   "fps": 14,
+   "loop": false
+  },
+  "cast": {
+   "row": 8,
+   "frames": 4,
+   "fps": 10,
+   "loop": true
+  },
+  "hit": {
+   "row": 9,
+   "frames": 2,
+   "fps": 10,
+   "loop": false
+  },
+  "ko": {
+   "row": 10,
+   "frames": 3,
+   "fps": 8,
+   "loop": false
+  }
+ },
+ "items": {
+  "accessoire_schal": {
+   "id": "accessoire_schal",
+   "name": "Kampfschal",
+   "slot": "accessory",
+   "channels": [
+    {
+     "key": "c0",
+     "label": "Schal",
+     "group": "stoff",
+     "default": "rot"
+    }
+   ],
+   "layers": {
+    "acc_back": "res://assets/characters/items/accessoire_schal/acc_back.png",
+    "acc_front": "res://assets/characters/items/accessoire_schal/acc_front.png"
+   },
+   "source": "platzhalter"
+  },
+  "gesicht_entschlossen": {
+   "id": "gesicht_entschlossen",
+   "name": "Entschlossen",
+   "slot": "face",
+   "channels": [
+    {
+     "key": "eyes",
+     "label": "Augen",
+     "group": "augen",
+     "appearance": true
+    }
+   ],
+   "layers": {
+    "face": "res://assets/characters/items/gesicht_entschlossen/face.png"
+   },
+   "source": "platzhalter"
+  },
+  "gesicht_standard": {
+   "id": "gesicht_standard",
+   "name": "Freundlich",
+   "slot": "face",
+   "channels": [
+    {
+     "key": "eyes",
+     "label": "Augen",
+     "group": "augen",
+     "appearance": true
+    }
+   ],
+   "layers": {
+    "face": "res://assets/characters/items/gesicht_standard/face.png"
+   },
+   "source": "platzhalter"
+  },
+  "haar_kurz": {
+   "id": "haar_kurz",
+   "name": "Kurz",
+   "slot": "hair",
+   "channels": [
+    {
+     "key": "hair",
+     "label": "Haar",
+     "group": "haar",
+     "appearance": true
+    }
+   ],
+   "layers": {
+    "hair_front": "res://assets/characters/items/haar_kurz/hair_front.png"
+   },
+   "source": "platzhalter"
+  },
+  "haar_lang": {
+   "id": "haar_lang",
+   "name": "Lang",
+   "slot": "hair",
+   "channels": [
+    {
+     "key": "hair",
+     "label": "Haar",
+     "group": "haar",
+     "appearance": true
+    }
+   ],
+   "layers": {
+    "hair_front": "res://assets/characters/items/haar_lang/hair_front.png",
+    "hair_back": "res://assets/characters/items/haar_lang/hair_back.png"
+   },
+   "source": "platzhalter"
+  },
+  "haar_stachelig": {
+   "id": "haar_stachelig",
+   "name": "Stachelig",
+   "slot": "hair",
+   "channels": [
+    {
+     "key": "hair",
+     "label": "Haar",
+     "group": "haar",
+     "appearance": true
+    }
+   ],
+   "layers": {
+    "hair_front": "res://assets/characters/items/haar_stachelig/hair_front.png"
+   },
+   "source": "platzhalter"
+  },
+  "haar_wuschel": {
+   "id": "haar_wuschel",
+   "name": "Wuschel",
+   "slot": "hair",
+   "channels": [
+    {
+     "key": "hair",
+     "label": "Haar",
+     "group": "haar",
+     "appearance": true
+    }
+   ],
+   "layers": {
+    "hair_front": "res://assets/characters/items/haar_wuschel/hair_front.png"
+   },
+   "source": "platzhalter"
+  },
+  "haar_zopf": {
+   "id": "haar_zopf",
+   "name": "Zopf",
+   "slot": "hair",
+   "channels": [
+    {
+     "key": "hair",
+     "label": "Haar",
+     "group": "haar",
+     "appearance": true
+    },
+    {
+     "key": "c1",
+     "label": "Haarband",
+     "group": "stoff",
+     "default": "rot"
+    }
+   ],
+   "layers": {
+    "hair_front": "res://assets/characters/items/haar_zopf/hair_front.png",
+    "hair_back": "res://assets/characters/items/haar_zopf/hair_back.png"
+   },
+   "source": "platzhalter"
+  },
+  "hose_kurz": {
+   "id": "hose_kurz",
+   "name": "Kurze Hose",
+   "slot": "pants",
+   "channels": [
+    {
+     "key": "c0",
+     "label": "Hose",
+     "group": "stoff",
+     "default": "marine"
+    }
+   ],
+   "layers": {
+    "pants": "res://assets/characters/items/hose_kurz/pants.png"
+   },
+   "source": "platzhalter"
+  },
+  "hose_lang": {
+   "id": "hose_lang",
+   "name": "Lange Hose",
+   "slot": "pants",
+   "channels": [
+    {
+     "key": "c0",
+     "label": "Hose",
+     "group": "stoff",
+     "default": "braun"
+    }
+   ],
+   "layers": {
+    "pants": "res://assets/characters/items/hose_lang/pants.png"
+   },
+   "source": "platzhalter"
+  },
+  "koerper_basis": {
+   "id": "koerper_basis",
+   "name": "Basis-Körper",
+   "slot": "body",
+   "channels": [
+    {
+     "key": "skin",
+     "label": "Haut",
+     "group": "haut",
+     "appearance": true
+    }
+   ],
+   "layers": {
+    "body": "res://assets/characters/items/koerper_basis/body.png"
+   },
+   "source": "platzhalter"
+  },
+  "kopf_stirnband": {
+   "id": "kopf_stirnband",
+   "name": "Stirnband",
+   "slot": "headgear",
+   "channels": [
+    {
+     "key": "c0",
+     "label": "Band",
+     "group": "stoff",
+     "default": "marine"
+    }
+   ],
+   "layers": {
+    "headgear": "res://assets/characters/items/kopf_stirnband/headgear.png"
+   },
+   "source": "platzhalter"
+  },
+  "oberteil_akademie": {
+   "id": "oberteil_akademie",
+   "name": "Akademie-Jacke",
+   "slot": "top",
+   "channels": [
+    {
+     "key": "c0",
+     "label": "Jacke",
+     "group": "stoff",
+     "default": "weiss"
+    },
+    {
+     "key": "c1",
+     "label": "Kragen",
+     "group": "stoff",
+     "default": "rot"
+    }
+   ],
+   "layers": {
+    "top": "res://assets/characters/items/oberteil_akademie/top.png"
+   },
+   "source": "platzhalter"
+  },
+  "oberteil_shirt": {
+   "id": "oberteil_shirt",
+   "name": "Trainingsshirt",
+   "slot": "top",
+   "channels": [
+    {
+     "key": "c0",
+     "label": "Shirt",
+     "group": "stoff",
+     "default": "blau"
+    },
+    {
+     "key": "c1",
+     "label": "Saum",
+     "group": "stoff",
+     "default": "weiss"
+    }
+   ],
+   "layers": {
+    "top": "res://assets/characters/items/oberteil_shirt/top.png"
+   },
+   "source": "platzhalter"
+  },
+  "schuhe_stiefel": {
+   "id": "schuhe_stiefel",
+   "name": "Stiefel",
+   "slot": "shoes",
+   "channels": [
+    {
+     "key": "c0",
+     "label": "Leder",
+     "group": "stoff",
+     "default": "dunkelbraun"
+    }
+   ],
+   "layers": {
+    "shoes": "res://assets/characters/items/schuhe_stiefel/shoes.png"
+   },
+   "source": "platzhalter"
+  },
+  "waffe_katana": {
+   "id": "waffe_katana",
+   "name": "Übungs-Katana",
+   "slot": "weapon",
+   "channels": [
+    {
+     "key": "c0",
+     "label": "Scheide",
+     "group": "stoff",
+     "default": "violett"
+    }
+   ],
+   "layers": {
+    "weapon": "res://assets/characters/items/waffe_katana/weapon.png"
+   },
+   "source": "platzhalter"
+  }
+ }
+}

@@ -25,7 +25,7 @@ Spielwelt: die Multiversum-Akademie. Fähigkeiten und Outfits sind eigene Entwü
 | Katana-Combo | J | X |
 | Fähigkeiten 1–4 | K, L, I, O (oder 1–4) | Y, RB, LB, RT |
 | Unendlich Aura / Abklingzeiten zurücksetzen | U / R | – / Back |
-| Look wechseln | C | Start |
+| Character Creator | C | Start |
 | Hilfe ein/aus | H | – |
 
 ## Starten
@@ -48,6 +48,11 @@ scripts/
   world/                   Trainingswald und Parallax-Hintergrund
   fx/                      Schadenszahlen und Pixel-Effekte
   ui/hud.gd                HUD
+  ui/character_creator.gd  Character Creator (C / Start, beim ersten Start automatisch)
+  character/appearance.gd  Looks: Teile-Katalog, Farben, Transmog, Speichern
+assets/characters/         Paper-Doll-Teile und Farben, siehe assets/characters/README.md
+tools/sprites/             Format, Platzhalter backen, Prüfen, Vorschau (Python + Pillow)
+tools/pixellab/            Neue Teile mit PixelLab erzeugen oder eigene PNGs importieren
 ```
 
 Daten und Reaktionslogik hängen nicht an Szenen. Dadurch kann der spätere Godot-Headless-Server (Koop, Phase 4) denselben Code nutzen.
