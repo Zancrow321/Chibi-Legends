@@ -1,0 +1,58 @@
+{
+  "_info": "Kuratierte Farben pro Gruppe. unlock leer = für alle frei. Sonst: pass (Saison-Pass), challenge (Herausforderung), shop (Kosmetik-Shop), gacha. Jede Farbe wird im Spiel zu einer 8-Ton-Rampe erweitert.",
+  "haut": [
+    {"id": "haut_1", "name": "Porzellan", "color": "ffe2c9"},
+    {"id": "haut_2", "name": "Pfirsich", "color": "f4c7a1"},
+    {"id": "haut_3", "name": "Honig", "color": "d99c6c"},
+    {"id": "haut_4", "name": "Bronze", "color": "a8693f"},
+    {"id": "haut_5", "name": "Kakao", "color": "6e4127"},
+    {"id": "haut_6", "name": "Ebenholz", "color": "4a2c1d"},
+    {"id": "haut_geist", "name": "Geisterblass", "color": "c9d8f2", "unlock": "challenge", "hint": "Geisterwelt-Herausforderung"},
+    {"id": "haut_oni", "name": "Oni-Rot", "color": "c8564a", "unlock": "pass", "hint": "Saison-Pass Stufe 30"}
+  ],
+  "haar": [
+    {"id": "haar_rot", "name": "Feuerrot", "color": "e8553a"},
+    {"id": "haar_schwarz", "name": "Rabenschwarz", "color": "2b2233"},
+    {"id": "haar_blond", "name": "Blond", "color": "f4dc5c"},
+    {"id": "haar_weiss", "name": "Schneeweiß", "color": "e8eef2"},
+    {"id": "haar_blau", "name": "Himmelblau", "color": "4a7bf0"},
+    {"id": "haar_rosa", "name": "Kirschblüte", "color": "ff8fc8"},
+    {"id": "haar_braun", "name": "Kastanie", "color": "7b4a2e"},
+    {"id": "haar_gruen", "name": "Jade", "color": "55d18a"},
+    {"id": "haar_violett", "name": "Lavendel", "color": "a47be8"},
+    {"id": "haar_orange", "name": "Mandarine", "color": "ff9d3a"},
+    {"id": "haar_gold", "name": "Legendengold", "color": "ffd23f", "unlock": "pass", "hint": "Saison-Pass Stufe 50"},
+    {"id": "haar_silber", "name": "Mondsilber", "color": "b8c4d6", "unlock": "challenge", "hint": "Wellen-Arena: Welle 30"},
+    {"id": "haar_sternenblau", "name": "Sternennacht", "color": "3a3fb8", "unlock": "shop", "hint": "Kosmetik-Shop"}
+  ],
+  "augen": [
+    {"id": "augen_braun", "name": "Braun", "color": "7a3b2e"},
+    {"id": "augen_blau", "name": "Blau", "color": "3b6fe0"},
+    {"id": "augen_rot", "name": "Rot", "color": "d23b3b"},
+    {"id": "augen_gruen", "name": "Grün", "color": "2fae5f"},
+    {"id": "augen_violett", "name": "Violett", "color": "8a4fd6"},
+    {"id": "augen_grau", "name": "Grau", "color": "6b7280"},
+    {"id": "augen_bernstein", "name": "Bernstein", "color": "d98b1f"},
+    {"id": "augen_gold", "name": "Erwachtes Gold", "color": "ffcc33", "unlock": "pass", "hint": "Saison-Pass Stufe 20"},
+    {"id": "augen_seele", "name": "Seelenblau", "color": "5ce0ff", "unlock": "challenge", "hint": "Geisterwelt-Boss"}
+  ],
+  "stoff": [
+    {"id": "weiss", "name": "Weiß", "color": "f2f0e6"},
+    {"id": "schwarz", "name": "Schwarz", "color": "2b2b38"},
+    {"id": "grau", "name": "Grau", "color": "8a8a99"},
+    {"id": "rot", "name": "Rot", "color": "d23b3b"},
+    {"id": "orange", "name": "Orange", "color": "f08a3a"},
+    {"id": "gelb", "name": "Gelb", "color": "f2d04e"},
+    {"id": "gruen", "name": "Grün", "color": "3aa86b"},
+    {"id": "tuerkis", "name": "Türkis", "color": "35b8b0"},
+    {"id": "blau", "name": "Blau", "color": "2f5fd0"},
+    {"id": "marine", "name": "Marine", "color": "2c2a40"},
+    {"id": "violett", "name": "Violett", "color": "6b3fa0"},
+    {"id": "rosa", "name": "Rosa", "color": "f08ab8"},
+    {"id": "braun", "name": "Braun", "color": "5b4a3a"},
+    {"id": "dunkelbraun", "name": "Dunkelbraun", "color": "3a2a26"},
+    {"id": "gold", "name": "Prunkgold", "color": "e8b23a", "unlock": "pass", "hint": "Saison-Pass Stufe 40"},
+    {"id": "karmesin", "name": "Karmesin", "color": "9e1530", "unlock": "challenge", "hint": "Story-Boss ohne Treffer"},
+    {"id": "nebel", "name": "Geisternebel", "color": "9fb3d9", "unlock": "shop", "hint": "Kosmetik-Shop"}
+  ]
+}

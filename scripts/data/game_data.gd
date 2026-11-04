@@ -49,6 +49,13 @@ const SKILLS := {
 
 const START_BUILD := ["flammenschnitt", "frostlanze", "kettenblitz", "sturmklinge"]
 
+## Super move on its own key: long cooldown, full fighting-game super sequence.
+const SUPER := {
+	"id": "legendenstrahl", "name": "Legendenstrahl", "style": "Ultimativ", "element": "",
+	"kind": "super", "damage": 7.0, "final_damage": 45.0, "cost": 30.0, "cooldown": 18.0,
+	"desc": "Super: Bildschirm-Blitz, Aufladen, riesiger Energiestrahl mit Finale.",
+}
+
 const REACTIONS := {
 	"dampfexplosion": {"name": "Dampfexplosion", "color": Color("f0f6ff"), "recipe": "Feuer + Frost"},
 	"ueberladung": {"name": "Überladung", "color": Color("ffb347"), "recipe": "Feuer + Blitz"},
@@ -59,19 +66,23 @@ const REACTIONS := {
 ## Basic attack combo of the starting katana.
 const COMBO_DAMAGE := [8.0, 8.0, 14.0]
 
-# --- Character looks (customization comes in phase 2; C cycles presets) ---
-const HAIR_STYLES := ["Stachelig", "Lang", "Zopf", "Kurz", "Wuschel"]
-const HAIR_COLORS := [Color("e8553a"), Color("2b2233"), Color("f4dc5c"), Color("e8eef2"), Color("4a7bf0"), Color("ff8fc8"), Color("7b4a2e"), Color("55d18a")]
-const SKIN_TONES := [Color("ffe2c9"), Color("f4c7a1"), Color("d99c6c"), Color("a8693f"), Color("6e4127")]
-const EYE_COLORS := [Color("7a3b2e"), Color("3b6fe0"), Color("d23b3b"), Color("2fae5f"), Color("8a4fd6")]
-const TOP_COLORS := [Color("f2f0e6"), Color("2f5fd0"), Color("2b2b38"), Color("d8423c"), Color("3aa86b"), Color("8b45c8")]
-const PANTS_COLORS := [Color("5b4a3a"), Color("2c2a40"), Color("3b4a6b"), Color("6b2c2c")]
+# --- Character looks (parts and colors live in assets/characters, see Appearance) ---
+
+## Visual item per gear slot of the starting equipment. Later the inventory
+## fills this; the look can override each slot (switchable transmog).
+const START_EQUIPMENT := {
+	"weapon": "waffe_katana", "top": "oberteil_akademie", "pants": "hose_lang",
+	"shoes": "schuhe_stiefel", "accessory": "accessoire_schal",
+}
 
 const LOOK_PRESETS := [
-	{"hair_style": 0, "hair_color": 0, "skin": 0, "eyes": 0, "top": 0, "pants": 0},
-	{"hair_style": 1, "hair_color": 1, "skin": 1, "eyes": 2, "top": 2, "pants": 1},
-	{"hair_style": 2, "hair_color": 5, "skin": 0, "eyes": 1, "top": 1, "pants": 2},
-	{"hair_style": 4, "hair_color": 2, "skin": 2, "eyes": 3, "top": 4, "pants": 0},
-	{"hair_style": 3, "hair_color": 3, "skin": 3, "eyes": 4, "top": 5, "pants": 3},
-	{"hair_style": 0, "hair_color": 4, "skin": 4, "eyes": 0, "top": 3, "pants": 1},
+	{"hair": "haar_stachelig", "colors": {"skin": "haut_1", "hair": "haar_rot", "eyes": "augen_braun"}},
+	{"hair": "haar_lang", "face": "gesicht_entschlossen", "colors": {"skin": "haut_2", "hair": "haar_schwarz", "eyes": "augen_rot"},
+		"cosmetics": {"top": "oberteil_shirt"}, "item_colors": {"oberteil_shirt": ["schwarz", "rot"]}},
+	{"hair": "haar_zopf", "colors": {"skin": "haut_1", "hair": "haar_rosa", "eyes": "augen_blau"},
+		"cosmetics": {"headgear": "kopf_stirnband"}, "item_colors": {"oberteil_akademie": ["blau", "weiss"], "haar_zopf": ["", "gelb"]}},
+	{"hair": "haar_wuschel", "colors": {"skin": "haut_3", "hair": "haar_blond", "eyes": "augen_gruen"},
+		"cosmetics": {"pants": "hose_kurz", "accessory": "none"}, "item_colors": {"oberteil_akademie": ["gruen", "weiss"]}},
+	{"hair": "haar_kurz", "face": "gesicht_entschlossen", "colors": {"skin": "haut_5", "hair": "haar_weiss", "eyes": "augen_violett"},
+		"item_colors": {"oberteil_akademie": ["violett", "gelb"], "accessoire_schal": ["schwarz"]}},
 ]

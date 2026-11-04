@@ -1,0 +1,18 @@
+{
+  "id": "haar_lang",
+  "name": "Lang",
+  "slot": "hair",
+  "channels": [
+    {
+      "key": "hair",
+      "label": "Haar",
+      "group": "haar",
+      "appearance": true
+    }
+  ],
+  "layers": {
+    "hair_front": "hair_front.png",
+    "hair_back": "hair_back.png"
+  },
+  "source": "platzhalter"
+}
