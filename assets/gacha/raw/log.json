@@ -1,0 +1,314 @@
+{
+ "banner_schwarzmond": {
+  "prompt": "a lone swordsman silhouette with a huge black cleaver sword under a giant black crescent moon, cyan and deep blue night, crimson sparks, anime gacha banner key art, pixel art, dramatic diagonal composition, glowing light rays, starry night sky, epic heroic mood, no text, no letters, no logo",
+  "size": [
+   320,
+   256
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "banner_gleichklang": {
+  "prompt": "a dancer silhouette with a long scythe, glowing pale blue soul waves and bronze bells, violet night sky, anime gacha banner key art, pixel art, dramatic diagonal composition, glowing light rays, starry night sky, epic heroic mood, no text, no letters, no logo",
+  "size": [
+   320,
+   256
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "banner_bollwerk": {
+  "prompt": "an armored super soldier with a glowing amber visor and a blue energy shield, orbital laser beam from the sky, steel and amber colors, anime gacha banner key art, pixel art, dramatic diagonal composition, glowing light rays, starry night sky, epic heroic mood, no text, no letters, no logo",
+  "size": [
+   320,
+   256
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "banner_wirbelwille": {
+  "prompt": "a dark-haired young woman in a teal coat spinning a swirling turquoise wind sphere in one palm, many translucent shadow clones behind, gold and turquoise, anime gacha banner key art, pixel art, dramatic diagonal composition, glowing light rays, starry night sky, epic heroic mood, no text, no letters, no logo",
+  "size": [
+   320,
+   256
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "banner_grenzbrecher": {
+  "prompt": "a martial artist in a powerful stance with a huge blue ki aura bursting up, golden sparks, a mountain peak behind, anime gacha banner key art, pixel art, dramatic diagonal composition, glowing light rays, starry night sky, epic heroic mood, no text, no letters, no logo",
+  "size": [
+   320,
+   256
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "banner_spannkraft": {
+  "prompt": "a cheerful brawler stretching a rubber-like arm into a giant punch, ocean waves and a sun, coral red and yellow, anime gacha banner key art, pixel art, dramatic diagonal composition, glowing light rays, starry night sky, epic heroic mood, no text, no letters, no logo",
+  "size": [
+   320,
+   256
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "banner_lauffeuer": {
+  "prompt": "a fighter whose body turns into roaring flames, fire fists, a wildfire spreading behind, orange red and gold, anime gacha banner key art, pixel art, dramatic diagonal composition, glowing light rays, starry night sky, epic heroic mood, no text, no letters, no logo",
+  "size": [
+   320,
+   256
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "emblem_glutatem": {
+  "prompt": "emblem of a white-hot katana crossed over an anvil with a burst of orange sparks, game item icon, pixel art, centered, bold dark outline, high contrast, glowing highlights, no text, no letters",
+  "size": [
+   64,
+   64
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "emblem_schwarzmond": {
+  "prompt": "emblem of a black crescent moon pierced by a huge black sword, cyan glow, game item icon, pixel art, centered, bold dark outline, high contrast, glowing highlights, no text, no letters",
+  "size": [
+   64,
+   64
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "emblem_gleichklang": {
+  "prompt": "emblem of a scythe blade inside a ring of pale blue sound waves with a small bronze bell, game item icon, pixel art, centered, bold dark outline, high contrast, glowing highlights, no text, no letters",
+  "size": [
+   64,
+   64
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "emblem_bollwerk": {
+  "prompt": "emblem of a futuristic armored helmet with a glowing amber visor in front of a blue hex shield, game item icon, pixel art, centered, bold dark outline, high contrast, glowing highlights, no text, no letters",
+  "size": [
+   64,
+   64
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "emblem_wirbelwille": {
+  "prompt": "emblem of a swirling turquoise wind sphere with a golden spiral, game item icon, pixel art, centered, bold dark outline, high contrast, glowing highlights, no text, no letters",
+  "size": [
+   64,
+   64
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "emblem_grenzbrecher": {
+  "prompt": "emblem of a clenched fist surrounded by a blazing blue ki aura and golden sparks, game item icon, pixel art, centered, bold dark outline, high contrast, glowing highlights, no text, no letters",
+  "size": [
+   64,
+   64
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "emblem_spannkraft": {
+  "prompt": "emblem of a stretching rubber fist with motion rings, coral red and yellow, game item icon, pixel art, centered, bold dark outline, high contrast, glowing highlights, no text, no letters",
+  "size": [
+   64,
+   64
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "emblem_lauffeuer": {
+  "prompt": "emblem of a burning fist made of fire with flame trails, orange and gold, game item icon, pixel art, centered, bold dark outline, high contrast, glowing highlights, no text, no letters",
+  "size": [
+   64,
+   64
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "card_back": {
+  "prompt": "back of a collectible card, deep indigo with a golden eight-pointed star in the centre and ornate gold corners, game UI element, pixel art, bold black ink outline, manga panel style, high contrast, clean readable shapes, no text, no letters",
+  "size": [
+   96,
+   136
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "card_selten": {
+  "prompt": "empty collectible card frame, thick blue metallic border, plain light blue empty inside, small star at the top, game UI element, pixel art, bold black ink outline, manga panel style, high contrast, clean readable shapes, no text, no letters",
+  "size": [
+   96,
+   136
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "card_episch": {
+  "prompt": "empty collectible card frame, thick purple crystal border with small gems, plain pale violet empty inside, game UI element, pixel art, bold black ink outline, manga panel style, high contrast, clean readable shapes, no text, no letters",
+  "size": [
+   96,
+   136
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "card_legendaer": {
+  "prompt": "empty collectible card frame, thick ornate golden border with glowing gems and rays, plain pale gold empty inside, game UI element, pixel art, bold black ink outline, manga panel style, high contrast, clean readable shapes, no text, no letters",
+  "size": [
+   96,
+   136
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "crystal": {
+  "prompt": "a glowing blue star crystal gem with a small star inside, game item icon, pixel art, centered, bold dark outline, high contrast, glowing highlights, no text, no letters",
+  "size": [
+   32,
+   32
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gift": {
+  "prompt": "a small gift box wrapped in red with a gold star ribbon, game item icon, pixel art, centered, bold dark outline, high contrast, glowing highlights, no text, no letters",
+  "size": [
+   32,
+   32
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "icon_splitter": {
+  "prompt": "a small pile of glowing cyan crystal shards, game item icon, pixel art, centered, bold dark outline, high contrast, glowing highlights, no text, no letters",
+  "size": [
+   32,
+   32
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "icon_dye": {
+  "prompt": "a small glass bottle of dye with a white liquid and a cork, game item icon, pixel art, centered, bold dark outline, high contrast, glowing highlights, no text, no letters",
+  "size": [
+   32,
+   32
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "icon_outfit": {
+  "prompt": "a folded martial arts jacket with a red belt on top, game item icon, pixel art, centered, bold dark outline, high contrast, glowing highlights, no text, no letters",
+  "size": [
+   32,
+   32
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "summon_circle": {
+  "prompt": "a magic summoning circle seen from the front, golden rings with star constellation lines and runes, glowing, transparent background, game UI element, pixel art, bold black ink outline, manga panel style, high contrast, clean readable shapes, no text, no letters",
+  "size": [
+   128,
+   128
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "button_summon": {
+  "prompt": "a wide slanted red button with a thick black outline and a small gold star on the left, empty, no text, game UI element, pixel art, bold black ink outline, manga panel style, high contrast, clean readable shapes, no text, no letters",
+  "size": [
+   192,
+   48
+  ],
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ }
+}

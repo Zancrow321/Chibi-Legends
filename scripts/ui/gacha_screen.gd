@@ -735,7 +735,8 @@ func _draw_card(i: int) -> void:
 	var fs := 14 if cr.size.x < 160 else 20
 	_ink(Vector2(cr.position.x + 6, cr.position.y + cr.size.y * 0.72), str(r.name), fs, INK, HORIZONTAL_ALIGNMENT_CENTER, cr.size.x - 12)
 	draw_string(font, Vector2(cr.position.x + 6, cr.position.y + cr.size.y * 0.72 + fs + 4), Gacha.RARITY_NAMES[rar], HORIZONTAL_ALIGNMENT_CENTER, cr.size.x - 12, fs - 3, col.darkened(0.25))
-	draw_string(font, Vector2(cr.position.x + 6, cr.position.y + cr.size.y * 0.72 + fs * 2 + 6), str(r.get("text", "")), HORIZONTAL_ALIGNMENT_CENTER, cr.size.x - 12, 11, Color(INK, 0.75))
+	if cr.size.x >= 160:  # small cards have no room for the note
+		draw_string(font, Vector2(cr.position.x + 6, cr.position.y + cr.size.y * 0.72 + fs * 2 + 6), str(r.get("text", "")), HORIZONTAL_ALIGNMENT_CENTER, cr.size.x - 12, 11, Color(INK, 0.75))
 	if r.get("new", false):
 		var nb := Rect2(cr.position + Vector2(-6, -8), Vector2(52, 24))
 		_slant(nb, RED)

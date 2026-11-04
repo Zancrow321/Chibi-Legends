@@ -473,7 +473,7 @@ func _draw_pass(R: Rect2) -> void:
 			if claimed:
 				var stamp := _tex("stamp_done")
 				if stamp != null:
-					draw_texture_rect(stamp, Rect2(cell.get_center() - Vector2(30, 40), Vector2(60, 60)), false, Color(1, 1, 1, 0.9))
+					draw_texture_rect(stamp, Rect2(Vector2(cell.end.x - 44, cell.end.y - 46), Vector2(40, 40)), false, Color(1, 1, 1, 0.9))
 				else:
 					_ink(Vector2(cell.position.x, cell.end.y - 18), "✓", 22, GOOD, HORIZONTAL_ALIGNMENT_CENTER, cell.size.x)
 			elif SeasonPass.can_claim(t, prem):

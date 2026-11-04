@@ -30,7 +30,7 @@ ASSETS = {
                            "violet night sky, " + ART, 320, 256, False),
     "banner_bollwerk": ("an armored super soldier with a glowing amber visor and a blue energy shield, "
                         "orbital laser beam from the sky, steel and amber colors, " + ART, 320, 256, False),
-    "banner_wirbelwille": ("a young fighter spinning a swirling turquoise wind sphere in one palm, "
+    "banner_wirbelwille": ("a dark-haired young woman in a teal coat spinning a swirling turquoise wind sphere in one palm, "
                            "many translucent shadow clones behind, gold and turquoise, " + ART, 320, 256, False),
     "banner_grenzbrecher": ("a martial artist in a powerful stance with a huge blue ki aura bursting up, "
                             "golden sparks, a mountain peak behind, " + ART, 320, 256, False),
