@@ -1,0 +1,365 @@
+{
+ "frames": [
+  {
+   "filename": "pinwheel-wind-burst 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 292,
+    "h": 258
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 292,
+    "h": 258
+   },
+   "sourceSize": {
+    "w": 292,
+    "h": 258
+   },
+   "pivot": {
+    "x": 0.4931506849315068,
+    "y": 0.5038759689922481
+   },
+   "duration": 67
+  },
+  {
+   "filename": "pinwheel-wind-burst 1.png",
+   "frame": {
+    "x": 292,
+    "y": 0,
+    "w": 292,
+    "h": 258
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 292,
+    "h": 258
+   },
+   "sourceSize": {
+    "w": 292,
+    "h": 258
+   },
+   "pivot": {
+    "x": 0.4931506849315068,
+    "y": 0.5038759689922481
+   },
+   "duration": 67
+  },
+  {
+   "filename": "pinwheel-wind-burst 2.png",
+   "frame": {
+    "x": 584,
+    "y": 0,
+    "w": 292,
+    "h": 258
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 292,
+    "h": 258
+   },
+   "sourceSize": {
+    "w": 292,
+    "h": 258
+   },
+   "pivot": {
+    "x": 0.4931506849315068,
+    "y": 0.5038759689922481
+   },
+   "duration": 67
+  },
+  {
+   "filename": "pinwheel-wind-burst 3.png",
+   "frame": {
+    "x": 876,
+    "y": 0,
+    "w": 292,
+    "h": 258
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 292,
+    "h": 258
+   },
+   "sourceSize": {
+    "w": 292,
+    "h": 258
+   },
+   "pivot": {
+    "x": 0.4931506849315068,
+    "y": 0.5038759689922481
+   },
+   "duration": 67
+  },
+  {
+   "filename": "pinwheel-wind-burst 4.png",
+   "frame": {
+    "x": 0,
+    "y": 258,
+    "w": 292,
+    "h": 258
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 292,
+    "h": 258
+   },
+   "sourceSize": {
+    "w": 292,
+    "h": 258
+   },
+   "pivot": {
+    "x": 0.4931506849315068,
+    "y": 0.5038759689922481
+   },
+   "duration": 67
+  },
+  {
+   "filename": "pinwheel-wind-burst 5.png",
+   "frame": {
+    "x": 292,
+    "y": 258,
+    "w": 292,
+    "h": 258
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 292,
+    "h": 258
+   },
+   "sourceSize": {
+    "w": 292,
+    "h": 258
+   },
+   "pivot": {
+    "x": 0.4931506849315068,
+    "y": 0.5038759689922481
+   },
+   "duration": 67
+  },
+  {
+   "filename": "pinwheel-wind-burst 6.png",
+   "frame": {
+    "x": 584,
+    "y": 258,
+    "w": 292,
+    "h": 258
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 292,
+    "h": 258
+   },
+   "sourceSize": {
+    "w": 292,
+    "h": 258
+   },
+   "pivot": {
+    "x": 0.4931506849315068,
+    "y": 0.5038759689922481
+   },
+   "duration": 67
+  },
+  {
+   "filename": "pinwheel-wind-burst 7.png",
+   "frame": {
+    "x": 876,
+    "y": 258,
+    "w": 292,
+    "h": 258
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 292,
+    "h": 258
+   },
+   "sourceSize": {
+    "w": 292,
+    "h": 258
+   },
+   "pivot": {
+    "x": 0.4931506849315068,
+    "y": 0.5038759689922481
+   },
+   "duration": 67
+  },
+  {
+   "filename": "pinwheel-wind-burst 8.png",
+   "frame": {
+    "x": 0,
+    "y": 516,
+    "w": 292,
+    "h": 258
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 292,
+    "h": 258
+   },
+   "sourceSize": {
+    "w": 292,
+    "h": 258
+   },
+   "pivot": {
+    "x": 0.4931506849315068,
+    "y": 0.5038759689922481
+   },
+   "duration": 67
+  },
+  {
+   "filename": "pinwheel-wind-burst 9.png",
+   "frame": {
+    "x": 292,
+    "y": 516,
+    "w": 292,
+    "h": 258
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 292,
+    "h": 258
+   },
+   "sourceSize": {
+    "w": 292,
+    "h": 258
+   },
+   "pivot": {
+    "x": 0.4931506849315068,
+    "y": 0.5038759689922481
+   },
+   "duration": 67
+  },
+  {
+   "filename": "pinwheel-wind-burst 10.png",
+   "frame": {
+    "x": 584,
+    "y": 516,
+    "w": 292,
+    "h": 258
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 292,
+    "h": 258
+   },
+   "sourceSize": {
+    "w": 292,
+    "h": 258
+   },
+   "pivot": {
+    "x": 0.4931506849315068,
+    "y": 0.5038759689922481
+   },
+   "duration": 67
+  },
+  {
+   "filename": "pinwheel-wind-burst 11.png",
+   "frame": {
+    "x": 876,
+    "y": 516,
+    "w": 292,
+    "h": 258
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 292,
+    "h": 258
+   },
+   "sourceSize": {
+    "w": 292,
+    "h": 258
+   },
+   "pivot": {
+    "x": 0.4931506849315068,
+    "y": 0.5038759689922481
+   },
+   "duration": 67
+  },
+  {
+   "filename": "pinwheel-wind-burst 12.png",
+   "frame": {
+    "x": 0,
+    "y": 774,
+    "w": 292,
+    "h": 258
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 292,
+    "h": 258
+   },
+   "sourceSize": {
+    "w": 292,
+    "h": 258
+   },
+   "pivot": {
+    "x": 0.4931506849315068,
+    "y": 0.5038759689922481
+   },
+   "duration": 67
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "pinwheel-wind-burst.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 1168,
+   "h": 1032
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "origin",
+   "x": 144,
+   "y": 130
+  },
+  "frameTags": [
+   {
+    "name": "pinwheel-wind-burst",
+    "from": 0,
+    "to": 12,
+    "direction": "forward"
+   }
+  ]
+ }
+}

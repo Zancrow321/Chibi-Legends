@@ -1,0 +1,39 @@
+{
+ "fps": 12,
+ "kind": "new",
+ "loop": true,
+ "name": "Storm cloak",
+ "files": {
+  "storm-cloak.gif": "https://api.pixellab.ai/mcp/pixel-tools/f6be4cd7-070d-4323-ab7e-935baf6b157e/storm-cloak.gif",
+  "storm-cloak.png": "https://api.pixellab.ai/mcp/pixel-tools/f6be4cd7-070d-4323-ab7e-935baf6b157e/storm-cloak.png",
+  "storm-cloak.json": "https://api.pixellab.ai/mcp/pixel-tools/f6be4cd7-070d-4323-ab7e-935baf6b157e/storm-cloak.json",
+  "storm-cloak-game.zip": "https://api.pixellab.ai/mcp/pixel-tools/f6be4cd7-070d-4323-ab7e-935baf6b157e/storm-cloak-game.zip"
+ },
+ "parts": [],
+ "anchor": {
+  "x": 57,
+  "y": 73,
+  "kind": "origin"
+ },
+ "artist": "lite",
+ "canvas": {
+  "h": 148,
+  "w": 120
+ },
+ "frames": 16,
+ "message": "A looping storm cloak: grey-turquoise streams spiral up around an empty human-sized space, with bright white cores, two gold lightning forks crackling on the sides, fluttering wind ribbons rising off the top, and gold sparks orbiting. Try the Spark count and the Bolt cores by hand in the recipe; the cloak is drawn as a tall helix shape rather than a fitted garment, so it reads as a whirling storm column more than a tailored cape.",
+ "edit_url": "https://pixellab.ai/create-vfx?effect=128746db-3c4b-4ff3-b8ca-42287244770f",
+ "effect_id": "128746db-3c4b-4ff3-b8ca-42287244770f",
+ "gif_exact": true,
+ "result_id": "f6be4cd7-070d-4323-ab7e-935baf6b157e",
+ "billing_usage": {
+  "usd": 0.0,
+  "type": "generations",
+  "generations": 1.628874635416667
+ },
+ "generation_id": "95259291-7afe-4192-ad10-245342b0d027",
+ "billing_charged": true,
+ "generation_mode": "vfx",
+ "pixel_tools_image": true,
+ "quoted_generations": 1
+}

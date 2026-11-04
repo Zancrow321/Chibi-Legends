@@ -1,0 +1,11 @@
+{
+ "kunai": {
+  "label": "Kunai",
+  "texture": "res://assets/creator/weapons/wirbelwille/kunai.png",
+  "scale": 1,
+  "grip": [16.0, 24.0],
+  "tip": [46.5, 24.0],
+  "kind": "thrown",
+  "source": "PixelLab create-image-pixen, seed 21"
+ }
+}
