@@ -314,6 +314,9 @@ func _draw_style_panel(r: Rect2) -> void:
 	if g is WirbelCaster:
 		_draw_wirbel_panel(r, g)
 		return
+	if g is BollwerkCaster:
+		_draw_bollwerk_panel(r, g)
+		return
 	_panel(r, PANEL, 13, Color("ff9a2a", 0.6))
 	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, Color("ffb347"))
 	var names := ["Rot", "Orange", "Weiß"]
@@ -472,6 +475,61 @@ func _draw_feder_panel(r: Rect2, g: FederCaster) -> void:
 	elif g._snap_t > 0.0 and g.chain_left > 0:
 		info = "Schwung!"
 	_text(Vector2(r.position.x + 176 + n * 14 + 4, r.position.y + 19), info, 13, yellow if g.is_free() else MUTED)
+
+
+## Bollwerk: shield bar, three Einsatzenergie cells, magazine and grenades.
+func _draw_bollwerk_panel(r: Rect2, g: BollwerkCaster) -> void:
+	var shield_col := Color("5fb8ff")
+	var gold := Color("ffd36a")
+	var amber := Color("ffb02e")
+	_panel(r, PANEL, 13, Color(amber, 0.55))
+	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, TEXT)
+	var cy := r.get_center().y
+	# shield bar with hexagon ticks; red blink while broken
+	var sb := Rect2(r.position.x + 100, cy - 5, 64, 10)
+	draw_rect(sb.grow(1), Color(0.03, 0.04, 0.07))
+	var k := g.shield / maxf(1.0, g.shield_max)
+	var broken := g.shield <= 0.0
+	if broken:
+		draw_rect(sb, Color(1.0, 0.25, 0.2, 0.25 + 0.25 * sin(_t * 12.0)))
+	else:
+		draw_rect(Rect2(sb.position, Vector2(sb.size.x * k, sb.size.y)), shield_col)
+		draw_rect(Rect2(sb.position, Vector2(sb.size.x * k, 3)), Color(1, 1, 1, 0.35))
+		if g._since_hit >= 3.5 and k < 1.0:
+			draw_rect(Rect2(sb.position.x + sb.size.x * k - 2, sb.position.y, 2, sb.size.y), Color(1, 1, 1, 0.5 + 0.5 * sin(_t * 18.0)))
+	for i in range(1, 4):
+		draw_line(Vector2(sb.position.x + sb.size.x * i / 4.0, sb.position.y), Vector2(sb.position.x + sb.size.x * i / 4.0, sb.end.y), Color(0, 0, 0, 0.45), 1)
+	# energy cells
+	var emax := int(g.rules.get("energy_max", 3))
+	for i in emax:
+		var cr := Rect2(r.position.x + 172 + i * 13, cy - 6, 10, 12)
+		if g.energy > i:
+			if g.energy >= emax:
+				draw_rect(cr.grow(2), Color(gold, 0.25 + 0.15 * sin(_t * 12.0)))
+			draw_rect(cr, gold)
+			draw_rect(Rect2(cr.position, Vector2(cr.size.x, 3)), Color(1, 1, 1, 0.4))
+		else:
+			draw_rect(cr, Color(gold, 0.3), false, 1.2)
+	# magazine (or reload bar) and grenade pips
+	var mx := r.position.x + 214
+	if g.reload_t > 0.0:
+		var rk := 1.0 - g.reload_t / maxf(0.01, g.reload_max)
+		draw_rect(Rect2(mx, cy - 3, 40, 6), Color(0.03, 0.04, 0.07))
+		draw_rect(Rect2(mx, cy - 3, 40 * rk, 6), amber)
+		_text(Vector2(mx, r.position.y + 12), "LADEN", 10, amber)
+	else:
+		var low := g.ammo <= int(g.mag * 0.25)
+		_text(Vector2(mx, r.position.y + 19), "%d/%d" % [g.ammo, g.mag], 13, Color("ff6a5a") if low else TEXT)
+	for i in int(g.rules.get("grenades", 2)):
+		var c := Vector2(r.position.x + 266 + i * 12, cy)
+		var part := clampf(g.grenades - i, 0.0, 1.0)
+		if part >= 1.0:
+			draw_circle(c, 4.5, Color("8fd16a"))
+			draw_circle(c + Vector2(-1, -1), 1.5, Color(1, 1, 1, 0.5))
+		else:
+			draw_arc(c, 4.5, 0, TAU, 14, Color("8fd16a", 0.3), 1.2)
+			if part > 0.0:
+				draw_arc(c, 4.5, -PI / 2.0, -PI / 2.0 + TAU * part, 14, Color("8fd16a"), 2.0)
 
 
 ## Gleichklang: Einklang as six small bells, a beat dot and the state.

@@ -151,6 +151,8 @@ func init_style() -> void:
 		glut = FederCaster.new()
 	elif style.id == "wirbelwille":
 		glut = WirbelCaster.new()
+	elif style.data.get("caster", "") == "bollwerk":
+		glut = BollwerkCaster.new()
 	else:
 		glut = GlutCaster.new()
 	add_child(glut)
@@ -823,6 +825,16 @@ func _use_meisterzug() -> void:
 		ws.variant = style.super_variant
 		ws.title = style.variant().get("name", "Meisterzug")
 		world.add_child(ws)
+		return
+	if glut is BollwerkCaster:
+		var bs := BollwerkSuper.new()
+		bs.room = world
+		bs.player = self
+		bs.caster = glut
+		bs.bfx = glut.bfx
+		bs.variant = style.super_variant
+		bs.title = style.variant().get("name", "Meisterzug")
+		world.add_child(bs)
 		return
 	if glut is FederCaster:
 		var fs := FederSuper.new()
