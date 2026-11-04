@@ -1,0 +1,93 @@
+{
+  "_info": "Feste, spielbare Charaktere. rarity: 3 selten, 4 episch, 5 legendär. look.parts: Slot -> Teil aus items/. skins: Varianten, die Farben oder Teile des Grund-Looks überschreiben. unlock: start, gacha, pass, shop, challenge. starters: beim ersten Start wählt man einen davon gratis, der Rest kommt über Gacha. Duplikate schalten Äste 4-6 frei.",
+  "starters": ["kaito", "brann", "yuki", "leon", "mika"],
+  "characters": {
+    "kaito": {
+      "name": "Kaito Hayabusa",
+      "world": "ninja",
+      "rarity": 4,
+      "unlock": "start",
+      "desc": "Schneller Klingenläufer aus der Schattenstadt. Trainiert jeden Morgen bis zum Sonnenaufgang.",
+      "look": {
+        "parts": {"body": "koerper_basis", "face": "gesicht_standard", "hair": "haar_stachelig", "top": "oberteil_akademie", "pants": "hose_lang", "shoes": "schuhe_stiefel", "accessory": "accessoire_schal", "headgear": "kopf_stirnband", "weapon": "waffe_katana"},
+        "colors": {"skin": "haut_1", "hair": "haar_rot", "eyes": "augen_braun"},
+        "item_colors": {"oberteil_akademie": ["weiss", "rot"], "accessoire_schal": ["rot"], "kopf_stirnband": ["marine"]}
+      },
+      "skins": [
+        {"id": "kaito_legende", "name": "Goldene Legende", "unlock": "pass",
+         "look": {"colors": {"hair": "haar_gold", "eyes": "augen_gold"}, "item_colors": {"oberteil_akademie": ["schwarz", "gold"], "accessoire_schal": ["gold"], "kopf_stirnband": ["schwarz"]}}}
+      ]
+    },
+    "brann": {
+      "name": "Brann Eisenfaust",
+      "world": "krieger",
+      "rarity": 4,
+      "unlock": "start",
+      "desc": "Arenaveteran mit einer Klinge so schwer wie sein Dickkopf. Steht immer wieder auf.",
+      "look": {
+        "parts": {"body": "koerper_basis", "face": "gesicht_entschlossen", "hair": "haar_kurz", "top": "oberteil_shirt", "pants": "hose_lang", "shoes": "schuhe_stiefel", "weapon": "waffe_katana"},
+        "colors": {"skin": "haut_3", "hair": "haar_braun", "eyes": "augen_bernstein"},
+        "item_colors": {"oberteil_shirt": ["rot", "gelb"], "hose_lang": ["braun"], "waffe_katana": ["schwarz"]}
+      },
+      "skins": [
+        {"id": "brann_karmesin", "name": "Karmesin-Champion", "unlock": "challenge",
+         "look": {"colors": {"hair": "haar_schwarz"}, "item_colors": {"oberteil_shirt": ["karmesin", "gold"], "hose_lang": ["schwarz"]}}}
+      ]
+    },
+    "yuki": {
+      "name": "Yuki Sorano",
+      "world": "elementar",
+      "rarity": 5,
+      "unlock": "start",
+      "desc": "Frostmagierin, die Schneeflocken zum Tanzen bringt. Spricht wenig, trifft immer.",
+      "look": {
+        "parts": {"body": "koerper_basis", "face": "gesicht_standard", "hair": "haar_lang", "top": "oberteil_akademie", "pants": "hose_lang", "shoes": "schuhe_stiefel", "weapon": "waffe_katana"},
+        "colors": {"skin": "haut_1", "hair": "haar_weiss", "eyes": "augen_blau"},
+        "item_colors": {"oberteil_akademie": ["blau", "weiss"], "hose_lang": ["marine"], "waffe_katana": ["tuerkis"]}
+      },
+      "skins": [
+        {"id": "yuki_sternennacht", "name": "Sternennacht", "unlock": "shop",
+         "look": {"colors": {"hair": "haar_sternenblau", "eyes": "augen_violett"}, "item_colors": {"oberteil_akademie": ["marine", "gelb"]}}}
+      ]
+    },
+    "leon": {
+      "name": "Leon Aurelius",
+      "world": "aura",
+      "rarity": 5,
+      "unlock": "start",
+      "desc": "Seine Aura leuchtet heller, je aussichtsloser der Kampf. Isst für drei.",
+      "look": {
+        "parts": {"body": "koerper_basis", "face": "gesicht_entschlossen", "hair": "haar_wuschel", "top": "oberteil_akademie", "pants": "hose_kurz", "shoes": "schuhe_stiefel", "accessory": "accessoire_schal", "weapon": "waffe_katana"},
+        "colors": {"skin": "haut_2", "hair": "haar_blond", "eyes": "augen_gruen"},
+        "item_colors": {"oberteil_akademie": ["orange", "blau"], "hose_kurz": ["blau"], "accessoire_schal": ["blau"]}
+      },
+      "skins": [
+        {"id": "leon_erwacht", "name": "Erwacht", "unlock": "gacha",
+         "look": {"colors": {"hair": "haar_gold", "eyes": "augen_seele"}, "item_colors": {"oberteil_akademie": ["weiss", "gold"]}}}
+      ]
+    },
+    "mika": {
+      "name": "Mika Shirane",
+      "world": "seele",
+      "rarity": 4,
+      "unlock": "start",
+      "desc": "Sieht Geister und unterhält sich gern mit ihnen. Die Geister finden sie etwas anstrengend.",
+      "look": {
+        "parts": {"body": "koerper_basis", "face": "gesicht_standard", "hair": "haar_zopf", "top": "oberteil_shirt", "pants": "hose_kurz", "shoes": "schuhe_stiefel", "accessory": "accessoire_schal", "weapon": "waffe_katana"},
+        "colors": {"skin": "haut_geist", "hair": "haar_violett", "eyes": "augen_seele"},
+        "item_colors": {"haar_zopf": ["", "schwarz"], "oberteil_shirt": ["schwarz", "violett"], "hose_kurz": ["schwarz"], "accessoire_schal": ["violett"], "waffe_katana": ["nebel"]}
+      },
+      "skins": [
+        {"id": "mika_kirschgeist", "name": "Kirschgeist", "unlock": "pass",
+         "look": {"colors": {"hair": "haar_rosa"}, "item_colors": {"oberteil_shirt": ["weiss", "rosa"], "accessoire_schal": ["rosa"]}}}
+      ]
+    }
+  },
+  "worlds": {
+    "ninja": "Ninja-Welt",
+    "krieger": "Krieger-Welt",
+    "elementar": "Elementar-Welt",
+    "aura": "Aura-Welt",
+    "seele": "Geisterwelt"
+  }
+}

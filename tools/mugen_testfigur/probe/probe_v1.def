@@ -1,0 +1,15 @@
+; Probe - eigene Testfigur fuer den M.U.G.E.N-Importer von Chibi Legends
+[Info]
+name = "Probe"
+displayname = "Probe"
+versiondate = 11,04,2026
+mugenversion = 1.1
+author = "Chibi Legends Team"
+
+[Files]
+cmd = probe.cmd
+cns = probe.cns
+st = probe.cns
+sprite = probe_v1.sff
+anim = probe.air
+pal1 = probe.act

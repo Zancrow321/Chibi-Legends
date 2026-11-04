@@ -16,10 +16,15 @@ var max_life := 0.2
 var velocity := Vector2.ZERO
 var pierce := true
 var knockback := 0.0
+var launch := 0.0  # upward throw for juggles (negative = slam down)
+var profile := ""  # hit feel (FxSettings.HIT); empty = by knockback
 var phase := 0
 var facing := 1
+## Colour of the drawn swing (the fighting style tints it by blade heat).
+var trail := Color("7fd8ff")
 var _hit: Dictionary = {}
 var _t := 0.0
+var _angle := 0.0  # only tilts the drawn arc; the hitbox stays a rectangle
 
 
 func setup(d: Dictionary) -> void:
@@ -35,10 +40,14 @@ func setup(d: Dictionary) -> void:
 	velocity = d.get("velocity", Vector2.ZERO)
 	pierce = d.get("pierce", true)
 	knockback = d.get("knockback", 0.0)
+	launch = d.get("launch", 0.0)
+	profile = d.get("profile", "")
 	phase = d.get("phase", 0)
+	trail = d.get("trail", trail)
 	facing = owner_body.facing
 	global_position = owner_body.global_position + Vector2(offset.x * facing, offset.y)
 	scale.x = facing
+	_angle = deg_to_rad(d.get("angle", 0.0))
 
 
 func hit_rect() -> Rect2:
@@ -63,7 +72,9 @@ func _physics_process(delta: float) -> void:
 			continue
 		if rect.intersects(t.get_hurt_rect()):
 			_hit[t.get_instance_id()] = true
-			world.deal_hit(t, damage, element, owner_body.global_position.x, knockback)
+			world.deal_hit(t, damage, element, owner_body.global_position.x, knockback, profile, launch)
+			if owner_body.has_method("on_attack_hit"):
+				owner_body.on_attack_hit()
 			if not pierce:
 				queue_free()
 				return
@@ -73,14 +84,27 @@ func _physics_process(delta: float) -> void:
 func _draw() -> void:
 	var p := 1.0 - life / max_life  # progress 0..1
 	var a := 1.0 - p * 0.6
+	draw_set_transform(Vector2.ZERO, _angle, Vector2.ONE)
 	match kind:
+		"thrust":
+			var len := size.x * (0.6 + 0.4 * minf(1.0, p * 3.0))
+			draw_line(Vector2(-size.x / 2.0, 0), Vector2(-size.x / 2.0 + len, 0), Color(trail, a * 0.6), 6.0)
+			draw_line(Vector2(-size.x / 2.0, 0), Vector2(-size.x / 2.0 + len, 0), Color(1, 1, 1, a), 2.0)
+			for k in 3:
+				var y := -size.y / 2.0 + size.y * (k + 0.5) / 3.0
+				draw_line(Vector2(-size.x / 2.0 - 10, y), Vector2(-size.x / 2.0 + len * 0.5, y), Color(1, 1, 1, a * 0.35), 1.0)
+		"sweep":
+			draw_arc(Vector2(-size.x / 2.0, -size.y), size.x, 0.15, 1.0, 12, Color(trail, a * 0.6), 6.0)
+			draw_arc(Vector2(-size.x / 2.0, -size.y), size.x, 0.15, 1.0, 12, Color(1, 1, 1, a), 2.0)
+		"grab":
+			draw_arc(Vector2.ZERO, 10.0 + p * 6.0, 0.0, TAU, 16, Color("ffe45c", a * 0.8), 2.0)
 		"slash":
 			var col := Color(1, 1, 1, a)
 			var r := size.y * 0.55
 			var start := -1.3 if phase != 1 else 1.3
 			var sweep := 2.4 * (1.0 if phase != 1 else -1.0)
 			var from := start + sweep * p * 0.3
-			draw_arc(Vector2(-6, 0), r, from, from + sweep * 0.8, 10, Color("7fd8ff", a * 0.6), 7.0)
+			draw_arc(Vector2(-6, 0), r, from, from + sweep * 0.8, 10, Color(trail, a * 0.6), 7.0)
 			draw_arc(Vector2(-6, 0), r, from, from + sweep * 0.8, 10, col, 3.0)
 		"flammenschnitt":
 			var r := size.y * 0.6

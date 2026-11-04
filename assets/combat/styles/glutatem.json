@@ -1,0 +1,92 @@
+{
+	"_doc": "Fighting Style Glutatem (Feueratmung, Thema Schmiede). Design-Doc: https://claude.ai/artifact/XMR57DtTg2dr8cF352SeRR . 7 Skills: 6 Zuege fuer die Spezial-Taste + Meisterzug. Jeder Skill hat 3 Alternativen, pro Skill ist genau eine aktiv (oder die Grundform). frames = [Anlauf inkl. Einatmen, aktiv, Erholung] bei 60 fps. params = Werte der Grundform; eine Alternative ueberschreibt einzelne Werte. enhanced = verstaerkt (L halten, 1 Stufe der Legendenleiste): Schluessel mit _add werden addiert, mit _mul multipliziert, andere ersetzt.",
+	"id": "glutatem",
+	"name": "Glutatem",
+	"element": "feuer",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"colors": {"ash": "2a1a1a", "ember": "c2331f", "red": "ff3b1f", "orange": "ff9a2a", "yellow": "ffd25c", "white": "fff4d0"},
+	"loadout": {"neutral": "weissglut", "forward": "funkenschlag", "up": "schlackeregen", "down": "essensturz"},
+	"zuege": {
+		"funkenschlag": {
+			"name": "Funkenschlag", "dir": "forward", "sp": 1, "cd": 0.9, "frames": [12, 8, 20],
+			"desc": "Harter Hieb wie auf dem Amboss. Funkenkegel nach vorn, 4 leichte Treffer, setzt Brand.",
+			"pose": {"startup": [0, 1, 2], "active": [3, 4], "recovery": [6]},
+			"params": {"len": 60, "hits": 4, "damage": 5, "sides": [1], "shield": 0.0},
+			"enhanced": {"hits_add": 3, "len_add": 16, "damage_add": 1},
+			"alts": [
+				{"id": "weit", "name": "Weiter Kegel", "sp": 2, "desc": "Kegel 90 px statt 60 px.", "params": {"len": 90}},
+				{"id": "zwei_seiten", "name": "Zwei Seiten", "sp": 2, "desc": "Kegel nach vorn und hinten gleichzeitig.", "params": {"sides": [1, -1]}},
+				{"id": "funkenschild", "name": "Funkenschild", "sp": 2, "desc": "Der Kegel steht 0,5 s und löscht gegnerische Geschosse.", "params": {"shield": 0.5}}
+			]
+		},
+		"schlackeregen": {
+			"name": "Schlackeregen", "dir": "up", "sp": 1, "cd": 1.4, "frames": [13, 5, 22],
+			"desc": "Aufwärtsschnitt wirft 3 glühende Schlackebrocken. Wo sie landen, brennt der Boden 2 s.",
+			"pose": {"startup": [2], "active": [5], "recovery": [6]},
+			"params": {"count": 3, "damage": 8, "pool_time": 2.0, "pool_damage": 3, "big": false, "radius": 0},
+			"enhanced": {"count_add": 2, "pool_time_add": 1.0},
+			"alts": [
+				{"id": "mehr", "name": "Mehr Schlacke", "sp": 2, "desc": "5 Brocken statt 3.", "params": {"count": 5}},
+				{"id": "lange_glut", "name": "Lange Glut", "sp": 2, "desc": "Brennende Lachen bleiben 4 s.", "params": {"pool_time": 4.0}},
+				{"id": "grosser_brocken", "name": "Großer Brocken", "sp": 2, "desc": "Ein großer Brocken, der beim Aufprall explodiert (40 px).", "params": {"big": true, "count": 1, "damage": 20, "radius": 40, "pool_time": 1.2}}
+			]
+		},
+		"weissglut": {
+			"name": "Weißglut", "dir": "neutral", "sp": 1, "cd": 6.0, "frames": [30, 6, 20],
+			"desc": "Klinge 0,5 s aufheizen, dann zuschlagen. Danach 5 s: J und K +20 % Feuerschaden.",
+			"pose": {"startup": [5], "active": [3, 4], "recovery": [6]},
+			"params": {"buff": 5.0, "bonus": 0.2, "damage": 14, "burnout": false, "burnout_damage": 18, "burnout_radius": 50},
+			"enhanced": {"bonus": 0.35, "buff_add": 2.0},
+			"alts": [
+				{"id": "lange_hitze", "name": "Lange Hitze", "sp": 2, "desc": "Wirkung 8 s statt 5 s.", "params": {"buff": 8.0}},
+				{"id": "schnell", "name": "Schnelles Aufheizen", "sp": 2, "desc": "Aufheizen nur 0,2 s, Wirkung 3 s.", "params": {"buff": 3.0}, "frames": [12, 6, 18]},
+				{"id": "ausbrennen", "name": "Ausbrennen", "sp": 2, "desc": "Endet die Weißglut, explodiert die Klinge in einem Funkenring (50 px).", "params": {"burnout": true}}
+			]
+		},
+		"ambosshaltung": {
+			"name": "Ambosshaltung", "dir": "down", "sp": 1, "cd": 1.2, "frames": [4, 24, 18],
+			"desc": "Konter-Haltung 0,4 s. Wird man getroffen: Funkenexplosion und Gegenschlag.",
+			"pose": {"startup": [6], "active": [6], "recovery": [6]},
+			"params": {"stance": 0.4, "counter_damage": 20, "reflect": false, "white": false},
+			"enhanced": {"counter_damage_mul": 1.5},
+			"alts": [
+				{"id": "geduld", "name": "Geduld", "sp": 2, "desc": "Haltung 0,6 s statt 0,4 s.", "params": {"stance": 0.6}},
+				{"id": "spiegelschmiede", "name": "Spiegelschmiede", "sp": 2, "desc": "Wirft auch Geschosse brennend zurück.", "params": {"reflect": true}},
+				{"id": "eisen_im_feuer", "name": "Eisen im Feuer", "sp": 2, "desc": "Ein erfolgreicher Konter heizt die Klinge sofort auf Weiß (Atemrhythmus).", "params": {"white": true}}
+			]
+		},
+		"funkenflug": {
+			"name": "Funkenflug", "dir": "forward", "sp": 1, "cd": 1.2, "frames": [10, 8, 22],
+			"desc": "Dash-Schnitt 110 px durch den Gegner hindurch. Hinterlässt 1 s eine Glutspur am Boden.",
+			"pose": {"startup": [1, 2], "active": [3], "recovery": [6]},
+			"params": {"dist": 110, "damage": 12, "trail": 1.0, "trail_damage": 3, "back": false, "burn": false},
+			"enhanced": {"damage_add": 6, "trail_add": 1.0},
+			"alts": [
+				{"id": "langer_flug", "name": "Langer Flug", "sp": 2, "desc": "160 px statt 110 px.", "params": {"dist": 160}},
+				{"id": "hin_und_zurueck", "name": "Hin und zurück", "sp": 2, "desc": "Zwei Dashes, hin und zurück.", "params": {"back": true}},
+				{"id": "brennende_spur", "name": "Brennende Spur", "sp": 2, "desc": "Die Spur bleibt 3 s und setzt Brand.", "params": {"trail": 3.0, "burn": true}}
+			]
+		},
+		"essensturz": {
+			"name": "Essensturz", "dir": "down", "sp": 1, "cd": 1.4, "frames": [14, 6, 28],
+			"desc": "Sturz wie ein Hammerschlag (am Boden mit kurzem Sprung). Glutwelle nach beiden Seiten.",
+			"pose": {"startup": [5], "active": [4], "recovery": [3, 6]},
+			"params": {"wave": 50, "damage": 12, "wave_damage": 10, "aftershock": false, "crater": 0.0},
+			"enhanced": {"wave_add": 30, "wave_damage_add": 6},
+			"alts": [
+				{"id": "grosse_welle", "name": "Große Welle", "sp": 2, "desc": "Glutwelle 90 px nach jeder Seite.", "params": {"wave": 90}},
+				{"id": "nachbeben", "name": "Nachbeben", "sp": 2, "desc": "Eine zweite Welle nach 0,4 s.", "params": {"aftershock": true}},
+				{"id": "gluehender_krater", "name": "Glühender Krater", "sp": 2, "desc": "Der Krater brennt 3 s nach.", "params": {"crater": 3.0}}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug", "sp": 4, "cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die Alternativen sind drei verschiedene Supers.",
+		"variants": [
+			{"id": "letzte_esse", "name": "Letzte Esse", "sp": 0, "desc": "Drei Schmiedeschläge mit Funkenfontänen, dann rollt eine Glutwelle über den ganzen Boden."},
+			{"id": "schmelzofen", "name": "Schmelzofen", "sp": 2, "desc": "Eine glühende Kuppel schließt den Gegner ein und platzt in Schlacke und Funken. Stark gegen ein Ziel."},
+			{"id": "funkensturm", "name": "Funkensturm", "sp": 2, "desc": "Die Klinge fliegt in den Himmel, ein Regen aus Funken fällt über den ganzen Bildschirm. Stark gegen viele Ziele."}
+		]
+	}
+}
