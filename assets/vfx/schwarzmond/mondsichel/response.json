@@ -1,0 +1,48 @@
+{
+ "usage": {
+  "type": "generations",
+  "generations": 1.8517942187500003
+ },
+ "id": "3bd79fc9-fce0-486f-8e7a-578ec70d5930",
+ "status": "completed",
+ "created_at": "2026-11-04T18:45:29.221526+00:00",
+ "last_response": {
+  "fps": 20,
+  "kind": "new",
+  "loop": true,
+  "name": "Black crescent wave",
+  "files": {
+   "black-crescent-wave.gif": "https://api.pixellab.ai/mcp/pixel-tools/49bbf582-a7ed-4fbd-a574-a1ad18955929/black-crescent-wave.gif",
+   "black-crescent-wave.png": "https://api.pixellab.ai/mcp/pixel-tools/49bbf582-a7ed-4fbd-a574-a1ad18955929/black-crescent-wave.png",
+   "black-crescent-wave.json": "https://api.pixellab.ai/mcp/pixel-tools/49bbf582-a7ed-4fbd-a574-a1ad18955929/black-crescent-wave.json"
+  },
+  "parts": [],
+  "anchor": {
+   "x": 64,
+   "y": 40,
+   "kind": "origin"
+  },
+  "artist": "lite",
+  "canvas": {
+   "h": 80,
+   "w": 128
+  },
+  "frames": 12,
+  "message": "Here's a 0.6 s looping black crescent blade with a cool cyan-white rim and a soft pale halo, flying right across a transparent background, with small dark wisps trailing behind. The wisps are simple dots rather than flame shapes, and the halo reads greyer than the bright cyan you asked for, so the halo strength and wisp size are the first sliders to try.",
+  "edit_url": "https://pixellab.ai/create-vfx?effect=c5421f71-9445-4bb6-a027-7a8fe40df650",
+  "effect_id": "c5421f71-9445-4bb6-a027-7a8fe40df650",
+  "gif_exact": true,
+  "result_id": "49bbf582-a7ed-4fbd-a574-a1ad18955929",
+  "conversation": "GnJbYZcnMMCa9F0hn2HIwg.a03d6064c57d9d747e146dcdeddbb23cc1d173fffe4676d13e7d382bbd13b441",
+  "billing_usage": {
+   "usd": 0.0,
+   "type": "generations",
+   "generations": 1.8517942187500003
+  },
+  "generation_id": "9c8b4b90-7bcf-4918-8a4c-d03512406408",
+  "billing_charged": true,
+  "generation_mode": "vfx",
+  "pixel_tools_image": true,
+  "quoted_generations": 1
+ }
+}

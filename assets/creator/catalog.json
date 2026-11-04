@@ -433,6 +433,12 @@
    "unlock": "",
    "weapon": "schwert_kaiser"
   },
+  "spannkraft": {
+   "name": "Spannkraft",
+   "text": "Federleib: dehnbare Fäuste, Spannen und Rückschwung (Legendär)",
+   "unlock": "",
+   "weapon": "none"
+  },
   "lauffeuer": {
    "name": "Lauffeuer",
    "text": "Flammenleib: Brandherde legen und mit der Flammenfaust zünden",

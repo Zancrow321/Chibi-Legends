@@ -46,6 +46,9 @@ static func draw(ci: CanvasItem, r: Rect2, id: String, t := 0.0) -> void:
 	if style_id == "lauffeuer":
 		FeuerIcons.draw(ci, r, id, t)
 		return
+	if style_id == "spannkraft":
+		FederIcons.draw(ci, r, id, t)
+		return
 	if MondIcons.has(id) and (id != "meisterzug" or style_id == "schwarzmond"):
 		MondIcons.draw(ci, r, id, t)
 		return

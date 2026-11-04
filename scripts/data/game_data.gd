@@ -20,6 +20,7 @@ const STATUS := {
 	"frost": {"name": "Frost", "color": Color("7fd8ff")},
 	"schock": {"name": "Schock", "color": Color("ffe45c")},
 	"seelenbruch": {"name": "Seelenbruch", "color": Color("a884f3")},
+	"taumel": {"name": "Aus dem Gleichgewicht", "color": Color("ffd23c")},
 }
 
 const SKILLS := {

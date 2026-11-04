@@ -308,6 +308,9 @@ func _draw_style_panel(r: Rect2) -> void:
 	if g is FeuerCaster:
 		_draw_feuer_panel(r, g)
 		return
+	if g is FederCaster:
+		_draw_feder_panel(r, g)
+		return
 	_panel(r, PANEL, 13, Color("ff9a2a", 0.6))
 	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, Color("ffb347"))
 	var names := ["Rot", "Orange", "Weiß"]
@@ -397,6 +400,39 @@ func _draw_mond_panel(r: Rect2, g: MondCaster) -> void:
 		_text(Vector2(br.position.x, r.position.y + r.size.y - 2), "%s · %s" % [tname, info], 11, TEXT, HORIZONTAL_ALIGNMENT_CENTER, br.size.x, 3)
 	else:
 		_text(Vector2(bx, r.position.y + 19), "Mondphase: " + info, 15, MUTED)
+
+
+## Spannkraft: Spannung (3 pips while holding), Federringe (Übergänge left)
+## and the Grenzenlos timer.
+func _draw_feder_panel(r: Rect2, g: FederCaster) -> void:
+	var coral := Color("ff5a4a")
+	var yellow := Color("ffd23c")
+	var sky := Color("3f9fd8")
+	_panel(r, PANEL, 13, Color(coral, 0.55))
+	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, TEXT)
+	var tens: int = g.tension if g.busy() else 0
+	for i in 3:
+		var c := Vector2(r.position.x + 116 + i * 16, r.get_center().y)
+		var on := tens > i
+		var col := yellow if tens >= 3 else coral
+		if on:
+			draw_circle(c, 7.5 + (1.5 * sin(_t * 14.0) if tens >= 3 else 0.0), Color(col, 0.3))
+			draw_circle(c, 5.0, col)
+		else:
+			draw_arc(c, 5.0, 0, TAU, 12, Color(coral, 0.35), 1.5)
+	var n := g.max_chain()
+	for i in n:
+		var c2 := Vector2(r.position.x + 176 + i * 14, r.get_center().y)
+		var full := i < g.chain_left
+		draw_arc(c2, 5.0, 0, TAU, 14, Color(sky, 0.95 if full else 0.25), 2.2 if full else 1.2)
+	var info := ""
+	if g.is_free():
+		info = "FREI %.1f s" % g.free_time
+	elif g.phase == "charge":
+		info = ["", "Gespannt I", "Gespannt II", "VOLL"][tens]
+	elif g._snap_t > 0.0 and g.chain_left > 0:
+		info = "Schwung!"
+	_text(Vector2(r.position.x + 176 + n * 14 + 4, r.position.y + 19), info, 13, yellow if g.is_free() else MUTED)
 
 
 ## Gleichklang: Einklang as six small bells, a beat dot and the state.
