@@ -14,12 +14,14 @@ const KEYS := {
 	"special": [KEY_L],
 	"super": [KEY_P],
 	"toggle_figure": [KEY_T],
-	"cycle_moveset": [KEY_M],
+	"cycle_moveset": [KEY_F],
 	"cycle_fx": [KEY_V],
 	"toggle_infinite_aura": [KEY_U],
 	"reset_cooldowns": [KEY_R],
 	"cycle_look": [KEY_C],
 	"toggle_help": [KEY_H],
+	"style_menu": [KEY_TAB, KEY_M],
+	"toggle_light": [KEY_N],
 }
 
 const PAD_BUTTONS := {
@@ -34,6 +36,7 @@ const PAD_BUTTONS := {
 	"move_up": [JOY_BUTTON_DPAD_UP],
 	"reset_cooldowns": [JOY_BUTTON_BACK],
 	"cycle_look": [JOY_BUTTON_START],
+	"style_menu": [JOY_BUTTON_LEFT_SHOULDER],
 }
 
 ## Trigger for the super, sticks for movement and attack directions.

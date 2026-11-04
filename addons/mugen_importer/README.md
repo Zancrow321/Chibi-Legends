@@ -16,7 +16,7 @@ Bilderstreifen (PNG) plus eine Moveset-Datei, die der Kampf-Prototyp direkt läd
 2. Rechts oben im Dock **M.U.G.E.N** auf **Wählen…** klicken und die `.def` des Charakters wählen.
 3. ID (Dateiname im Spiel) prüfen, Figurenhöhe bleibt normal bei 56 px.
 4. Häkchen bei den Rechten setzen, **Importieren** klicken.
-5. Spiel starten und mit **M** zum neuen Kämpfer wechseln.
+5. Spiel starten und mit **F** zum neuen Kämpfer wechseln.
 
 Ohne Editor geht es auch über die Kommandozeile:
 

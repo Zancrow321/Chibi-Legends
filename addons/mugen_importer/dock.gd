@@ -109,4 +109,4 @@ func _import() -> void:
 	_report.text = "\n".join(c.report)
 	if ok:
 		EditorInterface.get_resource_filesystem().scan()
-		_report.append_text("\n\nIm Spiel mit Taste M zum neuen Kämpfer wechseln.")
+		_report.append_text("\n\nIm Spiel mit Taste F zum neuen Kämpfer wechseln.")

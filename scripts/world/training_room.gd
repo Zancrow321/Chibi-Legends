@@ -11,7 +11,9 @@ const DPS_WINDOW := 4.0
 ## one-way floating platforms [x, y, w].
 const GROUND := [[0.0, 300.0, 1000.0], [1000.0, 262.0, 400.0]]
 const PLATFORMS := [[170.0, 236.0, 110.0], [360.0, 196.0, 90.0], [800.0, 214.0, 110.0], [1120.0, 196.0, 120.0]]
-const DUMMIES := [[470.0, 300.0, false], [540.0, 300.0, false], [610.0, 300.0, false], [720.0, 300.0, true], [1250.0, 262.0, false]]
+const DUMMIES := [[470.0, 300.0, false], [540.0, 300.0, false], [610.0, 300.0, false], [720.0, 300.0, true]]
+## Sparring post that fights back (tests counter, reflect and shield).
+const POST_POS := Vector2(1300.0, 262.0)
 
 var player: Player
 var camera: Camera2D
@@ -20,6 +22,9 @@ var fx: CombatFx  # hit-stop, shake, glowing sparks, super flash
 var hud: Node  # set by Main (cut-in banner for supers)
 var numbers: DamageNumbers  # set by Main (lives on the HUD layer)
 var attacks: Node2D
+var glut_fx: GlutFx  # fire effects of the fighting style
+var stage: DuskStage  # dusk light look (null when switched off with N)
+var post: SparringPost
 
 # stats for the HUD
 var total_damage := 0.0
@@ -42,6 +47,10 @@ func _ready() -> void:
 		dummy.big = d[2]
 		dummy.position = Vector2(d[0], d[1])
 		add_child(dummy)
+	post = SparringPost.new()
+	post.world = self
+	post.position = POST_POS
+	add_child(post)
 	player = Player.new()
 	player.world = self
 	player.position = Vector2(110, GROUND_Y - 1)
@@ -66,6 +75,17 @@ func _ready() -> void:
 	fx.base_zoom = camera.zoom
 	add_child(fx)
 
+	glut_fx = GlutFx.new()
+	glut_fx.room = self
+	add_child(glut_fx)
+	player.init_style()
+	DuskStage.check_url()
+	if DuskStage.enabled:
+		stage = DuskStage.new()
+		stage.room = self
+		add_child(stage)
+		glut_fx.stage = stage
+
 
 func _process(delta: float) -> void:
 	_clock += delta
@@ -76,7 +96,11 @@ func _process(delta: float) -> void:
 		toast("Effekte: " + FxSettings.level_name())
 	if Input.is_action_just_pressed("toggle_infinite_aura"):
 		player.infinite_aura = not player.infinite_aura
-		toast("Unendlich Aura: " + ("an" if player.infinite_aura else "aus"))
+		toast("Unendlich Legendenleiste: " + ("an" if player.infinite_aura else "aus"))
+	if Input.is_action_just_pressed("toggle_light"):
+		DuskStage.enabled = not DuskStage.enabled
+		get_tree().paused = false
+		get_tree().reload_current_scene.call_deferred()
 	if Input.is_action_just_pressed("reset_cooldowns"):
 		player.reset_cooldowns()
 		toast("Abklingzeiten zurückgesetzt")
