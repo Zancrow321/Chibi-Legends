@@ -52,6 +52,9 @@ var _limb_k := 0.0        # 0 = limb at rest, 1 = fully out (per Zug)
 var _grab := Vector2.INF
 var _counter_mode := ""
 var _wob := 0.0
+var _swing_buf := 0.0     # a press just before the hit still counts
+var _swing_dir := ""
+var _flying: Array = []   # targets thrown by a strong hit: {n, t, hit, depth}
 
 
 func setup(p: Player, st: FightingStyle) -> void:
@@ -259,6 +262,7 @@ func tick(delta: float) -> void:
 		if _immune[id] <= 0.0:
 			_immune.erase(id)
 	_tick_free(delta)
+	_tick_flying(delta)
 	if _snap_t > 0.0:
 		_snap_t -= delta
 	if _in_chain:
@@ -266,9 +270,14 @@ func tick(delta: float) -> void:
 		if _chain_t > CHAIN_END and not busy():
 			_end_chain()
 	# Rückschwung: a different Zug pressed right after a hit cancels into it
-	if busy() and _snap_t > 0.0 and chain_left > 0 and Input.is_action_just_pressed("special") and not player.in_super:
-		var z := _zug_for(_dir_now())
+	_swing_buf = maxf(0.0, _swing_buf - delta)
+	if busy() and phase != "charge" and Input.is_action_just_pressed("special") and _zug_for(_dir_now()) != zug_id:
+		_swing_buf = 0.15
+		_swing_dir = _dir_now()
+	if busy() and _snap_t > 0.0 and chain_left > 0 and _swing_buf > 0.0 and not player.in_super:
+		var z := _zug_for(_swing_dir)
 		if z != "" and z != zug_id and cooldowns.get(z, 0.0) <= 0.0:
+			_swing_buf = 0.0
 			_take_swing(z)
 			return
 	if not busy():
@@ -365,7 +374,7 @@ func _tick_charge(delta: float) -> void:
 		var col := style.color("yellow") if lvl == 3 else style.color("coral")
 		ffx.ring(c + _fwd(-10), 14.0 + lvl * 6.0, col, 0.25, 2.0 + lvl)
 		ffx.word(c + Vector2(-player.facing * 22.0, -34), STEP_NAMES[lvl], col, 14 + lvl * 3)
-		Sfx.play("swing_light", -6.0 + lvl * 3.0)
+		Sfx.play("rubber_stretch", -6.0 + lvl * 3.0)
 		if lvl == 3:
 			world.fx.flash(0.08 * FxSettings.factor("flash"), Color(1.0, 0.9, 0.5))
 	# the limb pulled back and trembling
@@ -402,7 +411,7 @@ func _release() -> void:
 	if tension > 0:
 		frames[0] = maxi(1, int(round(frames[0] * 0.5)))
 		ffx.speedlines(_shoulder(), 0.0 if player.facing > 0 else PI, 3 + tension * 2, 30.0 + tension * 10.0, style.color("white"))
-		Sfx.play("swing_heavy" if tension >= 2 else "swing_light")
+		Sfx.play("rubber_snap", -4.0 + tension * 2.0)
 
 
 func _on_start() -> void:
@@ -455,8 +464,57 @@ func _hit(rect: Rect2, dmg: float, kb: float, profile := "", launch := 0.0, hit_
 		out.append(tg)
 	if tension >= 3:
 		_taumel(out)
+	if tension >= 2 or enhanced:
+		throw(out)
 	on_zug_hit(zug_id, out)
 	return out
+
+
+## Targets knocked away by a strong hit fly for a moment: what they crash
+## into gets hurt too (other enemies, and anything in the group
+## "hazard_zones" with hazard_rect()/trigger_on(node), e.g. later traps).
+func throw(targets: Array, depth := 0) -> void:
+	for tg in targets:
+		if is_instance_valid(tg):
+			_flying.append({"n": tg, "t": 0.55, "hit": {tg.get_instance_id(): true}, "depth": depth})
+
+
+func _tick_flying(delta: float) -> void:
+	if _flying.is_empty():
+		return
+	var all := world.get_tree().get_nodes_in_group("targets")
+	var zones := world.get_tree().get_nodes_in_group("hazard_zones")
+	var next: Array = []
+	for fl in _flying:
+		fl.t -= delta
+		var n: Node2D = fl.n
+		if fl.t <= 0.0 or not is_instance_valid(n):
+			continue
+		next.append(fl)
+		var r: Rect2 = n.get_hurt_rect()
+		for z in zones:
+			if z.has_method("hazard_rect") and z.has_method("trigger_on") and not fl.hit.has(z.get_instance_id()) and r.intersects(z.hazard_rect()):
+				fl.hit[z.get_instance_id()] = true
+				z.trigger_on(n)
+				ffx.word(r.get_center() + Vector2(0, -30), "HINEIN!", style.color("yellow"), 18)
+				on_zug_hit("aufprall", [n])
+		for o in all:
+			if fl.hit.has(o.get_instance_id()) or not r.intersects(o.get_hurt_rect()):
+				continue
+			fl.hit[o.get_instance_id()] = true
+			var c: Vector2 = o.get_hurt_rect().get_center()
+			world.deal_hit(o, 6.0, "", n.global_position.x, 200.0, "heavy", 140.0)
+			ffx.burst("stossring", c, 64.0, 0.3, randf() * TAU)
+			ffx.word(c + Vector2(0, -34), "RUMMS!", style.color("yellow"), 18)
+			world.fx.shake(3.0 * FxSettings.factor("shake"))
+			Sfx.play("rubber_prall")
+			# a crash keeps the sequence going without using a Federring
+			_in_chain = true
+			_chain_t = 0.0
+			_snap_t = SNAP_WINDOW
+			if fl.depth < 2:
+				next.append({"n": o, "t": 0.45, "hit": {o.get_instance_id(): true, n.get_instance_id(): true}, "depth": fl.depth + 1})
+	_flying = next
 
 
 func _taumel(targets: Array) -> void:
@@ -495,6 +553,7 @@ func _whiff_penalty() -> void:
 		frames[2] = int(frames[2]) + WHIFF_FRAMES[tension]
 		_wob = 0.3
 		ffx.word(_center() + Vector2(0, -40), "BOING", style.color("sky"), 14)
+		Sfx.play("rubber_boing", -6.0)
 
 
 # --- Schnappfaust ------------------------------------------------------------------------
@@ -508,7 +567,7 @@ func _tick_schnapp() -> void:
 		ffx.limb(sh, sh + _fwd(-6.0, 3.0), _skin, 4.0, 4.6)
 		if t >= _f(0):
 			_next_phase()
-			Sfx.play("swing_heavy" if kind == "double" else "swing_light")
+			Sfx.play("rubber_snap" if kind != "double" else "swing_heavy")
 	elif phase == "active":
 		if kind == "barrage":
 			_tick_barrage(reach)
@@ -654,6 +713,7 @@ func _tick_katapult() -> void:
 				ffx.burst("katapult", player.global_position + _fwd(-6, -18), 70.0 + tension * 12.0, 0.35, -PI / 4.0 if player.facing > 0 else PI / 4.0, player.facing < 0)
 				ffx.ring(player.global_position + Vector2(0, -4), 22.0, style.color("sky"), 0.3, 3.0)
 				ffx.word(player.global_position + Vector2(0, -50), "BOING!", style.color("sky"), 20)
+				Sfx.play("rubber_boing")
 	elif phase == "active":
 		var launch := float(params.get("launch", 360)) * (1.0 + 0.1 * tension)
 		if hook:
@@ -705,7 +765,7 @@ func _tick_prall() -> void:
 		if t >= _f(0):
 			_next_phase()
 			countering = true
-			Sfx.play("land", 4.0)
+			Sfx.play("rubber_prall")
 			ffx.word(c + Vector2(0, -36), "PLOPP", style.color("sky"), 14)
 	elif phase == "active":
 		var perfect: float = float(params.get("perfect", 0.15))
@@ -748,9 +808,9 @@ func try_counter(from_x: float, projectile: Node = null) -> bool:
 		if projectile != null and projectile.has_method("burn"):
 			projectile.burn()
 		return true
-	var sharp: bool = projectile != null and projectile.get("sharp") == true
-	if sharp:
-		return false  # blades and special energy go through the belly
+	if _passes_belly(projectile):
+		ffx.word(c + Vector2(0, -40), "AUTSCH!", style.color("coral"), 16)
+		return false  # blades, claws and special energy go through the belly
 	countering = false
 	invuln = 0.4
 	phase = "counter"
@@ -763,11 +823,11 @@ func try_counter(from_x: float, projectile: Node = null) -> bool:
 	world.fx.flash(0.15 * FxSettings.factor("flash"), Color(0.75, 0.9, 1.0))
 	world.fx.freeze(0.08 * FxSettings.factor("stop"))
 	world.fx.shake(4.0 * FxSettings.factor("shake"))
-	Sfx.play("land", 6.0)
+	Sfx.play("rubber_boing", 2.0)
 	player.add_gauge(12.0)
 	if projectile != null and projectile.has_method("burn"):
 		if _counter_mode == "reflect" and perfect and projectile.has_method("reflect"):
-			projectile.reflect()
+			projectile.reflect(self)
 		else:
 			projectile.burn()
 	var dmg: float = float(params.get("counter_damage", 8))
@@ -784,6 +844,20 @@ func try_counter(from_x: float, projectile: Node = null) -> bool:
 		if not tg.is_empty():
 			ffx.word(c + Vector2(0, -64), "ZURÜCK!", style.color("yellow"), 18)
 	return true
+
+
+## Sharp (claws, thorns, blades) and special energy (fire breath) are not
+## blunt: they go through Prallbauch. The attacker comes from the player.
+func _passes_belly(projectile: Node) -> bool:
+	var src: Node = projectile if projectile != null else player.hit_source
+	if src == null or not is_instance_valid(src):
+		return false
+	if src.get("sharp") == true or src.get("energy") == true:
+		return true
+	var d = src.get("data")
+	if d is Dictionary and str(d.get("kind", "")) in ["beast", "breather"]:
+		return true
+	return false
 
 
 # --- Spannzug -----------------------------------------------------------------------------------

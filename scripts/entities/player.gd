@@ -107,6 +107,7 @@ var build: Array = GameData.START_BUILD.duplicate()
 var cooldowns: Array[float] = [0.0, 0.0, 0.0, 0.0]
 var look_index := 0
 var super_cd := 0.0
+var hit_source: Node = null  # attacker of the hit being resolved (casters read it in try_counter)
 var in_super := false  # locked in place while the super move plays
 
 
@@ -178,6 +179,7 @@ func receive_hit(damage: float, from_x: float, source: Node = null) -> bool:
 	if dash_timer > 0.0:
 		_dodged()
 		return false
+	hit_source = source
 	if glut != null and glut.try_counter(from_x, source if source != null and source.has_method("burn") else null):
 		return false
 	if glut != null and glut.guard_hit(damage, from_x, source):
