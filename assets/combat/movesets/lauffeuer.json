@@ -11,7 +11,7 @@
 		"leicht_3": {"name": "Haken", "button": "light", "dir": "neutral", "startup": 6, "active": 4, "recovery": 15,
 			"damage": 9, "hitbox": [20, -32, 32, 26], "knockback": 140, "draw": "sweep", "profile": "heavy", "lunge": 50,
 			"creator": {"startup": ["jab_wind"], "active": ["hook_hit"], "recovery": ["hook_hit"]}, "pose": {"startup": [1], "active": [3], "recovery": [6]}},
-		"leicht_vor": {"name": "Stoßschritt", "button": "light", "dir": "forward", "startup": 7, "active": 3, "recovery": 13,
+		"leicht_vor": {"name": "Stoßschritt", "button": "light", "dir": "forward", "chain": "leicht_2", "startup": 7, "active": 3, "recovery": 13,
 			"damage": 7, "hitbox": [24, -30, 30, 16], "knockback": 70, "lunge": 150, "draw": "thrust",
 			"creator": {"startup": ["dash_0"], "active": ["dashpunch_hit"], "recovery": ["dashpunch_hit"]}, "pose": {"startup": [1], "active": [3], "recovery": [6]}},
 		"leicht_oben": {"name": "Aufwärtshaken", "button": "light", "dir": "up", "startup": 6, "active": 4, "recovery": 13,

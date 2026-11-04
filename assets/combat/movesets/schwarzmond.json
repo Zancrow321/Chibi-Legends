@@ -135,6 +135,7 @@
 			"name": "Klingenstoß",
 			"button": "light",
 			"dir": "forward",
+			"chain": "leicht_2",
 			"startup": 8,
 			"active": 3,
 			"recovery": 14,

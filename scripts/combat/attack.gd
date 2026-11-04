@@ -17,6 +17,7 @@ var velocity := Vector2.ZERO
 var pierce := true
 var knockback := 0.0
 var launch := 0.0  # upward throw for juggles (negative = slam down)
+var stun := -1.0  # hitstun for enemies in seconds (-1 = by hit strength)
 var profile := ""  # hit feel (FxSettings.HIT); empty = by knockback
 var phase := 0
 var facing := 1
@@ -42,6 +43,7 @@ func setup(d: Dictionary) -> void:
 	knockback = d.get("knockback", 0.0)
 	launch = d.get("launch", 0.0)
 	profile = d.get("profile", "")
+	stun = d.get("stun", -1.0)
 	phase = d.get("phase", 0)
 	trail = d.get("trail", trail)
 	facing = owner_body.facing
@@ -72,7 +74,7 @@ func _physics_process(delta: float) -> void:
 			continue
 		if rect.intersects(t.get_hurt_rect()):
 			_hit[t.get_instance_id()] = true
-			world.deal_hit(t, damage, element, owner_body.global_position.x, knockback, profile, launch)
+			world.deal_hit(t, damage, element, owner_body.global_position.x, knockback, profile, launch, stun)
 			if owner_body.has_method("on_attack_hit"):
 				owner_body.on_attack_hit()
 			if not pierce:
