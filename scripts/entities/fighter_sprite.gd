@@ -6,6 +6,9 @@ extends Node2D
 ## (the style guide asks for few drawings and timing in code anyway).
 ## Imported characters (addons/mugen_importer) bring their own strips per
 ## state and per move, with frame times in ticks: see use_sprite_data().
+## The own fighter is the Character Creator figure (LayeredBody: body,
+## clothes, hair, weapon at the hand anchor); states and attack phases pick
+## its poses, and the same code lean/squash is applied on top.
 ## The owner flips it via scale.x.
 
 const CELL := 96
@@ -55,6 +58,17 @@ var _squash := Vector2.ZERO  # spring offset on the scale (land, jump)
 var _squash_v := Vector2.ZERO
 
 var _sprite: Sprite2D
+## Creator figure for the own fighter (false: strips of an imported fighter).
+var body: LayeredBody
+var use_body := true
+## Creator pose for the current attack frame (set by the owner).
+var attack_pose := "slash_hit"
+var _land_t := 0.0
+## Frames of the old sword strip (test figure 2) as creator poses, for
+## callers that still think in strip frames (Glutatem's Züge).
+const SLASH_POSE := ["slash_wind", "slash_wind", "slash_wind", "slash_hit", "upper_hit", "slash_wind", "slash_side"]
+## Our state -> creator animation.
+const BODY_ANIM := {"idle": "idle", "run": "run", "jump": "jump", "fall": "fall", "dash": "dash", "hurt": "hit"}
 
 
 func _init() -> void:
@@ -64,6 +78,46 @@ func _init() -> void:
 	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_child(_sprite)
 	_show("idle", 0)
+	body = LayeredBody.new()
+	add_child(body)
+	_sprite.visible = false
+
+
+func _ready() -> void:
+	add_to_group("fighter_sprite")
+	set_look(CreatorCatalog.load_look())
+
+
+## New creator look (after the Character Creator closed).
+func set_look(look: Dictionary) -> void:
+	body.look = look.duplicate(true)
+
+
+## Big weapons (scale 2 and up, or "twohand": true) stand in the two-hand guard.
+func _twohand() -> bool:
+	var w: Dictionary = CreatorCatalog.data.get("weapons", {}).get(str(body.look.get("weapon", "")), {})
+	return bool(w.get("twohand", float(w.get("scale", 1)) >= 2.0))
+
+
+## How much further the creator weapon reaches than the sword the movesets
+## were tuned for (about 30 px from hand to tip): hitboxes grow with it.
+func reach() -> float:
+	if not use_body or body._wdata.is_empty():
+		return 1.0
+	var g: Array = body._wdata["grip"]
+	var t: Array = body._wdata["tip"]
+	var len := Vector2(t[0] - g[0], t[1] - g[1]).length() * float(body._wdata.get("scale", 1))
+	return clampf(len / 30.0, 1.0, 1.4)
+
+
+## Hand and tip of the weapon in the world, or [] without a creator weapon.
+func blade_line() -> Array:
+	if not use_body or not visible or body._weapon == null or body._weapon.texture == null or body._wdata.is_empty():
+		return []
+	var g: Array = body._wdata["grip"]
+	var t: Array = body._wdata["tip"]
+	var xf := body._weapon.get_global_transform()
+	return [xf * Vector2.ZERO, xf * Vector2(t[0] - g[0], t[1] - g[1])]
 
 
 ## Switches to the drawings of a moveset's "sprite" block; empty = test figure 2.
@@ -80,19 +134,35 @@ static func _default_strips() -> Dictionary:
 ## Squash on landing (0..1 = how hard), stretch on take-off.
 func land(strength := 1.0) -> void:
 	_squash_v += Vector2(4.5, -4.5) * strength
+	_land_t = 0.05 + 0.07 * strength
 
 
 func jump() -> void:
 	_squash_v += Vector2(-3.5, 4.0)
 
 
-## Copy of what is shown right now, for afterimages (Effects.ghost).
+## Copy of what is shown right now, for afterimages: every visible drawing
+## with its texture region and global transform.
 func snapshot() -> Dictionary:
-	return {"tex": _sprite.texture, "hframes": _sprite.hframes, "frame": _sprite.frame,
-		"xform": _sprite.global_transform, "offset": _sprite.offset}
+	var parts: Array = []
+	var list: Array = [_sprite]
+	if use_body:
+		list = body._rig.get_children()
+	for n in list:
+		var sp := n as Sprite2D
+		if sp == null or not sp.visible or sp.texture == null:
+			continue
+		var src := sp.region_rect if sp.region_enabled else Rect2(
+			float(sp.texture.get_width()) / maxi(1, sp.hframes) * sp.frame, 0,
+			float(sp.texture.get_width()) / maxi(1, sp.hframes), sp.texture.get_height())
+		parts.append({"tex": sp.texture, "src": src, "xform": sp.get_global_transform(), "offset": sp.offset})
+	return {"parts": parts}
 
 
 func use_sprite_data(sp: Dictionary) -> void:
+	use_body = sp.is_empty()
+	body.visible = use_body
+	_sprite.visible = not use_body
 	strips = _default_strips()
 	state_strips = {}
 	_sprite.offset = -FOOT
@@ -180,7 +250,11 @@ func _process(delta: float) -> void:
 	var off := Vector2.ZERO
 	var own: String = state_strips.get(state, "")
 	if state == "attack":
-		_show(attack_strip, attack_frame)
+		if use_body:
+			body.play("")
+			body.set_pose(attack_pose)
+		else:
+			_show(attack_strip, attack_frame)
 		var p := attack_power
 		match attack_phase:
 			"startup":
@@ -198,6 +272,29 @@ func _process(delta: float) -> void:
 				var k2 := 1.0 - attack_k
 				rot = 0.05 * p * k2
 				sc = Vector2(1.0 + 0.04 * p * k2, 1.0 - 0.03 * p * k2)
+	elif use_body:
+		_land_t = maxf(0.0, _land_t - delta)
+		match state:
+			"cast":
+				body.play("")
+				body.set_pose("cast_wind" if anim_time < 0.1 else "cast_hit")
+			"idle", "run":
+				if _land_t > 0.0:
+					body.play("")
+					body.set_pose("land_0")
+				elif state == "idle":
+					body.play("twohand_idle" if _twohand() else "idle")
+				else:
+					body.play("run")
+					rot = 0.04
+			_:
+				body.play(BODY_ANIM.get(state, "idle"))
+		if state == "idle":
+			var br := sin(anim_time * 3.2)
+			sc = Vector2(1.0 - br * 0.012, 1.0 + br * 0.015)
+		elif state == "dash":
+			sc = Vector2(1.08, 0.95)
+			rot = 0.08
 	elif own != "":
 		_show(own, _frame_at(own, anim_time))
 		if state == "dash":
@@ -285,10 +382,11 @@ func _apply(sc: Vector2, rot: float, off: Vector2) -> void:
 	_squash_v += (-_squash * SPRING - _squash_v * DAMP) * dt
 	_squash += _squash_v * dt
 	_squash = _squash.clamp(Vector2(-0.3, -0.3), Vector2(0.3, 0.3))
-	_sprite.position = _cur_off
-	_sprite.rotation = _cur_rot
-	_sprite.scale = _cur_sc + _squash
+	var node: Node2D = body if use_body else _sprite
+	node.position = _cur_off
+	node.rotation = _cur_rot
+	node.scale = _cur_sc + _squash
 	var base := Color(1, 1, 1)
 	if state == "hurt":
 		base = Color(1.6, 0.75, 0.7) if fmod(anim_time, 0.1) < 0.05 else Color(1, 1, 1)
-	_sprite.modulate = base.lerp(Color(4, 4, 4), clampf(flash * 10.0, 0.0, 1.0))
+	node.modulate = base.lerp(Color(4, 4, 4), clampf(flash * 10.0, 0.0, 1.0))

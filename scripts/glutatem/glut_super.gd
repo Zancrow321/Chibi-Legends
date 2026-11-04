@@ -222,9 +222,10 @@ func _start_strikes() -> void:
 		return
 	var from := player.global_position
 	var to := Vector2(tx, gy - 1.0)
+	var snap := player.sprite.snapshot()
 	for i in 7:
 		var p := from.lerp(to, float(i) / 7.0)
-		fx.afterimage(player.sprite._sprite, p, player.facing, Color(1.0, 0.45, 0.15, 0.25 + i * 0.07), 0.3)
+		room.afterimages.add(snap, Color(1.6, 0.72, 0.24, 0.25 + i * 0.07), p - from, 0.3)
 		fx.flame(p + Vector2(0, -18), 6.0, Vector2(0, -40), 0.3)
 	player.global_position = to
 	player.velocity = Vector2.ZERO

@@ -361,6 +361,9 @@ func blade_heat() -> float:
 
 ## Hand and tip of the blade in the world, matching the sprite frame shown.
 func blade_now() -> Array:
+	var real := player.sprite.blade_line()  # creator weapon at the hand anchor
+	if not real.is_empty():
+		return real
 	var b: Array = IDLE_BLADE
 	match player.sprite.state:
 		"attack":
@@ -594,7 +597,7 @@ func _tick_funkenflug() -> void:
 		_ghost_t -= get_physics_process_delta_time()
 		if _ghost_t <= 0.0:
 			_ghost_t = 0.025
-			fx.afterimage(player.sprite._sprite, player.global_position, player.facing, Color(1.0, 0.45, 0.15, 0.7), 0.25)
+			player.world.afterimages.add(player.sprite.snapshot(), Color(1.0, 0.45, 0.15, 0.7) * Color(1.6, 1.6, 1.6, 1.0))
 			fx.sparks(player.global_position + Vector2(0, -20), PI if player.facing > 0 else 0.0, 0.5, 3, 160.0, 0.35)
 			fx.flame(player.global_position + Vector2(-player.facing * 6.0, -18.0), 7.0, Vector2(-player.facing * 40.0, -30), 0.3)
 		fx.light(player.global_position + Vector2(0, -20), Color(1.0, 0.6, 0.3), 1.6, 0.55, 0.05)
@@ -641,7 +644,7 @@ func _tick_essensturz() -> void:
 		_ghost_t -= get_physics_process_delta_time()
 		if _ghost_t <= 0.0:
 			_ghost_t = 0.03
-			fx.afterimage(player.sprite._sprite, player.global_position, player.facing, Color(1.0, 0.5, 0.2, 0.5), 0.2)
+			player.world.afterimages.add(player.sprite.snapshot(), Color(1.0, 0.5, 0.2, 0.5) * Color(1.6, 1.6, 1.6, 1.0))
 			fx.flame(player.global_position + Vector2(player.facing * 10.0, -6.0), 6.0, Vector2(0, -80), 0.25)
 		var r := Rect2(player.global_position + Vector2(-16, -20), Vector2(32 + 0.0, 26))
 		_strike(r, float(params.get("damage", 12)), 40.0, "heavy", -260.0, _hit_set)
