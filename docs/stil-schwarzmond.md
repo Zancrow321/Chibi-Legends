@@ -249,6 +249,18 @@ Mondfinsternis aktiv.
 - **Testlauf:** `tools/schwarzmond/probe.gd` spielt alle Züge und Meisterzüge durch und
   speichert Bilder (`xvfb-run godot --path . --fixed-fps 60 -s res://tools/schwarzmond/probe.gd -- <ordner>`).
 
+## Effekte (PixelLab, 2026-11-04)
+
+Zehn Skill-Effekte wurden mit PixelLab generiert (REST `/vfx`, Künstler *lite*, zusammen
+12,01 Generierungen). Sie liegen unter `assets/vfx/schwarzmond/<id>/`: mondsichel,
+mondsichel_treffer, mondschnitt, aufsteigender_mond, fallender_mond, schwarze_spur, konter,
+schattenlarve, blutmond und mondfinsternis. `scripts/schwarzmond/mond_clip.gd` spielt sie ab.
+Die Frames kommen aus dem Raster in `effect.json`, der Ankerpunkt aus `response.json`, und
+im Hit-Stop pausieren die Clips. Fehlt eine Datei, bleiben die Code-Effekte aktiv. Das
+Generator-Skript ist `tools/schwarzmond/gen_vfx.py`.
+
+![Effekte im Spiel](screenshots/schwarzmond-effekte.png)
+
 ## Bedarf für den Einbau (später, noch nicht freigegeben)
 
 - PixelLab: Mondbrecher und Neumond-Klinge, je 8 Winkel = 16 Generierungen

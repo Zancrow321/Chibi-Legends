@@ -1,0 +1,48 @@
+{
+ "usage": {
+  "type": "generations",
+  "generations": 1.0
+ },
+ "id": "e998b011-1f94-47c0-b2c6-ccf7d9ea33e6",
+ "status": "completed",
+ "created_at": "2026-11-04T18:52:50.144117+00:00",
+ "last_response": {
+  "fps": 12,
+  "kind": "new",
+  "loop": false,
+  "name": "Total eclipse cut",
+  "files": {
+   "total-eclipse-cut.gif": "https://api.pixellab.ai/mcp/pixel-tools/ea6d7d67-1fa0-4441-b70a-30c687e3e7f1/total-eclipse-cut.gif",
+   "total-eclipse-cut.png": "https://api.pixellab.ai/mcp/pixel-tools/ea6d7d67-1fa0-4441-b70a-30c687e3e7f1/total-eclipse-cut.png",
+   "total-eclipse-cut.json": "https://api.pixellab.ai/mcp/pixel-tools/ea6d7d67-1fa0-4441-b70a-30c687e3e7f1/total-eclipse-cut.json"
+  },
+  "parts": [],
+  "anchor": {
+   "x": 120,
+   "y": 80,
+   "kind": "origin"
+  },
+  "artist": "lite",
+  "canvas": {
+   "h": 160,
+   "w": 240
+  },
+  "frames": 13,
+  "message": "Here's a 1.0 s one-shot total eclipse: a black disc with a blazing white corona ring, cyan rays and a flickering dark-fire edge, then a long white horizontal cut slices across it with a cyan glow along the line. It sits on a transparent background with no characters or text. To adjust, try the rays and corona glow intensity, or the cut's width and reveal timing.",
+  "edit_url": "https://pixellab.ai/create-vfx?effect=5701c4a0-9fcb-4fe0-a10d-0de237997750",
+  "effect_id": "5701c4a0-9fcb-4fe0-a10d-0de237997750",
+  "gif_exact": true,
+  "result_id": "ea6d7d67-1fa0-4441-b70a-30c687e3e7f1",
+  "conversation": "TENkWZWEuMh9fU1s_zzpng.eb6c51aff1af79c25ed5ff52056a8a0a19011759dab66f58cc2e626c422447ff",
+  "billing_usage": {
+   "usd": 0.0,
+   "type": "generations",
+   "generations": 1.0
+  },
+  "generation_id": "6b091de0-e8c3-4810-8adb-1332af29e823",
+  "billing_charged": true,
+  "generation_mode": "vfx",
+  "pixel_tools_image": true,
+  "quoted_generations": 1
+ }
+}

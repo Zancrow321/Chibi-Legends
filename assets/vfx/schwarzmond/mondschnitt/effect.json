@@ -1,0 +1,287 @@
+{
+ "frames": [
+  {
+   "filename": "black-crescent-slash 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 31
+  },
+  {
+   "filename": "black-crescent-slash 1.png",
+   "frame": {
+    "x": 128,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 31
+  },
+  {
+   "filename": "black-crescent-slash 2.png",
+   "frame": {
+    "x": 256,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 31
+  },
+  {
+   "filename": "black-crescent-slash 3.png",
+   "frame": {
+    "x": 384,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 31
+  },
+  {
+   "filename": "black-crescent-slash 4.png",
+   "frame": {
+    "x": 0,
+    "y": 80,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 31
+  },
+  {
+   "filename": "black-crescent-slash 5.png",
+   "frame": {
+    "x": 128,
+    "y": 80,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 31
+  },
+  {
+   "filename": "black-crescent-slash 6.png",
+   "frame": {
+    "x": 256,
+    "y": 80,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 31
+  },
+  {
+   "filename": "black-crescent-slash 7.png",
+   "frame": {
+    "x": 384,
+    "y": 80,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 31
+  },
+  {
+   "filename": "black-crescent-slash 8.png",
+   "frame": {
+    "x": 0,
+    "y": 160,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 31
+  },
+  {
+   "filename": "black-crescent-slash 9.png",
+   "frame": {
+    "x": 128,
+    "y": 160,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 31
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "black-crescent-slash.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 512,
+   "h": 240
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "origin",
+   "x": 64,
+   "y": 40
+  },
+  "frameTags": [
+   {
+    "name": "black-crescent-slash",
+    "from": 0,
+    "to": 9,
+    "direction": "forward"
+   }
+  ]
+ }
+}

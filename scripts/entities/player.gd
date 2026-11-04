@@ -107,6 +107,7 @@ var build: Array = GameData.START_BUILD.duplicate()
 var cooldowns: Array[float] = [0.0, 0.0, 0.0, 0.0]
 var look_index := 0
 var super_cd := 0.0
+var hit_source: Node = null  # attacker of the hit being resolved (casters read it in try_counter)
 var in_super := false  # locked in place while the super move plays
 
 
@@ -142,8 +143,12 @@ func init_style() -> void:
 		return
 	if style.data.get("caster", "") == "schwarzmond":
 		glut = MondCaster.new()
+	elif style.id == "lauffeuer":
+		glut = FeuerCaster.new()
 	elif style.id == "gleichklang":
 		glut = KlangCaster.new()
+	elif style.id == "spannkraft":
+		glut = FederCaster.new()
 	else:
 		glut = GlutCaster.new()
 	add_child(glut)
@@ -174,6 +179,7 @@ func receive_hit(damage: float, from_x: float, source: Node = null) -> bool:
 	if dash_timer > 0.0:
 		_dodged()
 		return false
+	hit_source = source
 	if glut != null and glut.try_counter(from_x, source if source != null and source.has_method("burn") else null):
 		return false
 	if glut != null and glut.guard_hit(damage, from_x, source):
@@ -787,6 +793,15 @@ func _use_meisterzug() -> void:
 	move = {}
 	_queued = ""
 	Sfx.play("super_flash")
+	if glut is FeuerCaster:
+		var fs := FeuerSuper.new()
+		fs.room = world
+		fs.player = self
+		fs.caster = glut
+		fs.variant = style.super_variant
+		fs.title = style.variant().get("name", "Meisterzug")
+		world.add_child(fs)
+		return
 	if mond != null:
 		var ms := MondSuper.new()
 		ms.room = world
@@ -797,6 +812,16 @@ func _use_meisterzug() -> void:
 		ms.title = style.variant().get("name", "Meisterzug")
 		Sfx.play("mond_super", -2.0)
 		world.add_child(ms)
+		return
+	if glut is FederCaster:
+		var fs := FederSuper.new()
+		fs.room = world
+		fs.player = self
+		fs.caster = glut
+		fs.ffx = glut.ffx
+		fs.variant = style.super_variant
+		fs.title = style.variant().get("name", "Meisterzug")
+		world.add_child(fs)
 		return
 	if glut is KlangCaster:
 		var ks := KlangSuper.new()
@@ -841,7 +866,8 @@ func _update_visual() -> void:
 	elif _glut_busy():
 		st = "attack"
 		sprite.attack_frame = glut.pose_frame()
-		sprite.attack_pose = FighterSprite.SLASH_POSE[clampi(sprite.attack_frame, 0, FighterSprite.SLASH_POSE.size() - 1)]
+		var cp := glut.creator_pose()
+		sprite.attack_pose = cp if cp != "" else FighterSprite.SLASH_POSE[clampi(sprite.attack_frame, 0, FighterSprite.SLASH_POSE.size() - 1)]
 	elif dash_timer > 0.0:
 		st = "dash"
 	elif not move.is_empty():

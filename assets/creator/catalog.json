@@ -13,14 +13,20 @@
     "schatten": "Schattenwickel",
     "schmied": "Schmiede-Schürze",
     "akademie": "Akademie-Jacke",
-    "steilpfad": "Steilpfad-Gi"
+    "steilpfad": "Steilpfad-Gi",
+    "bollwerk": "Bollwerk-Panzer",
+    "feuerwacht": "Feuerwacht-Jacke",
+    "deckshand": "Deckshand-Hemd"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
     "wanderer": "Trainingswald abschließen",
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
-    "schmied": "Bei Schmiedin Hino (Akademie-Hof)"
+    "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
+    "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "feuerwacht": "Kampfstil Lauffeuer (Banner „Wer am Feuer sitzt“)",
+    "deckshand": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)"
    }
   },
   "pants": {
@@ -32,14 +38,20 @@
     "schatten": "Wickelhose",
     "schmied": "Arbeitshose",
     "akademie": "Uniformhose",
-    "steilpfad": "Steilpfad-Wickelhose"
+    "steilpfad": "Steilpfad-Wickelhose",
+    "bollwerk": "Bollwerk-Beinpanzer",
+    "feuerwacht": "Feuerwacht-Hose",
+    "deckshand": "Segeltuchhose"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
     "wanderer": "Trainingswald abschließen",
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
-    "schmied": "Bei Schmiedin Hino (Akademie-Hof)"
+    "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
+    "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "feuerwacht": "Kampfstil Lauffeuer (Banner „Wer am Feuer sitzt“)",
+    "deckshand": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)"
    }
   },
   "shoes": {
@@ -51,14 +63,20 @@
     "schatten": "Tabi-Stiefel",
     "schmied": "Eisenkappen-Stiefel",
     "akademie": "Turnschuhe",
-    "steilpfad": "Stoffschuhe"
+    "steilpfad": "Stoffschuhe",
+    "bollwerk": "Bollwerk-Stiefel",
+    "feuerwacht": "Feuerstein-Stiefel",
+    "deckshand": "Messingschnallen-Stiefel"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
     "wanderer": "Trainingswald abschließen",
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
-    "schmied": "Bei Schmiedin Hino (Akademie-Hof)"
+    "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
+    "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "feuerwacht": "Kampfstil Lauffeuer (Banner „Wer am Feuer sitzt“)",
+    "deckshand": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)"
    }
   },
   "hair": {
@@ -71,12 +89,16 @@
     "kurz": "Kurzhaar",
     "zwillinge": "Zwillingszöpfe",
     "lang": "Lange Mähne",
-    "kamm": "Stachelkamm"
+    "kamm": "Stachelkamm",
+    "bollwerk_helm": "Bollwerk-Helm",
+    "deckshand_muetze": "Segeltuch-Kapitänsmütze"
    },
    "unlock": {
     "wuschel": "Saisonpass, Stufe 5",
     "zwillinge": "Erfolg: 3 Super-Treffer in einem Kampf",
-    "kamm": "Herausforderung im Trainingswald"
+    "kamm": "Herausforderung im Trainingswald",
+    "bollwerk_helm": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "deckshand_muetze": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)"
    }
   },
   "weapon": {
@@ -418,6 +440,19 @@
    "text": "Riesige schwarze Klinge, Mondsicheln (Legendär)",
    "unlock": "",
    "weapon": "schwert_kaiser"
+  },
+  "spannkraft": {
+   "name": "Spannkraft",
+   "text": "Federleib: dehnbare Fäuste, Spannen und Rückschwung (Legendär)",
+   "unlock": "",
+   "weapon": "none"
+  },
+  "lauffeuer": {
+   "name": "Lauffeuer",
+   "text": "Flammenleib: Brandherde legen und mit der Flammenfaust zünden",
+   "unlock": "",
+   "weapon": "",
+   "unarmed": true
   }
  },
  "start_items_note": "Teile ohne unlock-Eintrag sind von Anfang an frei. CreatorUnlocks.unlock(slot, id) schaltet frei."

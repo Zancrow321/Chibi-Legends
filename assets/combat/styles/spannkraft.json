@@ -1,0 +1,93 @@
+{
+	"_doc": "Kampfstil Spannkraft (Federleib, elastischer Koerper). Konzept: docs/stil-spannkraft.md. 6 Zuege fuer die Spezial-Taste + Meisterzug, je 3 Alternativen. frames = [Anlauf, aktiv, Erholung] bei 60 fps. spann = Zug laesst sich durch Halten von L spannen (3 Stufen); voll gespannt verbraucht 1 Stufe Legendenleiste (falls da) fuer die verstaerkte Fassung (enhanced). Zuege ohne spann: L halten = verstaerkt wie gewohnt. Schaden: 8 entspricht einem normalen Leichtschlag (100 %).",
+	"id": "spannkraft",
+	"name": "Spannkraft",
+	"element": "",
+	"subtitle": "Federleib · Eisenwille  ·  L halten spannt (3 Stufen), Treffer + neuer Zug = Rückschwung (3 pro Folge)",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"colors": {"ink": "1a1420", "coral": "ff5a4a", "yellow": "ffd23c", "sky": "6fd0ff", "white": "fff8e8", "steel": "7fa8d8", "steam": "d8d4d0", "orange": "ff9a2a"},
+	"loadout": {"neutral": "schnappfaust", "forward": "fegebein", "up": "katapult", "down": "fallbeilferse"},
+	"zuege": {
+		"schnappfaust": {
+			"name": "Schnappfaust", "dir": "neutral", "sp": 1, "cd": 0.7, "frames": [6, 8, 14], "spann": true,
+			"desc": "Gerader, elastischer Faustschlag mit großer Reichweite. Halten spannt: mehr Reichweite und Wucht.",
+			"pose": {"startup": [1], "active": [3], "recovery": [6]},
+			"params": {"damage": 10, "reach": 76, "kind": "single"},
+			"enhanced": {"double": true},
+			"alts": [
+				{"id": "prassel", "name": "Prasselfaust", "sp": 2, "desc": "Viele kurze Schläge in einem Bereich vor dir. Spannen verlängert die Dauer.", "frames": [6, 30, 14], "params": {"kind": "barrage", "damage": 2.2, "hits": 8, "reach": 54}},
+				{"id": "doppel", "name": "Doppelstoß", "sp": 2, "desc": "Beide Fäuste treffen gemeinsam. Langsamer, viel mehr Rückstoß.", "frames": [10, 8, 18], "params": {"kind": "double", "damage": 16, "reach": 70}},
+				{"id": "schnapp", "name": "Schnelle Schnappfaust", "sp": 2, "desc": "Noch schneller, etwas weniger Reichweite. Bester Starter für Übergänge.", "frames": [4, 6, 10], "params": {"damage": 9, "reach": 64}}
+			]
+		},
+		"fegebein": {
+			"name": "Fegebein", "dir": "forward", "sp": 1, "cd": 0.9, "frames": [8, 10, 16], "spann": true,
+			"desc": "Ein verlängertes Bein fegt quer durch den Bereich vor dir, trifft auch am Boden.",
+			"pose": {"startup": [1], "active": [6], "recovery": [6]},
+			"params": {"damage": 11, "reach": 84, "kind": "sweep", "pull": false},
+			"enhanced": {"twice": true},
+			"alts": [
+				{"id": "breit", "name": "Breites Fegebein", "sp": 2, "desc": "Große Fläche, längere Erholung.", "frames": [8, 12, 28], "params": {"reach": 120}},
+				{"id": "haken", "name": "Hakentritt", "sp": 2, "desc": "Zieht leichte Gegner zur Mitte des Angriffs.", "params": {"pull": true}},
+				{"id": "speer", "name": "Speerstoß", "sp": 2, "desc": "Beide Füße stoßen gerade nach vorn, schmal und weit.", "params": {"kind": "spear", "damage": 14, "reach": 110}}
+			]
+		},
+		"katapult": {
+			"name": "Katapult", "dir": "up", "sp": 1, "cd": 1.0, "frames": [8, 14, 16], "spann": true,
+			"desc": "Greift den Boden, spannt sich und schießt diagonal nach oben. Ein Treffer nimmt den Gegner mit.",
+			"pose": {"startup": [6], "active": [4], "recovery": [5]},
+			"params": {"damage": 10, "launch": 360, "vx": 260, "vy": -520, "hook": false},
+			"enhanced": {"finisher": true},
+			"alts": [
+				{"id": "hoch", "name": "Hohes Katapult", "sp": 2, "desc": "Mehr Höhe, weniger seitliche Bewegung.", "params": {"vx": 110, "vy": -640, "launch": 440}},
+				{"id": "flach", "name": "Flaches Katapult", "sp": 2, "desc": "Weiter Vorstoß knapp über dem Boden.", "params": {"vx": 460, "vy": -200, "launch": 200}},
+				{"id": "haken", "name": "Himmelshaken", "sp": 2, "desc": "Keine Bewegung: die Faust schießt senkrecht nach oben. Starker Abwehrschlag.", "frames": [6, 8, 16], "params": {"hook": true, "damage": 14, "launch": 300}}
+			]
+		},
+		"prallbauch": {
+			"name": "Prallbauch", "dir": "neutral", "sp": 1, "cd": 1.3, "frames": [4, 24, 12],
+			"desc": "Bläht sich kurz kugelrund auf. Stumpfe Treffer federn ab und stoßen den Angreifer zurück.",
+			"pose": {"startup": [6], "active": [6], "recovery": [6]},
+			"params": {"stance": 0.4, "perfect": 0.15, "counter_damage": 8, "mode": "bounce"},
+			"enhanced": {"counter_damage_add": 8, "wave": true},
+			"alts": [
+				{"id": "rueckprall", "name": "Rückprall", "sp": 2, "desc": "Mit perfektem Timing wirfst du Geschosse zurück.", "params": {"mode": "reflect", "perfect": 0.2}},
+				{"id": "wille", "name": "Willensdeckung", "sp": 2, "desc": "Harte Armdeckung durch Eisenwille: hält alle Trefferarten, ohne Konter.", "params": {"mode": "guard", "counter_damage": 0, "stance": 0.5}},
+				{"id": "feder", "name": "Federkörper", "sp": 2, "desc": "Ein abgefangener Treffer lässt dich zurückspringen und gibt sofort Spannung II.", "params": {"mode": "spring", "counter_damage": 0}}
+			]
+		},
+		"spannzug": {
+			"name": "Spannzug", "dir": "forward", "sp": 1, "cd": 1.1, "frames": [6, 14, 12],
+			"desc": "Greift einen Gegner oder eine Kante und zieht sich hin. Erneut L: Schlag im Flug. Ohne Greifpunkt ein kurzer Federsprung.",
+			"pose": {"startup": [1], "active": [3], "recovery": [6]},
+			"params": {"grab": 170, "dist": 70, "damage": 9, "swing": false, "steam": false},
+			"enhanced": {"bounce": true},
+			"alts": [
+				{"id": "lang", "name": "Langer Zug", "sp": 2, "desc": "Mehr Strecke, deutlichere Vorbereitung.", "frames": [10, 16, 12], "params": {"grab": 250}},
+				{"id": "seite", "name": "Seitenschwung", "sp": 2, "desc": "Bogen um das Ziel herum, du landest dahinter.", "params": {"swing": true}},
+				{"id": "siede", "name": "Siedeschritt", "sp": 2, "desc": "Sehr schneller kurzer Vorstoß mit Dampf, längere Abklingzeit.", "cd": 3.0, "frames": [3, 8, 10], "params": {"steam": true, "grab": 0, "dist": 130}}
+			]
+		},
+		"fallbeilferse": {
+			"name": "Fallbeilferse", "dir": "down", "sp": 1, "cd": 1.1, "frames": [10, 6, 16], "spann": true,
+			"desc": "Ein hoch gestrecktes Bein schnellt nach unten. Verfehlt steckt der Fuß kurz fest.",
+			"pose": {"startup": [5], "active": [4], "recovery": [3, 6]},
+			"params": {"damage": 15, "kind": "axe", "fall": 760},
+			"enhanced": {"toss": true},
+			"alts": [
+				{"id": "schwer", "name": "Schweres Fallbeil", "sp": 2, "desc": "Langsame Vorbereitung, hoher Rückstoß.", "frames": [16, 6, 18], "params": {"damage": 20}},
+				{"id": "doppel", "name": "Doppelstampfer", "sp": 2, "desc": "Beide Füße treffen konzentriert ein Ziel, kein Flächenschaden.", "params": {"kind": "stomp", "damage": 19}},
+				{"id": "wirbel", "name": "Wirbelsturz", "sp": 2, "desc": "Drehender Fall gegen mehrere Gegner, geringerer Einzelschaden.", "params": {"kind": "spin", "damage": 4, "fall": 420}}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug", "sp": 4, "cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die Figur grinst breit und ballt die Faust; die Alternativen sind drei verschiedene Supers.",
+		"variants": [
+			{"id": "dampfhagel", "name": "Siedepuls: Dampfhagel", "sp": 0, "desc": "Hitzeflimmern und Dampf steigen auf, dann eine rasante Schlagfolge vor dir. Stark gegen ein Ziel."},
+			{"id": "federkanone", "name": "Prallform: Federkanone", "sp": 2, "desc": "Ein Arm bläht sich riesig auf und entlädt einen gewaltigen Fauststoß. Schleudert leichte Gegner weit weg."},
+			{"id": "grenzenlos", "name": "Grenzenlos: Freier Lauf", "sp": 2, "desc": "8 Sekunden Comic-Regeln: alles sofort voll gespannt, 5 Übergänge pro Folge, zum Schluss ein großer Aufprall."}
+		]
+	}
+}

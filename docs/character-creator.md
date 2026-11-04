@@ -76,3 +76,12 @@ in einem `edit-image-pixen`-Aufruf (1 Generierung), statt 10 Generierungen pro E
 - Kampfstil-Zeile: `look.style` (Liste in `catalog.json` unter `styles`), der Spieler lädt
   `FightingStyle.load_style(look.style)`. Bisher nur Glutatem.
 - Offen: Freischalt-Aufrufe an echte Ereignisse hängen (NPC-Dialoge, Trainingswald-Abschluss, Truhen).
+
+## Bollwerk-Teile (2026-11-04)
+
+- Outfit **bollwerk** (Panzer, Beinpanzer, Stiefel) und Kopfteil **bollwerk_helm** im Frisur-Slot
+  (deckt den ganzen Kopf ab). Gesperrt: „Gacha-Banner „Die letzte Linie““.
+- Lehre: Bei sperrigen Outfits verändert PixelLab manchmal die Posen eines Rasters.
+  `tools/bollwerk/fix_outfit_grids.py` misst je Raster, wie viel vom Grundkörper bedeckt ist,
+  und erzeugt schlechte Raster neu (1 Generierung pro Raster). Eine Referenzfigur in Zelle 16
+  hat nicht funktioniert (Modell zog die Figuren kaum an).

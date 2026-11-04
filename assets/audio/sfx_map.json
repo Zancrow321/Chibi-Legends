@@ -61,5 +61,9 @@
   "bell_tick": {"files": ["assets/audio/sfx/bell_tick.wav"], "volume_db": -16},
   "bell_hit": {"files": ["assets/audio/sfx/bell_hit_1.wav", "assets/audio/sfx/bell_hit_2.wav"], "volume_db": -6, "pitch_jitter": 0.03},
   "bell_big": {"files": ["assets/audio/sfx/bell_big.wav"], "volume_db": -2},
-  "bell_clear": {"files": ["assets/audio/sfx/bell_clear.wav"], "volume_db": -4}
+  "bell_clear": {"files": ["assets/audio/sfx/bell_clear.wav"], "volume_db": -4},
+  "rubber_boing": {"files": ["assets/audio/sfx/rubber_boing_1.wav", "assets/audio/sfx/rubber_boing_2.wav"], "volume_db": -8, "pitch_jitter": 0.08},
+  "rubber_stretch": {"files": ["assets/audio/sfx/rubber_stretch_1.wav"], "volume_db": -10, "pitch_jitter": 0.1},
+  "rubber_snap": {"files": ["assets/audio/sfx/rubber_snap_1.wav", "assets/audio/sfx/rubber_snap_2.wav"], "volume_db": -6, "pitch_jitter": 0.08},
+  "rubber_prall": {"files": ["assets/audio/sfx/rubber_prall_1.wav"], "volume_db": -4, "pitch_jitter": 0.05}
 }

@@ -1,0 +1,48 @@
+{
+ "usage": {
+  "type": "generations",
+  "generations": 1.891828125
+ },
+ "id": "a4b7ce9f-3002-41e9-83dc-61dc3da07546",
+ "status": "completed",
+ "created_at": "2026-11-04T18:51:12.686182+00:00",
+ "last_response": {
+  "fps": 10,
+  "kind": "new",
+  "loop": true,
+  "name": "Black crescent wave",
+  "files": {
+   "black-crescent-wave.gif": "https://api.pixellab.ai/mcp/pixel-tools/0f55078e-93fc-40ce-b6f8-765128eb5c0c/black-crescent-wave.gif",
+   "black-crescent-wave.png": "https://api.pixellab.ai/mcp/pixel-tools/0f55078e-93fc-40ce-b6f8-765128eb5c0c/black-crescent-wave.png",
+   "black-crescent-wave.json": "https://api.pixellab.ai/mcp/pixel-tools/0f55078e-93fc-40ce-b6f8-765128eb5c0c/black-crescent-wave.json"
+  },
+  "parts": [],
+  "anchor": {
+   "x": 120,
+   "y": 85,
+   "kind": "origin"
+  },
+  "artist": "lite",
+  "canvas": {
+   "h": 170,
+   "w": 240
+  },
+  "frames": 8,
+  "message": "A huge black crescent wave with jet-black flickering flame edges, a blood-red glow hugging its outer curve, and a sharp cold white-cyan rim, flying left to right in side view on a transparent background. It loops in 0.8 seconds (8 frames), fading in and out at each end so the restart is hidden, with thin cyan streaks trailing behind it. The flames mostly rise off the top edge, so they read as a dark smudge more than as licks of fire.",
+  "edit_url": "https://pixellab.ai/create-vfx?effect=ccf7203e-072e-40d4-b2e6-466411657f8d",
+  "effect_id": "ccf7203e-072e-40d4-b2e6-466411657f8d",
+  "gif_exact": true,
+  "result_id": "0f55078e-93fc-40ce-b6f8-765128eb5c0c",
+  "conversation": "0yesq4dCKc_mLc_iVNaYqA.7168c6372d74552d246f8bcb418f30aa77720344a78e9aa125c3e92d671e3ab7",
+  "billing_usage": {
+   "usd": 0.0,
+   "type": "generations",
+   "generations": 1.891828125
+  },
+  "generation_id": "fad749d2-8b18-4719-9c19-221108e5c444",
+  "billing_charged": true,
+  "generation_mode": "vfx",
+  "pixel_tools_image": true,
+  "quoted_generations": 1
+ }
+}

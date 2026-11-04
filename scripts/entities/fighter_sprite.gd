@@ -90,7 +90,12 @@ func _ready() -> void:
 
 ## New creator look (after the Character Creator closed).
 func set_look(look: Dictionary) -> void:
-	body.look = look.duplicate(true)
+	var l := look.duplicate(true)
+	# unarmed styles (Lauffeuer) fight without the weapon
+	var st: Dictionary = CreatorCatalog.data.get("styles", {}).get(str(l.get("style", "")), {})
+	if bool(st.get("unarmed", false)):
+		l["weapon"] = ""
+	body.look = l
 
 
 ## Big weapons (scale 2 and up, or "twohand": true) stand in the two-hand guard.

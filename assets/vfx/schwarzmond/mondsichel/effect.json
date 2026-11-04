@@ -1,0 +1,339 @@
+{
+ "frames": [
+  {
+   "filename": "black-crescent-wave 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "black-crescent-wave 1.png",
+   "frame": {
+    "x": 128,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "black-crescent-wave 2.png",
+   "frame": {
+    "x": 256,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "black-crescent-wave 3.png",
+   "frame": {
+    "x": 384,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "black-crescent-wave 4.png",
+   "frame": {
+    "x": 0,
+    "y": 80,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "black-crescent-wave 5.png",
+   "frame": {
+    "x": 128,
+    "y": 80,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "black-crescent-wave 6.png",
+   "frame": {
+    "x": 256,
+    "y": 80,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "black-crescent-wave 7.png",
+   "frame": {
+    "x": 384,
+    "y": 80,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "black-crescent-wave 8.png",
+   "frame": {
+    "x": 0,
+    "y": 160,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "black-crescent-wave 9.png",
+   "frame": {
+    "x": 128,
+    "y": 160,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "black-crescent-wave 10.png",
+   "frame": {
+    "x": 256,
+    "y": 160,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  },
+  {
+   "filename": "black-crescent-wave 11.png",
+   "frame": {
+    "x": 384,
+    "y": 160,
+    "w": 128,
+    "h": 80
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 128,
+    "h": 80
+   },
+   "sourceSize": {
+    "w": 128,
+    "h": 80
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 50
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "black-crescent-wave.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 512,
+   "h": 240
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "origin",
+   "x": 64,
+   "y": 40
+  },
+  "frameTags": [
+   {
+    "name": "black-crescent-wave",
+    "from": 0,
+    "to": 11,
+    "direction": "forward"
+   }
+  ]
+ }
+}
