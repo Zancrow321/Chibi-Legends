@@ -32,8 +32,14 @@ Manga und altem UI, im Web lädt `?ui=alt` das alte UI. Große Panels bekommen d
 schmale Leisten (unter 40 px) Papier mit Tuscherand, kleine Farbflächen einen schwarzen Rand,
 Schrift wird Tusche mit weißem Rand.
 
-## Offene Punkte
+## Nachbearbeitung (ohne neue Generierungen)
 
-- Lebens- und Superbalken haben noch Gold-/Holz-Anteile statt reiner Tusche.
-- Halbtonecke im Panel wird beim Strecken mitgezogen.
-- Buttons sind sehr rot und lenken von den Icons ab.
+`build.py` färbt Gold/Holz der Balken auf Papierweiß und Grau um (Herz und Flamme bleiben),
+macht den Button zu Papier mit Tuscherand (Hover färbt ihn im Code rot) und glättet die
+Panel-Innenfläche, damit das Raster beim Strecken nicht verzerrt.
+
+## Wiederverwendung
+
+`UiSkin.box("panel" | "hp_bar" | "super_bar" | "skill_slot" | "button")` liefert die
+StyleBoxTexture für jedes weitere HUD (z. B. Overworld vs. Dungeon), `UiSkin.inner()` die
+Innenfläche für Füllungen, `UiSkin.INK/PAPER/RED` die Grundfarben.

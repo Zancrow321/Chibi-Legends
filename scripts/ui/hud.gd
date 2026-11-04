@@ -539,7 +539,7 @@ func _draw_menu(W: float, H: float) -> void:
 		_menu_rects.append(r)
 		var hover := i == _hover
 		if manga:
-			_skin("button", r.grow(2), Color(1.15, 1.15, 1.15) if hover else Color(0.92, 0.92, 0.92))
+			_skin("button", r.grow(2), Color(1.0, 0.72, 0.66) if hover else Color.WHITE)
 		else:
 			_panel(r, PANEL_LIGHT if hover else PANEL, 8, Color(TRIM, 0.9 if hover else 0.35))
 		_draw_menu_icon(Vector2(r.get_center().x, y + 17), i)
