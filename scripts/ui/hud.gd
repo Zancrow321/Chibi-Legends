@@ -205,6 +205,7 @@ func _draw() -> void:
 	if show_help:
 		_draw_training()
 		_draw_help()
+	_draw_combo(W, H)
 	if _cutin_t >= 0.0:
 		_draw_cutin(W, H)
 	if room.toast_time > 0.0:
@@ -212,6 +213,22 @@ func _draw() -> void:
 		var tw := font.get_string_size(room.toast_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 22).x + 48
 		_panel(Rect2(W / 2 - tw / 2, H * 0.24, tw, 44), Color(0.09, 0.07, 0.16, 0.9 * a), 22, Color(TRIM, a))
 		_text(Vector2(W / 2 - tw / 2, H * 0.24 + 29), room.toast_text, 22, Color(TEXT, a), HORIZONTAL_ALIGNMENT_CENTER, tw)
+
+
+## Combo counter at the right edge while a combo runs.
+func _draw_combo(W: float, H: float) -> void:
+	if room.combo < 3:
+		return
+	var fade := clampf((TrainingRoom.COMBO_GAP - room.combo_time) * 3.0, 0.0, 1.0)
+	var pop := 1.0 + 0.25 * maxf(0.0, 0.15 - room.combo_time) / 0.15
+	var x := W - 190.0
+	var y := H * 0.42
+	var col := Color("ffd25c") if room.combo < 10 else Color("ff7a2a") if room.combo < 20 else Color("fff4d0")
+	_text(Vector2(x, y), str(room.combo), int(52 * pop), Color(col, fade), HORIZONTAL_ALIGNMENT_RIGHT, 110, 6)
+	_text(Vector2(x + 116, y - 4), "HITS", 22, Color(TEXT, fade), HORIZONTAL_ALIGNMENT_LEFT, -1, 4)
+	var bar := Rect2(x + 10, y + 10, 160, 5)
+	draw_rect(bar, Color(0, 0, 0, 0.5 * fade))
+	draw_rect(Rect2(bar.position, Vector2(bar.size.x * (1.0 - room.combo_time / TrainingRoom.COMBO_GAP), bar.size.y)), Color(col, fade))
 
 
 func _draw_status() -> void:
@@ -610,7 +627,7 @@ func _draw_bottom_left(H: float) -> void:
 
 func _draw_help() -> void:
 	var glut := room.player.glut != null
-	var r := Rect2(16, 286, 400, 382)
+	var r := Rect2(16, 280, 400, 404)
 	_panel(r, PANEL, 10)
 	_text(Vector2(32, 312), "Steuerung", 17, TRIM)
 	var lines := [
@@ -618,7 +635,8 @@ func _draw_help() -> void:
 		["J / K", "Leicht (3er-Kette) / Schwer"], ["W/S/A/D +", "Richtung: oben/unten/vor"],
 		["L (+ Richtung)", "Zug von Glutatem"], ["L halten", "Verstärkt (1 Stufe Leiste)"],
 		["P", "Meisterzug (3 Stufen)"], ["Tab / M", "Kampfstil: Alternativen, Slots"],
-		["J + K", "Griff (Wurf)"], ["U", "Unendlich Legendenleiste"], ["R", "Abklingzeiten zurück"],
+		["J + K", "Griff (Wurf)"], ["Q halten", "Blocken (kurz vorher = Perfekt)"],
+		["Shift im Treffer", "Befreiungsstoß (1 Stufe)"], ["U / R", "Unendlich Leiste / Abklingzeiten"],
 		["N", "Abendlicht an/aus"], ["V", "Effekt-Stärke"], ["T / C / H", "Figur / Charaktere / Hilfe"],
 		["F / I", "Kämpfer wechseln / UI-Stil"],
 	] if glut else [

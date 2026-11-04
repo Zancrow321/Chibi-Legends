@@ -24,6 +24,7 @@ const KEYS := {
 	"style_menu": [KEY_TAB, KEY_M],
 	"toggle_light": [KEY_N],
 	"interact": [KEY_E, KEY_ENTER],
+	"block": [KEY_Q],
 }
 
 const PAD_BUTTONS := {
@@ -44,6 +45,7 @@ const PAD_BUTTONS := {
 ## Trigger for the super, sticks for movement and attack directions.
 const PAD_AXES := {
 	"super": [[JOY_AXIS_TRIGGER_LEFT, 1.0]],
+	"block": [[JOY_AXIS_TRIGGER_RIGHT, 1.0]],
 	"move_up": [[JOY_AXIS_LEFT_Y, -1.0]],
 	"move_left": [[JOY_AXIS_LEFT_X, -1.0]],
 	"move_right": [[JOY_AXIS_LEFT_X, 1.0]],

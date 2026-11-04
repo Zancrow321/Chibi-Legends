@@ -169,6 +169,19 @@ func take_hit(knockback: float, from_x: float) -> void:
 		_enter("hurt")
 
 
+## Perfekt-Block by the player: the attack bounces off, the enemy reels.
+func parried(from_x: float) -> void:
+	if state == "dead":
+		return
+	_enter("hurt")
+	_st = -0.7  # a long stagger: time for a punish
+	flash = 0.15
+	vel.x = signf(global_position.x - from_x) * 160.0
+	_cd = maxf(_cd, 1.2)
+	if world.glut_fx != null:
+		world.glut_fx.word(head_position() + Vector2(0, -10), "BENOMMEN", Color("ffd25c"), 14)
+
+
 ## Juggle: thrown up (positive) or slammed down (negative).
 func launch(speed: float) -> void:
 	if state == "dead":
