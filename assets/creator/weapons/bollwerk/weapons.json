@@ -1,0 +1,107 @@
+{
+ "wachhund": {
+  "label": "Sturmgewehr „Wachhund“",
+  "texture": "res://assets/creator/weapons/bollwerk/wachhund.png",
+  "scale": 1,
+  "grip": [
+   15.0,
+   17.5
+  ],
+  "tip": [
+   46.5,
+   11.5
+  ],
+  "kind": "gun",
+  "source": "PixelLab create-image-pixen, seed 3"
+ },
+ "dreischlag": {
+  "label": "Salvengewehr „Dreischlag“",
+  "texture": "res://assets/creator/weapons/bollwerk/dreischlag.png",
+  "scale": 1,
+  "grip": [
+   6.5,
+   11.5
+  ],
+  "tip": [
+   45.5,
+   7.0
+  ],
+  "kind": "gun",
+  "source": "PixelLab create-image-pixen, seed 11"
+ },
+ "kurzwort": {
+  "label": "Dienstpistole „Kurzwort“",
+  "texture": "res://assets/creator/weapons/bollwerk/kurzwort.png",
+  "scale": 1,
+  "grip": [
+   5.0,
+   19.5
+  ],
+  "tip": [
+   32.5,
+   8.5
+  ],
+  "kind": "gun",
+  "source": "PixelLab create-image-pixen, seed 11"
+ },
+ "fremdklinge": {
+  "label": "Fremdklinge",
+  "texture": "res://assets/creator/weapons/bollwerk/fremdklinge.png",
+  "scale": 1,
+  "grip": [
+   7.5,
+   6.0
+  ],
+  "tip": [
+   44.5,
+   6.0
+  ],
+  "kind": "blade",
+  "source": "PixelLab create-image-pixen, seed 11"
+ },
+ "zwillingsrohr": {
+  "label": "Zwillingsrohr",
+  "texture": "res://assets/creator/weapons/bollwerk/zwillingsrohr.png",
+  "scale": 1,
+  "grip": [
+   13.1,
+   28.5
+  ],
+  "tip": [
+   60.5,
+   14.833333333333334
+  ],
+  "kind": "gun",
+  "source": "PixelLab create-image-pixen, seed 27"
+ },
+ "lanzenstrahl": {
+  "label": "Lanzenstrahl",
+  "texture": "res://assets/creator/weapons/bollwerk/lanzenstrahl.png",
+  "scale": 1,
+  "grip": [
+   8.7,
+   18.5
+  ],
+  "tip": [
+   56.5,
+   13.5
+  ],
+  "kind": "gun",
+  "source": "PixelLab create-image-pixen, seed 21"
+ },
+ "schrotflinte": {
+  "label": "Schrotflinte",
+  "texture": "res://assets/creator/weapons/bollwerk/schrotflinte.png",
+  "scale": 1,
+  "grip": [
+   6.0,
+   8.5
+  ],
+  "tip": [
+   44.5,
+   4.0
+  ],
+  "kind": "gun",
+  "source": "PixelLab create-image-pixen, seed 11"
+ }
+}
