@@ -60,7 +60,14 @@ scripts/
 assets/characters/         Paper-Doll-Teile und Farben, siehe assets/characters/README.md
 tools/sprites/             Format, Platzhalter backen, Prüfen, Vorschau (Python + Pillow)
 tools/pixellab/            Neue Teile mit PixelLab erzeugen oder eigene PNGs importieren
+tools/palette/             Master-Palette (Lospec), Quantisieren, Farbvarianten für den Shader
+tools/assets/              CC0-Platzhalter (Kenney) holen, mit Lizenzliste
+tools/audio/               Eigene Sounds (z. B. Stable Audio) zuschneiden und angleichen
+scripts/audio/sfx.gd       Sfx.play("ereignis"), Zuordnung in assets/audio/sfx_map.json
+scripts/fx/palette_remap.gd Farbvarianten per Shader (assets/palettes/swaps.json)
 ```
+
+Werkzeuge im Detail: [docs/werkzeuge.md](docs/werkzeuge.md)
 
 Daten und Reaktionslogik hängen nicht an Szenen. Dadurch kann der spätere Godot-Headless-Server (Koop, Phase 4) denselben Code nutzen.
 
@@ -77,3 +84,5 @@ Grafik ist vorerst prozedural gezeichnet. Echte Sprites (z. B. aus PixelLab) ers
 ## Lizenzen
 
 Schrift: Pixelify Sans, SIL Open Font License 1.1 (siehe `assets/fonts/OFL-NOTICE.txt`).
+Platzhalter für UI, Sound und Effekte: Kenney, CC0 1.0 (siehe `assets/third_party/LICENSES.md`).
+Paletten: Resurrect 64 (Kerrie Lake) und Endesga 32 (ENDESGA) von lospec.com.

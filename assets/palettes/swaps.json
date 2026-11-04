@@ -1,0 +1,21 @@
+{
+  "_info": "Farbvarianten für den Palette-Remap-Shader. Jede Variante ersetzt Master-Palettenfarben (links) durch andere Farben (rechts). Eine Zeile gilt für ein ganzes Sprite: Varianten am besten pro Figur oder Skin anlegen, z. B. 'raiga_gi_blau'. Danach: python3 tools/palette/build.py Wichtig: Haut und Kleidung dürfen sich keine Palettenfarbe teilen, sonst färbt sich beides um (z. B. cd683d ist bei Raiga Hautschatten und Gi zugleich).",
+  "raiga_gi_blau": {
+    "9e4539": "484a77",
+    "e6904e": "4d65b4"
+  },
+  "raiga_haar_silber": {
+    "6e2727": "625565",
+    "7a3045": "7f708a",
+    "ae2334": "9babb2",
+    "c32454": "c7dcd0"
+  },
+  "raiga_schatten": {
+    "9e4539": "45293f",
+    "e6904e": "6b3e75",
+    "6e2727": "2e222f",
+    "7a3045": "3e3546",
+    "ae2334": "484a77",
+    "c32454": "4d65b4"
+  }
+}
