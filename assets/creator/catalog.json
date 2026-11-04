@@ -13,9 +13,11 @@
     "schatten": "Schattenwickel",
     "schmied": "Schmiede-Schürze",
     "akademie": "Akademie-Jacke",
+    "steilpfad": "Steilpfad-Gi",
     "bollwerk": "Bollwerk-Panzer"
    },
    "unlock": {
+    "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
     "wanderer": "Trainingswald abschließen",
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
@@ -32,9 +34,11 @@
     "schatten": "Wickelhose",
     "schmied": "Arbeitshose",
     "akademie": "Uniformhose",
+    "steilpfad": "Steilpfad-Wickelhose",
     "bollwerk": "Bollwerk-Beinpanzer"
    },
    "unlock": {
+    "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
     "wanderer": "Trainingswald abschließen",
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
@@ -51,9 +55,11 @@
     "schatten": "Tabi-Stiefel",
     "schmied": "Eisenkappen-Stiefel",
     "akademie": "Turnschuhe",
+    "steilpfad": "Stoffschuhe",
     "bollwerk": "Bollwerk-Stiefel"
    },
    "unlock": {
+    "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
     "wanderer": "Trainingswald abschließen",
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
@@ -114,8 +120,8 @@
    "texture": "res://assets/creator/weapons/sense_nachhall.png",
    "scale": 2,
    "grip": [
-    11.0,
-    31.0
+    11.5,
+    30.5
    ],
    "tip": [
     29.0,
@@ -414,6 +420,12 @@
    "text": "Sense Nachhall: Züge im Takt bauen Einklang auf",
    "unlock": "",
    "weapon": "sense_nachhall"
+  },
+  "schwarzmond": {
+   "name": "Schwarzmond",
+   "text": "Riesige schwarze Klinge, Mondsicheln (Legendär)",
+   "unlock": "",
+   "weapon": "schwert_kaiser"
   }
  },
  "start_items_note": "Teile ohne unlock-Eintrag sind von Anfang an frei. CreatorUnlocks.unlock(slot, id) schaltet frei."

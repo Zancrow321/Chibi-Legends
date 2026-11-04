@@ -1,0 +1,39 @@
+{
+ "fps": 16,
+ "kind": "new",
+ "loop": true,
+ "name": "Turquoise pinwheel",
+ "files": {
+  "turquoise-pinwheel.gif": "https://api.pixellab.ai/mcp/pixel-tools/50748c12-a55e-4253-971d-fb2fb89ee99a/turquoise-pinwheel.gif",
+  "turquoise-pinwheel.png": "https://api.pixellab.ai/mcp/pixel-tools/50748c12-a55e-4253-971d-fb2fb89ee99a/turquoise-pinwheel.png",
+  "turquoise-pinwheel.json": "https://api.pixellab.ai/mcp/pixel-tools/50748c12-a55e-4253-971d-fb2fb89ee99a/turquoise-pinwheel.json",
+  "turquoise-pinwheel-game.zip": "https://api.pixellab.ai/mcp/pixel-tools/50748c12-a55e-4253-971d-fb2fb89ee99a/turquoise-pinwheel-game.zip"
+ },
+ "parts": [],
+ "anchor": {
+  "x": 60,
+  "y": 60,
+  "kind": "origin"
+ },
+ "artist": "lite",
+ "canvas": {
+  "h": 120,
+  "w": 120
+ },
+ "frames": 12,
+ "message": "A looping turquoise-white pinwheel: six curved wind blades with a gold edge glow, wrapped around a glowing thread hub, on a transparent background, one full turn every 12 frames at 16 fps. The blade thickness and the hub glow are the easiest things to tune by hand in the recipe if you want it chunkier or softer.",
+ "edit_url": "https://pixellab.ai/create-vfx?effect=1cfce21a-0886-47be-9627-58a860cf7ad4",
+ "effect_id": "1cfce21a-0886-47be-9627-58a860cf7ad4",
+ "gif_exact": true,
+ "result_id": "50748c12-a55e-4253-971d-fb2fb89ee99a",
+ "billing_usage": {
+  "usd": 0.0,
+  "type": "generations",
+  "generations": 1.0
+ },
+ "generation_id": "24055ca8-6ddf-424c-8f60-5663a48f81a5",
+ "billing_charged": true,
+ "generation_mode": "vfx",
+ "pixel_tools_image": true,
+ "quoted_generations": 1
+}

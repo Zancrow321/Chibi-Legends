@@ -1,0 +1,39 @@
+{
+ "fps": 24,
+ "kind": "new",
+ "loop": false,
+ "name": "Wind impact burst",
+ "files": {
+  "wind-impact-burst.gif": "https://api.pixellab.ai/mcp/pixel-tools/a412eebd-eba7-4105-81ab-b159b921daea/wind-impact-burst.gif",
+  "wind-impact-burst.png": "https://api.pixellab.ai/mcp/pixel-tools/a412eebd-eba7-4105-81ab-b159b921daea/wind-impact-burst.png",
+  "wind-impact-burst.json": "https://api.pixellab.ai/mcp/pixel-tools/a412eebd-eba7-4105-81ab-b159b921daea/wind-impact-burst.json",
+  "wind-impact-burst-game.zip": "https://api.pixellab.ai/mcp/pixel-tools/a412eebd-eba7-4105-81ab-b159b921daea/wind-impact-burst-game.zip"
+ },
+ "parts": [],
+ "anchor": {
+  "x": 100,
+  "y": 80,
+  "kind": "origin"
+ },
+ "artist": "lite",
+ "canvas": {
+  "h": 160,
+  "w": 200
+ },
+ "frames": 12,
+ "message": "A 0.5-second wind impact burst: a white flash at the centre, three turquoise wind rings snapping open into a wide shockwave, radiating white-core wind streaks and gold sparks flying outward, on a transparent background. The rings are the biggest read; try the Shockwave size and the spark count to push it bigger or busier.",
+ "edit_url": "https://pixellab.ai/create-vfx?effect=f918a76b-e70f-4df9-ade2-e0c54a3e045c",
+ "effect_id": "f918a76b-e70f-4df9-ade2-e0c54a3e045c",
+ "gif_exact": true,
+ "result_id": "a412eebd-eba7-4105-81ab-b159b921daea",
+ "billing_usage": {
+  "usd": 0.0,
+  "type": "generations",
+  "generations": 1.0
+ },
+ "generation_id": "c008cee3-e3f7-4db8-9069-328997f513b5",
+ "billing_charged": true,
+ "generation_mode": "vfx",
+ "pixel_tools_image": true,
+ "quoted_generations": 1
+}

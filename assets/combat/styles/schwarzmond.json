@@ -1,0 +1,94 @@
+{
+	"_doc": "Fighting Style Schwarzmond (Mondlast, Thema Neumondnacht). Konzept: docs/stil-schwarzmond.md. Gleiches Format wie glutatem.json; 'caster' waehlt das Skript (MondCaster/MondSuper). frames = [Anlauf, aktiv, Erholung] bei 60 fps. enhanced = verstaerkt (L halten oder Vollmond): _add addiert, _mul multipliziert, sonst ersetzt. posture = Haltungsschaden-Faktor bei Druckbruch.",
+	"id": "schwarzmond",
+	"name": "Schwarzmond",
+	"caster": "schwarzmond",
+	"element": "mondlast",
+	"rarity": "legendaer",
+	"moveset": "res://assets/combat/movesets/schwarzmond.json",
+	"colors": {"ink": "0b0a12", "night": "1c1b33", "cyan": "6fe3ff", "blue": "3a7bff", "white": "f4f8ff", "red": "b0122a", "ember": "ff3b4a"},
+	"loadout": {"neutral": "mondschnitt", "forward": "mondsichel", "up": "aufsteigender_mond", "down": "fallender_mond"},
+	"zuege": {
+		"mondschnitt": {
+			"name": "Mondschnitt", "dir": "neutral", "sp": 1, "cd": 0.8, "frames": [8, 30, 16],
+			"desc": "Zwei weite Schwertschläge und ein kräftiger Abschluss. Zuverlässiger Einstieg in eine Kombo.",
+			"pose": {"startup": [0, 1], "active": [3, 4, 5, 3], "recovery": [6]},
+			"params": {"hits": [5, 5, 8], "w": 46, "h": 34, "charge": 0.0, "posture": 1.0},
+			"enhanced": {"extra_wave": true},
+			"alts": [
+				{"id": "breiter_mond", "name": "Breiter Mond", "sp": 2, "desc": "Langsamer, der Bogen trifft mehrere Gegner (+60 % Fläche).", "params": {"w": 74, "h": 46}, "frames": [12, 36, 20]},
+				{"id": "schwarze_schneide", "name": "Schwarze Schneide", "sp": 2, "desc": "Schnelle, kurze Schlagfolge: 5 Treffer gegen ein Ziel.", "params": {"hits": [3, 3, 3, 3, 4], "w": 38}, "frames": [6, 28, 14]},
+				{"id": "verdichteter_hieb", "name": "Verdichteter Hieb", "sp": 2, "desc": "L halten lädt bis 1 s: ein Einzelschlag bis 16 Schaden mit hohem Haltungsschaden.", "params": {"hits": [9], "charge": 1.0, "posture": 2.0, "w": 52, "h": 40}, "frames": [10, 8, 26]}
+			]
+		},
+		"mondsichel": {
+			"name": "Mondsichel", "dir": "forward", "sp": 1, "cd": 1.1, "frames": [12, 6, 20],
+			"desc": "Schleudert eine sichelförmige Energiewelle nach vorn. Aus der Nähe treffen Klinge und Welle, zusammen höchstens 11 Schaden.",
+			"pose": {"startup": [1, 2], "active": [3, 4], "recovery": [6]},
+			"params": {"damage": 7, "blade": 4, "range": 240, "speed": 430, "h": 34, "charge": 0.0, "scale": 1.0, "pierce": false},
+			"enhanced": {"scale": 1.8, "pierce": true, "damage_add": 4},
+			"alts": [
+				{"id": "weite_sichel", "name": "Weite Sichel", "sp": 2, "desc": "Breite, hohe Welle, aber nur 150 px weit.", "params": {"h": 58, "range": 150}},
+				{"id": "schneidender_mond", "name": "Schneidender Mond", "sp": 2, "desc": "Schmale, flache Welle über die ganze Bildschirmbreite.", "params": {"h": 20, "range": 480, "speed": 560}},
+				{"id": "gehaltene_sichel", "name": "Gehaltene Sichel", "sp": 2, "desc": "L halten lädt 0,6 s: 14 Schaden, aber in der Ladezeit leicht zu unterbrechen.", "params": {"charge": 0.6, "damage": 10}}
+			]
+		},
+		"aufsteigender_mond": {
+			"name": "Aufsteigender Mond", "dir": "up", "sp": 1, "cd": 1.2, "frames": [8, 6, 22],
+			"desc": "Aufwärtshieb hebt normale Gegner an. L nochmal drücken: hinterherspringen.",
+			"pose": {"startup": [4], "active": [5], "recovery": [6]},
+			"params": {"damage": 8, "launch": 360, "follow": 430, "w": 44, "h": 52, "wave": false},
+			"enhanced": {"launch_add": 120, "follow_add": 80, "damage_add": 4},
+			"alts": [
+				{"id": "himmelsklinge", "name": "Himmelsklinge", "sp": 2, "desc": "Höherer Start für längere Luftkombos.", "params": {"launch": 470, "follow": 520}},
+				{"id": "mondbogen", "name": "Mondbogen", "sp": 2, "desc": "Halbkreis-Hieb, trifft einen großen Bereich über dir.", "params": {"w": 92, "h": 70}},
+				{"id": "steigende_sichel", "name": "Steigende Sichel", "sp": 2, "desc": "Feuert eine Mondsichel schräg nach oben statt mitzuspringen.", "params": {"wave": true, "follow": 0}}
+			]
+		},
+		"entschlossene_abwehr": {
+			"name": "Entschlossene Abwehr", "dir": "neutral", "sp": 1, "cd": 1.0, "frames": [2, 30, 14],
+			"desc": "Klinge quer vor den Körper. In den ersten 0,15 s: Gegenangriff. Später: nur weniger Schaden.",
+			"pose": {"startup": [6], "active": [6], "recovery": [6]},
+			"params": {"stance": 0.5, "perfect": 0.15, "counter_damage": 14, "push": false, "fast": false},
+			"enhanced": {"counter_damage_mul": 1.4},
+			"alts": [
+				{"id": "klingenparade", "name": "Klingenparade", "sp": 2, "desc": "Perfekte Abwehr erlaubt einen sehr schnellen Gegenschnitt.", "params": {"fast": true}},
+				{"id": "druckstoss", "name": "Druckstoß", "sp": 2, "desc": "Jede erfolgreiche Abwehr stößt nahe Gegner zurück.", "params": {"push": true}},
+				{"id": "standhaft", "name": "Standhaft", "sp": 2, "desc": "Haltung 1,2 s, aber nur ein schwacher Konter.", "params": {"stance": 1.2, "counter_damage": 7}}
+			]
+		},
+		"schwarze_spur": {
+			"name": "Schwarze Spur", "dir": "forward", "sp": 1, "cd": 1.0, "frames": [6, 8, 16],
+			"desc": "Extrem schneller Vorstoß mit schwarzem Nachbild. J oder K im Vorstoß wird zum vorbeiziehenden Schnitt.",
+			"pose": {"startup": [1], "active": [3], "recovery": [6]},
+			"params": {"dist": 120, "cut": 9, "invuln": 0.0, "chase": false, "ghosts": 0},
+			"enhanced": {"dist_mul": 2.0, "ghosts": 2},
+			"alts": [
+				{"id": "durchbruch", "name": "Durchbruch", "sp": 2, "desc": "200 px weit, aber längere Erholung.", "params": {"dist": 200}, "frames": [6, 10, 26]},
+				{"id": "nachbild", "name": "Nachbild", "sp": 2, "desc": "Kurzer Schritt (70 px), kurz unverwundbar.", "params": {"dist": 70, "invuln": 0.14}, "frames": [4, 6, 12]},
+				{"id": "verfolgung", "name": "Verfolgung", "sp": 2, "desc": "Schräger Schritt zu einem Gegner in der Luft.", "params": {"chase": true}}
+			]
+		},
+		"fallender_mond": {
+			"name": "Fallender Mond", "dir": "down", "sp": 1, "cd": 1.3, "frames": [12, 6, 24],
+			"desc": "Stürzt mit schwerem Schnitt zu Boden (am Boden mit kurzem Sprung). Kleine Druckwelle beim Aufprall. Verfehlt: kurz offen.",
+			"pose": {"startup": [5], "active": [4], "recovery": [3, 6]},
+			"params": {"damage": 9, "wave": 50, "wave_damage": 6, "fall": 760, "posture": 1.0, "rain": false, "spin": false},
+			"enhanced": {"wave_mul": 2.0, "wave_damage_add": 4},
+			"alts": [
+				{"id": "mondsturz", "name": "Mondsturz", "sp": 2, "desc": "Steiler Fall, ein starker Einzeltreffer (14).", "params": {"damage": 14, "fall": 980, "posture": 1.5}},
+				{"id": "schwarzer_regen", "name": "Schwarzer Regen", "sp": 2, "desc": "Feuert eine Mondsichel schräg nach unten und bleibt kurz in der Luft.", "params": {"rain": true}},
+				{"id": "kreisender_fall", "name": "Kreisender Fall", "sp": 2, "desc": "Drehender Hieb trifft mehrere Gegner, weniger Haltungsschaden.", "params": {"spin": true, "posture": 0.5, "wave": 70}}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug", "sp": 4, "cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Danach erscheint 5 s die Schattenlarve (außer bei Mondfinsternis).",
+		"variants": [
+			{"id": "neumond", "name": "Neumond", "sp": 0, "desc": "Die Klinge verdichtet sich. 8 s: Züge und Schläge 25 % schneller, Abklingzeiten −40 %, nur +10 % Schaden."},
+			{"id": "blutmond", "name": "Blutmond", "sp": 2, "desc": "Die Larve schließt sich, eine riesige schwarz-rote Mondsichel rollt in gerader Linie über die ganze Breite."},
+			{"id": "mondfinsternis", "name": "Mondfinsternis", "sp": 2, "desc": "Einmal pro Kampf: Die Welt wird schwarz, ein einziger gewaltiger Schnitt. Danach ist alles verbraucht, 10 s Erschöpfung."}
+		]
+	}
+}
