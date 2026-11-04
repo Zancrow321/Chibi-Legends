@@ -81,6 +81,7 @@ func _ready() -> void:
 	hud_layer.add_child(hud)
 	var info := Hd2dInfo.new()
 	info.view_name = VIEWS[view_mode]
+	info.hud = hud
 	hud_layer.add_child(info)
 	add_child(hud_layer)
 	room.numbers = numbers
