@@ -1,6 +1,6 @@
 """Räumt die erzeugten Frames auf und misst die echten Ankerpunkte.
 
-1. Streupixel entfernen: nur zusammenhängende Flächen ab 12 Pixeln bleiben
+1. Streupixel entfernen: nur zusammenhängende Flächen ab 60 Pixeln bleiben
    (entfernt kleine Effekt-Reste, die das Modell manchmal dazumalt).
 2. PixelLab estimate-skeleton auf jedem fertigen Frame (0,1 Generierung pro Frame),
    daraus Kopf-, Hand- und Rückenanker in Pixeln samt Winkel.
@@ -16,7 +16,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from pixellab_v2 import Image, b64, request, wait_job  # noqa: E402
 
-MIN_AREA = 12
+MIN_AREA = 60
 
 
 def clean(im: Image.Image) -> Image.Image:
