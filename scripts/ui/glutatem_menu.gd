@@ -185,7 +185,7 @@ func _draw() -> void:
 	var x0 := box.position.x
 	var y0 := box.position.y
 	_text(Vector2(x0 + 28, y0 + 44), "Kampfstil: " + st.style_name(), 30, TEXT)
-	_text(Vector2(x0 + 28, y0 + 70), "Feueratmung · Schmiede  ·  Atemrhythmus: verschiedene Züge im Combo heizen die Klinge (Rot, Orange, Weiß)", 15, MUTED)
+	_text(Vector2(x0 + 28, y0 + 70), str(st.data.get("subtitle", "Feueratmung · Schmiede  ·  Atemrhythmus: verschiedene Züge im Combo heizen die Klinge (Rot, Orange, Weiß)")), 15, MUTED)
 	_text_r(Vector2(x0 + w - 28, y0 + 44), "Skillpunkte: alles frei im Training (voller Stil %d SP)" % st.total_sp(), 15, TRIM)
 	draw_line(Vector2(x0 + 24, y0 + 84), Vector2(x0 + w - 24, y0 + 84), Color(HOT, 0.5), 2)
 	# left: skill list

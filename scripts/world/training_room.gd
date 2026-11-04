@@ -30,6 +30,7 @@ var dust: Dust  # footstep / landing puffs
 ## Off when another view draws the ground (HD-2D variant B builds it in 3D).
 var draw_terrain := true
 var glut_fx: GlutFx  # fire effects of the fighting style
+var klang_fx: KlangFx  # effects of Gleichklang (created by its caster)
 var stage: DuskStage  # dusk light look (only in the "Licht" view, see Main)
 var post: SparringPost
 var waves: EnemyWaves  # first real enemies behind the dummies
@@ -123,7 +124,7 @@ func on_enemy_died(e: Enemy) -> void:
 		_slowmo(0.55, 0.25)
 		fx.punch(0.12)
 		if glut_fx != null:
-			glut_fx.word(e.head_position() + Vector2(0, -20), "VERGLÜHT!" if e.status.has("brand") or player.glut != null and player.glut.busy() else "BESIEGT!", Color("fff4d0"), 30)
+			glut_fx.word(e.head_position() + Vector2(0, -20), "VERGLÜHT!" if e.status.has("brand") or player.glut != null and player.glut.busy() and player.style.id == "glutatem" else "BESIEGT!", Color("fff4d0"), 30)
 	else:
 		_slowmo(0.16, 0.4)
 

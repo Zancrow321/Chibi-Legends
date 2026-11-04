@@ -138,7 +138,7 @@ func _ready() -> void:
 func init_style() -> void:
 	if style == null or style.zuege.is_empty():
 		return
-	glut = GlutCaster.new()
+	glut = KlangCaster.new() if style.id == "gleichklang" else GlutCaster.new()
 	add_child(glut)
 	glut.setup(self, style)
 
@@ -772,6 +772,16 @@ func _use_meisterzug() -> void:
 	move = {}
 	_queued = ""
 	Sfx.play("super_flash")
+	if glut is KlangCaster:
+		var ks := KlangSuper.new()
+		ks.room = world
+		ks.player = self
+		ks.caster = glut
+		ks.kfx = glut.kfx
+		ks.variant = style.super_variant
+		ks.title = style.variant().get("name", "Meisterzug")
+		world.add_child(ks)
+		return
 	var s := GlutSuper.new()
 	s.room = world
 	s.player = self
