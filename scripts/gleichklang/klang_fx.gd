@@ -23,6 +23,8 @@ var _fx: Array = []
 var _once: Array = []      # one-frame shapes (beat ring, Klangloch glow)
 var _speech: Dictionary = {}
 var _speech_pos := Vector2.ZERO
+## Colour of the beat ring (follows the Klangfarbe).
+var beat_col := BLUE
 
 
 func _ready() -> void:
@@ -170,12 +172,12 @@ func _draw_add() -> void:
 		match f.type:
 			"beat":
 				var k: float = f.k
-				var col: Color = Color(0.55, 0.55, 0.6) if f.grey else BLUE
+				var col: Color = Color(0.55, 0.55, 0.6) if f.grey else beat_col
 				var r := lerpf(30.0, 15.0, k) * (1.15 if f.wide else 1.0)
 				var a := 0.12 + 0.35 * k * k
 				_add.draw_arc(f.pos, r, 0.0, TAU, 40, Color(col, a), 1.2 + k, true)
 				if k > 0.92 and not f.grey:
-					_glow(_add, f.pos, 22.0, Color(BLUE, 0.25))
+					_glow(_add, f.pos, 22.0, Color(beat_col, 0.25))
 			"hole":
 				var s: float = f.s
 				_glow(_add, f.pos, 4.0 + s * 8.0, Color(f.col, 0.35 + 0.5 * s))

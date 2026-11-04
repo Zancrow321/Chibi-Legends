@@ -743,7 +743,8 @@ func _draw_bottom_left(H: float) -> void:
 
 func _draw_help() -> void:
 	var glut := room.player.glut != null
-	var r := Rect2(16, 280, 400, 404)
+	var klang := room.player.glut is KlangCaster
+	var r := Rect2(16, 280, 400, 424 if klang else 404)
 	_panel(r, PANEL, 10)
 	_text(Vector2(32, 312), "Steuerung", 17, TRIM)
 	var lines := [
@@ -763,6 +764,8 @@ func _draw_help() -> void:
 		["T", "Figur: Testfigur / Sammlung"], ["F", "Kämpfer wechseln (Importe)"], ["C", "Charaktere"],
 		["H / I", "Hilfe / UI-Stil"],
 	]
+	if klang:
+		lines.append(["X / Y", "Takt-Hilfe / Klangfarbe"])
 	var y := 338.0
 	for l in lines:
 		_text(Vector2(32, y), l[0], 15, TEXT)
