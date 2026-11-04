@@ -1,0 +1,39 @@
+{
+ "fps": 25,
+ "kind": "new",
+ "loop": false,
+ "name": "Summoning burst",
+ "files": {
+  "summoning-burst.gif": "https://api.pixellab.ai/mcp/pixel-tools/47f39122-5bc1-416b-9ca1-3db3b354dde3/summoning-burst.gif",
+  "summoning-burst.png": "https://api.pixellab.ai/mcp/pixel-tools/47f39122-5bc1-416b-9ca1-3db3b354dde3/summoning-burst.png",
+  "summoning-burst.json": "https://api.pixellab.ai/mcp/pixel-tools/47f39122-5bc1-416b-9ca1-3db3b354dde3/summoning-burst.json",
+  "summoning-burst-game.zip": "https://api.pixellab.ai/mcp/pixel-tools/47f39122-5bc1-416b-9ca1-3db3b354dde3/summoning-burst-game.zip"
+ },
+ "parts": [],
+ "anchor": {
+  "x": 47,
+  "y": 51,
+  "kind": "origin"
+ },
+ "artist": "lite",
+ "canvas": {
+  "h": 103,
+  "w": 97
+ },
+ "frames": 11,
+ "message": "A 0.44 s one-shot summoning burst: pale blue and white wind streaks spiral in from all sides onto a tall glowing oval, three bright threads snap up through it, then a white flash and a tall ring with burst streaks blow outward. No figure, text or symbols, transparent background, and the canvas is trimmed so nothing is cut off. Try the Burst and ring sizes in the sliders if you want a bigger or smaller finish.",
+ "edit_url": "https://pixellab.ai/create-vfx?effect=aeb19a71-fbe0-4e0b-ab24-a00600a8dd2f",
+ "effect_id": "aeb19a71-fbe0-4e0b-ab24-a00600a8dd2f",
+ "gif_exact": true,
+ "result_id": "47f39122-5bc1-416b-9ca1-3db3b354dde3",
+ "billing_usage": {
+  "usd": 0.0,
+  "type": "generations",
+  "generations": 1.0
+ },
+ "generation_id": "c220d85b-4292-4716-87ad-802b82f2b09d",
+ "billing_charged": true,
+ "generation_mode": "vfx",
+ "pixel_tools_image": true,
+ "quoted_generations": 1
+}

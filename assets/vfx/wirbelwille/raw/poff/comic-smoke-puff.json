@@ -1,0 +1,209 @@
+{
+ "frames": [
+  {
+   "filename": "comic-smoke-puff 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 106,
+    "h": 83
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 106,
+    "h": 83
+   },
+   "sourceSize": {
+    "w": 106,
+    "h": 83
+   },
+   "pivot": {
+    "x": 0.5283018867924528,
+    "y": 0.6024096385542169
+   },
+   "duration": 67
+  },
+  {
+   "filename": "comic-smoke-puff 1.png",
+   "frame": {
+    "x": 106,
+    "y": 0,
+    "w": 106,
+    "h": 83
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 106,
+    "h": 83
+   },
+   "sourceSize": {
+    "w": 106,
+    "h": 83
+   },
+   "pivot": {
+    "x": 0.5283018867924528,
+    "y": 0.6024096385542169
+   },
+   "duration": 67
+  },
+  {
+   "filename": "comic-smoke-puff 2.png",
+   "frame": {
+    "x": 212,
+    "y": 0,
+    "w": 106,
+    "h": 83
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 106,
+    "h": 83
+   },
+   "sourceSize": {
+    "w": 106,
+    "h": 83
+   },
+   "pivot": {
+    "x": 0.5283018867924528,
+    "y": 0.6024096385542169
+   },
+   "duration": 67
+  },
+  {
+   "filename": "comic-smoke-puff 3.png",
+   "frame": {
+    "x": 0,
+    "y": 83,
+    "w": 106,
+    "h": 83
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 106,
+    "h": 83
+   },
+   "sourceSize": {
+    "w": 106,
+    "h": 83
+   },
+   "pivot": {
+    "x": 0.5283018867924528,
+    "y": 0.6024096385542169
+   },
+   "duration": 67
+  },
+  {
+   "filename": "comic-smoke-puff 4.png",
+   "frame": {
+    "x": 106,
+    "y": 83,
+    "w": 106,
+    "h": 83
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 106,
+    "h": 83
+   },
+   "sourceSize": {
+    "w": 106,
+    "h": 83
+   },
+   "pivot": {
+    "x": 0.5283018867924528,
+    "y": 0.6024096385542169
+   },
+   "duration": 67
+  },
+  {
+   "filename": "comic-smoke-puff 5.png",
+   "frame": {
+    "x": 212,
+    "y": 83,
+    "w": 106,
+    "h": 83
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 106,
+    "h": 83
+   },
+   "sourceSize": {
+    "w": 106,
+    "h": 83
+   },
+   "pivot": {
+    "x": 0.5283018867924528,
+    "y": 0.6024096385542169
+   },
+   "duration": 67
+  },
+  {
+   "filename": "comic-smoke-puff 6.png",
+   "frame": {
+    "x": 0,
+    "y": 166,
+    "w": 106,
+    "h": 83
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 106,
+    "h": 83
+   },
+   "sourceSize": {
+    "w": 106,
+    "h": 83
+   },
+   "pivot": {
+    "x": 0.5283018867924528,
+    "y": 0.6024096385542169
+   },
+   "duration": 67
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "comic-smoke-puff.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 318,
+   "h": 249
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "origin",
+   "x": 56,
+   "y": 50
+  },
+  "frameTags": [
+   {
+    "name": "comic-smoke-puff",
+    "from": 0,
+    "to": 6,
+    "direction": "forward"
+   }
+  ]
+ }
+}

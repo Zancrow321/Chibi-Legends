@@ -1,0 +1,261 @@
+{
+ "frames": [
+  {
+   "filename": "gust-streaks 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 340,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 340,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 340,
+    "h": 122
+   },
+   "pivot": {
+    "x": 0.9558823529411765,
+    "y": 0.5655737704918032
+   },
+   "duration": 50
+  },
+  {
+   "filename": "gust-streaks 1.png",
+   "frame": {
+    "x": 340,
+    "y": 0,
+    "w": 340,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 340,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 340,
+    "h": 122
+   },
+   "pivot": {
+    "x": 0.9558823529411765,
+    "y": 0.5655737704918032
+   },
+   "duration": 50
+  },
+  {
+   "filename": "gust-streaks 2.png",
+   "frame": {
+    "x": 680,
+    "y": 0,
+    "w": 340,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 340,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 340,
+    "h": 122
+   },
+   "pivot": {
+    "x": 0.9558823529411765,
+    "y": 0.5655737704918032
+   },
+   "duration": 50
+  },
+  {
+   "filename": "gust-streaks 3.png",
+   "frame": {
+    "x": 0,
+    "y": 122,
+    "w": 340,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 340,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 340,
+    "h": 122
+   },
+   "pivot": {
+    "x": 0.9558823529411765,
+    "y": 0.5655737704918032
+   },
+   "duration": 50
+  },
+  {
+   "filename": "gust-streaks 4.png",
+   "frame": {
+    "x": 340,
+    "y": 122,
+    "w": 340,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 340,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 340,
+    "h": 122
+   },
+   "pivot": {
+    "x": 0.9558823529411765,
+    "y": 0.5655737704918032
+   },
+   "duration": 50
+  },
+  {
+   "filename": "gust-streaks 5.png",
+   "frame": {
+    "x": 680,
+    "y": 122,
+    "w": 340,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 340,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 340,
+    "h": 122
+   },
+   "pivot": {
+    "x": 0.9558823529411765,
+    "y": 0.5655737704918032
+   },
+   "duration": 50
+  },
+  {
+   "filename": "gust-streaks 6.png",
+   "frame": {
+    "x": 0,
+    "y": 244,
+    "w": 340,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 340,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 340,
+    "h": 122
+   },
+   "pivot": {
+    "x": 0.9558823529411765,
+    "y": 0.5655737704918032
+   },
+   "duration": 50
+  },
+  {
+   "filename": "gust-streaks 7.png",
+   "frame": {
+    "x": 340,
+    "y": 244,
+    "w": 340,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 340,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 340,
+    "h": 122
+   },
+   "pivot": {
+    "x": 0.9558823529411765,
+    "y": 0.5655737704918032
+   },
+   "duration": 50
+  },
+  {
+   "filename": "gust-streaks 8.png",
+   "frame": {
+    "x": 680,
+    "y": 244,
+    "w": 340,
+    "h": 122
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 340,
+    "h": 122
+   },
+   "sourceSize": {
+    "w": 340,
+    "h": 122
+   },
+   "pivot": {
+    "x": 0.9558823529411765,
+    "y": 0.5655737704918032
+   },
+   "duration": 50
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "gust-streaks.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 1020,
+   "h": 366
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "origin",
+   "x": 325,
+   "y": 69
+  },
+  "frameTags": [
+   {
+    "name": "gust-streaks",
+    "from": 0,
+    "to": 8,
+    "direction": "forward"
+   }
+  ]
+ }
+}

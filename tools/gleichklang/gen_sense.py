@@ -4,7 +4,7 @@ Kein KI-Bild: Schaft, Blatt und Klangloch werden hier per Geometrie gerastert,
 damit die Waffe ohne PixelLab-Generierung im Spiel ist. Später kann ein
 PixelLab-Bild sie ersetzen (gleiche Datei, Griff/Spitze in catalog.json).
 
-Aufruf: python3 tools/gleichklang/gen_sense.py assets/creator/weapons/sense_nachhall.png
+Aufruf: python3 tools/gleichklang/gen_sense.py assets/creator/weapons/sense_nachhall_skizze.png
 """
 import math
 import sys
