@@ -13,14 +13,16 @@
     "schatten": "Schattenwickel",
     "schmied": "Schmiede-Schürze",
     "akademie": "Akademie-Jacke",
-    "steilpfad": "Steilpfad-Gi"
+    "steilpfad": "Steilpfad-Gi",
+    "bollwerk": "Bollwerk-Panzer"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
     "wanderer": "Trainingswald abschließen",
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
-    "schmied": "Bei Schmiedin Hino (Akademie-Hof)"
+    "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
+    "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)"
    }
   },
   "pants": {
@@ -32,14 +34,16 @@
     "schatten": "Wickelhose",
     "schmied": "Arbeitshose",
     "akademie": "Uniformhose",
-    "steilpfad": "Steilpfad-Wickelhose"
+    "steilpfad": "Steilpfad-Wickelhose",
+    "bollwerk": "Bollwerk-Beinpanzer"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
     "wanderer": "Trainingswald abschließen",
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
-    "schmied": "Bei Schmiedin Hino (Akademie-Hof)"
+    "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
+    "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)"
    }
   },
   "shoes": {
@@ -51,14 +55,16 @@
     "schatten": "Tabi-Stiefel",
     "schmied": "Eisenkappen-Stiefel",
     "akademie": "Turnschuhe",
-    "steilpfad": "Stoffschuhe"
+    "steilpfad": "Stoffschuhe",
+    "bollwerk": "Bollwerk-Stiefel"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
     "wanderer": "Trainingswald abschließen",
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
-    "schmied": "Bei Schmiedin Hino (Akademie-Hof)"
+    "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
+    "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)"
    }
   },
   "hair": {
@@ -71,12 +77,14 @@
     "kurz": "Kurzhaar",
     "zwillinge": "Zwillingszöpfe",
     "lang": "Lange Mähne",
-    "kamm": "Stachelkamm"
+    "kamm": "Stachelkamm",
+    "bollwerk_helm": "Bollwerk-Helm"
    },
    "unlock": {
     "wuschel": "Saisonpass, Stufe 5",
     "zwillinge": "Erfolg: 3 Super-Treffer in einem Kampf",
-    "kamm": "Herausforderung im Trainingswald"
+    "kamm": "Herausforderung im Trainingswald",
+    "bollwerk_helm": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)"
    }
   },
   "weapon": {

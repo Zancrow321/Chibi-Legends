@@ -278,7 +278,11 @@ Granaten (2 Ladungen).
   `assets/creator/weapons/bollwerk/` (Griff/Mündung in `weapons.json`, Werkzeuge in
   `tools/bollwerk/`). Waffen werden in Godot gedreht, darum reicht ein Bild pro Waffe statt
   8 Winkeln. Vorschau: `docs/screenshots/bollwerk-waffen.png`.
-  Rüstung als Outfit-Ebenen für den Creator (ca. 10–20) steht noch aus.
+  Rüstung als Creator-Outfit **erledigt 2026-11-04**: Panzer/Beinpanzer/Stiefel `bollwerk` und
+  Kopfteil `bollwerk_helm` (Bernstein-Visierband), gesperrt hinter dem Banner. 17 Generierungen,
+  davon 6 für Nachbesserungen, weil PixelLab in einigen Rastern die Posen verändert hatte
+  (`tools/bollwerk/fix_outfit_grids.py` prüft das automatisch). Vorschau:
+  `docs/screenshots/bollwerk-ruestung.png`.
 - Posen: Anschlag (Gewehr angelegt), Wurf, Knien (Werfer), Nachladen,
   Zielschweben in der Luft.
 - Effekte im Code: Geschossspuren (Line2D), Mündungsblitz, Sechseck-Schild (Shader),
