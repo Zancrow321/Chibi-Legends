@@ -7,6 +7,9 @@ const WIDTH := 1400.0
 const GROUND_Y := 300.0
 const DPS_WINDOW := 4.0
 
+## Emitted on every hit (for lights, sounds, ...): world position and element color.
+signal hit_landed(pos: Vector2, color: Color, strong: bool)
+
 ## Solid ground pieces [x, y, w] (extend down past the screen) and
 ## one-way floating platforms [x, y, w].
 const GROUND := [[0.0, 300.0, 1000.0], [1000.0, 262.0, 400.0]]
@@ -20,6 +23,8 @@ var fx: CombatFx  # hit-stop, shake, glowing sparks, super flash
 var hud: Node  # set by Main (cut-in banner for supers)
 var numbers: DamageNumbers  # set by Main (lives on the HUD layer)
 var attacks: Node2D
+## Off when another view draws the ground (HD-2D variant B builds it in 3D).
+var draw_terrain := true
 
 # stats for the HUD
 var total_damage := 0.0
@@ -113,6 +118,8 @@ static func _h(i: int, salt: float) -> float:
 
 
 func _draw() -> void:
+	if not draw_terrain:
+		return
 	var outline := Color("2a1c14")
 	for g in GROUND:
 		_draw_cliff(Rect2(g[0], g[1], g[2], 200.0), outline)
@@ -240,6 +247,7 @@ func deal_hit(target: Node2D, base: float, element: String, from_x: float, knock
 	var res := Reactions.resolve(target.status, element, base)
 	var dmg := int(round(res.damage * randf_range(0.92, 1.08)))
 	var col: Color = GameData.ELEMENTS[element].color if element != "" else Color("ff4b3e")
+	hit_landed.emit(target.get_hurt_rect().get_center(), col, res.reaction != "")
 	target.take_hit(knockback, from_x)
 	_record(dmg)
 	if not profile.begins_with("super"):
@@ -262,6 +270,7 @@ func _trigger_reaction(target: Node2D, res: Dictionary) -> void:
 	last_reaction = res.reaction
 	reactions_found[res.reaction] = true
 	var center: Vector2 = target.get_hurt_rect().get_center()
+	hit_landed.emit(center, info.color, true)
 	numbers.spawn_text(target.head_position() + Vector2(0, -10), info.name + "!", info.color)
 	effects.burst(center, info.color, 22, 160.0, 60.0)
 	fx.blast(center, info.color, res.aoe_radius, "reaction")

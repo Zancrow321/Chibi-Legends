@@ -30,6 +30,38 @@ Spielwelt: die Multiversum-Akademie. Fähigkeiten und Outfits sind eigene Entwü
 | Unendlich Aura / Abklingzeiten zurücksetzen | U / R | – / Back |
 | Character Creator | C | Start |
 | Hilfe ein/aus | H | – |
+| Look-Test: Ansicht wechseln (flach / HD-2D A / HD-2D B / Licht) | B | – |
+| Look-Test: Grafik Hoch / Mittel / Niedrig | G | – |
+
+## HD-2D-Look (Test)
+
+Zwei Varianten zum Vergleich, beide im Trainingswald, Stimmung „sonniger Morgen“:
+
+- **A, 3D-Kulisse:** Die Spielebene bleibt 2D. Dahinter steht der Wald als echte 3D-Kulisse mit Fluss, Holzbrücken und Wasserfall.
+- **B, alles 3D:** Boden, Plattformen und Umgebung sind 3D, die Kamera schaut leicht von oben. Die Spiellogik bleibt der bewährte 2D-Code: Figuren, Angriffe und Effekte werden in eine eigene 2D-Ansicht gezeichnet und stehen als Karte auf der Spiellinie.
+
+Effekte: Tiefenunschärfe (auf „Hoch“ echte Tiefe, sonst Tilt-Shift), Bloom, Dunst und Nebel über dem Fluss, Lichtstrahlen, Pollen, Wasser mit Spiegelung (nur „Hoch“) und Sonnenschatten.
+Der Browser-Renderer (GL Compatibility) hat dafür keine fertigen Effekte, darum ist die Kette selbst gebaut (`shaders/hd2d/`).
+Alle Grafiken sind eigene Pixel-Art aus `tools/hd2d/gen_textures.py`.
+
+Im Web-Build lässt sich die Ansicht per URL wählen: `?view=flat`, `?view=a`, `?view=b`, dazu `&q=0` bis `&q=2` für die Grafikstufe.
+
+| A: 3D-Kulisse | B: alles 3D |
+| --- | --- |
+| ![HD-2D Variante A](docs/screenshots/hd2d-a.png) | ![HD-2D Variante B](docs/screenshots/hd2d-b.png) |
+
+## Licht-Look (Test)
+
+Vierte Ansicht: moderne Pixel-Art mit dynamischem 2D-Licht in der Abenddämmerung, vor einem Parallax-Diorama. Reines 2D und damit deutlich sparsamer als die HD-2D-Varianten.
+
+- Dämmerungsfarbe auf der Spielebene, tiefe warme Sonne, Laternen am Trainingsplatz (mit Schattenwurf auf „Hoch“), pulsierende Kristalle und Glühwürmchen
+- Jede Fähigkeit trägt ein Licht in ihrer Elementfarbe, Treffer und Reaktionen blitzen auf
+- Figuren bekommen automatisch gerundete Normalen, das Licht wird in harte Stufen gerastert (Pixel-Art statt weicher Verläufe)
+- Sechs Parallax-Ebenen (Himmel, Berge, drei Waldebenen, unscharfer Vordergrund), erzeugt von `tools/lightlook/gen_parallax.py`
+
+Web-Build: `?view=licht`.
+
+![Licht-Look in der Dämmerung](docs/screenshots/licht-daemmerung.png)
 
 ## Starten
 
@@ -55,6 +87,10 @@ scripts/
   fx/hit_sparks.gd         Additive Treffer-Funken (optional mit Pixel-Frames aus assets/vfx/)
   fx/fx_settings.gd        Treffer-Profile und Effekt-Stärke zum Feintunen
   ui/hud.gd                HUD
+  hd2d/                    HD-2D-Test: 3D-Wald, Effekt-Kette, Variante A und B
+  lightlook/               Licht-Test: 2D-Lichter, Dämmerung, Parallax
+shaders/hd2d/              Shader für Gelände, Wasser, Unschärfe, Bloom
+tools/hd2d/                Generator für die Pixel-Texturen (assets/hd2d/)
   ui/character_creator.gd  Character Creator (C / Start, beim ersten Start automatisch)
   character/appearance.gd  Looks: Teile-Katalog, Farben, Transmog, Speichern
 assets/characters/         Paper-Doll-Teile und Farben, siehe assets/characters/README.md
