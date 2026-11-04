@@ -299,6 +299,9 @@ func _draw_gauge(r: Rect2) -> void:
 ## Style, Atemrhythmus (glow stage of the blade) and the Weißglut timer.
 func _draw_style_panel(r: Rect2) -> void:
 	var g := room.player.glut
+	if g is KlangCaster:
+		_draw_klang_panel(r, g)
+		return
 	_panel(r, PANEL, 13, Color("ff9a2a", 0.6))
 	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, Color("ffb347"))
 	var names := ["Rot", "Orange", "Weiß"]
@@ -322,6 +325,35 @@ func _draw_style_panel(r: Rect2) -> void:
 		_text(Vector2(r.position.x + 176, r.position.y + 19), "Klinge: " + info, 15, MUTED)
 
 
+## Gleichklang: Einklang as six small bells, a beat dot and the state.
+func _draw_klang_panel(r: Rect2, g: KlangCaster) -> void:
+	var ink := Color("2f5d9e")
+	var full_col := Color("6a3fc0")
+	_panel(r, PANEL, 13, Color("8fd3ff", 0.6))
+	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, TEXT)
+	var full := g.klang >= KlangCaster.MAX_KLANG
+	for i in KlangCaster.MAX_KLANG:
+		var c := Vector2(r.position.x + 124 + i * 17, r.get_center().y + 1)
+		var on := g.klang > i
+		var col := full_col if full else ink
+		var bell := PackedVector2Array([c + Vector2(-5, 4), c + Vector2(-4, -2), c + Vector2(-2, -5), c + Vector2(2, -5), c + Vector2(4, -2), c + Vector2(5, 4)])
+		if on:
+			if full:
+				draw_circle(c, 8 + 1.5 * sin(_t * 12.0 + i), Color(Color("a884f3"), 0.35))
+			draw_colored_polygon(bell, col)
+			draw_circle(c + Vector2(0, 5), 1.6, Color("c07a30"))
+		else:
+			bell.append(bell[0])
+			draw_polyline(bell, Color(ink, 0.35), 1.2)
+	# beat: a dot that flashes on every beat (grey while the beat is lost)
+	var bp := 1.0 - g.beat_progress()
+	var bc := Vector2(r.position.x + 236, r.get_center().y)
+	var lost := g._lost > 0.0
+	draw_circle(bc, 3.0 + 4.0 * pow(bp, 6.0), Color(0.5, 0.5, 0.55) if lost else Color(ink, 0.45 + 0.55 * pow(bp, 6.0)))
+	var info := "EINKLANG" if full else ("Takt weg" if lost else "Takt")
+	_text(Vector2(r.position.x + 246, r.position.y + 19), info, 13, full_col if full else MUTED)
+
+
 func _draw_notice(W: float) -> void:
 	var wv := room.waves
 	var msg2 := ""
@@ -338,9 +370,10 @@ func _draw_notice(W: float) -> void:
 	return
 	var r := Rect2(480, 16, maxf(W - 480 - 352 - 16, 160), 26)
 	_panel(r, PANEL, 13)
+	var klang := room.player.glut is KlangCaster
 	var tips := [
-		"Glutatem: L + Richtung, L halten = verstärkt",
-		"Verschiedene Züge im Combo heizen die Klinge",
+		"%s: L + Richtung, L halten = verstärkt" % room.player.style.style_name() if room.player.style != null else "L + Richtung = Zug",
+		"Treffer im Takt füllen den Einklang" if klang else "Verschiedene Züge im Combo heizen die Klinge",
 		"Tab: Kampfstil, Alternativen und Slots",
 		"Der Sparringspfahl rechts schlägt zurück!",
 		"Willkommen im Trainingswald der Akademie!",
@@ -478,7 +511,7 @@ func _draw_style_slots(slots: Array, arrows: Array, sk: String) -> void:
 	var gap := 8.0
 	var total := slots.size() * (slot + gap) - gap + 24
 	var bar := Rect2(W / 2 - total / 2, H - 22 - slot - 30, total, slot + 24)
-	_panel(bar, Color(PANEL, 0.6), 18, Color("ff9a2a", 0.35))
+	_panel(bar, Color(PANEL, 0.6), 18, Color("8fd3ff", 0.35) if p.glut is KlangCaster else Color("ff9a2a", 0.35))
 	for i in slots.size():
 		var sl: Dictionary = slots[i]
 		var r := Rect2(bar.position.x + 12 + i * (slot + gap), bar.position.y + 12, slot, slot)
@@ -632,7 +665,7 @@ func _draw_help() -> void:
 	var lines := [
 		["A / D", "Laufen"], ["Leertaste", "Springen, 2x Doppelsprung"], ["Shift", "Dash (in der Luft 1x)"],
 		["J / K", "Leicht (3er-Kette) / Schwer"], ["W/S/A/D +", "Richtung: oben/unten/vor"],
-		["L (+ Richtung)", "Zug von Glutatem"], ["L halten", "Verstärkt (1 Stufe Leiste)"],
+		["L (+ Richtung)", "Zug von " + room.player.style.style_name()], ["L halten", "Verstärkt (1 Stufe Leiste)"],
 		["P", "Meisterzug (3 Stufen)"], ["Tab / M", "Kampfstil: Alternativen, Slots"],
 		["J + K", "Griff (Wurf)"], ["Q halten", "Blocken (kurz vorher = Perfekt)"],
 		["Shift im Treffer", "Befreiungsstoß (1 Stufe)"], ["U / R", "Unendlich Leiste / Abklingzeiten"],
