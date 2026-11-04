@@ -587,6 +587,13 @@
    "unlock": "",
    "weapon": "none"
   },
+  "grenzbrecher": {
+   "name": "Grenzbrecher",
+   "text": "Ki-Kampfkunst: Ki-Leiste, Kernstrahl, Fernschritt (Legendär)",
+   "unlock": "",
+   "weapon": "none",
+   "unarmed": true
+  },
   "wirbelwille": {
    "name": "Wirbelwille",
    "text": "Windschatten, Kreiselfaust, Teamwork-Marken (Legendär)",

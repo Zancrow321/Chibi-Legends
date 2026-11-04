@@ -49,6 +49,9 @@ static func draw(ci: CanvasItem, r: Rect2, id: String, t := 0.0) -> void:
 	if style_id == "spannkraft":
 		FederIcons.draw(ci, r, id, t)
 		return
+	if style_id == "grenzbrecher":
+		GrenzIcons.draw(ci, r, id, t)
+		return
 	if style_id == "wirbelwille":
 		WirbelIcons.draw(ci, r, id, t)
 		return
