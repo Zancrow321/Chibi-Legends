@@ -224,6 +224,19 @@ die Steinarena von Siebengipfel. Satz-Vorschläge (eigene): „Noch ein Stück w
 - **Effekt-Stil:** klare Energiestrahlen mit hellem Kern und weichem Rand, pulsierende
   Auren, kurze Geschwindigkeitsspuren, Nachbilder beim Fernschritt. Weich animiert
   (M.U.G.E.N-Stil), Texturen grau, per Verlauf eingefärbt.
+- **Wow-Optik (Kaisers Vorgabe: große Effekte, Bloom):**
+  - Alle Ki-Effekte laufen über HDR-Bloom (scripts/fx/bloom.gd); Strahlkern und
+    Aura werden über 1,0 Helligkeit gezogen, damit sie richtig glühen.
+  - Kernstrahl: bildschirmbreiter Strahl mit weißem Kern, blauem Rand, Funkenregen
+    an der Mündung, Bodenstaub entlang der Linie und 3 Frames Hitstop beim Einschlag.
+    Voll geladen: kurzer Weißblitz über den ganzen Bildschirm und Kamerawackeln.
+  - Sammeln: Aura als hohe Flammensäule, schwebende Steine, Risse im Boden, leichtes
+    Bildschirmbeben, das mit dem Ki-Stand wächst.
+  - Fernschritt: Nachbild-Kette, Verzerrungsring am Start- und Zielpunkt.
+  - Meisterzüge: Grenzbruch mit Lichtsäule bis zum oberen Bildrand und Druckwelle;
+    Fernstrahl mit Super-Flash (Bild kurz dunkel, nur Figur und Ziel hell);
+    Sonnenkern als Mini-Sonne mit Korona, die das ganze Bild in Gold taucht, beim
+    Aufprall Weißblitz, Druckwelle und 0,3 s Zeitlupe.
 - **Lautmalerei:** „ZWOOM“, „BAM“, „KRAASH“
 - **Posen:**
   - Tiefe Kampfhaltung, vordere Hand offen, hintere Faust an der Hüfte (Idle).
