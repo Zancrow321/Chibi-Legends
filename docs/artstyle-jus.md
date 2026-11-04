@@ -9,18 +9,18 @@ Entschieden am 2026-11-04: Figuren werden größer (ca. 48 × 64 px), dazu komme
 | Punkt | Regel |
 |---|---|
 | Zelle | 96 × 96 px pro Frame, Fußpunkt bei x 44, y 88, Blick nach rechts (links wird gespiegelt) |
-| Figur | ca. 40–48 breit × 56–64 hoch, Waffe und Haare dürfen in die Zelle hinausragen |
-| Proportionen | ca. 3 Köpfe: großer Kopf, aber echte Arme und Beine mit Ellbogen und Knien |
+| Figur | stehend ca. 28–32 breit × 56–60 hoch, Waffe, Haare und Angriffsposen nutzen den Rest der Zelle |
+| Proportionen | ca. 2,7 Köpfe inkl. Frisur (ohne ca. 3,5): großer Kopf, aber echte Arme und Beine |
 | Gesicht | große Anime-Augen mit 2 Glanzpunkten, Mimik muss in 3× Zoom lesbar sein |
-| Umriss | 1 px, geschlossen und dunkel; an Haut ein dunkler Hautton, sonst fast schwarz; Innenlinien selektiv |
-| Schattierung | Cel-Shading, 2–3 Töne pro Material, harte Kanten, kein Dithering, Figur gesamt 12–16 Farben |
+| Umriss | 1 px, geschlossen; ca. 70 % fast schwarz, an farbigen Spitzen/Kanten ein kräftiger Flächenton; Innenlinien selektiv |
+| Schattierung | Cel-Shading, 2–3 Töne pro Material, harte Kanten, kein Dithering, Figur gesamt 13–16 Farben |
 | Farben | hell und satt, jede Figur hat 1 Signaturfarbe, die auch Aura und Effekte färbt |
 | Silhouette | jede Figur muss schwarz gefüllt erkennbar sein (Haar, Waffe, Schal) |
 
 ## Animation
 
 - Übertriebene Schlüsselposen, Squash & Stretch, Vorhol- und Nachschwung.
-- Richtwerte: idle 4–6, run 8, Angriff 6–8, Treffer 2–3 Frames.
+- Richtwerte: idle 4, run 8, Angriff 4–5, Treffer 1–2 Zeichnungen; Länge über Haltezeiten und Wiederverwendung.
 - Treffer-Frame eines Angriffs ist der weiteste Pose und hält 2–3 Frames länger (Hit-Stop).
 
 ## Manga-Effekte
@@ -33,33 +33,52 @@ Entschieden am 2026-11-04: Figuren werden größer (ca. 48 × 64 px), dazu komme
 
 ## Referenz: wie Figuren im DS-Vorbild aufgebaut sind
 
-Beobachtungen aus Spielszenen und bekannter DS-Technik. Genaue Pixelmaße sind nicht öffentlich belegt, die Zahlen sind deshalb Schätzungen und dienen als Richtwert, nicht als Kopiervorlage.
+Gemessen am 2026-11-04 an einer Kämpferfigur aus einem privaten Export (nur Zahlen ausgewertet, keine Bilder übernommen). Die Werte sind unser Maßstab für Größe, Farben und Animationsumfang. Figuren, Formen und Posen entwerfen wir selbst.
 
-**Größe im Bild.** Der DS-Bildschirm hat 256 × 192 px. Eine Kampffigur ist dort grob 40–60 px hoch, also etwa ein Viertel der Bildhöhe. Figuren behalten ihre Größenunterschiede zueinander: kleine Figuren sind sichtbar kleiner, große Kämpfer größer, statt alle gleich hoch zu sein.
+| Messwert | Vorbild |
+|---|---|
+| Stehen, sichtbare Pixel | ca. 28 × 56 px (Breite 27–30, Höhe 55–57) |
+| Laufen | ca. 36 × 51 px (Körper geht tiefer, Schritt breiter) |
+| alle Körperbilder | Höhe meist 55, max. 67 (Sprünge, große Angriffe) |
+| Trefferbox | stehend 20 × 46, geduckt 20 × 38; die Frisur ragt ca. 10 px darüber |
+| Kopf | ca. 20–23 px breit, Hals bei Zeile 20–21 von oben |
+| Proportion | 2,6–2,8 Köpfe inkl. Frisur, ohne Frisur ca. 3,5; die Frisur macht rund ein Drittel der Höhe aus |
+| Farben | 13 pro Bild, 13 für alle Grundposen (16er-Palette inkl. Transparenz), keine Verläufe |
+| Umriss | ca. 70 % fast schwarz (8, 8, 8); der Rest in einem kräftigen Ton der angrenzenden Fläche (z. B. Haarspitzen) |
+| Effekte | fast ohne schwarzen Umriss, aus Weiß und Gelb aufgebaut, bis 65 Farben |
 
-**Proportionen.** Kein extremes 2-Kopf-Chibi, sondern eher ca. 3 Köpfe: der Kopf ist groß, aber Rumpf und Beine sind lang genug für klare Lauf-, Sprung- und Schlagposen. Hände und Füße sind leicht vergrößert, damit Angriffe lesbar sind. Die Haare sind die wichtigste Erkennungsform und dürfen über den Kopf hinaus stark übertrieben sein.
+**Bilder pro Animation** (verschiedene Zeichnungen):
 
-**Umriss.** 1 px, dunkel, geschlossen um die ganze Figur. Nicht überall reines Schwarz: an Haut und hellen Flächen ein dunkler Ton der Fläche, an Kleidung und Haaren fast schwarz. Innenlinien nur dort, wo sie Form erklären (Kinn, Arm vor dem Körper, Kleidungsfalte).
+| Animation | Bilder |
+|---|---|
+| Stehen | 4 |
+| Laufen | 8 |
+| Dash / Bremsen | 2 / 3 |
+| Sprung | aufwärts 2, oben 1, fallen 2, landen 2 |
+| Ducken, Drehen, Blocken | je 1 |
+| Treffer / Umfallen / Aufstehen | 1–2 / 3 / 3 |
+| Angriffe (schwach, stark, nach oben, Luft) | je 4–5 |
+| Spezialangriff | 4–5 Zeichnungen, 14–17 Schlüsselbilder |
+| großer Spezialangriff | 10–12 Zeichnungen, 22–46 Schlüsselbilder |
+| Intro / Sieg | 6 / 9 |
 
-**Farben.** DS-Sprites nutzen meist 16-Farben-Paletten (15 Farben + transparent). Pro Figur also ca. 12–16 Farben gesamt, pro Material 2–3 Töne: Grundton, Schatten, ggf. Glanzlicht. Licht kommt einheitlich von oben vorn. Keine weichen Verläufe, kein Anti-Aliasing nach außen.
+**Lehren für uns**
 
-**Gesicht.** Auf so kleiner Fläche werden Augen zu 2–4 px hohen Formen mit einem hellen Glanzpixel, der Mund zu 1–2 px. Ausdruck entsteht über Augenform und Augenbrauen, nicht über Details.
-
-**Blickrichtung.** Seitenansicht mit leichter Drehung zum Betrachter (Dreiviertel), damit Gesicht und Brust lesbar bleiben. Nach links wird gespiegelt.
-
-**Animation.** Viele Frames für eine Handheld-Figur und klare Schlüsselposen: Angriffe mit deutlichem Ausholen, einer gehaltenen Trefferpose und kurzem Nachschwung. Jede Figur hat ein festes Grundset (Stand, Lauf, Sprung, leichter, starker, Aufwärts- und Abwärtsangriff, Spezial) plus Spezialbewegungen, die genau ihre Vorlage zitieren.
-
-**Lesbarkeit.** Jede Figur muss als einfarbige Silhouette erkennbar sein und sich in Signaturfarbe und Haarform von allen anderen abheben.
+- Klein und kopflastig: Die Figur ist etwa halb so breit wie hoch, und die Frisur ist die wichtigste Erkennungsform.
+- 13 Farben reichen für eine ganze Figur. Jedes Material hat 2–3 Töne, harte Kanten.
+- Der Umriss ist überwiegend fast schwarz, nur an farbigen Spitzen und Kanten nimmt er die Flächenfarbe auf.
+- Sparsame Animation: wenige Zeichnungen, Bewegung durch Haltezeiten und wiederverwendete Bilder. Ein großer Spezialangriff zeigt bis zu 46 Schlüsselbilder aus nur 12 Zeichnungen. Für uns heißt das: weniger PixelLab-Frames, dafür Timing im Code.
+- Effekte sind hell (Weiß, Gelb) und ohne schwarze Linie, damit sie sich von den Figuren abheben.
 
 ### Was das für uns heißt
 
 | Punkt | Testfigur (Stand PR #10) | Ziel nach Referenz |
 |---|---|---|
-| Höhe | ca. 92 px | ca. 56–64 px in der 96er Zelle |
-| Proportion | ca. 2,2 Köpfe | ca. 3 Köpfe |
-| Farben | 46 | 12–16 |
-| Umriss | überall Schwarz | dunkel, an Haut farbig |
-| Blick | Dreiviertel, gut | bleibt |
+| Höhe | ca. 92 px | ca. 56–60 px in der 96er Zelle |
+| Breite stehend | ca. 74 px inkl. Schwert | ca. 28–32 px Körper |
+| Proportion | ca. 2,2 Köpfe | ca. 2,7 Köpfe inkl. Frisur |
+| Farben | 46 | 13–16 |
+| Umriss | überall schwarz | ca. 70 % fast schwarz, Rest Flächenfarbe |
 
 ## PixelLab
 
