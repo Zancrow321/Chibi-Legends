@@ -297,9 +297,10 @@ Spielbar im Trainingswald. Auswahl im Character Creator (Taste O), Zeile
   (es gibt noch keine eigene Haltungsleiste), Brutes verlieren ihre Rüstung.
 - **Code:** `scripts/gleichklang/` (Caster, Effekte, Welle, Meisterzug, Icons),
   Daten in `assets/combat/styles/gleichklang.json`.
-- **Grafik und Ton ohne PixelLab:** Sense als Pixelbild aus
-  `tools/gleichklang/gen_sense.py`, Glocken aus `tools/audio/synth_bell.py`.
-  Beides kann später durch PixelLab-Bilder bzw. eigene Aufnahmen ersetzt werden.
+- **Grafik und Ton:** Die Sense kommt aus PixelLab (`tools/gleichklang/gen_sense_pixellab.py`,
+  4 Generierungen, Seed 44 gewählt). Startbild war die Skizze aus
+  `tools/gleichklang/gen_sense.py` (`sense_nachhall_skizze.png`), damit Griff
+  und Klangloch an derselben Stelle bleiben. Glocken aus `tools/audio/synth_bell.py`.
 
 ![Einklang voll, verstärkte Seelensichel](screenshots/gleichklang-einklang.png)
 ![Meisterzug Erntebogen](screenshots/gleichklang-erntebogen.png)
