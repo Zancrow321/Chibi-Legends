@@ -1,6 +1,6 @@
 {
-  "_info": "Feste, spielbare Charaktere. rarity: 3 selten, 4 episch, 5 legendär. look.parts: Slot -> Teil aus items/. skins: Varianten, die Farben oder Teile des Grund-Looks überschreiben. unlock: start, gacha, pass, shop, challenge.",
-  "starter": "kaito",
+  "_info": "Feste, spielbare Charaktere. rarity: 3 selten, 4 episch, 5 legendär. look.parts: Slot -> Teil aus items/. skins: Varianten, die Farben oder Teile des Grund-Looks überschreiben. unlock: start, gacha, pass, shop, challenge. starters: beim ersten Start wählt man einen davon gratis, der Rest kommt über Gacha. Duplikate schalten Äste 4-6 frei.",
+  "starters": ["kaito", "brann", "yuki", "leon", "mika"],
   "characters": {
     "kaito": {
       "name": "Kaito Hayabusa",
@@ -22,7 +22,7 @@
       "name": "Brann Eisenfaust",
       "world": "krieger",
       "rarity": 4,
-      "unlock": "gacha",
+      "unlock": "start",
       "desc": "Arenaveteran mit einer Klinge so schwer wie sein Dickkopf. Steht immer wieder auf.",
       "look": {
         "parts": {"body": "koerper_basis", "face": "gesicht_entschlossen", "hair": "haar_kurz", "top": "oberteil_shirt", "pants": "hose_lang", "shoes": "schuhe_stiefel", "weapon": "waffe_katana"},
@@ -38,7 +38,7 @@
       "name": "Yuki Sorano",
       "world": "elementar",
       "rarity": 5,
-      "unlock": "gacha",
+      "unlock": "start",
       "desc": "Frostmagierin, die Schneeflocken zum Tanzen bringt. Spricht wenig, trifft immer.",
       "look": {
         "parts": {"body": "koerper_basis", "face": "gesicht_standard", "hair": "haar_lang", "top": "oberteil_akademie", "pants": "hose_lang", "shoes": "schuhe_stiefel", "weapon": "waffe_katana"},
@@ -54,7 +54,7 @@
       "name": "Leon Aurelius",
       "world": "aura",
       "rarity": 5,
-      "unlock": "gacha",
+      "unlock": "start",
       "desc": "Seine Aura leuchtet heller, je aussichtsloser der Kampf. Isst für drei.",
       "look": {
         "parts": {"body": "koerper_basis", "face": "gesicht_entschlossen", "hair": "haar_wuschel", "top": "oberteil_akademie", "pants": "hose_kurz", "shoes": "schuhe_stiefel", "accessory": "accessoire_schal", "weapon": "waffe_katana"},
@@ -70,7 +70,7 @@
       "name": "Mika Shirane",
       "world": "seele",
       "rarity": 4,
-      "unlock": "gacha",
+      "unlock": "start",
       "desc": "Sieht Geister und unterhält sich gern mit ihnen. Die Geister finden sie etwas anstrengend.",
       "look": {
         "parts": {"body": "koerper_basis", "face": "gesicht_standard", "hair": "haar_zopf", "top": "oberteil_shirt", "pants": "hose_kurz", "shoes": "schuhe_stiefel", "accessory": "accessoire_schal", "weapon": "waffe_katana"},

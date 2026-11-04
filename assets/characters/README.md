@@ -1,6 +1,12 @@
 # Charaktere und Sprites
 
-Chibi Legends hat viele feste Charaktere, die man über Gacha bekommt. Jeder Charakter hat einen festen Look und optionale Skins.
+Chibi Legends hat viele feste Charaktere (3–5 pro Welt), die man über Gacha bekommt. Jeder Charakter hat einen festen Look und optionale Skins.
+
+Regeln aus dem Gameloop-Design, umgesetzt in `scripts/character/roster.gd`:
+- Beim ersten Start wählt man einen der `starters` gratis, alle anderen kommen über Gacha.
+- Jeder Charakter hat eine eigene Stufe von 1 bis 50, die Ausrüstung gilt für den ganzen Account.
+- Duplikate schalten die Skilltree-Äste 4–6 frei. Das bringt mehr Auswahl, aber keine zusätzliche Stärke. Die Ranglisten-Arena nutzt nur die 3 Grundäste.
+- Jeder Charakter kann in jeder Welt spielen und bekommt in seiner Heimatwelt +10 % EP.
 
 ## Dateien
 

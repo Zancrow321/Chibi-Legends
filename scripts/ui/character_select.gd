@@ -3,7 +3,8 @@ extends Control
 ## Character collection: list of all fixed characters (rarity, world), a big
 ## animated preview, details and skins, and "Spielen" to switch the played
 ## character. Characters you don't own show as dark silhouettes (gacha).
-## Opens with C / Start (call_group "character_select").
+## Opens with C / Start (call_group "character_select"). On the very first
+## start it opens in starter mode: pick one of the free starters.
 
 const PREVIEW_ANIMS := [["idle", "Stand"], ["run", "Lauf"], ["attack", "Angriff"], ["cast", "Technik"], ["hit", "Treffer"]]
 const PREVIEW_SCALE := 5.0
@@ -21,6 +22,9 @@ var _info: VBoxContainer
 var _status: Label
 var _play_btn: Button
 var _cards: Dictionary = {}
+var _head: Label
+var _close_btn: Button
+var _pick_starter := false
 
 
 func _ready() -> void:
@@ -31,10 +35,15 @@ func _ready() -> void:
 	_build()
 
 
-func open_for(visual: ChibiVisual) -> void:
+func open_for(visual: ChibiVisual, pick_starter := false) -> void:
 	if visible or visual == null:
 		return
 	target = visual
+	_pick_starter = pick_starter
+	_head.text = "Wähle deinen Start-Charakter" if pick_starter else "Sammlung"
+	_close_btn.visible = not pick_starter
+	for id in _cards:
+		(_cards[id] as Button).visible = not pick_starter or id in Roster.starters()
 	visible = true
 	get_tree().paused = true
 	_show(Roster.selected(), Roster.selected_skin())
@@ -47,7 +56,7 @@ func _close() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not visible:
+	if not visible or _pick_starter:
 		return
 	if event.is_action_pressed("cycle_look") or event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
@@ -89,10 +98,11 @@ func _build() -> void:
 	var left := VBoxContainer.new()
 	left.custom_minimum_size = Vector2(250, 0)
 	row.add_child(left)
-	var head := Label.new()
-	head.text = "Sammlung"
-	head.add_theme_font_size_override("font_size", 28)
-	left.add_child(head)
+	_head = Label.new()
+	_head.text = "Sammlung"
+	_head.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_head.add_theme_font_size_override("font_size", 28)
+	left.add_child(_head)
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -172,11 +182,11 @@ func _build() -> void:
 	_play_btn.custom_minimum_size = Vector2(200, 46)
 	_play_btn.pressed.connect(_play)
 	actions.add_child(_play_btn)
-	var close := Button.new()
-	close.text = "Schließen"
-	close.custom_minimum_size = Vector2(130, 46)
-	close.pressed.connect(_close)
-	actions.add_child(close)
+	_close_btn = Button.new()
+	_close_btn.text = "Schließen"
+	_close_btn.custom_minimum_size = Vector2(130, 46)
+	_close_btn.pressed.connect(_close)
+	actions.add_child(_close_btn)
 
 	# right: details + skins
 	var right := PanelContainer.new()
@@ -197,15 +207,18 @@ func _show(char_id: String, skin_id: String) -> void:
 	_char_id = char_id
 	_skin_id = skin_id
 	(_cards[char_id] as Button).button_pressed = true
-	var owned := Roster.owns(char_id)
+	var owned := Roster.owns(char_id) or _pick_starter
 	_preview.look = Roster.look(char_id, skin_id)
 	_preview.shadow = 0.0 if owned else 1.0
 	_status.text = ""
 	_rebuild_info()
 	var c := Roster.character(char_id)
-	var playing := char_id == Roster.selected() and skin_id == Roster.selected_skin()
+	var playing := not _pick_starter and char_id == Roster.selected() and skin_id == Roster.selected_skin()
 	_play_btn.disabled = not owned or not Roster.owns_skin(skin_id) or playing
-	if playing:
+	if _pick_starter:
+		_play_btn.text = "%s nehmen" % c.get("name", "")
+		_play_btn.disabled = false
+	elif playing:
 		_play_btn.text = "Wird gespielt"
 	elif not owned:
 		_play_btn.text = "Über %s" % Roster.UNLOCK_NAMES.get(c.get("unlock", "gacha"), "Gacha")
@@ -224,7 +237,15 @@ func _rebuild_info() -> void:
 	var d := _label(c.get("desc", ""), 16)
 	d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	d.modulate = Color(1, 1, 1, 0.8)
-	if not Roster.owns(_char_id):
+	if Roster.owns(_char_id) and not Roster.needs_starter():
+		var p := Roster.progress(_char_id)
+		var st := _label("Stufe %d/%d · Skilltree-Äste %d/%d · Kopien %d" % [p.level, Roster.MAX_LEVEL, Roster.branches(_char_id), Roster.MAX_BRANCHES, p.copies], 16)
+		st.modulate = Color(0.7, 0.9, 1.0)
+	if _pick_starter:
+		var free := _label("Gratis zum Start. Die anderen bekommst du später über Gacha.", 16)
+		free.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		free.modulate = Color("f2c14e")
+	elif not Roster.owns(_char_id):
 		var lock := _label("Noch nicht in deiner Sammlung.", 16)
 		lock.modulate = Color("f2c14e")
 
@@ -261,6 +282,12 @@ func _label(text: String, size: int) -> Label:
 
 
 func _play() -> void:
+	if _pick_starter:
+		Roster.choose_starter(_char_id)
+		if target:
+			target.look = Roster.look(_char_id)
+		_close()
+		return
 	Roster.select(_char_id, _skin_id)
 	if target:
 		target.look = Roster.look(_char_id, _skin_id)

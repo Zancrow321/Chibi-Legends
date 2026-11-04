@@ -1,14 +1,20 @@
 class_name Roster
 extends RefCounted
 ## The playable characters (fixed looks, obtained through gacha) and the
-## player's collection: which characters and skins they own and which one
-## they play. Saved locally for now, Supabase later.
+## player's collection: owned characters with copies and level, skins, and
+## the character being played. Saved locally for now, Supabase later.
+## Rules: pick 1 of the starters for free, the rest via gacha. Every character
+## has its own level 1-50. Duplicates unlock skill-tree branches 4-6 (choice,
+## not power; ranked arena only uses the 3 base branches).
 
 const CHARACTERS_PATH := "res://assets/characters/characters.json"
 const SAVE_PATH := "user://sammlung.json"
 ## Training build: every character and skin can be tried out.
 ## Set to false once gacha and unlocks exist.
 const DEV_UNLOCK_ALL := true
+const MAX_LEVEL := 50
+const BASE_BRANCHES := 3
+const MAX_BRANCHES := 6
 
 const RARITY := {
 	3: {"name": "Selten", "color": Color("5ca8ff")},
@@ -39,8 +45,17 @@ static func ids() -> Array:
 	return out
 
 
+## Characters you can pick for free on the very first start.
+static func starters() -> Array:
+	return data().get("starters", [])
+
+
+## Fallback character (shown before anything is picked).
 static func starter() -> String:
-	return String(data().get("starter", ids()[0] if not ids().is_empty() else ""))
+	var s := starters()
+	if not s.is_empty():
+		return String(s[0])
+	return String(ids()[0]) if not ids().is_empty() else ""
 
 
 static func character(id: String) -> Dictionary:
@@ -69,7 +84,7 @@ static func look(char_id: String, skin_id := "") -> Dictionary:
 
 static func _state() -> Dictionary:
 	if _save.is_empty():
-		_save = {"owned": [starter()], "owned_skins": [], "selected": starter(), "skin": ""}
+		_save = {"owned": {}, "owned_skins": [], "selected": "", "skin": ""}
 		if FileAccess.file_exists(SAVE_PATH):
 			var f := FileAccess.open(SAVE_PATH, FileAccess.READ)
 			var d = JSON.parse_string(f.get_as_text()) if f else null
@@ -77,22 +92,45 @@ static func _state() -> Dictionary:
 				for k in _save:
 					if d.has(k) and typeof(d[k]) == typeof(_save[k]):
 						_save[k] = d[k]
-		if character(_save.selected).is_empty():
-			_save.selected = starter()
+		if _save.selected != "" and character(_save.selected).is_empty():
+			_save.selected = ""
 			_save.skin = ""
 	return _save
 
 
+## True until the player has picked their free starter.
+static func needs_starter() -> bool:
+	return _state().owned.is_empty()
+
+
+static func choose_starter(char_id: String) -> void:
+	if needs_starter() and char_id in starters():
+		grant(char_id)
+		select(char_id)
+
+
 static func owns(char_id: String) -> bool:
-	return DEV_UNLOCK_ALL or char_id in _state().owned or character(char_id).get("unlock", "") == "start"
+	return DEV_UNLOCK_ALL or _state().owned.has(char_id)
 
 
 static func owns_skin(skin_id: String) -> bool:
 	return DEV_UNLOCK_ALL or skin_id == "" or skin_id in _state().owned_skins
 
 
+## Copies, level and xp of an owned character (defaults for others).
+static func progress(char_id: String) -> Dictionary:
+	var p: Dictionary = _state().owned.get(char_id, {})
+	return {"copies": int(p.get("copies", 0)), "level": int(p.get("level", 1)), "xp": int(p.get("xp", 0))}
+
+
+## Skill-tree branches open for this character: 3 base + 1 per duplicate, up to 6.
+static func branches(char_id: String) -> int:
+	return BASE_BRANCHES + clampi(progress(char_id).copies - 1, 0, MAX_BRANCHES - BASE_BRANCHES)
+
+
 static func selected() -> String:
-	return _state().selected
+	var s: String = _state().selected
+	return s if s != "" else starter()
 
 
 static func selected_skin() -> String:
@@ -108,12 +146,16 @@ static func select(char_id: String, skin_id := "") -> void:
 	_write()
 
 
-## For gacha / shop / pass rewards later.
+## Gacha / shop reward. A character you already own counts as a duplicate.
 static func grant(char_id: String) -> void:
-	var s := _state()
-	if not char_id in s.owned:
-		s.owned.append(char_id)
-		_write()
+	if character(char_id).is_empty():
+		return
+	var owned: Dictionary = _state().owned
+	if owned.has(char_id):
+		owned[char_id].copies = int(owned[char_id].get("copies", 1)) + 1
+	else:
+		owned[char_id] = {"copies": 1, "level": 1, "xp": 0}
+	_write()
 
 
 static func grant_skin(skin_id: String) -> void:
