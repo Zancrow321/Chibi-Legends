@@ -1,0 +1,39 @@
+{
+ "fps": 15,
+ "kind": "new",
+ "loop": false,
+ "name": "Pinwheel wind burst",
+ "files": {
+  "pinwheel-wind-burst.gif": "https://api.pixellab.ai/mcp/pixel-tools/617e54d8-c919-4e36-a59b-ce34add01ecd/pinwheel-wind-burst.gif",
+  "pinwheel-wind-burst.png": "https://api.pixellab.ai/mcp/pixel-tools/617e54d8-c919-4e36-a59b-ce34add01ecd/pinwheel-wind-burst.png",
+  "pinwheel-wind-burst.json": "https://api.pixellab.ai/mcp/pixel-tools/617e54d8-c919-4e36-a59b-ce34add01ecd/pinwheel-wind-burst.json",
+  "pinwheel-wind-burst-game.zip": "https://api.pixellab.ai/mcp/pixel-tools/617e54d8-c919-4e36-a59b-ce34add01ecd/pinwheel-wind-burst-game.zip"
+ },
+ "parts": [],
+ "anchor": {
+  "x": 144,
+  "y": 130,
+  "kind": "origin"
+ },
+ "artist": "lite",
+ "canvas": {
+  "h": 258,
+  "w": 292
+ },
+ "frames": 13,
+ "message": "A 0.8-second one-shot: six thick turquoise blades fold in toward a bright white core, then snap outward and spin as a ring of white-turquoise wind expands, with gold sparks bursting out and a white flash on the first beats. Try the Speed or Size sliders to make it snappier or bigger; the canvas has been fitted so nothing is cut off.",
+ "edit_url": "https://pixellab.ai/create-vfx?effect=ed4be3a9-d698-4f01-9d91-31b924a30d4c",
+ "effect_id": "ed4be3a9-d698-4f01-9d91-31b924a30d4c",
+ "gif_exact": true,
+ "result_id": "617e54d8-c919-4e36-a59b-ce34add01ecd",
+ "billing_usage": {
+  "usd": 0.0,
+  "type": "generations",
+  "generations": 1.0
+ },
+ "generation_id": "4318e852-0e02-4f37-9d2e-720a9b8a52c2",
+ "billing_charged": true,
+ "generation_mode": "vfx",
+ "pixel_tools_image": true,
+ "quoted_generations": 1
+}

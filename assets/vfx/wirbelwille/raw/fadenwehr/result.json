@@ -1,0 +1,42 @@
+{
+ "fps": 20,
+ "kind": "new",
+ "loop": false,
+ "name": "Turquoise web shield",
+ "files": {
+  "turquoise-web-shield.gif": "https://api.pixellab.ai/mcp/pixel-tools/91463518-8199-4eff-9a29-50457e606ae1/turquoise-web-shield.gif",
+  "turquoise-web-shield.png": "https://api.pixellab.ai/mcp/pixel-tools/91463518-8199-4eff-9a29-50457e606ae1/turquoise-web-shield.png",
+  "turquoise-web-shield.json": "https://api.pixellab.ai/mcp/pixel-tools/91463518-8199-4eff-9a29-50457e606ae1/turquoise-web-shield.json",
+  "turquoise-web-shield-game.zip": "https://api.pixellab.ai/mcp/pixel-tools/91463518-8199-4eff-9a29-50457e606ae1/turquoise-web-shield-game.zip"
+ },
+ "parts": [
+  "rest",
+  "web"
+ ],
+ "anchor": {
+  "x": 64,
+  "y": 64,
+  "kind": "origin"
+ },
+ "artist": "lite",
+ "canvas": {
+  "h": 128,
+  "w": 128
+ },
+ "frames": 13,
+ "message": "A turquoise spider-web shield opens in front of the spot with a white-cored web of thin strokes and a soft flash, holds at full size, then frays and breaks apart into dashes over about 0.6 seconds, on a transparent background. Its speed comes from the frame count and frame rate, and the flash size is set on the flash layer if you want more or less glow.",
+ "edit_url": "https://pixellab.ai/create-vfx?effect=834fccad-0924-4fce-bc7f-2cb93dd8c7f6",
+ "effect_id": "834fccad-0924-4fce-bc7f-2cb93dd8c7f6",
+ "gif_exact": true,
+ "result_id": "91463518-8199-4eff-9a29-50457e606ae1",
+ "billing_usage": {
+  "usd": 0.0,
+  "type": "generations",
+  "generations": 1.1252673854166668
+ },
+ "generation_id": "b0adbaaa-e6cc-4f4a-aa4f-ccbdbe815143",
+ "billing_charged": true,
+ "generation_mode": "vfx",
+ "pixel_tools_image": true,
+ "quoted_generations": 1
+}

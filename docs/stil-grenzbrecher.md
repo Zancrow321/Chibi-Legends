@@ -277,8 +277,10 @@ die Steinarena von Siebengipfel. Satz-Vorschläge (eigene): „Noch ein Stück w
   je 1 Generierung) in `assets/combat/icons/grenzbrecher/`, Werkzeug
   `tools/grenzbrecher/gen_icons.py`, Vorschau `docs/screenshots/grenzbrecher-icons.png`.
 - Keine Waffe, darum **kein PixelLab-Bedarf für Waffen**. Möglich später:
-  Outfit-Ebenen für den Steilpfad-Gi (ca. 6–10 Generierungen) und die Posen unten.
-  Beides erst nach Kaisers Freigabe mit genauer Anzahl.
+  die Posen unten (erst nach Kaisers Freigabe mit genauer Anzahl).
+- **Steilpfad-Gi erledigt 2026-11-04** (Kaiser freigegeben): alle 68 Posen mit
+  edit-image-pixen (5 Generierungen), zerlegt in `assets/creator/parts/{top,pants,shoes}/steilpfad.png`,
+  im Katalog als Steilpfad-Gi / Steilpfad-Wickelhose / Stoffschuhe (Freischaltung über das Gacha-Banner).
 - Posen: Ladepose (Faust an Schulter), Handballenstoß, Kampfkunstgruß, Sammelhaltung,
   Hammerschlag in der Luft, erhobene Faust (Sonnenkern).
 - Effekte im Code: Strahl (Line2D + Shader), Aura (Partikel, additiv), Nachbild,

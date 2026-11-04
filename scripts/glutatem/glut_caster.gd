@@ -112,6 +112,21 @@ func normal_mul() -> float:
 	return 1.0 + buff_bonus if buff_time > 0.0 else 1.0
 
 
+## Speed factor for J/K (other styles can speed them up).
+func normal_speed() -> float:
+	return 1.0
+
+
+## Once-per-fight state (R in the training room resets it).
+func reset_fight() -> void:
+	pass
+
+
+## A guard stance of the style took the hit (block damage). Glutatem has none.
+func guard_hit(_damage: float, _from_x: float, _source: Node) -> bool:
+	return false
+
+
 # --- casting -------------------------------------------------------------------
 
 func cast(dir: String) -> bool:

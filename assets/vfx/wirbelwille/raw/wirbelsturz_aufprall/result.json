@@ -1,0 +1,44 @@
+{
+ "fps": 14,
+ "kind": "new",
+ "loop": false,
+ "name": "Ground impact: a",
+ "files": {
+  "ground-impact-a.gif": "https://api.pixellab.ai/mcp/pixel-tools/0afdd82f-8b33-4e73-bd9d-ffccb89c4a8a/ground-impact-a.gif",
+  "ground-impact-a.png": "https://api.pixellab.ai/mcp/pixel-tools/0afdd82f-8b33-4e73-bd9d-ffccb89c4a8a/ground-impact-a.png",
+  "ground-impact-a.json": "https://api.pixellab.ai/mcp/pixel-tools/0afdd82f-8b33-4e73-bd9d-ffccb89c4a8a/ground-impact-a.json",
+  "ground-impact-a-game.zip": "https://api.pixellab.ai/mcp/pixel-tools/0afdd82f-8b33-4e73-bd9d-ffccb89c4a8a/ground-impact-a-game.zip"
+ },
+ "parts": [
+  "rest",
+  "wave",
+  "dust",
+  "gold"
+ ],
+ "anchor": {
+  "x": 112,
+  "y": 56,
+  "kind": "origin"
+ },
+ "artist": "lite",
+ "canvas": {
+  "h": 194,
+  "w": 224
+ },
+ "frames": 8,
+ "message": "A one-shot ground impact of about 0.6 seconds on a transparent background: a downward blast of frost-coloured streaks drops onto the floor, then a flat white and turquoise shockwave spreads out to both sides with grey dust and gold sparks. Try the Shockwave colour, Dust puff and Gold sparks sliders to change the intensity; the streaks are a bit thin, so the blast may need more contrast if you want it heavier.",
+ "edit_url": "https://pixellab.ai/create-vfx?effect=9b587263-4c85-409e-8c54-4ef8abc2754a",
+ "effect_id": "9b587263-4c85-409e-8c54-4ef8abc2754a",
+ "gif_exact": true,
+ "result_id": "0afdd82f-8b33-4e73-bd9d-ffccb89c4a8a",
+ "billing_usage": {
+  "usd": 0.0,
+  "type": "generations",
+  "generations": 1.0
+ },
+ "generation_id": "fb36007d-a07a-4a74-8968-cb1f6bc80f2c",
+ "billing_charged": true,
+ "generation_mode": "vfx",
+ "pixel_tools_image": true,
+ "quoted_generations": 1
+}

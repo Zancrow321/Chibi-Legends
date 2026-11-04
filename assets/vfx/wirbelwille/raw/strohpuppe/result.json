@@ -1,0 +1,44 @@
+{
+ "fps": 20,
+ "kind": "new",
+ "loop": false,
+ "name": "Straw bundle bursts",
+ "files": {
+  "straw-bundle-bursts.gif": "https://api.pixellab.ai/mcp/pixel-tools/256ec593-bbb6-40bf-a5b5-b4822a9de01f/straw-bundle-bursts.gif",
+  "straw-bundle-bursts.png": "https://api.pixellab.ai/mcp/pixel-tools/256ec593-bbb6-40bf-a5b5-b4822a9de01f/straw-bundle-bursts.png",
+  "straw-bundle-bursts.json": "https://api.pixellab.ai/mcp/pixel-tools/256ec593-bbb6-40bf-a5b5-b4822a9de01f/straw-bundle-bursts.json",
+  "straw-bundle-bursts-game.zip": "https://api.pixellab.ai/mcp/pixel-tools/256ec593-bbb6-40bf-a5b5-b4822a9de01f/straw-bundle-bursts-game.zip"
+ },
+ "parts": [
+  "flash",
+  "straw",
+  "rest",
+  "smoke"
+ ],
+ "anchor": {
+  "x": 91,
+  "y": 91,
+  "kind": "origin"
+ },
+ "artist": "lite",
+ "canvas": {
+  "h": 229,
+  "w": 98
+ },
+ "frames": 9,
+ "message": "A bright white flash bursts from the bundle, straw pieces fly out in every direction with glowing white streaks, and a small grey smoke puff rises and thins away, all in a 0.45-second one-shot on a transparent background. The straw pieces fall a long way, so the canvas grew tall to fit them; the Straw colour and Straw amount sliders and the Smoke sliders are the ones to tune.",
+ "edit_url": "https://pixellab.ai/create-vfx?effect=dc781aa8-03f3-4c18-93d8-c00c5e4a06d5",
+ "effect_id": "dc781aa8-03f3-4c18-93d8-c00c5e4a06d5",
+ "gif_exact": true,
+ "result_id": "256ec593-bbb6-40bf-a5b5-b4822a9de01f",
+ "billing_usage": {
+  "usd": 0.0,
+  "type": "generations",
+  "generations": 1.1809458958333336
+ },
+ "generation_id": "87acd10b-193a-45e3-a6c6-594b3e7a2b29",
+ "billing_charged": true,
+ "generation_mode": "vfx",
+ "pixel_tools_image": true,
+ "quoted_generations": 1
+}

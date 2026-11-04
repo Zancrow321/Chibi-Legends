@@ -1,0 +1,39 @@
+{
+ "fps": 16,
+ "kind": "new",
+ "loop": true,
+ "name": "Gyro wind rings",
+ "files": {
+  "gyro-wind-rings.gif": "https://api.pixellab.ai/mcp/pixel-tools/c3c78e7b-9b17-4d18-b010-80009e11a0b3/gyro-wind-rings.gif",
+  "gyro-wind-rings.png": "https://api.pixellab.ai/mcp/pixel-tools/c3c78e7b-9b17-4d18-b010-80009e11a0b3/gyro-wind-rings.png",
+  "gyro-wind-rings.json": "https://api.pixellab.ai/mcp/pixel-tools/c3c78e7b-9b17-4d18-b010-80009e11a0b3/gyro-wind-rings.json",
+  "gyro-wind-rings-game.zip": "https://api.pixellab.ai/mcp/pixel-tools/c3c78e7b-9b17-4d18-b010-80009e11a0b3/gyro-wind-rings-game.zip"
+ },
+ "parts": [],
+ "anchor": {
+  "x": 48,
+  "y": 48,
+  "kind": "origin"
+ },
+ "artist": "lite",
+ "canvas": {
+  "h": 96,
+  "w": 96
+ },
+ "frames": 24,
+ "message": "Three thin wind rings cross at one point and spin like a gyroscope, pale turquoise with white-hot brightness, with a glowing core and gold sparks flicking off the centre. The spin builds slowly over the first half second, then whips round fast in a seamless 1.5 s loop on a transparent 96x96 canvas. Try the ring and spark sliders in the page; I left the glow as a bright light ramp rather than a true additive blend.",
+ "edit_url": "https://pixellab.ai/create-vfx?effect=1adaae86-672f-4aaa-9ba7-507572d6bffe",
+ "effect_id": "1adaae86-672f-4aaa-9ba7-507572d6bffe",
+ "gif_exact": true,
+ "result_id": "c3c78e7b-9b17-4d18-b010-80009e11a0b3",
+ "billing_usage": {
+  "usd": 0.0,
+  "type": "generations",
+  "generations": 1.0
+ },
+ "generation_id": "eeb0759d-4564-4303-956e-8f17cd3d64af",
+ "billing_charged": true,
+ "generation_mode": "vfx",
+ "pixel_tools_image": true,
+ "quoted_generations": 1
+}

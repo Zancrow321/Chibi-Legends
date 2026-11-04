@@ -1,0 +1,339 @@
+{
+ "frames": [
+  {
+   "filename": "wind-impact-burst 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 200,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 42
+  },
+  {
+   "filename": "wind-impact-burst 1.png",
+   "frame": {
+    "x": 200,
+    "y": 0,
+    "w": 200,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 200,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 42
+  },
+  {
+   "filename": "wind-impact-burst 2.png",
+   "frame": {
+    "x": 400,
+    "y": 0,
+    "w": 200,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 200,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 42
+  },
+  {
+   "filename": "wind-impact-burst 3.png",
+   "frame": {
+    "x": 600,
+    "y": 0,
+    "w": 200,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 200,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 42
+  },
+  {
+   "filename": "wind-impact-burst 4.png",
+   "frame": {
+    "x": 0,
+    "y": 160,
+    "w": 200,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 200,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 42
+  },
+  {
+   "filename": "wind-impact-burst 5.png",
+   "frame": {
+    "x": 200,
+    "y": 160,
+    "w": 200,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 200,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 42
+  },
+  {
+   "filename": "wind-impact-burst 6.png",
+   "frame": {
+    "x": 400,
+    "y": 160,
+    "w": 200,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 200,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 42
+  },
+  {
+   "filename": "wind-impact-burst 7.png",
+   "frame": {
+    "x": 600,
+    "y": 160,
+    "w": 200,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 200,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 42
+  },
+  {
+   "filename": "wind-impact-burst 8.png",
+   "frame": {
+    "x": 0,
+    "y": 320,
+    "w": 200,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 200,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 42
+  },
+  {
+   "filename": "wind-impact-burst 9.png",
+   "frame": {
+    "x": 200,
+    "y": 320,
+    "w": 200,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 200,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 42
+  },
+  {
+   "filename": "wind-impact-burst 10.png",
+   "frame": {
+    "x": 400,
+    "y": 320,
+    "w": 200,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 200,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 42
+  },
+  {
+   "filename": "wind-impact-burst 11.png",
+   "frame": {
+    "x": 600,
+    "y": 320,
+    "w": 200,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 200,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 42
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "wind-impact-burst.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 800,
+   "h": 480
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "origin",
+   "x": 100,
+   "y": 80
+  },
+  "frameTags": [
+   {
+    "name": "wind-impact-burst",
+    "from": 0,
+    "to": 11,
+    "direction": "forward"
+   }
+  ]
+ }
+}

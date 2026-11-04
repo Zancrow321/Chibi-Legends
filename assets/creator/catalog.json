@@ -13,13 +13,17 @@
     "schatten": "Schattenwickel",
     "schmied": "Schmiede-Schürze",
     "akademie": "Akademie-Jacke",
+    "steilpfad": "Steilpfad-Gi",
+    "bollwerk": "Bollwerk-Panzer",
     "feuerwacht": "Feuerwacht-Jacke"
    },
    "unlock": {
+    "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
     "wanderer": "Trainingswald abschließen",
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
     "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
+    "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
     "feuerwacht": "Kampfstil Lauffeuer (Banner „Wer am Feuer sitzt“)"
    }
   },
@@ -32,13 +36,17 @@
     "schatten": "Wickelhose",
     "schmied": "Arbeitshose",
     "akademie": "Uniformhose",
+    "steilpfad": "Steilpfad-Wickelhose",
+    "bollwerk": "Bollwerk-Beinpanzer",
     "feuerwacht": "Feuerwacht-Hose"
    },
    "unlock": {
+    "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
     "wanderer": "Trainingswald abschließen",
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
     "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
+    "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
     "feuerwacht": "Kampfstil Lauffeuer (Banner „Wer am Feuer sitzt“)"
    }
   },
@@ -51,13 +59,17 @@
     "schatten": "Tabi-Stiefel",
     "schmied": "Eisenkappen-Stiefel",
     "akademie": "Turnschuhe",
+    "steilpfad": "Stoffschuhe",
+    "bollwerk": "Bollwerk-Stiefel",
     "feuerwacht": "Feuerstein-Stiefel"
    },
    "unlock": {
+    "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
     "wanderer": "Trainingswald abschließen",
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
     "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
+    "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
     "feuerwacht": "Kampfstil Lauffeuer (Banner „Wer am Feuer sitzt“)"
    }
   },
@@ -71,12 +83,14 @@
     "kurz": "Kurzhaar",
     "zwillinge": "Zwillingszöpfe",
     "lang": "Lange Mähne",
-    "kamm": "Stachelkamm"
+    "kamm": "Stachelkamm",
+    "bollwerk_helm": "Bollwerk-Helm"
    },
    "unlock": {
     "wuschel": "Saisonpass, Stufe 5",
     "zwillinge": "Erfolg: 3 Super-Treffer in einem Kampf",
-    "kamm": "Herausforderung im Trainingswald"
+    "kamm": "Herausforderung im Trainingswald",
+    "bollwerk_helm": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)"
    }
   },
   "weapon": {
@@ -112,8 +126,8 @@
    "texture": "res://assets/creator/weapons/sense_nachhall.png",
    "scale": 2,
    "grip": [
-    11.0,
-    31.0
+    11.5,
+    30.5
    ],
    "tip": [
     29.0,
@@ -412,6 +426,12 @@
    "text": "Sense Nachhall: Züge im Takt bauen Einklang auf",
    "unlock": "",
    "weapon": "sense_nachhall"
+  },
+  "schwarzmond": {
+   "name": "Schwarzmond",
+   "text": "Riesige schwarze Klinge, Mondsicheln (Legendär)",
+   "unlock": "",
+   "weapon": "schwert_kaiser"
   },
   "lauffeuer": {
    "name": "Lauffeuer",
