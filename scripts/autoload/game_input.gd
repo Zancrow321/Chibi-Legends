@@ -20,6 +20,7 @@ const KEYS := {
 	"reset_cooldowns": [KEY_R],
 	"cycle_look": [KEY_C],
 	"toggle_help": [KEY_H],
+	"toggle_ui": [KEY_I],
 	"style_menu": [KEY_TAB, KEY_M],
 	"toggle_light": [KEY_N],
 }

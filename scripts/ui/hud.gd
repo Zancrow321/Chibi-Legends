@@ -27,6 +27,8 @@ const MENU := [
 var room: TrainingRoom
 var font: Font
 var show_help := true
+## Manga-Panel-Skin (PixelLab-Teile, Taste I oder ?ui=alt schaltet zurueck auf das alte UI)
+var manga := true
 var _menu_rects: Array = []
 var _hover := -1
 var _t := 0.0
@@ -46,6 +48,8 @@ func _ready() -> void:
 	menu = GlutatemMenu.new()
 	menu.room = room
 	add_child(menu)
+	if OS.has_feature("web") and "ui=alt" in str(JavaScriptBridge.eval("window.location.search", true)):
+		manga = false
 
 
 func show_cutin(text: String, col: Color) -> void:
@@ -65,6 +69,8 @@ func _process(delta: float) -> void:
 	size = get_viewport_rect().size
 	if Input.is_action_just_pressed("toggle_help"):
 		show_help = not show_help
+	if Input.is_action_just_pressed("toggle_ui"):
+		manga = not manga
 	queue_redraw()
 
 
@@ -88,22 +94,68 @@ func _menu_index(p: Vector2) -> int:
 # --- drawing helpers -------------------------------------------------------
 
 func _panel(r: Rect2, col := PANEL, radius := 10, border := Color(0, 0, 0, 0)) -> void:
+	if manga and (col == PANEL or col == PANEL_LIGHT):
+		if r.size.y >= 40.0:
+			_skin("panel", r)
+		else:
+			# schmale Leisten: Papier mit Tuscherand und etwas Raster rechts
+			var sbs := StyleBoxFlat.new()
+			sbs.bg_color = UiSkin.PAPER
+			sbs.border_color = UiSkin.INK
+			sbs.set_border_width_all(2)
+			draw_style_box(sbs, r)
+			_halftone(Rect2(r.end.x - minf(60.0, r.size.x * 0.3), r.position.y + 3, minf(60.0, r.size.x * 0.3) - 3, r.size.y - 6), Color(UiSkin.INK, 0.25))
+		return
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = col
 	sb.set_corner_radius_all(radius)
+	if manga:
+		# Tusche-Look fuer die kleinen Farbflaechen: eckig, schwarzer Rand
+		sb.set_corner_radius_all(mini(radius, 2))
+		if col.a > 0.5 and r.size.y > 8:
+			border = Color(UiSkin.INK, col.a)
 	if border.a > 0.0:
 		sb.border_color = border
 		sb.set_border_width_all(2)
 	draw_style_box(sb, r)
 
 
+func _skin(part: String, r: Rect2, tint := Color.WHITE) -> void:
+	var sb := UiSkin.box(part)
+	sb.modulate_color = tint
+	draw_style_box(sb, r)
+
+
 func _text(pos: Vector2, s: String, size: int, col := TEXT, align := HORIZONTAL_ALIGNMENT_LEFT, width := -1.0, outline := 4) -> void:
+	if manga and outline > 0:
+		# Manga: Tusche-Schrift mit Papier-Rand, Gold wird Signalrot
+		var a := col.a
+		if col.is_equal_approx(Color(TEXT, a)) or col.is_equal_approx(Color(MUTED, a)):
+			col = Color(UiSkin.INK, a)
+		elif col.is_equal_approx(Color(TRIM, a)):
+			col = Color(UiSkin.RED.darkened(0.15), a)
+		elif col.get_luminance() > 0.55:
+			col = Color(col.darkened(0.45), a)
+		draw_string_outline(font, pos, s, align, width, size, outline, Color(UiSkin.PAPER, 0.95 * a))
+		draw_string(font, pos, s, align, width, size, col)
+		return
 	if outline > 0:
 		draw_string_outline(font, pos, s, align, width, size, outline, Color(0.05, 0.03, 0.1, 0.9))
 	draw_string(font, pos, s, align, width, size, col)
 
 
 func _bar(r: Rect2, frac: float, col: Color, label: String) -> void:
+	if manga:
+		var fr := Rect2(r.position.x, r.get_center().y - 16, r.size.x, 32)
+		var inner := UiSkin.inner("hp_bar", fr)
+		_skin("hp_bar", fr)
+		inner.size.x *= clampf(frac, 0.0, 1.0)
+		if inner.size.x > 1:
+			draw_rect(inner, col)
+			draw_rect(Rect2(inner.position, Vector2(inner.size.x, 3)), Color(1, 1, 1, 0.35))
+			_halftone(Rect2(inner.position + Vector2(0, inner.size.y * 0.55), Vector2(inner.size.x, inner.size.y * 0.45)), Color(0, 0, 0, 0.22))
+		_text(Vector2(inner.position.x, r.position.y + r.size.y * 0.72), label, int(r.size.y * 0.62), TEXT, HORIZONTAL_ALIGNMENT_CENTER, fr.end.x - inner.position.x - 10)
+		return
 	_panel(r, Color(0.05, 0.04, 0.1, 0.95), int(r.size.y / 2), Color(1, 1, 1, 0.15))
 	var inner := r.grow(-3)
 	inner.size.x *= clampf(frac, 0.0, 1.0)
@@ -111,6 +163,19 @@ func _bar(r: Rect2, frac: float, col: Color, label: String) -> void:
 		_panel(inner, col, int(inner.size.y / 2))
 		_panel(Rect2(inner.position + Vector2(4, 2), Vector2(maxf(inner.size.x - 8, 0), inner.size.y * 0.3)), Color(1, 1, 1, 0.25), 3)
 	_text(Vector2(r.position.x, r.position.y + r.size.y * 0.72), label, int(r.size.y * 0.62), TEXT, HORIZONTAL_ALIGNMENT_CENTER, r.size.x)
+
+
+## Manga-Raster: Punktgitter, jede zweite Reihe versetzt.
+func _halftone(r: Rect2, col: Color, step := 4) -> void:
+	var row := 0
+	var y := r.position.y + 1
+	while y < r.end.y:
+		var x := r.position.x + (step * 0.5 if row % 2 == 1 else 0.0)
+		while x < r.end.x - 1:
+			draw_rect(Rect2(x, y, 2, 2), col)
+			x += step
+		y += step * 0.5
+		row += 1
 
 
 static func _fmt(n: float) -> String:
@@ -164,23 +229,29 @@ func _draw_status() -> void:
 		_text(Vector2(x + 180, 35), "KK " + _fmt(p.combat_power()), 16, TRIM)
 	else:
 		_text(Vector2(x, 35), "Akademie-Schüler", 17, TEXT, HORIZONTAL_ALIGNMENT_CENTER, 310)
-	_bar(Rect2(x, 48, 310, 26), p.hp / p.max_hp, HP, "%s / %s" % [_fmt(p.hp), _fmt(p.max_hp)])
+	var dy := 4.0 if manga else 0.0  # Manga-Rahmen sind etwas hoeher
+	_bar(Rect2(x, 48 + dy, 310, 26), p.hp / p.max_hp, HP, "%s / %s" % [_fmt(p.hp), _fmt(p.max_hp)])
 	if p.glut == null:
-		_bar(Rect2(x, 80, 310, 22), p.aura / p.max_aura, AURA, "Aura %d / %d%s" % [int(p.aura), int(p.max_aura), "  (unendlich)" if p.infinite_aura else ""])
-		_panel(Rect2(x, 108, 240, 26), PANEL, 13, Color(TRIM, 0.7))
-		_text(Vector2(x + 14, 127), "Kampfkraft", 16, TRIM)
-		_text(Vector2(x + 124, 127), _fmt(p.combat_power()), 18, TEXT)
+		_bar(Rect2(x, 80 + 2 * dy, 310, 22), p.aura / p.max_aura, AURA, "Aura %d / %d%s" % [int(p.aura), int(p.max_aura), "  (unendlich)" if p.infinite_aura else ""])
+		_panel(Rect2(x, 108 + 3 * dy, 240, 26), PANEL, 13, Color(TRIM, 0.7))
+		_text(Vector2(x + 14, 127 + 3 * dy), "Kampfkraft", 16, TRIM)
+		_text(Vector2(x + 124, 127 + 3 * dy), _fmt(p.combat_power()), 18, TEXT)
 		return
-	_draw_gauge(Rect2(x, 80, 310, 22))
-	_draw_style_panel(Rect2(x, 108, 310, 26))
+	_draw_gauge(Rect2(x, 80 + 2 * dy, 310, 22))
+	_draw_style_panel(Rect2(x, 108 + 3 * dy, 310, 26))
 
 
 ## Legendenleiste: three Stufen of 100; full Stufen glow, a full bar pulses.
 func _draw_gauge(r: Rect2) -> void:
 	var p := room.player
 	_gauge_shown = move_toward(_gauge_shown, p.gauge, get_process_delta_time() * 400.0)
-	_panel(r, Color(0.05, 0.04, 0.1, 0.95), int(r.size.y / 2), Color(1, 1, 1, 0.15))
+	var frame := Rect2(r.position.x, r.get_center().y - 17, r.size.x, 34)
 	var inner := r.grow(-3)
+	if manga:
+		inner = UiSkin.inner("super_bar", frame)
+		_skin("super_bar", frame)
+	else:
+		_panel(r, Color(0.05, 0.04, 0.1, 0.95), int(r.size.y / 2), Color(1, 1, 1, 0.15))
 	var seg := inner.size.x / 3.0
 	var full := int(p.gauge / 100.0)
 	for i in 3:
@@ -194,8 +265,15 @@ func _draw_gauge(r: Rect2) -> void:
 			col = Color("ff9a2a").lerp(Color("fff4d0"), 0.3 + 0.3 * sin(_t * 8.0))
 		_panel(fr, col, 6)
 		_panel(Rect2(fr.position + Vector2(3, 2), Vector2(maxf(fr.size.x - 6, 0), fr.size.y * 0.3)), Color(1, 1, 1, 0.25), 3)
-	for i in range(1, 3):
-		draw_rect(Rect2(inner.position.x + i * seg - 1, inner.position.y - 1, 2, inner.size.y + 2), Color(0.05, 0.04, 0.1))
+	if manga:
+		for i in range(1, 3):
+			# schraege Tusche-Trennstriche wie Panel-Kanten
+			var bx := inner.position.x + i * seg
+			draw_line(Vector2(bx + 4, inner.position.y), Vector2(bx - 4, inner.end.y), Color(UiSkin.INK), 3)
+			draw_line(Vector2(bx + 6, inner.position.y), Vector2(bx - 2, inner.end.y), Color(1, 1, 1, 0.5), 1)
+	else:
+		for i in range(1, 3):
+			draw_rect(Rect2(inner.position.x + i * seg - 1, inner.position.y - 1, 2, inner.size.y + 2), Color(0.05, 0.04, 0.1))
 	var label := "Legendenleiste  %d / 3%s" % [full, "  (unendlich)" if p.infinite_aura else ""]
 	_text(Vector2(r.position.x, r.position.y + r.size.y * 0.72), label, int(r.size.y * 0.62), TEXT, HORIZONTAL_ALIGNMENT_CENTER, r.size.x)
 
@@ -334,7 +412,7 @@ func _draw_skill_bar(W: float, H: float) -> void:
 	for i in slots.size():
 		var sl: Dictionary = slots[i]
 		var r := Rect2(bar.position.x + 12 + i * (slot + gap), bar.position.y + 12, slot, slot)
-		_panel(r, Color(0.04, 0.03, 0.08, 0.95), 8, Color(1, 1, 1, 0.18))
+		_slot(r)
 		_draw_icon(r.grow(-6), sl.icon)
 		if sl.cd > 0.0:
 			var frac: float = clampf(sl.cd / sl.max, 0.0, 1.0)
@@ -369,7 +447,7 @@ func _draw_style_slots(slots: Array, arrows: Array, sk: String) -> void:
 	for i in slots.size():
 		var sl: Dictionary = slots[i]
 		var r := Rect2(bar.position.x + 12 + i * (slot + gap), bar.position.y + 12, slot, slot)
-		_panel(r, Color(0.04, 0.03, 0.08, 0.95), 8, Color(1, 1, 1, 0.18))
+		_slot(r)
 		if sl.has("zug") or sl.has("super") or sl.icon == "":
 			GlutIcons.draw(self, r.grow(-6), sl.icon, _t)
 		else:
@@ -395,6 +473,13 @@ func _draw_style_slots(slots: Array, arrows: Array, sk: String) -> void:
 		if font.get_string_size(lbl, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x > slot + 6:
 			lbl = lbl.substr(0, 8) + "."
 		_text(Vector2(r.position.x - 4, r.end.y + 15), lbl, 12, MUTED, HORIZONTAL_ALIGNMENT_CENTER, slot + 8, 3)
+
+
+func _slot(r: Rect2) -> void:
+	if manga:
+		_skin("skill_slot", r.grow(6))
+	else:
+		_panel(r, Color(0.04, 0.03, 0.08, 0.95), 8, Color(1, 1, 1, 0.18))
 
 
 func _draw_icon(r: Rect2, icon: String) -> void:
@@ -453,7 +538,10 @@ func _draw_menu(W: float, H: float) -> void:
 		var r := Rect2(x0 + i * (bw + gap), y, bw, 50)
 		_menu_rects.append(r)
 		var hover := i == _hover
-		_panel(r, PANEL_LIGHT if hover else PANEL, 8, Color(TRIM, 0.9 if hover else 0.35))
+		if manga:
+			_skin("button", r.grow(2), Color(1.15, 1.15, 1.15) if hover else Color(0.92, 0.92, 0.92))
+		else:
+			_panel(r, PANEL_LIGHT if hover else PANEL, 8, Color(TRIM, 0.9 if hover else 0.35))
 		_draw_menu_icon(Vector2(r.get_center().x, y + 17), i)
 		_text(Vector2(r.position.x, y + 44), MENU[i][0], 14, TEXT, HORIZONTAL_ALIGNMENT_CENTER, bw)
 
@@ -515,14 +603,14 @@ func _draw_help() -> void:
 		["P", "Meisterzug (3 Stufen)"], ["Tab / M", "Kampfstil: Alternativen, Slots"],
 		["J + K", "Griff (Wurf)"], ["U", "Unendlich Legendenleiste"], ["R", "Abklingzeiten zurück"],
 		["N", "Abendlicht an/aus"], ["V", "Effekt-Stärke"], ["T / C / H", "Figur / Charaktere / Hilfe"],
-		["F", "Kämpfer wechseln (Importe)"],
+		["F / I", "Kämpfer wechseln / UI-Stil"],
 	] if glut else [
 		["A / D", "Laufen"], ["Leertaste", "Springen, 2x Doppelsprung"], ["S + Leertaste", "Durch Plattform fallen"],
 		["Shift", "Dash (in der Luft 1x)"], ["J", "Leicht (3er-Kette)"], ["K", "Schwer"],
 		["L", "Spezial (Fähigkeit)"], ["W/S/A/D +", "Richtung: oben/unten/vor"],
 		["J + K", "Griff (Wurf)"], ["P", "Super: Legendenstrahl"], ["V", "Effekt-Stärke wechseln"],
 		["T", "Figur: Testfigur / Sammlung"], ["F", "Kämpfer wechseln (Importe)"], ["C", "Charaktere"],
-		["H", "Hilfe ein/aus"],
+		["H / I", "Hilfe / UI-Stil"],
 	]
 	var y := 338.0
 	for l in lines:
