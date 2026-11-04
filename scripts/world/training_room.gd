@@ -16,6 +16,8 @@ const DUMMIES := [[470.0, 300.0, false], [540.0, 300.0, false], [610.0, 300.0, f
 var player: Player
 var camera: Camera2D
 var effects: Effects
+var fx: CombatFx  # hit-stop, shake, glowing sparks, super flash
+var hud: Node  # set by Main (cut-in banner for supers)
 var numbers: DamageNumbers  # set by Main (lives on the HUD layer)
 var attacks: Node2D
 
@@ -27,14 +29,13 @@ var toast_text := ""
 var toast_time := 0.0
 var _hits: Array = []  # [time, damage]
 var _clock := 0.0
-var _shake := 0.0
 
 
 func _ready() -> void:
 	_build_terrain()
 	attacks = Node2D.new()
 	effects = Effects.new()
-	effects.z_index = 5
+	effects.z_index = 50
 	for d in DUMMIES:
 		var dummy := TrainingDummy.new()
 		dummy.world = self
@@ -56,15 +57,23 @@ func _ready() -> void:
 	camera.limit_bottom = 360
 	camera.position_smoothing_enabled = true
 	camera.position_smoothing_speed = 7.0
+	camera.process_mode = Node.PROCESS_MODE_ALWAYS  # shake also plays during hit-stop
 	add_child(camera)
+
+	fx = CombatFx.new()
+	fx.room = self
+	fx.camera = camera
+	fx.base_zoom = camera.zoom
+	add_child(fx)
 
 
 func _process(delta: float) -> void:
 	_clock += delta
 	toast_time = maxf(0.0, toast_time - delta)
 	camera.global_position = player.global_position + Vector2(player.facing * 30.0, -40.0)
-	_shake = maxf(0.0, _shake - delta * 18.0)
-	camera.offset = Vector2(randf_range(-1, 1), randf_range(-1, 1)) * _shake
+	if Input.is_action_just_pressed("cycle_fx"):
+		FxSettings.cycle()
+		toast("Effekte: " + FxSettings.level_name())
 	if Input.is_action_just_pressed("toggle_infinite_aura"):
 		player.infinite_aura = not player.infinite_aura
 		toast("Unendlich Aura: " + ("an" if player.infinite_aura else "aus"))
@@ -215,17 +224,37 @@ func cast_chain(p: Player, s: Dictionary) -> void:
 	effects.bolt(points)
 
 
-func deal_hit(target: Node2D, base: float, element: String, from_x: float, knockback: float) -> void:
+func cast_super(p: Player, s: Dictionary) -> void:
+	var beam := SuperBeam.new()
+	beam.room = self
+	beam.player = p
+	beam.skill = s
+	add_child(beam)
+
+
+## `profile` picks the hit feel from FxSettings.HIT; empty = light or heavy
+## depending on knockback.
+## Returns the damage dealt. Super hits ("super", "super_final") show no
+## number of their own; the beam adds them up and shows one big total.
+func deal_hit(target: Node2D, base: float, element: String, from_x: float, knockback: float, profile := "") -> int:
 	var res := Reactions.resolve(target.status, element, base)
 	var dmg := int(round(res.damage * randf_range(0.92, 1.08)))
 	var col: Color = GameData.ELEMENTS[element].color if element != "" else Color("ff4b3e")
 	target.take_hit(knockback, from_x)
 	_record(dmg)
-	numbers.spawn_number(target.head_position(), dmg, col, target.get_instance_id(), res.reaction != "")
-	effects.burst(target.get_hurt_rect().get_center(), col, 6)
-	_shake = maxf(_shake, 1.5)
-	if res.reaction != "":
+	if not profile.begins_with("super"):
+		numbers.spawn_number(target.head_position(), dmg, col, target.get_instance_id(), res.reaction != "")
+	var center: Vector2 = target.get_hurt_rect().get_center()
+	effects.burst(center, col, 6)
+	if profile == "":
+		profile = "heavy" if knockback >= 120.0 else "light"
+	var dir := signf(center.x - from_x)
+	if res.reaction == "":
+		fx.hit(center, element, profile, dir)
+	else:
+		fx.hit(center, element, "super_final" if profile == "super_final" else "heavy", dir)
 		_trigger_reaction(target, res)
+	return dmg
 
 
 func _trigger_reaction(target: Node2D, res: Dictionary) -> void:
@@ -235,9 +264,8 @@ func _trigger_reaction(target: Node2D, res: Dictionary) -> void:
 	var center: Vector2 = target.get_hurt_rect().get_center()
 	numbers.spawn_text(target.head_position() + Vector2(0, -10), info.name + "!", info.color)
 	effects.burst(center, info.color, 22, 160.0, 60.0)
-	_shake = 5.0
+	fx.blast(center, info.color, res.aoe_radius, "reaction")
 	if res.aoe_radius > 0.0:
-		effects.ring(center, res.aoe_radius, info.color)
 		for t in get_tree().get_nodes_in_group("targets"):
 			if t.get_hurt_rect().get_center().distance_to(center) <= res.aoe_radius:
 				var aoe := int(round(res.aoe_damage * randf_range(0.92, 1.08)))

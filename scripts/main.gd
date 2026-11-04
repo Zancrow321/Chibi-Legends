@@ -21,6 +21,8 @@ func _ready() -> void:
 	hud_layer.add_child(numbers)
 	var hud := Hud.new()
 	hud.room = room
+	hud.process_mode = Node.PROCESS_MODE_ALWAYS  # cut-in banner plays during the super pause
+	room.hud = hud
 	hud_layer.add_child(hud)
 	add_child(hud_layer)
 	room.numbers = numbers

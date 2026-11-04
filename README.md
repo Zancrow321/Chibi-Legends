@@ -13,6 +13,7 @@ Spielwelt: die Multiversum-Akademie. Fähigkeiten und Outfits sind eigene Entwü
 - Trainingswald mit Trainingspuppen, Schaden pro Sekunde, Gesamtschaden und Reaktions-Quest
 - HUD: Leisten oben links, Minikarte und Quests oben rechts, Fähigkeiten-Leiste und Menüleiste unten
 - Tastatur und Gamepad
+- Kampfeffekte im Stil klassischer 2D-Fighter: Trefferpause (Hit-Stop), Screenshake, leuchtende Treffer-Funken je Element, große Reaktions-Explosionen und der Super „Legendenstrahl“ (Bildschirm-Abdunkeln, Cut-in, Energiestrahl, Finale). Stärke per V umschaltbar.
 
 ## Steuerung
 
@@ -24,6 +25,8 @@ Spielwelt: die Multiversum-Akademie. Fähigkeiten und Outfits sind eigene Entwü
 | Dash | Shift | B |
 | Katana-Combo | J | X |
 | Fähigkeiten 1–4 | K, L, I, O (oder 1–4) | Y, RB, LB, RT |
+| Super „Legendenstrahl“ | P (oder 5) | LT |
+| Effekt-Stärke (Dezent / Kräftig / Maximal) | V | – |
 | Unendlich Aura / Abklingzeiten zurücksetzen | U / R | – / Back |
 | Look wechseln | C | Start |
 | Hilfe ein/aus | H | – |
@@ -44,9 +47,13 @@ scripts/
   data/game_data.gd        Elemente, Fähigkeiten, Reaktionen, Looks (reine Daten)
   combat/reactions.gd      Reaktionsregeln (reine Logik, später auch auf dem Server)
   combat/attack.gd         Hitboxen und Geschosse
+  combat/super_beam.gd     Super-Angriff mit Super-Flash, Strahl und Finale
   entities/                Spieler, Chibi-Grafik, Trainingspuppe
   world/                   Trainingswald und Parallax-Hintergrund
   fx/                      Schadenszahlen und Pixel-Effekte
+  fx/combat_fx.gd          Hit-Stop, Screenshake, Zoom, Abdunkeln, Bildschirm-Blitz
+  fx/hit_sparks.gd         Additive Treffer-Funken (optional mit Pixel-Frames aus assets/vfx/)
+  fx/fx_settings.gd        Treffer-Profile und Effekt-Stärke zum Feintunen
   ui/hud.gd                HUD
 ```
 
