@@ -39,7 +39,9 @@ Jeder Charakter hat eine Datei `assets/combat/movesets/<id>.json`. Pro Angriff:
 
 ## Noch nicht drin (Schritte 3 bis 5)
 
-Legendenleiste mit 3 Stufen, Block, Perfekt-Block, Ausweich-Dash mit Unverwundbarkeit, Befreiungsstoß, Schadensformel mit Kombo-Abschwächung, Gewichtsklassen, Statuseffekte, Arena mit Pickups, Helfer, KI-Gegner. Der Super läuft bis Schritt 3 weiter über die Abklingzeit.
+Schon drin (PR #27): Block (Q), Perfekt-Block, Ausweich-Dash, Befreiungsstoß, Kombo-Zähler mit Abschwächung. Menü, Stufen und Beute: `docs/menue-und-fortschritt.md`.
+
+Legendenleiste mit 3 Stufen, Gewichtsklassen, Statuseffekte, Arena mit Pickups, Helfer, KI-Gegner. Der Super läuft bis Schritt 3 weiter über die Abklingzeit.
 
 Die Testfigur hat bisher nur Stand- und Schwertbilder. Laufen, Springen und Dash sind daraus mit Neigung und Stauchung im Code gebaut, bis eigene Bilder kommen.
 

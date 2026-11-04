@@ -23,6 +23,8 @@ func _ready() -> void:
 
 
 func spawn_number(world_pos: Vector2, amount: int, color: Color, key: int, big := false) -> void:
+	if not GameSettings.numbers:
+		return
 	var stack := 0
 	if _recent.has(key) and _clock - _recent[key][0] < STACK_WINDOW:
 		stack = _recent[key][1] + 1

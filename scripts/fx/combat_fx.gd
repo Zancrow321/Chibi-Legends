@@ -94,6 +94,9 @@ func hold(on: bool) -> void:
 
 
 func shake(amount: float, dir := 0.0) -> void:
+	amount *= GameSettings.shake_factor()
+	if amount <= 0.0:
+		return
 	_trauma = maxf(_trauma, amount)
 	if dir != 0.0:
 		_kick = Vector2(dir * amount * 0.6, 0.0)  # first frames lean in the hit direction
