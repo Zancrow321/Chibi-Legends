@@ -20,17 +20,17 @@ var _next := 0
 
 
 static func play(event: String, volume_db := 0.0) -> void:
-	var sfx := _get()
+	var sfx := _node()
 	if sfx:
 		sfx._play(event, volume_db)
 
 
 static func has_event(event: String) -> bool:
-	var sfx := _get()
+	var sfx := _node()
 	return sfx != null and sfx._map.has(event)
 
 
-static func _get() -> Sfx:
+static func _node() -> Sfx:
 	if is_instance_valid(_instance):
 		return _instance
 	var tree := Engine.get_main_loop() as SceneTree

@@ -23,6 +23,7 @@ const KEYS := {
 	"toggle_ui": [KEY_I],
 	"style_menu": [KEY_TAB, KEY_M],
 	"toggle_light": [KEY_N],
+	"interact": [KEY_E, KEY_ENTER],
 }
 
 const PAD_BUTTONS := {

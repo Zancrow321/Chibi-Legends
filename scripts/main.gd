@@ -1,6 +1,12 @@
 extends Node2D
-## Entry point: assembles background, training room and HUD.
-## Phase 1 starts straight in the training room; menus and modes follow later.
+## Entry point. The game has two modes (GameFlow): the overworld (academy
+## courtyard: exploring, NPCs, gates, a quiet HUD) and the combat areas
+## (training room with the combat HUD). AreaTransition switches between them
+## with a manga panel wipe and reloads this scene; Main then builds the mode
+## that GameFlow names. The game starts in the overworld; ?modus=dungeon in
+## the web URL starts in the training forest.
+##
+## Combat areas: background, training room and HUD.
 ## Look test: [B] switches the view (flat original / HD-2D A with a 3D
 ## backdrop / HD-2D B fully 3D / Licht: 2D lights at dusk + parallax, the
 ## default), [G] the graphics preset (Hoch/Mittel/Niedrig), [N] jumps between
@@ -13,8 +19,18 @@ static var view_mode := 3
 static var _url_read := false
 
 
+static var _intro_shown := false
+
+
 func _ready() -> void:
 	_read_url()
+	GameFlow.read_url()
+	if not _intro_shown:
+		_intro_shown = true
+		AreaTransition.intro.call_deferred(GameFlow.area)
+	if GameFlow.is_overworld():
+		_build_overworld()
+		return
 	for a in [["cycle_view", KEY_B], ["cycle_quality", KEY_G]]:
 		if not InputMap.has_action(a[0]):
 			InputMap.add_action(a[0])
@@ -60,12 +76,21 @@ func _ready() -> void:
 	hud.room = room
 	hud.process_mode = Node.PROCESS_MODE_ALWAYS  # cut-in banner plays during the super pause
 	room.hud = hud
+	hud.show_help = not GameFlow.combat_help_seen  # H opens it again
+	GameFlow.combat_help_seen = true
 	hud_layer.add_child(hud)
 	var info := Hd2dInfo.new()
 	info.view_name = VIEWS[view_mode]
 	hud_layer.add_child(info)
 	add_child(hud_layer)
 	room.numbers = numbers
+
+	# the way back to the overworld: the forest gate, seen from the inside
+	var exit := DungeonExit.new()
+	exit.room = room
+	exit.position = Vector2(34.0, TrainingRoom.GROUND_Y)
+	exit.z_index = -2
+	room.add_child(exit)
 
 	# Character collection: opens with C / Start; on the first start you pick a free starter.
 	var select_layer := CanvasLayer.new()
@@ -78,7 +103,35 @@ func _ready() -> void:
 		select.open_for.call_deferred(room.player.visual, true)
 
 
+## Overworld: the courtyard, bloom for everything that glows, the quiet HUD
+## and the collection (C).
+func _build_overworld() -> void:
+	var world := Overworld.new()
+	add_child(world)
+	var bloom := Bloom.new()
+	add_child(bloom)
+	bloom.environment.glow_intensity = 0.7
+	var hud_layer := CanvasLayer.new()
+	hud_layer.layer = 10
+	var hud := OverworldHud.new()
+	hud.world = world
+	world.hud = hud
+	hud_layer.add_child(hud)
+	add_child(hud_layer)
+	var select_layer := CanvasLayer.new()
+	select_layer.layer = 20
+	var select := CharacterSelect.new()
+	select_layer.add_child(select)
+	add_child(select_layer)
+	hud.select = select
+	world.walker.visual.look = Roster.look(Roster.selected(), Roster.selected_skin())
+	if Roster.needs_starter():
+		select.open_for.call_deferred(world.walker.visual, true)
+
+
 func _process(_delta: float) -> void:
+	if GameFlow.is_overworld():
+		return  # the look test (views, quality) belongs to the combat areas
 	if Input.is_action_just_pressed("cycle_view"):
 		view_mode = (view_mode + 1) % VIEWS.size()
 		get_tree().reload_current_scene.call_deferred()
