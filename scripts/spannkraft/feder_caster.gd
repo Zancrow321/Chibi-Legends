@@ -478,7 +478,7 @@ func _taumel(targets: Array) -> void:
 		world.fx.freeze(0.05 * FxSettings.factor("stop"))
 
 
-func _impact(c: Vector2, id: String, size: float, word := "", rot := 0.0) -> void:
+func _burst_hit(c: Vector2, id: String, size: float, word := "", rot := 0.0) -> void:
 	var big := tension >= 2 or enhanced
 	ffx.burst(id, c, size * (1.25 if big else 1.0), 0.32, rot, player.facing < 0)
 	if big:
@@ -529,7 +529,7 @@ func _tick_schnapp() -> void:
 			var tg := _hit(rect, dmg, 220.0 if kind == "double" else 110.0, "heavy" if kind == "double" or tension >= 2 else "light", 0.0, _hit_set)
 			ffx.streak("schnappfaust", sh, tip + _fwd(10), 18.0 + tension * 4.0, 0.16)
 			if not tg.is_empty():
-				_impact(tip + _fwd(8), "schnappfaust" if kind != "double" else "stossring", 56.0 + (20.0 if kind == "double" else 0.0),
+				_burst_hit(tip + _fwd(8), "schnappfaust" if kind != "double" else "stossring", 56.0 + (20.0 if kind == "double" else 0.0),
 					"WUMMS!" if kind == "double" else "SCHNAPP!")
 		if t >= _f(1):
 			_next_phase()
@@ -547,7 +547,7 @@ func _tick_schnapp() -> void:
 			var r2 := Rect2(minf(sh.x, tip2.x) - 8, sh.y - 12, absf(tip2.x - sh.x) + 16, 24)
 			var tg2 := _hit(r2, 7.0, 60.0, "light", 0.0, {}, player.global_position.x + player.facing * (reach + 30.0))
 			if not tg2.is_empty():
-				_impact(tip2, "schnappfaust", 40.0, "SCHNAPP!")
+				_burst_hit(tip2, "schnappfaust", 40.0, "SCHNAPP!")
 		if t >= _f(2):
 			_next_phase()
 
@@ -611,7 +611,7 @@ func _tick_fege() -> void:
 			ffx.burst("fegebein", mid, reach * 1.2, 0.3, 0.0, player.facing < 0)
 			ffx.speedlines(mid, 0.0 if player.facing > 0 else PI, 5, 34.0, style.color("sky"))
 			if not tg.is_empty():
-				_impact(tg[0].get_hurt_rect().get_center(), "stossring", 44.0, "WUSCH!")
+				_burst_hit(tg[0].get_hurt_rect().get_center(), "stossring", 44.0, "WUSCH!")
 		# verstärkt: a second sweep back that knocks down
 		if params.get("twice", false) and _step == 1 and k >= 0.95:
 			_step = 2
@@ -619,7 +619,7 @@ func _tick_fege() -> void:
 			ffx.burst("fegebein", hip + _fwd(reach * 0.55, -2), reach * 1.25, 0.3, PI, player.facing > 0, Color(1, 1, 1, 0.9))
 			var tg2 := _hit(rect2, 8.0, 60.0, "heavy", 260.0, {})
 			if not tg2.is_empty():
-				_impact(tg2[0].get_hurt_rect().get_center(), "stossring", 50.0, "UMGEFEGT!")
+				_burst_hit(tg2[0].get_hurt_rect().get_center(), "stossring", 50.0, "UMGEFEGT!")
 		if t >= _f(1):
 			_next_phase()
 	elif phase == "recovery":
@@ -667,7 +667,7 @@ func _tick_katapult() -> void:
 				var tg := _hit(rect, float(params.get("damage", 14)), 60.0, "heavy", launch, _hit_set)
 				ffx.burst("katapult", tip + Vector2(0, 20), 70.0, 0.3, -PI / 2.0)
 				if not tg.is_empty():
-					_impact(tip, "stossring", 52.0, "HIMMELSHAKEN!")
+					_burst_hit(tip, "stossring", 52.0, "HIMMELSHAKEN!")
 		else:
 			ffx.limb(sh, sh + Vector2(player.facing * 14.0, -20.0), _skin, 4.2, 5.0)
 			if randf() < 0.6:
@@ -676,7 +676,7 @@ func _tick_katapult() -> void:
 			var tg := _hit(rect, float(params.get("damage", 10)), 40.0, "heavy", launch, _hit_set)
 			if not tg.is_empty() and _step == 0:
 				_step = 1
-				_impact(tg[0].get_hurt_rect().get_center(), "katapult", 60.0, "WUMMS!", -PI / 4.0)
+				_burst_hit(tg[0].get_hurt_rect().get_center(), "katapult", 60.0, "WUMMS!", -PI / 4.0)
 			# verstärkt: a finisher at the top of the flight
 			if params.get("finisher", false) and _step < 2 and player.velocity.y >= -40.0:
 				_step = 2
@@ -748,7 +748,7 @@ func try_counter(from_x: float, projectile: Node = null) -> bool:
 		if projectile != null and projectile.has_method("burn"):
 			projectile.burn()
 		return true
-	var sharp := projectile != null and projectile.get("sharp") == true
+	var sharp: bool = projectile != null and projectile.get("sharp") == true
 	if sharp:
 		return false  # blades and special energy go through the belly
 	countering = false
@@ -839,7 +839,7 @@ func _tick_spannzug() -> void:
 		ffx.speedlines(_center(), PI if player.facing > 0 else 0.0, 1, 30.0, style.color("white"), 0.12)
 		if _follow and not _did_follow:
 			_fly_punch()
-		var arrived := _grab != Vector2.INF and absf(player.global_position.x - _grab.x) < 18.0 and not params.get("swing", false)
+		var arrived: bool = _grab != Vector2.INF and absf(player.global_position.x - _grab.x) < 18.0 and not params.get("swing", false)
 		if t >= _f(1) or player.is_on_wall() or arrived:
 			if params.get("swing", false) and _grab != Vector2.INF:
 				player.facing = -player.facing
@@ -863,7 +863,7 @@ func _fly_punch() -> void:
 	ffx.limb(sh, tip, _skin, 4.2, 5.4)
 	var tg := _hit(_rect_front(0.0, 56.0, -44.0, 44.0), float(params.get("damage", 9)), 150.0, "heavy", 0.0, _hit_set)
 	if not tg.is_empty():
-		_impact(tip, "schnappfaust", 50.0, "WUMMS!")
+		_burst_hit(tip, "schnappfaust", 50.0, "WUMMS!")
 
 
 # --- Fallbeilferse ------------------------------------------------------------------------------

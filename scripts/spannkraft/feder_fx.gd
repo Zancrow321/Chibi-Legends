@@ -128,7 +128,9 @@ func _draw_add() -> void:
 				var t2 := tex(f.id)
 				var d: Vector2 = f.b - f.a
 				var a2: float = 1.0 - p
-				_add.draw_set_transform(f.a.lerp(f.b, 0.5), d.angle(), Vector2.ONE)
+				# the sprite runs diagonally (bottom left -> top right): turn it flat first
+				var left: bool = d.x < 0.0
+				_add.draw_set_transform(f.a.lerp(f.b, 0.5), d.angle() + (-0.62 if left else 0.62), Vector2(1.0, -1.0) if left else Vector2.ONE)
 				_add.draw_texture_rect(t2, Rect2(Vector2(-d.length() * 0.5, -f.w * 0.5), Vector2(d.length(), f.w)), false, Color(f.col, a2))
 				_add.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 			"speed":
