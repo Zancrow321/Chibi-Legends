@@ -1,0 +1,339 @@
+{
+ "frames": [
+  {
+   "filename": "turquoise-pinwheel 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 120
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 120
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 120
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 63
+  },
+  {
+   "filename": "turquoise-pinwheel 1.png",
+   "frame": {
+    "x": 120,
+    "y": 0,
+    "w": 120,
+    "h": 120
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 120
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 120
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 63
+  },
+  {
+   "filename": "turquoise-pinwheel 2.png",
+   "frame": {
+    "x": 240,
+    "y": 0,
+    "w": 120,
+    "h": 120
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 120
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 120
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 63
+  },
+  {
+   "filename": "turquoise-pinwheel 3.png",
+   "frame": {
+    "x": 360,
+    "y": 0,
+    "w": 120,
+    "h": 120
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 120
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 120
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 63
+  },
+  {
+   "filename": "turquoise-pinwheel 4.png",
+   "frame": {
+    "x": 0,
+    "y": 120,
+    "w": 120,
+    "h": 120
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 120
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 120
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 63
+  },
+  {
+   "filename": "turquoise-pinwheel 5.png",
+   "frame": {
+    "x": 120,
+    "y": 120,
+    "w": 120,
+    "h": 120
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 120
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 120
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 63
+  },
+  {
+   "filename": "turquoise-pinwheel 6.png",
+   "frame": {
+    "x": 240,
+    "y": 120,
+    "w": 120,
+    "h": 120
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 120
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 120
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 63
+  },
+  {
+   "filename": "turquoise-pinwheel 7.png",
+   "frame": {
+    "x": 360,
+    "y": 120,
+    "w": 120,
+    "h": 120
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 120
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 120
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 63
+  },
+  {
+   "filename": "turquoise-pinwheel 8.png",
+   "frame": {
+    "x": 0,
+    "y": 240,
+    "w": 120,
+    "h": 120
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 120
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 120
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 63
+  },
+  {
+   "filename": "turquoise-pinwheel 9.png",
+   "frame": {
+    "x": 120,
+    "y": 240,
+    "w": 120,
+    "h": 120
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 120
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 120
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 63
+  },
+  {
+   "filename": "turquoise-pinwheel 10.png",
+   "frame": {
+    "x": 240,
+    "y": 240,
+    "w": 120,
+    "h": 120
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 120
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 120
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 63
+  },
+  {
+   "filename": "turquoise-pinwheel 11.png",
+   "frame": {
+    "x": 360,
+    "y": 240,
+    "w": 120,
+    "h": 120
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 120
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 120
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 63
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "turquoise-pinwheel.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 480,
+   "h": 360
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "origin",
+   "x": 60,
+   "y": 60
+  },
+  "frameTags": [
+   {
+    "name": "turquoise-pinwheel",
+    "from": 0,
+    "to": 11,
+    "direction": "forward"
+   }
+  ]
+ }
+}

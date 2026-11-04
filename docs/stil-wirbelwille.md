@@ -285,18 +285,25 @@ im Schatten, Wind in den Haaren), zurück zur Szene.
 6 Züge à 1 SP + 18 Alternativen à 2 SP + Meisterzug 4 SP + 2 Varianten à 2 SP
 = 6 + 36 + 8 = **50 SP**.
 
-## Bedarf für den Einbau (später, noch nicht freigegeben)
+## Effekte (erzeugt am 2026-11-04)
 
-- PixelLab: nichts zwingend. Kunai als Waffen-Sprite = 1–2 Generierungen.
-  Windschatten nutzen die Creator-Figur mit Umriss-Shader, keine eigenen Sprites.
-  Posen (Handzeichen, Klonwurf, Kreiselfaust-Haltung) kommen in die
-  Posen-Bibliothek; falls neue Posen nötig sind, wird die Anzahl vorher
-  angefragt.
+12 Effekte und das Kunai sind mit PixelLab erzeugt (ca. 16 Generierungen) und
+liegen in `assets/vfx/wirbelwille/` (Übersicht dort in der README, Frame-Daten in
+`effects.json`) und `assets/creator/weapons/wirbelwille/kunai.png`. Im Spiel werden
+sie additiv gezeichnet und mit Bloom hochgezogen, Kreiselfaust und Sturmrad
+zusätzlich vergrößert (2–3×) für den großen Auftritt.
+
+## Bedarf für den Einbau (später)
+
+- Posen (Handzeichen, Klonwurf, Kreiselfaust-Haltung) kommen in die
+  Posen-Bibliothek; falls neue Posen generiert werden müssen, wird die Anzahl
+  vorher angefragt. Windschatten nutzen die Creator-Figur mit Umriss-Shader,
+  keine eigenen Sprites.
 - Code: Klon-Verwaltung (max. 2, Lebensdauer, Vergehen bei Treffer),
   Teamwork-Marken-Anzeige (3 Drachen), Betäubungs-Deckel für Klontreffer,
   Feuerflächen-Vergrößerung mit Einmal-Markierung.
-- Effekte im Code: Windringe (Shader), Fäden (Line2D), Rauch mit Papierstreifen
-  (Partikel), Sturmrad, Orkanmantel mit Sturmarmen.
+- Effekte zusätzlich im Code: Fäden (Line2D), Sturmarme des Orkanmantels,
+  Kamera-Cut-in.
 
 ---
 
