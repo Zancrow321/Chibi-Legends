@@ -57,7 +57,8 @@ Die Spannung hat drei Stufen:
   Ein eingesteckter Treffer bricht das Spannen ab.
 
 **Rückschwung übernehmen.** Trifft ein Zug, schnellt das Glied zurück. Wer in
-diesem Moment (Fenster 0,15 s, angezeigt durch ein kurzes Aufblitzen am Glied)
+diesem Moment (Fenster 0,3 s ab dem Treffer; ein Druck bis 0,15 s vor dem Treffer
+wird gemerkt; angezeigt durch ein kurzes Aufblitzen am Glied und „Schwung!“ im HUD)
 einen **anderen** Zug startet, nimmt den Schwung mit: Dessen Vorbereitung ist um
 40 % kürzer, und Spannen erreicht die nächste Stufe 30 % schneller.
 
@@ -82,7 +83,14 @@ zusätzlich ein Stück nach hinten.
 Der Rückstoß kann Gegner in **vorhandene Gefahrenflächen** befördern (Glutfeld aus
 Glutatem, Eis, Stacheln der Umgebung, Abgründe in Dungeons). Wird ein Gegner durch
 Rückstoß in eine solche Fläche geschleudert, löst sie sofort einmal aus, und der
-Treffer zählt als Übergang, ohne einen Federring zu verbrauchen. Spannkraft bringt
+Treffer zählt als Übergang, ohne einen Federring zu verbrauchen.
+
+Im Spiel umgesetzt: Gegner, die von einem Treffer ab Spannung II (oder verstärkt,
+oder von der Federkanone) weggeschleudert werden, fliegen 0,55 s lang als Geschoss.
+Was sie treffen, nimmt Schaden („RUMMS!“), auch andere Gegner, die dann selbst
+weiterfliegen (bis zu 2 Stufen Kettenreaktion). Fallen und Flächen der Umgebung
+melden sich über die Gruppe `hazard_zones` (`hazard_rect()`, `trigger_on(node)`)
+und werden so automatisch ausgelöst, sobald es sie gibt. Spannkraft bringt
 selbst keine Elemente mit, sie arbeitet mit dem, was da ist.
 
 ---
@@ -102,7 +110,7 @@ Nahkampf (1,8-fache Leichtschlag-Reichweite). Schaden 120.
 
 | Alternative | Wirkung |
 |---|---|
-| Schnappfaust | Schnell, präzise und gegen ein Ziel (Grundform, bester Übergangsstarter) |
+| Schnelle Schnappfaust | Noch schneller, etwas weniger Reichweite; bester Übergangsstarter |
 | Prasselfaust | Viele kurze Schläge (8 × 25) in einem begrenzten Bereich vor der Figur; Spannen verlängert die Dauer statt der Reichweite |
 | Doppelstoß | Beide Hände treffen gemeinsam (200); langsamer, deutlich stärkerer Rückstoß |
 
@@ -260,7 +268,7 @@ Korallenrot), alle Effekte bekommen dicke, schwarze Umrisslinien.
 6 Züge à 1 SP + 18 Alternativen à 2 SP + Meisterzug 4 SP + 2 Varianten à 2 SP
 = 6 + 36 + 8 = **50 SP**.
 
-## Bedarf für den Einbau (später, noch nicht freigegeben)
+## Umsetzung im Spiel
 
 - Kein Waffen-Sprite nötig. Die Dehnung entsteht im Code: Arm/Bein als
   gestrecktes Segment zwischen Schulter-/Hüft-Anker und Faust-/Fuß-Sprite
@@ -269,10 +277,18 @@ Korallenrot), alle Effekte bekommen dicke, schwarze Umrisslinien.
   in `assets/combat/vfx/spannkraft/` (Liste dort im README).
 - PixelLab (optional, später): Faust- und Fußendstücke in 8 Winkeln (8–12
   Generierungen), Prallbauch- und Prallform-Pose (2–4). Wird vorher angefragt.
-- Code: Spannungs-Stufen beim Halten, Rückschwung-Fenster und 3 Federringe,
-  Trefferarten stumpf/scharf/Energie an allen Angriffen (für Prallbauch),
-  Greifpunkte im Level, Gefahrenflächen-Auslöser bei Rückstoß.
-- Effekte: Squash-&-Stretch-Shader, Nachbilder, Stoßringe, Hitzeflimmern.
+- **Spielbar seit 2026-11-04** (PR #43): `scripts/spannkraft/` (FederCaster,
+  FederFx, FederSuper, FederIcons), Daten `assets/combat/styles/spannkraft.json`,
+  im Creator als Stil wählbar (die Figur kämpft ohne Waffe).
+- Trefferarten für Prallbauch: Krallen und Dornen (Säbeltiger, Sumpfdorn) gelten
+  als scharf, Feueratem (Glutigel) als Energie; beides geht durch. Schläge, Keulen,
+  Körper und geworfene Holzscheite sind stumpf. Neue Gegner können `sharp` oder
+  `energy` setzen.
+- Greifpunkte für Spannzug: der nächste Gegner vor der Figur (bis 170 px, Langer
+  Zug 250 px). Eigene Ankerpunkte im Level sind eine spätere Erweiterung.
+- Klänge selbst synthetisiert (`tools/audio/synth_rubber.py`): Boing, Dehnen,
+  Schnapp, Prall.
+- Testlauf mit Screenshots: `tools/spannkraft/probe.gd`.
 
 ---
 

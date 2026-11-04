@@ -283,6 +283,7 @@ func _blast() -> void:
 				_deal(tg, 68.0, 260.0 if tough else 520.0, "super_final", 160.0)
 				if tg.get("status") is Dictionary:
 					tg.status["taumel"] = FederCaster.TAUMEL_TIME
+				caster.throw([tg])
 		room.fx.flash(0.5 * FxSettings.factor("flash"), Color(0.85, 0.92, 1.0))
 		room.fx.shake(14.0 * FxSettings.factor("shake"), player.facing)
 		room.fx.freeze(0.16 * FxSettings.factor("stop"))

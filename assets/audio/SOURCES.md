@@ -8,3 +8,4 @@ Platzhalter von Kenney stehen in `assets/third_party/LICENSES.md`.
 
 - `sfx/swing_light_*.wav`, `sfx/swing_heavy_*.wav`, `sfx/dash_*.wav`: selbst erzeugt mit `tools/audio/synth_whoosh.py` (gefiltertes Rauschen), 2026-11-04, keine fremde Lizenz.
 - `sfx/bell_*.wav`: selbst erzeugt mit `tools/audio/synth_bell.py` (additive Glocken-Synthese), 2026-11-04, keine fremde Lizenz. Für den Kampfstil Gleichklang.
+- `sfx/rubber_*.wav`: selbst erzeugt mit `tools/audio/synth_rubber.py` (Synthese: Boing, Dehnen, Schnapp, Prall), 2026-11-04, keine fremde Lizenz. Für den Kampfstil Spannkraft.
