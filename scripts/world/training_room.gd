@@ -363,7 +363,7 @@ func cast_super(p: Player, s: Dictionary) -> void:
 func deal_hit(target: Node2D, base: float, element: String, from_x: float, knockback: float, profile := "", launch := 0.0, stun := -1.0) -> int:
 	var res := Reactions.resolve(target.status, element, base)
 	var crit := randf() < 0.05 + Profile.bonus("crit")
-	var dmg := int(round(res.damage * randf_range(0.92, 1.08) * _combo_scale(target) * (1.0 + Profile.bonus("atk")) * (1.5 if crit else 1.0)))
+	var dmg := int(round(res.damage * randf_range(0.92, 1.08) * _combo_scale(target) * (1.0 + Profile.bonus("atk")) * (1.5 + Profile.bonus("critdmg") if crit else 1.0)))
 	var col: Color = GameData.ELEMENTS[element].color if element != "" else Color("ff4b3e")
 	hit_landed.emit(target.get_hurt_rect().get_center(), col, res.reaction != "")
 	# still staggered from the last hit = a real combo (no gap to escape)

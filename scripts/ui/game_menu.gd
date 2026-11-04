@@ -33,6 +33,7 @@ var _drag_opt := -1
 var _toast := ""
 var _toast_t := 0.0
 var _confirm_salvage := ""
+var _reforge_stat := ""  # affix picked for Umschmieden on the item card
 
 
 func _ready() -> void:
@@ -163,6 +164,8 @@ func _key(k: Key) -> void:
 				_salvage_selected()
 			KEY_R:
 				_sort()
+			KEY_U:
+				_reforge_selected()
 	elif tab == 2:
 		match k:
 			KEY_UP, KEY_W:
@@ -198,6 +201,7 @@ func _say(s: String) -> void:
 func _move_sel(d: int) -> void:
 	_sel = clampi(_sel + d, 0, COLS * ROWS - 1)
 	_confirm_salvage = ""
+	_reforge_stat = ""
 	Sfx.play("ui_click", -10.0)
 
 
@@ -233,6 +237,44 @@ func _salvage_selected() -> void:
 	_sel = mini(_sel, maxi(0, Profile.items.size() - 1))
 	_say("+%d Splitter" % gain)
 	Sfx.play("hit_light", -4.0)
+
+
+## Umschmieden: only in the courtyard (Schmiedin Hino), rerolls the picked
+## affix (default: the last one that isn't the main stat) for Splitter.
+func _reforge_selected() -> void:
+	var it := _sel_item()
+	if it.is_empty():
+		return
+	if not GameFlow.is_overworld():
+		_say("Umschmieden kannst du bei Schmiedin Hino im Akademie-Hof")
+		Sfx.play("ui_error")
+		return
+	var stat := _reforge_target(it)
+	if stat == "":
+		_say("Dieser Gegenstand hat nur seinen Hauptwert")
+		Sfx.play("ui_error")
+		return
+	var cost := Loot.reforge_cost(it)
+	if Profile.splitter < cost:
+		_say("Zu wenig Splitter (%d nötig)" % cost)
+		Sfx.play("ui_error")
+		return
+	var new_stat := Profile.reforge(it.uid, stat)
+	_reforge_stat = new_stat
+	get_tree().call_group("profile_user", "apply_profile")
+	_say("Umgeschmiedet: %s  (−%d Splitter)" % [Loot.stat_line(new_stat, float(it.stats[new_stat])), cost])
+	Sfx.play("hit_blade")
+
+
+func _reforge_target(it: Dictionary) -> String:
+	var main: String = Loot.MAIN_STAT.get(str(it.slot), "")
+	if _reforge_stat != "" and _reforge_stat != main and it.stats.has(_reforge_stat):
+		return _reforge_stat
+	var last := ""
+	for s in it.stats:
+		if s != main:
+			last = s
+	return last
 
 
 func _sort() -> void:
@@ -468,7 +510,8 @@ func _draw_character(R: Rect2) -> void:
 		["Leben", str(int(hp))],
 		["Schaden", "+" + _pct(Profile.bonus("atk"))],
 		["Krit-Chance", _pct(0.05 + Profile.bonus("crit"))],
-		["Krit-Schaden", "150 %"],
+		["Krit-Schaden", _pct(1.5 + Profile.bonus("critdmg"))],
+		["Schadensminderung", _pct(minf(Loot.DEF_CAP, Profile.bonus("def")))],
 		["Leistenladung", "+" + _pct(Profile.bonus("gauge"))],
 		["Ausrüstungswert", str(Profile.gear_score())],
 		["Splitter", str(Profile.splitter)],
@@ -487,14 +530,16 @@ func _draw_character(R: Rect2) -> void:
 	var gx := sr.end.x + 26.0
 	var gw := inner.end.x - gx
 	_ink(Vector2(gx, inner.position.y + 32), "Ausrüstung", 22, RED)
-	var gy := inner.position.y + 48.0
-	var gh := (inner.end.y - gy - 2 * 12.0) / 3.0
-	for s in Profile.SLOTS:
-		var r := Rect2(gx, gy, gw, gh)
+	var gy0 := inner.position.y + 48.0
+	var gap := 8.0
+	var cw := (gw - gap) * 0.5
+	var gh := (inner.end.y - gy0 - 3 * gap) / 4.0
+	for i in Profile.SLOTS.size():
+		var s: String = Profile.SLOTS[i]
+		var r := Rect2(gx + (i % 2) * (cw + gap), gy0 + (i / 2) * (gh + gap), cw, gh)
 		var it := Profile.equipped_item(s)
 		_slot_card(r, s, it)
 		_hits.append([r, func(_p): _set_tab(1)])
-		gy += gh + 12.0
 
 
 func _tagged(p: Vector2, text: String, col: Color, sz := 16) -> void:
@@ -507,21 +552,22 @@ func _tagged(p: Vector2, text: String, col: Color, sz := 16) -> void:
 func _slot_card(r: Rect2, slot: String, it: Dictionary) -> void:
 	var col := Loot.color(it) if not it.is_empty() else Color(INK, 0.3)
 	_paper(r, PAPER, 2)
-	draw_rect(Rect2(r.position + Vector2(3, 3), Vector2(6, r.size.y - 6)), col)
-	var ic := Rect2(r.position.x + 18, r.position.y + r.size.y * 0.5 - 34, 68, 68)
+	draw_rect(Rect2(r.position + Vector2(3, 3), Vector2(5, r.size.y - 6)), col)
+	var isz := minf(48.0, r.size.y - 30.0)
+	var ic := Rect2(r.position.x + 14, r.position.y + 26, isz, isz)
 	_icon_box(ic, it, slot)
-	var tx := ic.end.x + 14.0
-	_ink(Vector2(tx, r.position.y + 24), Profile.SLOT_NAMES[slot], 13, Color(INK, 0.6))
+	_ink(Vector2(r.position.x + 14, r.position.y + 18), Profile.SLOT_NAMES[slot], 13, Color(INK, 0.6))
+	var tx := ic.end.x + 8.0
+	var tw := r.end.x - tx - 6.0
 	if it.is_empty():
-		_ink(Vector2(tx, r.position.y + 50), "leer", 18, Color(INK, 0.45))
-		_ink(Vector2(tx, r.position.y + 72), "Gegner lassen Ausrüstung fallen", 13, Color(INK, 0.55))
+		_ink(Vector2(tx, r.position.y + 50), "leer", 16, Color(INK, 0.45))
 		return
-	_ink(Vector2(tx, r.position.y + 48), it.name, 19, col.darkened(0.25))
-	var y := r.position.y + 70.0
+	draw_string(font, Vector2(tx, r.position.y + 42), it.name, HORIZONTAL_ALIGNMENT_LEFT, tw, 14, col.darkened(0.3))
+	var y := r.position.y + 60.0
 	for st in it.stats:
-		_ink(Vector2(tx, y), Loot.stat_line(st, float(it.stats[st])), 14)
-		y += 18.0
-		if y > r.end.y - 6:
+		draw_string(font, Vector2(tx, y), Loot.stat_line(st, float(it.stats[st])), HORIZONTAL_ALIGNMENT_LEFT, tw, 11, INK)
+		y += 13.0
+		if y > r.end.y - 4:
 			break
 
 
@@ -535,7 +581,7 @@ func _icon_box(r: Rect2, it: Dictionary, slot := "") -> void:
 			draw_circle(r.get_center(), r.size.x * (0.36 + 0.03 * sin(_t * 4.0)), Color(col, 0.35))
 		ItemIcon.draw_icon(self, r.get_center(), it, r.size.x / 22.0)
 	elif slot != "":
-		var ghost := {"slot": slot, "rarity": 0, "icon": 0}
+		var ghost := {"slot": "talisman" if slot == "talisman2" else slot, "rarity": 0, "icon": 0}
 		_ghost(r, ghost)
 
 
@@ -612,14 +658,23 @@ func _draw_inventory(R: Rect2) -> void:
 	_ink(Vector2(tx, card.position.y + 70), it.name, 24)
 	_ink(Vector2(tx, card.position.y + 94), "%s · Gegenstandsstufe %d" % [Profile.SLOT_NAMES[it.slot], int(it.ilvl)], 14, Color(INK, 0.7))
 	var y := card.position.y + 150.0
-	var worn := Profile.equipped_item(it.slot)
+	var place := Profile.place_of(it.uid)
+	var worn := Profile.equipped_item(place if place != "" else Profile.place_for(it))
 	var same: bool = not worn.is_empty() and worn.uid == it.uid
+	var target := _reforge_target(it)
+	var hof := GameFlow.is_overworld()
 	for st in Loot.STATS:
 		var v := float(it.stats.get(st, 0.0))
 		var w := float(worn.stats.get(st, 0.0)) if not worn.is_empty() and not same else v
 		if v == 0.0 and w == 0.0:
 			continue
 		if v > 0.0:
+			if hof and st == target:
+				draw_rect(Rect2(card.position.x + 14, y - 20, card.size.x - 28, 26), Color("fb6b1d", 0.22))
+				_ink(Vector2(card.position.x + 24, y), "⚒", 16, Color("fb6b1d"), HORIZONTAL_ALIGNMENT_RIGHT, card.size.x - 120)
+			var stn: String = st
+			if st != Loot.MAIN_STAT.get(str(it.slot), ""):
+				_hits.append([Rect2(card.position.x + 14, y - 20, card.size.x - 28, 26), func(_p): _reforge_stat = stn])
 			_ink(Vector2(card.position.x + 24, y), Loot.stat_line(st, v), 18)
 		else:
 			_ink(Vector2(card.position.x + 24, y), "– " + str(Loot.STATS[st].name), 18, Color(INK, 0.4))
@@ -633,10 +688,14 @@ func _draw_inventory(R: Rect2) -> void:
 	if same:
 		_ink(Vector2(card.position.x + 24, y + 10), "Angelegt", 16, GOOD)
 	elif worn.is_empty():
-		_ink(Vector2(card.position.x + 24, y + 10), "Platz %s ist frei" % Profile.SLOT_NAMES[it.slot], 15, Color(INK, 0.7))
+		_ink(Vector2(card.position.x + 24, y + 10), "Platz %s ist frei" % Profile.SLOT_NAMES[Profile.place_for(it)], 15, Color(INK, 0.7))
 	else:
 		_ink(Vector2(card.position.x + 24, y + 10), "Vergleich mit: %s" % worn.name, 15, Color(INK, 0.7))
 	var by := card.end.y - 54.0
+	if hof and target != "":
+		_button(Rect2(card.position.x + 20, by - 48, card.size.x - 40, 38), "Umschmieden −%d Splitter" % Loot.reforge_cost(it), "U", _reforge_selected)
+	elif target != "":
+		_ink(Vector2(card.position.x + 24, by - 18), "Umschmieden: bei Schmiedin Hino im Hof", 13, Color(INK, 0.55))
 	_button(Rect2(card.position.x + 20, by, 190, 38), "Ablegen" if same else "Anlegen", "Leer", _equip_selected, not same)
 	var gain := int(Loot.salvage_value(it))
 	_button(Rect2(card.position.x + 226, by, card.size.x - 246, 38), "Zerlegen +%d" % gain if _confirm_salvage != it.uid else "Sicher? Nochmal", "X", _salvage_selected)

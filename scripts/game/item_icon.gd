@@ -11,13 +11,31 @@ const WOOD := Color("9a4f50")
 const CLOTH := [Color("e83b3b"), Color("4d9be6"), Color("1ebc73")]
 
 
+static var _tex := {}
+
+
+## PixelLab icon assets/items/<kind>_<0-2>.png when there (tools/items/gen_icons.py).
+static func texture(kind: String, v: int) -> Texture2D:
+	var key := "%s_%d" % [kind, v]
+	if not _tex.has(key):
+		var p := "res://assets/items/%s.png" % key
+		_tex[key] = load(p) if ResourceLoader.exists(p) else null
+	return _tex[key]
+
+
 static func draw_icon(ci: CanvasItem, c: Vector2, item: Dictionary, s: float) -> void:
 	var col := Loot.color(item)
 	var v := int(item.get("icon", 0)) % 3
-	match str(item.get("slot", "waffe")):
+	var kind := str(item.get("slot", "waffe"))
+	var t := texture(kind, v)
+	if t != null:
+		var size := 18.0 * s
+		ci.draw_texture_rect(t, Rect2(c - Vector2(size, size) * 0.5, Vector2(size, size)), false)
+		return
+	match kind:
 		"waffe":
 			_sword(ci, c, s, col, v)
-		"ruestung":
+		"oberteil", "ruestung", "hose", "schuhe":
 			_armour(ci, c, s, col, v)
 		_:
 			_talisman(ci, c, s, col, v)

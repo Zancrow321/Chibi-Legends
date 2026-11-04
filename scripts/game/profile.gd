@@ -5,11 +5,17 @@ extends RefCounted
 ## the overworld and the combat areas share it across scene reloads.
 ## Saved in user://profil.json after every change.
 ##
-## Gear is account-wide (see the gameloop doc): one bag, three slots.
+## Gear is account-wide (see the gameloop doc): one bag, seven places:
+## Waffe, Oberteil, Hose, Schuhe, Accessoire and two Talismane. An item's
+## "slot" is its kind; both talisman places take a talisman.
 
 const SAVE := "user://profil.json"
-const SLOTS := ["waffe", "ruestung", "talisman"]
-const SLOT_NAMES := {"waffe": "Waffe", "ruestung": "Rüstung", "talisman": "Talisman"}
+## Equipment places (keys of `equipped`).
+const SLOTS := ["waffe", "oberteil", "hose", "schuhe", "accessoire", "talisman", "talisman2"]
+const SLOT_NAMES := {"waffe": "Waffe", "oberteil": "Oberteil", "hose": "Hose", "schuhe": "Schuhe",
+	"accessoire": "Accessoire", "talisman": "Talisman", "talisman2": "Talisman 2", "ruestung": "Oberteil"}
+## Item kinds that drop.
+const KINDS := ["waffe", "oberteil", "hose", "schuhe", "accessoire", "talisman"]
 const BAG_SIZE := 30
 ## Per level: +3 % HP and +2 % damage, so a level feels like a step.
 const LEVEL_HP := 0.03
@@ -19,7 +25,7 @@ static var level := 1
 static var xp := 0.0
 static var splitter := 0
 static var items: Array = []  # Dictionaries from Loot.roll()
-static var equipped := {"waffe": "", "ruestung": "", "talisman": ""}  # slot -> item uid
+static var equipped := {}  # place -> item uid, see SLOTS
 static var _next_uid := 1
 static var _loaded := false
 
@@ -28,6 +34,8 @@ static func ensure() -> void:
 	if _loaded:
 		return
 	_loaded = true
+	for s in SLOTS:
+		equipped[s] = ""
 	var f := FileAccess.open(SAVE, FileAccess.READ)
 	if f == null:
 		return
@@ -39,6 +47,11 @@ static func ensure() -> void:
 	splitter = int(d.get("splitter", 0))
 	items = d.get("items", [])
 	var eq: Dictionary = d.get("equipped", {})
+	if eq.has("ruestung") and not eq.has("oberteil"):
+		eq["oberteil"] = eq["ruestung"]  # old saves: the armour becomes the top
+	for it in items:
+		if str(it.get("slot", "")) == "ruestung":
+			it["slot"] = "oberteil"
 	for s in SLOTS:
 		equipped[s] = str(eq.get(s, ""))
 	_next_uid = int(d.get("next_uid", items.size() + 1))
@@ -112,6 +125,24 @@ static func equipped_item(slot: String) -> Dictionary:
 	return item(equipped.get(slot, "")) if equipped.get(slot, "") != "" else {}
 
 
+## The place an item goes to: talismans fill the first free talisman place
+## (or replace the first one).
+static func place_for(it: Dictionary) -> String:
+	var kind := str(it.get("slot", "waffe"))
+	if kind == "talisman":
+		if equipped.get("talisman", "") != "" and equipped.get("talisman2", "") == "":
+			return "talisman2"
+	return kind
+
+
+## Where a worn item sits ("" = not worn).
+static func place_of(uid: String) -> String:
+	for s in SLOTS:
+		if equipped.get(s, "") == uid:
+			return s
+	return ""
+
+
 static func is_equipped(uid: String) -> bool:
 	ensure()
 	return uid in equipped.values()
@@ -123,8 +154,28 @@ static func toggle_equip(uid: String) -> void:
 	var it := item(uid)
 	if it.is_empty():
 		return
-	equipped[it.slot] = "" if equipped[it.slot] == uid else uid
+	var worn := place_of(uid)
+	if worn != "":
+		equipped[worn] = ""
+	else:
+		equipped[place_for(it)] = uid
 	save()
+
+
+## Umschmieden one affix of an item for Splitter. Returns the new stat id
+## ("" = not enough Splitter or nothing to reroll).
+static func reforge(uid: String, stat: String) -> String:
+	var it := item(uid)
+	if it.is_empty():
+		return ""
+	var cost := Loot.reforge_cost(it)
+	if splitter < cost:
+		return ""
+	var s := Loot.reforge(it, stat)
+	if s != "":
+		splitter -= cost
+		save()
+	return s
 
 
 ## Breaks an item into Splitter (never one that is worn).
@@ -140,7 +191,7 @@ static func salvage(uid: String) -> int:
 
 
 ## Sum of a stat over level and worn gear, as a fraction (0.12 = +12 %).
-## Stats: atk, hp, crit, gauge.
+## Stats: atk, hp, crit, gauge, critdmg, def.
 static func bonus(stat: String) -> float:
 	ensure()
 	var total := 0.0
@@ -173,7 +224,9 @@ static func reset() -> void:
 	xp = 0.0
 	splitter = 0
 	items = []
-	equipped = {"waffe": "", "ruestung": "", "talisman": ""}
+	equipped = {}
+	for s in SLOTS:
+		equipped[s] = ""
 	_next_uid = 1
 	_loaded = true
 	save()
