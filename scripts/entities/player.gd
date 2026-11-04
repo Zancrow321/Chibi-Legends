@@ -146,6 +146,8 @@ func init_style() -> void:
 		glut = KlangCaster.new()
 	elif style.id == "spannkraft":
 		glut = FederCaster.new()
+	elif style.id == "wirbelwille":
+		glut = WirbelCaster.new()
 	else:
 		glut = GlutCaster.new()
 	add_child(glut)
@@ -799,6 +801,16 @@ func _use_meisterzug() -> void:
 		ms.title = style.variant().get("name", "Meisterzug")
 		world.add_child(ms)
 		return
+	if glut is WirbelCaster:
+		var ws := WirbelSuper.new()
+		ws.room = world
+		ws.player = self
+		ws.caster = glut
+		ws.wfx = glut.wfx
+		ws.variant = style.super_variant
+		ws.title = style.variant().get("name", "Meisterzug")
+		world.add_child(ws)
+		return
 	if glut is FederCaster:
 		var fs := FederSuper.new()
 		fs.room = world
@@ -850,7 +862,8 @@ func _update_visual() -> void:
 	elif _glut_busy():
 		st = "attack"
 		sprite.attack_frame = glut.pose_frame()
-		sprite.attack_pose = FighterSprite.SLASH_POSE[clampi(sprite.attack_frame, 0, FighterSprite.SLASH_POSE.size() - 1)]
+		var named := glut.pose_name()
+		sprite.attack_pose = named if named != "" else FighterSprite.SLASH_POSE[clampi(sprite.attack_frame, 0, FighterSprite.SLASH_POSE.size() - 1)]
 	elif dash_timer > 0.0:
 		st = "dash"
 	elif not move.is_empty():

@@ -307,8 +307,27 @@ func _burn(delta: float) -> void:
 		_burn_timer = 0.0
 
 
+## What the enemy goes for: the player, or a Windschatten bait close by (Klonköder).
+func _focus() -> Node2D:
+	var best: Node2D = world.player
+	var best_d: float = data.aggro
+	for l in get_tree().get_nodes_in_group("lures"):
+		var d: float = absf(l.global_position.x - global_position.x)
+		if d < best_d and absf(l.global_position.y - global_position.y) < 120.0:
+			best = l
+			best_d = d
+	return best
+
+
+## Windschatten (Wirbelwille) in the way of an attack vanish.
+func _hit_decoys(r: Rect2) -> void:
+	for d in get_tree().get_nodes_in_group("decoys"):
+		if is_instance_valid(d) and r.intersects(d.get_hurt_rect()):
+			d.struck()
+
+
 func _think(delta: float) -> void:
-	var p := world.player
+	var p: Node2D = _focus()
 	var dx := p.global_position.x - global_position.x
 	var dist := absf(dx)
 	var near: bool = dist < data.aggro and absf(p.global_position.y - global_position.y) < 120.0
@@ -391,6 +410,7 @@ func _strike_start() -> void:
 
 
 func _body_hit(r: Rect2) -> void:
+	_hit_decoys(r)
 	var p := world.player
 	if not _struck and r.intersects(p.get_hurt_rect()):
 		_struck = true
@@ -433,6 +453,7 @@ func _strike(delta: float) -> void:
 			if _tick <= 0.0:
 				_tick = 0.2
 				var r := Rect2(mouth.x + (0.0 if facing > 0 else -data.range), mouth.y - 16.0, data.range, 32.0)
+				_hit_decoys(r)
 				if r.intersects(p.get_hurt_rect()):
 					p.receive_hit(data.damage, global_position.x, self)
 			if _st > 0.7:
