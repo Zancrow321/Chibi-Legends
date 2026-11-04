@@ -27,9 +27,12 @@ func _ready() -> void:
 	add_child(hud_layer)
 	room.numbers = numbers
 
-	# Character collection: opens with C / Start. Starts with the selected character.
+	# Character collection: opens with C / Start; on the first start you pick a free starter.
 	var select_layer := CanvasLayer.new()
 	select_layer.layer = 20
-	select_layer.add_child(CharacterSelect.new())
+	var select := CharacterSelect.new()
+	select_layer.add_child(select)
 	add_child(select_layer)
 	room.player.visual.look = Roster.look(Roster.selected(), Roster.selected_skin())
+	if Roster.needs_starter():
+		select.open_for.call_deferred(room.player.visual, true)
