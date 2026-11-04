@@ -18,6 +18,8 @@ var camera: Camera2D
 var effects: Effects
 var numbers: DamageNumbers  # set by Main (lives on the HUD layer)
 var attacks: Node2D
+## Off when another view draws the ground (HD-2D variant B builds it in 3D).
+var draw_terrain := true
 
 # stats for the HUD
 var total_damage := 0.0
@@ -104,6 +106,8 @@ static func _h(i: int, salt: float) -> float:
 
 
 func _draw() -> void:
+	if not draw_terrain:
+		return
 	var outline := Color("2a1c14")
 	for g in GROUND:
 		_draw_cliff(Rect2(g[0], g[1], g[2], 200.0), outline)

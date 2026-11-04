@@ -27,6 +27,25 @@ Spielwelt: die Multiversum-Akademie. Fähigkeiten und Outfits sind eigene Entwü
 | Unendlich Aura / Abklingzeiten zurücksetzen | U / R | – / Back |
 | Look wechseln | C | Start |
 | Hilfe ein/aus | H | – |
+| HD-2D-Test: Ansicht wechseln (flach / A / B) | V | – |
+| HD-2D-Test: Grafik Hoch / Mittel / Niedrig | G | – |
+
+## HD-2D-Look (Test)
+
+Zwei Varianten zum Vergleich, beide im Trainingswald, Stimmung „sonniger Morgen“:
+
+- **A, 3D-Kulisse:** Die Spielebene bleibt 2D. Dahinter steht der Wald als echte 3D-Kulisse mit Fluss, Holzbrücken und Wasserfall.
+- **B, alles 3D:** Boden, Plattformen und Umgebung sind 3D, die Kamera schaut leicht von oben. Die Spiellogik bleibt der bewährte 2D-Code: Figuren, Angriffe und Effekte werden in eine eigene 2D-Ansicht gezeichnet und stehen als Karte auf der Spiellinie.
+
+Effekte: Tiefenunschärfe (auf „Hoch“ echte Tiefe, sonst Tilt-Shift), Bloom, Dunst und Nebel über dem Fluss, Lichtstrahlen, Pollen, Wasser mit Spiegelung (nur „Hoch“) und Sonnenschatten.
+Der Browser-Renderer (GL Compatibility) hat dafür keine fertigen Effekte, darum ist die Kette selbst gebaut (`shaders/hd2d/`).
+Alle Grafiken sind eigene Pixel-Art aus `tools/hd2d/gen_textures.py`.
+
+Im Web-Build lässt sich die Ansicht per URL wählen: `?view=flat`, `?view=a`, `?view=b`, dazu `&q=0` bis `&q=2` für die Grafikstufe.
+
+| A: 3D-Kulisse | B: alles 3D |
+| --- | --- |
+| ![HD-2D Variante A](docs/screenshots/hd2d-a.png) | ![HD-2D Variante B](docs/screenshots/hd2d-b.png) |
 
 ## Starten
 
@@ -48,6 +67,9 @@ scripts/
   world/                   Trainingswald und Parallax-Hintergrund
   fx/                      Schadenszahlen und Pixel-Effekte
   ui/hud.gd                HUD
+  hd2d/                    HD-2D-Test: 3D-Wald, Effekt-Kette, Variante A und B
+shaders/hd2d/              Shader für Gelände, Wasser, Unschärfe, Bloom
+tools/hd2d/                Generator für die Pixel-Texturen (assets/hd2d/)
 ```
 
 Daten und Reaktionslogik hängen nicht an Szenen. Dadurch kann der spätere Godot-Headless-Server (Koop, Phase 4) denselben Code nutzen.

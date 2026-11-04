@@ -12,6 +12,8 @@ var font: Font
 var _items: Array = []  # {pos, text, color, size, t, stack, outline}
 var _recent: Dictionary = {}  # target id -> [last_time, stack]
 var _clock := 0.0
+## Optional world -> screen mapping (HD-2D variant B projects through the 3D camera).
+var to_screen := Callable()
 
 
 func _ready() -> void:
@@ -55,7 +57,7 @@ func _draw() -> void:
 	var xf := get_viewport().get_canvas_transform()
 	for it in _items:
 		var t: float = it.t
-		var screen: Vector2 = xf * it.pos
+		var screen: Vector2 = to_screen.call(it.pos) if to_screen.is_valid() else xf * it.pos
 		var rise: float = -40.0 * t - (it.stack * STACK_STEP if it.stack >= 0 else 96.0)
 		# pop: overshoot then settle
 		var s := 1.0
