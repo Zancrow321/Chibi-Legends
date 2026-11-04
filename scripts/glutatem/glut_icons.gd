@@ -35,12 +35,15 @@ static func texture(id: String) -> Texture2D:
 	return _tex[id]
 
 
-## Set by the player's caster: the generic "meisterzug" icon follows the style.
-static var mond_mode := false
+## Style whose icons are shown (set by the caster of the player's style).
+static var style_id := "glutatem"
 
 
 static func draw(ci: CanvasItem, r: Rect2, id: String, t := 0.0) -> void:
-	if MondIcons.has(id) and (id != "meisterzug" or mond_mode):
+	if style_id == "gleichklang":
+		KlangIcons.draw(ci, r, id, t)
+		return
+	if MondIcons.has(id) and (id != "meisterzug" or style_id == "schwarzmond"):
 		MondIcons.draw(ci, r, id, t)
 		return
 	var tex := texture(id)

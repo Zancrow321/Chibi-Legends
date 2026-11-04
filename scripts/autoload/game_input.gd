@@ -25,6 +25,7 @@ const KEYS := {
 	"toggle_light": [KEY_N],
 	"interact": [KEY_E, KEY_ENTER],
 	"block": [KEY_Q],
+	"game_menu": [KEY_ESCAPE],
 }
 
 const PAD_BUTTONS := {

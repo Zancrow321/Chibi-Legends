@@ -6,16 +6,19 @@ extends Control
 ## reach, the speech panel for NPCs and signs, and a few menu buttons that
 ## fade out while you walk. No HP, no skills, no combat numbers.
 
+## [label, key, toast or "" , menu tab (-1 = none)]
 const MENU := [
-	["Sammlung", "C", ""],
-	["Kampfstil", "", "Den Kampfstil stellst du im Kampfareal ein (Tab)"],
-	["Inventar", "", "Inventar kommt in Phase 2"],
-	["Optionen", "", "Einstellungen kommen in Phase 2"],
+	["Sammlung", "C", "", -1],
+	["Charakter", "Esc", "", 0],
+	["Inventar", "", "", 1],
+	["Kampfstil", "", "Den Kampfstil stellst du im Kampfareal ein (Tab)", -1],
+	["Optionen", "", "", 2],
 ]
 const TYPE_SPEED := 52.0  # characters per second
 
 var world: Overworld
 var select: CharacterSelect  # set by Main
+var menu: GameMenu  # set by Main
 var font: Font
 var show_help := true
 
@@ -118,6 +121,8 @@ func _gui_input(event: InputEvent) -> void:
 			Sfx.play("ui_click")
 			if i == 0 and select != null:
 				select.open_for(world.walker.visual)
+			elif MENU[i][3] >= 0 and menu != null:
+				menu.open(MENU[i][3])
 			else:
 				toast(MENU[i][2])
 			accept_event()
@@ -201,7 +206,7 @@ func _draw_nameplate() -> void:
 	var r := Rect2(16, 20, 284, 92)
 	draw_style_box(UiSkin.box("panel"), r)
 	var info := GameFlow.area_info(GameFlow.area)
-	var tw := _tag(Vector2(r.position.x + 16, r.position.y - 10), "Lv. 1", UiSkin.RED, 15)
+	var tw := _tag(Vector2(r.position.x + 16, r.position.y - 10), "Lv. %d" % Profile.level, UiSkin.RED, 15)
 	_tag(Vector2(r.position.x + 24 + tw, r.position.y - 10), "Akademie-Schüler", UiSkin.INK, 15)
 	_ink_text(Vector2(r.position.x + 18, r.position.y + 50), info.title, 28)
 	# small location pin in the accent colour
@@ -245,7 +250,7 @@ func _draw_route(W: float) -> void:
 	# currencies, small and quiet under the strip
 	var cy := r.end.y + 22.0
 	var cx := r.end.x - 8.0
-	for c in [["0", Color("4d9be6"), "Splitter"], ["0", Color("f04f78"), "Sternkristalle"]]:
+	for c in [[str(Profile.splitter), Color("4d9be6"), "Splitter"], ["0", Color("f04f78"), "Sternkristalle"]]:
 		var label := "%s %s" % [c[0], c[2]]
 		var tw := font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 14).x
 		cx -= tw
@@ -279,7 +284,7 @@ func _draw_prompt() -> void:
 
 func _draw_menu(W: float, H: float) -> void:
 	_menu_rects.clear()
-	var bw := 118.0
+	var bw := 104.0
 	var bh := 40.0
 	var x := W - 16.0 - MENU.size() * (bw + 6.0) + 6.0
 	var y := H - 16.0 - bh

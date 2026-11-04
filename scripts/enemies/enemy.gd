@@ -162,7 +162,7 @@ func take_hit(knockback: float, from_x: float) -> void:
 	if dir == 0.0:
 		dir = -facing
 	# brutes keep swinging through hits; the elite golem barely moves at all
-	var armored: bool = data.kind == "brute" and (state == "strike" or (is_elite() and state == "windup")) and _broken <= 0.0
+	var armored: bool = data.kind == "brute" and (state == "strike" or (is_elite() and state == "windup")) and not status.has("seelenbruch") and _broken <= 0.0
 	var k := 0.3 if armored else (0.5 if is_elite() else 1.0)
 	vel.x = dir * clampf(knockback, 20.0, 260.0) * 0.9 * k
 	if armored:

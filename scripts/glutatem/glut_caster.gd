@@ -74,7 +74,7 @@ func setup(p: Player, st: FightingStyle) -> void:
 	style = st
 	world = p.world
 	fx = world.glut_fx
-	GlutIcons.mond_mode = false
+	GlutIcons.style_id = st.id
 	for z in style.zug_order:
 		cooldowns[z] = 0.0
 

@@ -42,7 +42,6 @@ var _aura_t := 0.0
 
 func setup(p: Player, st: FightingStyle) -> void:
 	super.setup(p, st)
-	GlutIcons.mond_mode = true
 	mfx = MondFx.new()
 	mfx.room = world
 	mfx.caster = self

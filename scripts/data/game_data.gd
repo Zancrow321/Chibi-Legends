@@ -8,6 +8,7 @@ const ELEMENTS := {
 	"frost": {"name": "Frost", "color": Color("7fd8ff")},
 	"blitz": {"name": "Blitz", "color": Color("ffe45c")},
 	"wind": {"name": "Wind", "color": Color("9cf2b4")},
+	"seele": {"name": "Seele", "color": Color("8fd3ff")},
 	"": {"name": "Physisch", "color": Color("ffffff")},
 }
 
@@ -18,6 +19,7 @@ const STATUS := {
 	"brand": {"name": "Brand", "color": Color("ff7a3d")},
 	"frost": {"name": "Frost", "color": Color("7fd8ff")},
 	"schock": {"name": "Schock", "color": Color("ffe45c")},
+	"seelenbruch": {"name": "Seelenbruch", "color": Color("a884f3")},
 }
 
 const SKILLS := {

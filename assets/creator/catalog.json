@@ -76,7 +76,8 @@
   "weapon": {
    "label": "Waffe",
    "items": {
-    "schwert_kaiser": "Verband-Zweihänder"
+    "schwert_kaiser": "Verband-Zweihänder",
+    "sense_nachhall": "Glockensense Nachhall"
    },
    "unlock": {}
   }
@@ -100,6 +101,23 @@
     "shade": "c4c4c4",
     "outline": "3d3d3d"
    }
+  },
+  "sense_nachhall": {
+   "texture": "res://assets/creator/weapons/sense_nachhall.png",
+   "scale": 2,
+   "grip": [
+    11.0,
+    31.0
+   ],
+   "tip": [
+    29.0,
+    13.0
+   ],
+   "twohand": true,
+   "klangloch": [
+    29.0,
+    13.0
+   ]
   }
  },
  "colors": [
@@ -380,12 +398,20 @@
   "glutatem": {
    "name": "Glutatem",
    "text": "Feuer-Atemtechnik aus der Glutschmiede",
-   "unlock": ""
+   "unlock": "",
+   "weapon": "schwert_kaiser"
+  },
+  "gleichklang": {
+   "name": "Gleichklang",
+   "text": "Sense Nachhall: Züge im Takt bauen Einklang auf",
+   "unlock": "",
+   "weapon": "sense_nachhall"
   },
   "schwarzmond": {
    "name": "Schwarzmond",
    "text": "Riesige schwarze Klinge, Mondsicheln (Legendär)",
-   "unlock": ""
+   "unlock": "",
+   "weapon": "schwert_kaiser"
   }
  },
  "start_items_note": "Teile ohne unlock-Eintrag sind von Anfang an frei. CreatorUnlocks.unlock(slot, id) schaltet frei."

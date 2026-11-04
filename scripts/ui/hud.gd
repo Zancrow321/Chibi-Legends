@@ -302,6 +302,9 @@ func _draw_style_panel(r: Rect2) -> void:
 		_draw_mond_panel(r, room.player.glut)
 		return
 	var g := room.player.glut
+	if g is KlangCaster:
+		_draw_klang_panel(r, g)
+		return
 	_panel(r, PANEL, 13, Color("ff9a2a", 0.6))
 	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, Color("ffb347"))
 	var names := ["Rot", "Orange", "Weiß"]
@@ -370,6 +373,35 @@ func _draw_mond_panel(r: Rect2, g: MondCaster) -> void:
 		_text(Vector2(bx, r.position.y + 19), "Mondphase: " + info, 15, MUTED)
 
 
+## Gleichklang: Einklang as six small bells, a beat dot and the state.
+func _draw_klang_panel(r: Rect2, g: KlangCaster) -> void:
+	var ink := Color("2f5d9e")
+	var full_col := Color("6a3fc0")
+	_panel(r, PANEL, 13, Color("8fd3ff", 0.6))
+	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, TEXT)
+	var full := g.klang >= KlangCaster.MAX_KLANG
+	for i in KlangCaster.MAX_KLANG:
+		var c := Vector2(r.position.x + 124 + i * 17, r.get_center().y + 1)
+		var on := g.klang > i
+		var col := full_col if full else ink
+		var bell := PackedVector2Array([c + Vector2(-5, 4), c + Vector2(-4, -2), c + Vector2(-2, -5), c + Vector2(2, -5), c + Vector2(4, -2), c + Vector2(5, 4)])
+		if on:
+			if full:
+				draw_circle(c, 8 + 1.5 * sin(_t * 12.0 + i), Color(Color("a884f3"), 0.35))
+			draw_colored_polygon(bell, col)
+			draw_circle(c + Vector2(0, 5), 1.6, Color("c07a30"))
+		else:
+			bell.append(bell[0])
+			draw_polyline(bell, Color(ink, 0.35), 1.2)
+	# beat: a dot that flashes on every beat (grey while the beat is lost)
+	var bp := 1.0 - g.beat_progress()
+	var bc := Vector2(r.position.x + 236, r.get_center().y)
+	var lost := g._lost > 0.0
+	draw_circle(bc, 3.0 + 4.0 * pow(bp, 6.0), Color(0.5, 0.5, 0.55) if lost else Color(ink, 0.45 + 0.55 * pow(bp, 6.0)))
+	var info := "EINKLANG" if full else ("Takt weg" if lost else "Takt")
+	_text(Vector2(r.position.x + 246, r.position.y + 19), info, 13, full_col if full else MUTED)
+
+
 func _draw_notice(W: float) -> void:
 	var wv := room.waves
 	var msg2 := ""
@@ -386,9 +418,10 @@ func _draw_notice(W: float) -> void:
 	return
 	var r := Rect2(480, 16, maxf(W - 480 - 352 - 16, 160), 26)
 	_panel(r, PANEL, 13)
+	var klang := room.player.glut is KlangCaster
 	var tips := [
-		"Glutatem: L + Richtung, L halten = verstärkt",
-		"Verschiedene Züge im Combo heizen die Klinge",
+		"%s: L + Richtung, L halten = verstärkt" % room.player.style.style_name() if room.player.style != null else "L + Richtung = Zug",
+		"Treffer im Takt füllen den Einklang" if klang else "Verschiedene Züge im Combo heizen die Klinge",
 		"Tab: Kampfstil, Alternativen und Slots",
 		"Der Sparringspfahl rechts schlägt zurück!",
 		"Willkommen im Trainingswald der Akademie!",
@@ -526,7 +559,7 @@ func _draw_style_slots(slots: Array, arrows: Array, sk: String) -> void:
 	var gap := 8.0
 	var total := slots.size() * (slot + gap) - gap + 24
 	var bar := Rect2(W / 2 - total / 2, H - 22 - slot - 30, total, slot + 24)
-	_panel(bar, Color(PANEL, 0.6), 18, Color("ff9a2a", 0.35))
+	_panel(bar, Color(PANEL, 0.6), 18, Color("8fd3ff", 0.35) if p.glut is KlangCaster else Color("ff9a2a", 0.35))
 	for i in slots.size():
 		var sl: Dictionary = slots[i]
 		var r := Rect2(bar.position.x + 12 + i * (slot + gap), bar.position.y + 12, slot, slot)
@@ -656,12 +689,11 @@ func _draw_menu_icon(c: Vector2, i: int) -> void:
 
 func _draw_bottom_left(H: float) -> void:
 	if not show_help:
-		_text(Vector2(16, H - 30), "H  Hilfe & Steuerung", 14, Color(MUTED, 0.8))
+		_text(Vector2(16, H - 30), "H  Hilfe & Steuerung    Esc  Menü", 14, Color(MUTED, 0.8))
 	# EXP bar
 	_panel(Rect2(0, H - 22, size.x, 22), Color(0.05, 0.04, 0.1, 0.95), 0)
-	# EXP from defeated enemies (training forest), one bar = EXP_PER_LEVEL
-	var xp: float = room.exp_points if room != null else 0.0
-	var frac := fmod(xp, TrainingRoom.EXP_PER_LEVEL) / TrainingRoom.EXP_PER_LEVEL
+	# EXP toward the next level (Profile: lasts beyond the fight)
+	var frac := Profile.exp_fraction()
 	_text(Vector2(10, H - 5), "EXP %.2f %%" % (frac * 100.0), 15, TRIM, HORIZONTAL_ALIGNMENT_LEFT, -1, 0)
 	var x := 110.0
 	var seg := (size.x - x - 10) / 10.0

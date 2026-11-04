@@ -129,6 +129,8 @@ func _ready() -> void:
 	guard_fx.z_index = 6
 	guard_fx.draw.connect(_draw_guard)
 	add_child(guard_fx)
+	add_to_group("profile_user")
+	apply_profile(true)
 	style = FightingStyle.load_style(str(CreatorCatalog.load_look().get("style", "glutatem")))
 	if style.moveset_path() != "":
 		moveset = MoveSet.load_file(style.moveset_path())
@@ -138,7 +140,12 @@ func _ready() -> void:
 func init_style() -> void:
 	if style == null or style.zuege.is_empty():
 		return
-	glut = MondCaster.new() if style.data.get("caster", "") == "schwarzmond" else GlutCaster.new()
+	if style.data.get("caster", "") == "schwarzmond":
+		glut = MondCaster.new()
+	elif style.id == "gleichklang":
+		glut = KlangCaster.new()
+	else:
+		glut = GlutCaster.new()
 	add_child(glut)
 	glut.setup(self, style)
 
@@ -150,6 +157,8 @@ func _glut_busy() -> bool:
 func add_gauge(amount: float) -> void:
 	if in_super:
 		return
+	if amount > 0.0:
+		amount *= 1.0 + Profile.bonus("gauge")
 	gauge = clampf(gauge + amount, 0.0, GAUGE_MAX)
 
 
@@ -788,6 +797,16 @@ func _use_meisterzug() -> void:
 		ms.title = style.variant().get("name", "Meisterzug")
 		world.add_child(ms)
 		return
+	if glut is KlangCaster:
+		var ks := KlangSuper.new()
+		ks.room = world
+		ks.player = self
+		ks.caster = glut
+		ks.kfx = glut.kfx
+		ks.variant = style.super_variant
+		ks.title = style.variant().get("name", "Meisterzug")
+		world.add_child(ks)
+		return
 	var s := GlutSuper.new()
 	s.room = world
 	s.player = self
@@ -841,8 +860,16 @@ func _update_visual() -> void:
 	sprite.modulate.a = 0.55 if hurt_invuln > 0.0 and hitstun <= 0.0 and fmod(hurt_invuln, 0.12) < 0.06 else 1.0
 
 
+## Level and worn gear from the Profile: max HP (and full HP when refill).
+func apply_profile(refill := false) -> void:
+	level = Profile.level
+	var frac := hp / max_hp
+	max_hp = roundf(1200.0 * (1.0 + Profile.bonus("hp")))
+	hp = max_hp if refill else max_hp * frac
+
+
 func combat_power() -> int:
 	var total := 0.0
 	for id in build:
 		total += GameData.SKILLS[id].damage
-	return int(total * 10.0 + max_hp * 0.2)
+	return int(total * 10.0 * (1.0 + Profile.bonus("atk")) + max_hp * 0.2 + Profile.gear_score())
