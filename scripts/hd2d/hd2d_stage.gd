@@ -81,7 +81,7 @@ func _process(delta: float) -> void:
 	game_vp.canvas_transform = Transform2D(0.0, Vector2(0.0, -TOP))
 	_aim = _aim.lerp(_target_aim(delta), 1.0 - exp(-6.0 * delta))
 	var pr := deg_to_rad(PITCH)
-	var shake: float = room._shake * 0.05
+	var shake := float(room.get("_shake")) * 0.05 if room.get("_shake") != null else 0.0
 	var jitter := Vector3(randf_range(-1, 1), randf_range(-1, 1), 0.0) * shake
 	view.camera.position = _aim + Vector3(0.0, sin(pr), cos(pr)) * DIST + jitter
 	view.camera.rotation = Vector3(-pr, 0.0, 0.0)

@@ -1,7 +1,7 @@
 extends Node2D
 ## Entry point: assembles background, training room and HUD.
 ## Phase 1 starts straight in the training room; menus and modes follow later.
-## HD-2D look test: [V] switches the view (flat original / HD-2D A with a 3D
+## HD-2D look test: [B] switches the view (flat original / HD-2D A with a 3D
 ## backdrop / HD-2D B fully 3D), [G] the graphics preset (Hoch/Mittel/Niedrig).
 ## On the web, ?view=flat|a|b and ?q=0|1|2 in the URL pick them directly.
 
@@ -13,7 +13,7 @@ static var _url_read := false
 
 func _ready() -> void:
 	_read_url()
-	for a in [["cycle_view", KEY_V], ["cycle_quality", KEY_G]]:
+	for a in [["cycle_view", KEY_B], ["cycle_quality", KEY_G]]:
 		if not InputMap.has_action(a[0]):
 			InputMap.add_action(a[0])
 			var ev := InputEventKey.new()

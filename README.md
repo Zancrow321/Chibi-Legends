@@ -27,7 +27,7 @@ Spielwelt: die Multiversum-Akademie. Fähigkeiten und Outfits sind eigene Entwü
 | Unendlich Aura / Abklingzeiten zurücksetzen | U / R | – / Back |
 | Look wechseln | C | Start |
 | Hilfe ein/aus | H | – |
-| HD-2D-Test: Ansicht wechseln (flach / A / B) | V | – |
+| HD-2D-Test: Ansicht wechseln (flach / A / B) | B | – |
 | HD-2D-Test: Grafik Hoch / Mittel / Niedrig | G | – |
 
 ## HD-2D-Look (Test)
