@@ -136,6 +136,9 @@ func _slowmo(seconds: float, scale: float) -> void:
 
 func _process(delta: float) -> void:
 	_clock += delta
+	combo_time += delta
+	if combo_time >= COMBO_GAP:
+		combo = 0
 	if _slow_until > 0 and Time.get_ticks_msec() >= _slow_until:
 		_slow_until = 0
 		Engine.time_scale = 1.0
@@ -322,7 +325,7 @@ func cast_super(p: Player, s: Dictionary) -> void:
 ## number of their own; the beam adds them up and shows one big total.
 func deal_hit(target: Node2D, base: float, element: String, from_x: float, knockback: float, profile := "", launch := 0.0) -> int:
 	var res := Reactions.resolve(target.status, element, base)
-	var dmg := int(round(res.damage * randf_range(0.92, 1.08)))
+	var dmg := int(round(res.damage * randf_range(0.92, 1.08) * _combo_scale(target)))
 	var col: Color = GameData.ELEMENTS[element].color if element != "" else Color("ff4b3e")
 	hit_landed.emit(target.get_hurt_rect().get_center(), col, res.reaction != "")
 	target.take_hit(knockback, from_x)
@@ -350,6 +353,24 @@ func deal_hit(target: Node2D, base: float, element: String, from_x: float, knock
 		fx.hit(center, element, "super_final" if profile == "super_final" else "heavy", dir)
 		_trigger_reaction(target, res)
 	return dmg
+
+
+## Combo: hits on enemies less than COMBO_GAP apart count up. Long combos
+## lose damage (from the 5th hit 6 % less per hit, at most -50 %), so a
+## juggle never kills an elite on its own.
+const COMBO_GAP := 1.2
+var combo := 0
+var combo_time := 0.0  # seconds since the last combo hit
+var best_combo := 0
+
+
+func _combo_scale(target: Node2D) -> float:
+	if not target is Enemy:
+		return 1.0
+	combo = combo + 1 if combo_time < COMBO_GAP else 1
+	combo_time = 0.0
+	best_combo = maxi(best_combo, combo)
+	return maxf(0.5, 1.0 - 0.06 * maxi(0, combo - 4))
 
 
 func _trigger_reaction(target: Node2D, res: Dictionary) -> void:
