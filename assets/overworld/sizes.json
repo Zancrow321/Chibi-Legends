@@ -1,0 +1,50 @@
+{
+ "board": [
+  46,
+  60
+ ],
+ "dorm": [
+  169,
+  168
+ ],
+ "forge_stall": [
+  110,
+  110
+ ],
+ "fountain": [
+  98,
+  118
+ ],
+ "gate_glut": [
+  114,
+  122
+ ],
+ "gate_wald": [
+  104,
+  117
+ ],
+ "npc_hueter": [
+  42,
+  63
+ ],
+ "npc_rektorin": [
+  40,
+  64
+ ],
+ "npc_schmiedin": [
+  45,
+  64
+ ],
+ "npc_waechter": [
+  45,
+  62
+ ],
+ "sakura": [
+  169,
+  171
+ ],
+ "shrine": [
+  104,
+  115
+ ]
+}
