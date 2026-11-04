@@ -15,12 +15,17 @@ var flash := 0.0
 var knock := 0.0
 var _burn_timer := 0.0
 var _home_x := 0.0
+var _home_y := 0.0
+## Height above the post when launched (juggle), and its vertical speed.
+var air := 0.0
+var air_v := 0.0
 var _t := 0.0
 
 
 func _ready() -> void:
 	add_to_group("targets")
 	_home_x = position.x
+	_home_y = position.y
 
 
 func size() -> Vector2:
@@ -43,8 +48,25 @@ func take_hit(knockback: float, from_x: float) -> void:
 	knock += dir * knockback * (0.25 if big else 0.5) * 0.06
 
 
+## Throws the dummy up (positive) or slams it down (negative). Big dummies
+## are heavy and barely move; while airborne every hit keeps it up (juggle).
+func launch(speed: float) -> void:
+	var k := 0.35 if big else 1.0
+	if speed > 0.0:
+		air_v = maxf(air_v, 0.0) * 0.3 + speed * k
+	elif air > 0.0:
+		air_v = speed * k
+
+
 func _process(delta: float) -> void:
 	_t += delta
+	if air > 0.0 or air_v > 0.0:
+		air_v -= 900.0 * delta
+		air = maxf(0.0, air + air_v * delta)
+		if air <= 0.0:
+			air_v = 0.0
+			wobble = 1.0
+	position.y = _home_y - air
 	wobble = maxf(0.0, wobble - delta * 2.5)
 	flash = maxf(0.0, flash - delta)
 	# dummies are on springs: knockback slides them, then they return home
