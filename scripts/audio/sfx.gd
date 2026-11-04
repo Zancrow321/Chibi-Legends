@@ -80,6 +80,6 @@ func _play(event: String, volume_db: float) -> void:
 	_next = (_next + 1) % _players.size()
 	var jitter: float = entry.get("pitch_jitter", 0.0)
 	p.stream = stream
-	p.volume_db = float(entry.get("volume_db", 0.0)) + volume_db
+	p.volume_db = float(entry.get("volume_db", 0.0)) + volume_db + GameSettings.sfx_db()
 	p.pitch_scale = 1.0 + randf_range(-jitter, jitter)
 	p.play()

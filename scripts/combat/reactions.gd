@@ -5,6 +5,8 @@ extends RefCounted
 
 const STATUS_DURATION := 4.0
 const SHOCK_BONUS := 1.2
+## Seelenbruch (Gleichklang): every hit on the marked target does more.
+const SOUL_BREAK_BONUS := 1.25
 
 
 static func _has(status: Dictionary, key: String) -> bool:
@@ -42,9 +44,11 @@ static func resolve(status: Dictionary, element: String, base: float) -> Diction
 		r.aoe_radius = 110.0
 		r.spread_status = "brand"
 
+	if _has(status, "seelenbruch"):
+		r.damage *= SOUL_BREAK_BONUS
 	if r.reaction == "":
 		if schock:
-			r.damage = base * SHOCK_BONUS
+			r.damage = r.damage * SHOCK_BONUS
 		if GameData.STATUS_OF.has(element):
 			status[GameData.STATUS_OF[element]] = STATUS_DURATION
 	return r

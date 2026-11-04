@@ -1,0 +1,93 @@
+{
+	"_doc": "Kampfstil Gleichklang (Sense Nachhall, Takt und Einklang). Konzept: docs/stil-gleichklang.md. 6 Zuege fuer die Spezial-Taste + Meisterzug, je 3 Alternativen, pro Zug genau eine aktiv (oder die Grundform). frames = [Anlauf, aktiv, Erholung] bei 60 fps. params = Werte der Grundform; eine Alternative ueberschreibt einzelne Werte. enhanced = verstaerkt (L halten = 1 Stufe Legendenleiste, oder volle Einklang-Leiste): _add addiert, _mul multipliziert, andere ersetzen. Schaden: 8 entspricht einem normalen Leichtschlag (100 %).",
+	"id": "gleichklang",
+	"name": "Gleichklang",
+	"element": "seele",
+	"subtitle": "Sense Nachhall · Seelenklang  ·  Einklang: verschiedene Züge und Treffer im Takt füllen 6 Glocken",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"colors": {"ink": "16121f", "blue": "8fd3ff", "pale": "cfeaff", "white": "f4fbff", "violet": "a884f3", "red": "e83b3b", "bronze": "e0a060"},
+	"loadout": {"neutral": "sicheltakt", "forward": "seelensichel", "up": "himmelsreigen", "down": "fallende_sichel"},
+	"zuege": {
+		"sicheltakt": {
+			"name": "Sicheltakt", "dir": "neutral", "sp": 1, "cd": 0.8, "frames": [8, 24, 14],
+			"desc": "Zwei kontrollierte Sensenbögen und ein weiter Abschlussschnitt. Die äußere Schneide trifft am besten.",
+			"pose": {"startup": [1], "active": [3, 5, 4], "recovery": [6]},
+			"params": {"damage": [6, 6, 12], "reach": 50, "arc": 1.0, "heavy": false},
+			"enhanced": {"linger": true, "reach_add": 10},
+			"alts": [
+				{"id": "weit", "name": "Weiter Takt", "sp": 2, "desc": "Größere Bögen gegen Gruppen, langsamere Ausführung.", "frames": [10, 30, 16], "params": {"reach": 64, "arc": 1.5}},
+				{"id": "kurz", "name": "Kurzer Takt", "sp": 2, "desc": "Vier schnelle Schläge mit Schaft und Schneide gegen nahe Gegner, keine Schaft-Abwertung.", "frames": [6, 20, 10], "params": {"damage": [4, 4, 4, 6], "reach": 36, "arc": 0.8, "short": true}},
+				{"id": "schwer", "name": "Schwerer Takt", "sp": 2, "desc": "Zwei langsamere Hiebe mit hohem Haltungsschaden.", "frames": [12, 22, 18], "params": {"damage": [13, 14], "reach": 52, "heavy": true}}
+			]
+		},
+		"seelensichel": {
+			"name": "Seelensichel", "dir": "forward", "sp": 1, "cd": 1.0, "frames": [9, 8, 18],
+			"desc": "Tritt vor und zieht die Sense quer durch den Bereich vor sich. Verstärkt verlängert eine Seelenklinge den Schnitt.",
+			"pose": {"startup": [1, 2], "active": [3, 4], "recovery": [6]},
+			"params": {"damage": 13, "reach": 62, "step": 26, "pull": false, "wave": false},
+			"enhanced": {"reach_mul": 1.8, "soul": true},
+			"alts": [
+				{"id": "lang", "name": "Langer Bogen", "sp": 2, "desc": "Deutlich mehr Reichweite, längere Erholung.", "frames": [9, 8, 30], "params": {"reach": 86}},
+				{"id": "rueckhol", "name": "Rückholschnitt", "sp": 2, "desc": "Erneut L drücken: die Sense wird zurückgezogen, trifft noch einmal und zieht leichte Gegner heran.", "params": {"pull": true}},
+				{"id": "welle", "name": "Seelenwelle", "sp": 2, "desc": "Statt des Nahkampfschnitts fliegt eine kurze Energiewelle (ein Drittel Bildschirm).", "params": {"wave": true, "damage": 10}}
+			]
+		},
+		"himmelsreigen": {
+			"name": "Himmelsreigen", "dir": "up", "sp": 1, "cd": 1.1, "frames": [8, 8, 18],
+			"desc": "Aufsteigender Sensenschwung, hebt leichte Gegner an. Erneut L: hinterherspringen.",
+			"pose": {"startup": [6], "active": [4, 5], "recovery": [5]},
+			"params": {"damage": 11, "launch": 330, "follow": true, "wide": false, "overhead": false},
+			"enhanced": {"launch_add": 120, "float": 0.4},
+			"alts": [
+				{"id": "hoch", "name": "Hoher Reigen", "sp": 2, "desc": "Hebt einen Gegner besonders hoch, für lange Luftkombos.", "params": {"launch": 450}},
+				{"id": "breit", "name": "Breiter Reigen", "sp": 2, "desc": "Erfasst mehrere Gegner, hebt sie nur halb so hoch.", "params": {"launch": 190, "wide": true}},
+				{"id": "ueberkopf", "name": "Überkopfbogen", "sp": 2, "desc": "Starker Abwehrhieb gegen Gegner über dir, ohne Aufstieg.", "params": {"damage": 16, "launch": 0, "follow": false, "overhead": true}}
+			]
+		},
+		"seelenlauschen": {
+			"name": "Seelenlauschen", "dir": "neutral", "sp": 1, "cd": 1.4, "frames": [5, 30, 14],
+			"desc": "Augen zu, Nachhall summt. Wer in den ersten Momenten getroffen wird, weicht aus und schneidet zurück.",
+			"pose": {"startup": [6], "active": [6], "recovery": [6]},
+			"params": {"stance": 0.5, "perfect": 0.2, "counter_damage": 16, "klang_gain": 0},
+			"enhanced": {"break": true, "counter_damage_add": 6},
+			"alts": [
+				{"id": "gegentakt", "name": "Gegentakt", "sp": 2, "desc": "Sehr enges Zeitfenster, dafür doppelt so starker Konter.", "params": {"perfect": 0.12, "counter_damage": 32}},
+				{"id": "schaftparade", "name": "Schaftparade", "sp": 2, "desc": "Großzügiges Zeitfenster, schwächerer Konter.", "params": {"perfect": 0.32, "counter_damage": 10}},
+				{"id": "klangantwort", "name": "Klangantwort", "sp": 2, "desc": "Erfolgreiche Abwehr gibt +2 Einklang statt eines Konters.", "params": {"counter_damage": 0, "klang_gain": 2}}
+			]
+		},
+		"sichelschritt": {
+			"name": "Sichelschritt", "dir": "forward", "sp": 1, "cd": 1.0, "frames": [6, 12, 14],
+			"desc": "Setzt den Schaft auf und schwingt sich nach vorn. Erneut L: seitlicher Schnitt.",
+			"pose": {"startup": [1], "active": [3], "recovery": [6]},
+			"params": {"dist": 92, "damage": 10, "vault": false, "iframes": 0.0, "pass": false},
+			"enhanced": {"dist_mul": 1.8, "ring": true},
+			"alts": [
+				{"id": "stabsprung", "name": "Stabsprung", "sp": 2, "desc": "Hoher Sprung über den Schaft, Start einer Luftkombo.", "params": {"vault": true, "dist": 60}},
+				{"id": "seitentakt", "name": "Seitentakt", "sp": 2, "desc": "Kurzer Schritt mit engem Ausweichfenster.", "frames": [4, 8, 10], "params": {"dist": 52, "iframes": 0.12}},
+				{"id": "umlauf", "name": "Umlauf", "sp": 2, "desc": "Läuft am Gegner vorbei und dreht sich für einen Rückschnitt um.", "params": {"pass": true, "dist": 120}}
+			]
+		},
+		"fallende_sichel": {
+			"name": "Fallende Sichel", "dir": "down", "sp": 1, "cd": 1.2, "frames": [8, 6, 16],
+			"desc": "Drehung in der Luft, dann ein diagonaler Abwärtsschnitt. Verfehlt bleibst du kurz offen.",
+			"pose": {"startup": [5], "active": [4], "recovery": [3, 6]},
+			"params": {"damage": 14, "fall": 620, "wide": false, "bounce": false, "steep": false},
+			"enhanced": {"wave": true, "damage_add": 4},
+			"alts": [
+				{"id": "schwer", "name": "Schwerer Fall", "sp": 2, "desc": "Steiler Sturz mit hohem Haltungsschaden.", "params": {"damage": 18, "fall": 860, "steep": true}},
+				{"id": "wirbel", "name": "Wirbelbogen", "sp": 2, "desc": "Langsam sinkende Drehung, trifft mehrere Gegner.", "params": {"damage": 9, "fall": 260, "wide": true}},
+				{"id": "sprungfolge", "name": "Sprungfolge", "sp": 2, "desc": "Ein Treffer lässt dich zurückfedern, einmal pro Luftkombo.", "params": {"bounce": true}}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug", "sp": 4, "cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Figur und Nachhall rufen „Zusammen!“, die Alternativen sind drei verschiedene Supers.",
+		"variants": [
+			{"id": "erntebogen", "name": "Erntebogen", "sp": 0, "desc": "Eine riesige Seelenklinge verlängert das Blatt, ein einziger weiter Bogenschnitt trifft alles davor und darüber. Gut gegen Gruppen."},
+			{"id": "totengelaeut", "name": "Totengeläut", "sp": 2, "desc": "Drei tiefe Glockenschläge verdichten die Klinge, dann ein senkrechter Schnitt mit sehr hohem Schaden. Stark gegen ein großes Ziel."},
+			{"id": "reiner_klang", "name": "Reiner Klang", "sp": 2, "desc": "Ein heller Glockenschlag breitet sich als Lichtring aus: entfernt deine negativen Zustände, trifft und unterbricht nahe Gegner."}
+		]
+	}
+}

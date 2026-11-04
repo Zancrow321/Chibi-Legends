@@ -243,6 +243,11 @@ func _cycle(slot: String, dir: int) -> void:
 			return
 		var j := ids.find(str(look.get("style", ids[0])))
 		look["style"] = ids[(j + dir + ids.size()) % ids.size()]
+		# each style brings its weapon (Gleichklang: the scythe Nachhall)
+		var w := str(CreatorCatalog.data["styles"][look["style"]].get("weapon", ""))
+		if w != "" and look.get("weapon", "") != "":
+			look["weapon"] = w
+			_play("twohand_idle")
 	else:
 		var items: Array = CreatorCatalog.slot_items(slot)
 		var opts: Array = [""] + items if slot in ["hair", "weapon", "top", "pants", "shoes"] else items

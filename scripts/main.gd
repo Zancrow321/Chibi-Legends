@@ -24,6 +24,8 @@ static var _intro_shown := false
 
 func _ready() -> void:
 	_read_url()
+	GameSettings.ensure()
+	Profile.ensure()
 	for a in [["cycle_view", KEY_B], ["cycle_quality", KEY_G], ["open_creator", KEY_O]]:
 		if not InputMap.has_action(a[0]):
 			InputMap.add_action(a[0])
@@ -81,6 +83,7 @@ func _ready() -> void:
 	hud_layer.add_child(hud)
 	var info := Hd2dInfo.new()
 	info.view_name = VIEWS[view_mode]
+	info.hud = hud
 	hud_layer.add_child(info)
 	add_child(hud_layer)
 	room.numbers = numbers
@@ -99,8 +102,19 @@ func _ready() -> void:
 	select_layer.add_child(select)
 	add_child(select_layer)
 	room.player.visual.look = Roster.look(Roster.selected(), Roster.selected_skin())
+	_add_menu()
 	if not _add_creator() and Roster.needs_starter():
 		select.open_for.call_deferred(room.player.visual, true)
+
+
+## Game menu (Esc): Charakter, Inventar, Optionen. Over the HUDs, under the creator.
+func _add_menu() -> GameMenu:
+	var layer := CanvasLayer.new()
+	layer.layer = 19
+	var menu := GameMenu.new()
+	layer.add_child(menu)
+	add_child(layer)
+	return menu
 
 
 ## Character Creator: Taste O. Beim allerersten Start öffnet er sich von selbst.
@@ -140,6 +154,7 @@ func _build_overworld() -> void:
 	select_layer.add_child(select)
 	add_child(select_layer)
 	hud.select = select
+	hud.menu = _add_menu()
 	var creator_open := _add_creator()
 	world.walker.visual.look = Roster.look(Roster.selected(), Roster.selected_skin())
 	if not creator_open and Roster.needs_starter():

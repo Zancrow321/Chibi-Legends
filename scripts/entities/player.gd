@@ -52,6 +52,20 @@ var gauge := 0.0
 var hitstun := 0.0
 var hurt_invuln := 0.0
 
+## Guard (Q / right trigger): holding it on the ground blocks hits from the
+## front (25 % damage, no stagger). Pressed just before a hit = Perfekt-Block:
+## no damage, the attacker staggers, +15 Leiste. The dash is invulnerable;
+## dodging a hit with it = Ausweichen (+5 Leiste). Dash while staggered =
+## Befreiungsstoß (1 Stufe): breaks free and pushes enemies away.
+const PERFECT_WINDOW := 0.14
+const BLOCK_FACTOR := 0.25
+const BREAKER_COST := 100.0
+var blocking := false
+var _block_t := 99.0  # seconds since the guard was pressed
+var _guard_flash := 0.0
+var _dodge_t := 0.0
+var guard_fx: Node2D
+
 var facing := 1
 var jumps_used := 0
 var dash_timer := 0.0
@@ -111,6 +125,12 @@ func _ready() -> void:
 	add_child(visual)
 	sprite = FighterSprite.new()
 	add_child(sprite)
+	guard_fx = Node2D.new()
+	guard_fx.z_index = 6
+	guard_fx.draw.connect(_draw_guard)
+	add_child(guard_fx)
+	add_to_group("profile_user")
+	apply_profile(true)
 	style = FightingStyle.load_style(str(CreatorCatalog.load_look().get("style", "glutatem")))
 	if style.moveset_path() != "":
 		moveset = MoveSet.load_file(style.moveset_path())
@@ -120,7 +140,12 @@ func _ready() -> void:
 func init_style() -> void:
 	if style == null or style.zuege.is_empty():
 		return
-	glut = GlutCaster.new()
+	if style.data.get("caster", "") == "schwarzmond":
+		glut = MondCaster.new()
+	elif style.id == "gleichklang":
+		glut = KlangCaster.new()
+	else:
+		glut = GlutCaster.new()
 	add_child(glut)
 	glut.setup(self, style)
 
@@ -132,6 +157,8 @@ func _glut_busy() -> bool:
 func add_gauge(amount: float) -> void:
 	if in_super:
 		return
+	if amount > 0.0:
+		amount *= 1.0 + Profile.bonus("gauge")
 	gauge = clampf(gauge + amount, 0.0, GAUGE_MAX)
 
 
@@ -144,11 +171,23 @@ func get_hurt_rect() -> Rect2:
 func receive_hit(damage: float, from_x: float, source: Node = null) -> bool:
 	if in_super or hurt_invuln > 0.0 or (glut != null and glut.invuln > 0.0):
 		return false
+	if dash_timer > 0.0:
+		_dodged()
+		return false
 	if glut != null and glut.try_counter(from_x, source if source != null and source.has_method("burn") else null):
 		return false
+	if glut != null and glut.guard_hit(damage, from_x, source):
+		return true
 	var dir := signf(global_position.x - from_x)
 	if dir == 0.0:
 		dir = -facing
+	# guard: only against hits from the front
+	if blocking and signf(from_x - global_position.x) * facing >= 0.0:
+		if _block_t <= PERFECT_WINDOW:
+			_perfect_block(source)
+			return false
+		_block_hit(damage, dir)
+		return true
 	hp = maxf(0.0, hp - damage)
 	hitstun = 0.32
 	hurt_invuln = 0.7
@@ -166,6 +205,76 @@ func receive_hit(damage: float, from_x: float, source: Node = null) -> bool:
 		hp = max_hp
 		world.toast("Getroffen! Im Training geht es mit voller HP weiter")
 	return true
+
+
+func _block_hit(damage: float, dir: float) -> void:
+	var dmg := maxf(1.0, damage * BLOCK_FACTOR)
+	hp = maxf(1.0, hp - dmg)  # blocking never knocks you out
+	velocity.x = dir * 90.0
+	_guard_flash = 0.18
+	world.numbers.spawn_number(global_position + Vector2(0, -50), int(dmg), Color("9ab8ff"), get_instance_id(), false)
+	world.fx.hit(global_position + Vector2(facing * 12.0, -24), "", "light", dir)
+	world.effects.burst(global_position + Vector2(facing * 14.0, -24), Color("9ab8ff"), 8, 120.0, 0.0)
+	Sfx.play("hit_blade", -2.0)
+	add_gauge(3.0)
+
+
+func _perfect_block(source: Node) -> void:
+	_guard_flash = 0.35
+	var c := global_position + Vector2(facing * 14.0, -26)
+	world.fx.blast(c, Color("fff4d0"), 40.0, "heavy")
+	world.effects.ring(c, 34.0, Color("fff4d0"))
+	if world.glut_fx != null:
+		world.glut_fx.word(c + Vector2(0, -36), "PERFEKT!", Color("fff4d0"), 26)
+	Sfx.play("hit_heavy")
+	add_gauge(15.0)
+	if source != null and source.has_method("parried"):
+		source.parried(global_position.x)
+	hurt_invuln = maxf(hurt_invuln, 0.25)
+
+
+func _dodged() -> void:
+	if _dodge_t > 0.0:
+		return  # one "AUSGEWICHEN" per dash
+	_dodge_t = 0.25
+	if world.glut_fx != null:
+		world.glut_fx.word(global_position + Vector2(0, -64), "AUSGEWICHEN!", Color("9ef0ff"), 18)
+	world.spawn_ghost(self)
+	add_gauge(5.0)
+
+
+## Befreiungsstoß: breaks out of a stagger for 1 Stufe of the Leiste.
+func _breaker() -> void:
+	gauge = maxf(0.0, gauge - BREAKER_COST) if not infinite_aura else gauge
+	hitstun = 0.0
+	hurt_invuln = 0.6
+	velocity = Vector2(0, -120)
+	var c := global_position + Vector2(0, -24)
+	world.fx.blast(c, Color("ff9a2a"), 70.0, "heavy")
+	world.effects.ring(c, 60.0, Color("ffd25c"))
+	if world.glut_fx != null:
+		world.glut_fx.word(c + Vector2(0, -40), "BEFREIT!", Color("ffd25c"), 24)
+		world.glut_fx.sparks(c, 0.0, PI, 26, 260.0)
+	for t in get_tree().get_nodes_in_group("enemies"):
+		var d: Vector2 = t.global_position - global_position
+		if d.length() < 90.0 and t.has_method("take_hit"):
+			t.take_hit(220.0, global_position.x)
+	Sfx.play("super_flash", -6.0)
+
+
+func _draw_guard() -> void:
+	var a := 0.0
+	if blocking:
+		a = 0.55
+	a = maxf(a, _guard_flash * 3.0)
+	if a <= 0.0:
+		return
+	var perfect := blocking and _block_t <= PERFECT_WINDOW
+	var col := Color("fff4d0") if perfect or _guard_flash > 0.2 else Color("9ab8ff")
+	var c := Vector2(facing * 10.0, -24)
+	var from := -1.2 if facing > 0 else PI - 1.2
+	guard_fx.draw_arc(c, 22.0, from, from + 2.4, 16, Color(col, a * 0.35), 7.0)
+	guard_fx.draw_arc(c, 22.0, from, from + 2.4, 16, Color(col, a), 2.0)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -212,7 +321,10 @@ func _physics_process(delta: float) -> void:
 	if infinite_aura:
 		gauge = GAUGE_MAX
 
+	if hitstun > 0.0 and _take("dash") and (gauge >= BREAKER_COST or infinite_aura):
+		_breaker()
 	if hitstun > 0.0:
+		blocking = false
 		velocity.x = move_toward(velocity.x, 0.0, 500.0 * delta)
 		velocity.y = minf(velocity.y + GRAVITY * delta, MAX_FALL)
 		move_and_slide()
@@ -235,6 +347,21 @@ func _physics_process(delta: float) -> void:
 		_update_visual()
 		return
 	var busy := not move.is_empty() or cast_timer > 0.0
+	# guard: only on the ground and outside of attacks
+	var want_block := Input.is_action_pressed("block") and on_floor and not busy and dash_timer <= 0.0
+	if want_block and not blocking:
+		_block_t = 0.0
+	blocking = want_block
+	if blocking:
+		velocity.x = move_toward(velocity.x, 0.0, ACCEL * delta)
+		velocity.y = minf(velocity.y + _gravity() * delta, MAX_FALL)
+		if dir != 0.0:
+			facing = 1 if dir > 0.0 else -1
+		if _buffer.get("dash", 0.0) <= 0.0:
+			move_and_slide()
+			_update_visual()
+			return
+		blocking = false  # dash out of the guard
 
 	if dash_timer > 0.0:
 		velocity = Vector2(facing * DASH_SPEED, 0.0)
@@ -298,6 +425,10 @@ func _tick_timers(delta: float) -> void:
 		if _buffer[key] <= 0.0:
 			_buffer.erase(key)
 	dash_timer = maxf(0.0, dash_timer - delta)
+	_block_t += delta
+	_guard_flash = maxf(0.0, _guard_flash - delta)
+	_dodge_t = maxf(0.0, _dodge_t - delta)
+	guard_fx.queue_redraw()
 	_coyote = maxf(0.0, _coyote - delta)
 	dash_cd = maxf(0.0, dash_cd - delta)
 	cast_timer = maxf(0.0, cast_timer - delta)
@@ -496,7 +627,7 @@ func _start_move(m: Dictionary) -> void:
 func _tick_move(delta: float) -> void:
 	if move.is_empty():
 		return
-	move_t += delta
+	move_t += delta * (glut.normal_speed() if glut != null else 1.0)
 	var ph := MoveSet.phase_at(move, move_t)
 	if ph != "startup" and not _move_spawned:
 		_move_spawned = true
@@ -642,6 +773,10 @@ func _use_meisterzug() -> void:
 	if in_super or _glut_busy() or dash_timer > 0.0:
 		return
 	var cost := style.super_cost()
+	var mond := glut as MondCaster
+	if mond != null and style.super_variant == "mondfinsternis" and mond.eclipse_used:
+		world.toast("Mondfinsternis gibt es nur einmal pro Kampf (R setzt zurück)")
+		return
 	if not infinite_aura and gauge < cost:
 		world.toast("Legendenleiste: %d von 3 Stufen" % int(gauge / 100.0))
 		return
@@ -652,6 +787,28 @@ func _use_meisterzug() -> void:
 	move = {}
 	_queued = ""
 	Sfx.play("super_flash")
+	if mond != null:
+		var ms := MondSuper.new()
+		ms.room = world
+		ms.player = self
+		ms.caster = mond
+		ms.fx = world.glut_fx
+		ms.variant = style.super_variant
+		ms.title = style.variant().get("name", "Meisterzug")
+		Sfx.play("mond_super", -2.0)
+		world.add_child(ms)
+		return
+	if glut is KlangCaster:
+		var ks := KlangSuper.new()
+		ks.room = world
+		ks.player = self
+		ks.caster = glut
+		ks.kfx = glut.kfx
+		ks.variant = style.super_variant
+		ks.title = style.variant().get("name", "Meisterzug")
+		Sfx.play("klang_super", -4.0)
+		world.add_child(ks)
+		return
 	Sfx.play("glut_super", -2.0)
 	var s := GlutSuper.new()
 	s.room = world
@@ -667,6 +824,7 @@ func reset_cooldowns() -> void:
 	if glut != null:
 		for z in glut.cooldowns:
 			glut.cooldowns[z] = 0.0
+		glut.reset_fight()
 	super_cd = 0.0
 	for i in cooldowns.size():
 		cooldowns[i] = 0.0
@@ -705,8 +863,16 @@ func _update_visual() -> void:
 	sprite.modulate.a = 0.55 if hurt_invuln > 0.0 and hitstun <= 0.0 and fmod(hurt_invuln, 0.12) < 0.06 else 1.0
 
 
+## Level and worn gear from the Profile: max HP (and full HP when refill).
+func apply_profile(refill := false) -> void:
+	level = Profile.level
+	var frac := hp / max_hp
+	max_hp = roundf(1200.0 * (1.0 + Profile.bonus("hp")))
+	hp = max_hp if refill else max_hp * frac
+
+
 func combat_power() -> int:
 	var total := 0.0
 	for id in build:
 		total += GameData.SKILLS[id].damage
-	return int(total * 10.0 + max_hp * 0.2)
+	return int(total * 10.0 * (1.0 + Profile.bonus("atk")) + max_hp * 0.2 + Profile.gear_score())

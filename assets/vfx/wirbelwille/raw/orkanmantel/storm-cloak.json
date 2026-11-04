@@ -1,0 +1,443 @@
+{
+ "frames": [
+  {
+   "filename": "storm-cloak 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 148
+   },
+   "pivot": {
+    "x": 0.475,
+    "y": 0.49324324324324326
+   },
+   "duration": 83
+  },
+  {
+   "filename": "storm-cloak 1.png",
+   "frame": {
+    "x": 120,
+    "y": 0,
+    "w": 120,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 148
+   },
+   "pivot": {
+    "x": 0.475,
+    "y": 0.49324324324324326
+   },
+   "duration": 83
+  },
+  {
+   "filename": "storm-cloak 2.png",
+   "frame": {
+    "x": 240,
+    "y": 0,
+    "w": 120,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 148
+   },
+   "pivot": {
+    "x": 0.475,
+    "y": 0.49324324324324326
+   },
+   "duration": 83
+  },
+  {
+   "filename": "storm-cloak 3.png",
+   "frame": {
+    "x": 360,
+    "y": 0,
+    "w": 120,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 148
+   },
+   "pivot": {
+    "x": 0.475,
+    "y": 0.49324324324324326
+   },
+   "duration": 83
+  },
+  {
+   "filename": "storm-cloak 4.png",
+   "frame": {
+    "x": 0,
+    "y": 148,
+    "w": 120,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 148
+   },
+   "pivot": {
+    "x": 0.475,
+    "y": 0.49324324324324326
+   },
+   "duration": 83
+  },
+  {
+   "filename": "storm-cloak 5.png",
+   "frame": {
+    "x": 120,
+    "y": 148,
+    "w": 120,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 148
+   },
+   "pivot": {
+    "x": 0.475,
+    "y": 0.49324324324324326
+   },
+   "duration": 83
+  },
+  {
+   "filename": "storm-cloak 6.png",
+   "frame": {
+    "x": 240,
+    "y": 148,
+    "w": 120,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 148
+   },
+   "pivot": {
+    "x": 0.475,
+    "y": 0.49324324324324326
+   },
+   "duration": 83
+  },
+  {
+   "filename": "storm-cloak 7.png",
+   "frame": {
+    "x": 360,
+    "y": 148,
+    "w": 120,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 148
+   },
+   "pivot": {
+    "x": 0.475,
+    "y": 0.49324324324324326
+   },
+   "duration": 83
+  },
+  {
+   "filename": "storm-cloak 8.png",
+   "frame": {
+    "x": 0,
+    "y": 296,
+    "w": 120,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 148
+   },
+   "pivot": {
+    "x": 0.475,
+    "y": 0.49324324324324326
+   },
+   "duration": 83
+  },
+  {
+   "filename": "storm-cloak 9.png",
+   "frame": {
+    "x": 120,
+    "y": 296,
+    "w": 120,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 148
+   },
+   "pivot": {
+    "x": 0.475,
+    "y": 0.49324324324324326
+   },
+   "duration": 83
+  },
+  {
+   "filename": "storm-cloak 10.png",
+   "frame": {
+    "x": 240,
+    "y": 296,
+    "w": 120,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 148
+   },
+   "pivot": {
+    "x": 0.475,
+    "y": 0.49324324324324326
+   },
+   "duration": 83
+  },
+  {
+   "filename": "storm-cloak 11.png",
+   "frame": {
+    "x": 360,
+    "y": 296,
+    "w": 120,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 148
+   },
+   "pivot": {
+    "x": 0.475,
+    "y": 0.49324324324324326
+   },
+   "duration": 83
+  },
+  {
+   "filename": "storm-cloak 12.png",
+   "frame": {
+    "x": 0,
+    "y": 444,
+    "w": 120,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 148
+   },
+   "pivot": {
+    "x": 0.475,
+    "y": 0.49324324324324326
+   },
+   "duration": 83
+  },
+  {
+   "filename": "storm-cloak 13.png",
+   "frame": {
+    "x": 120,
+    "y": 444,
+    "w": 120,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 148
+   },
+   "pivot": {
+    "x": 0.475,
+    "y": 0.49324324324324326
+   },
+   "duration": 83
+  },
+  {
+   "filename": "storm-cloak 14.png",
+   "frame": {
+    "x": 240,
+    "y": 444,
+    "w": 120,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 148
+   },
+   "pivot": {
+    "x": 0.475,
+    "y": 0.49324324324324326
+   },
+   "duration": 83
+  },
+  {
+   "filename": "storm-cloak 15.png",
+   "frame": {
+    "x": 360,
+    "y": 444,
+    "w": 120,
+    "h": 148
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 120,
+    "h": 148
+   },
+   "sourceSize": {
+    "w": 120,
+    "h": 148
+   },
+   "pivot": {
+    "x": 0.475,
+    "y": 0.49324324324324326
+   },
+   "duration": 83
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "storm-cloak.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 480,
+   "h": 592
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "origin",
+   "x": 57,
+   "y": 73
+  },
+  "frameTags": [
+   {
+    "name": "storm-cloak",
+    "from": 0,
+    "to": 15,
+    "direction": "forward"
+   }
+  ]
+ }
+}

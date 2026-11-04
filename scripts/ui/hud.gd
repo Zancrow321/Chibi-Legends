@@ -195,15 +195,17 @@ func _draw() -> void:
 		return
 	var W := size.x
 	var H := size.y
+	# combat HUD stays slim: no menu row or currencies (they live in the
+	# overworld HUD), training stats and controls only with H
 	_draw_status()
 	_draw_notice(W)
 	_draw_right_column(W)
 	_draw_skill_bar(W, H)
-	_draw_menu(W, H)
 	_draw_bottom_left(H)
-	_draw_training()
 	if show_help:
+		_draw_training()
 		_draw_help()
+	_draw_combo(W, H)
 	if _cutin_t >= 0.0:
 		_draw_cutin(W, H)
 	if room.toast_time > 0.0:
@@ -211,6 +213,22 @@ func _draw() -> void:
 		var tw := font.get_string_size(room.toast_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 22).x + 48
 		_panel(Rect2(W / 2 - tw / 2, H * 0.24, tw, 44), Color(0.09, 0.07, 0.16, 0.9 * a), 22, Color(TRIM, a))
 		_text(Vector2(W / 2 - tw / 2, H * 0.24 + 29), room.toast_text, 22, Color(TEXT, a), HORIZONTAL_ALIGNMENT_CENTER, tw)
+
+
+## Combo counter at the right edge while a combo runs.
+func _draw_combo(W: float, H: float) -> void:
+	if room.combo < 3:
+		return
+	var fade := clampf((TrainingRoom.COMBO_GAP - room.combo_time) * 3.0, 0.0, 1.0)
+	var pop := 1.0 + 0.25 * maxf(0.0, 0.15 - room.combo_time) / 0.15
+	var x := W - 190.0
+	var y := H * 0.42
+	var col := Color("ffd25c") if room.combo < 10 else Color("ff7a2a") if room.combo < 20 else Color("fff4d0")
+	_text(Vector2(x, y), str(room.combo), int(52 * pop), Color(col, fade), HORIZONTAL_ALIGNMENT_RIGHT, 110, 6)
+	_text(Vector2(x + 116, y - 4), "HITS", 22, Color(TEXT, fade), HORIZONTAL_ALIGNMENT_LEFT, -1, 4)
+	var bar := Rect2(x + 10, y + 10, 160, 5)
+	draw_rect(bar, Color(0, 0, 0, 0.5 * fade))
+	draw_rect(Rect2(bar.position, Vector2(bar.size.x * (1.0 - room.combo_time / TrainingRoom.COMBO_GAP), bar.size.y)), Color(col, fade))
 
 
 func _draw_status() -> void:
@@ -280,7 +298,13 @@ func _draw_gauge(r: Rect2) -> void:
 
 ## Style, Atemrhythmus (glow stage of the blade) and the Weißglut timer.
 func _draw_style_panel(r: Rect2) -> void:
+	if room.player.glut is MondCaster:
+		_draw_mond_panel(r, room.player.glut)
+		return
 	var g := room.player.glut
+	if g is KlangCaster:
+		_draw_klang_panel(r, g)
+		return
 	_panel(r, PANEL, 13, Color("ff9a2a", 0.6))
 	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, Color("ffb347"))
 	var names := ["Rot", "Orange", "Weiß"]
@@ -304,12 +328,100 @@ func _draw_style_panel(r: Rect2) -> void:
 		_text(Vector2(r.position.x + 176, r.position.y + 19), "Klinge: " + info, 15, MUTED)
 
 
+## Schwarzmond: the Mondphase as a moon that fills, plus the timers of the
+## Schattenlarve, the Neumond form or the Erschöpfung.
+func _draw_mond_panel(r: Rect2, g: MondCaster) -> void:
+	var cyan := Color("6fe3ff")
+	_panel(r, PANEL, 13, Color(cyan, 0.55))
+	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, Color("cfe9ff"))
+	var c := Vector2(r.position.x + 132, r.get_center().y)
+	var rad := 8.0
+	draw_circle(c, rad + 1.5, Color(0.02, 0.02, 0.05))
+	draw_circle(c, rad, Color("1c1b33"))
+	# lit part of the moon: Sichel, Halbmond, Vollmond
+	if g.stage >= 3:
+		var pulse := 0.5 + 0.5 * sin(_t * 10.0)
+		draw_circle(c, rad + 3.0 * pulse, Color(cyan, 0.25))
+		draw_circle(c, rad, Color("f4f8ff"))
+	elif g.stage == 1:
+		draw_colored_polygon(MondFx.crescent(c, Vector2.RIGHT, rad, 1.5, 1.0), Color("f4f8ff"))
+	elif g.stage == 2:
+		var pts := PackedVector2Array()
+		for i in 17:
+			var a := -PI / 2.0 + PI * i / 16.0
+			pts.append(c + Vector2(cos(a), sin(a)) * rad)
+		draw_colored_polygon(pts, Color("f4f8ff"))
+	draw_arc(c, rad, 0, TAU, 20, Color(cyan, 0.7), 1.2)
+	var info := g.phase_name()
+	var bx := r.position.x + 150
+	var timer := 0.0
+	var tmax := 1.0
+	var tcol := cyan
+	var tname := ""
+	if g.larve_time > 0.0:
+		timer = g.larve_time; tmax = MondCaster.LARVE_TIME; tcol = Color("ff3b4a"); tname = "Schattenlarve"
+	elif g.neumond_time > 0.0:
+		timer = g.neumond_time; tmax = g.neumond_max; tcol = Color("f4f8ff"); tname = "Neumond"
+	elif g.erschoepft > 0.0:
+		timer = g.erschoepft; tmax = 10.0; tcol = Color("8a8fa8"); tname = "Erschöpft"
+	if timer > 0.0:
+		var br := Rect2(bx, r.position.y + 8, 146, 10)
+		draw_rect(br, Color(0.05, 0.03, 0.06))
+		draw_rect(Rect2(br.position, Vector2(br.size.x * timer / maxf(0.01, tmax), br.size.y)), tcol)
+		_text(Vector2(br.position.x, r.position.y + r.size.y - 2), "%s · %s" % [tname, info], 11, TEXT, HORIZONTAL_ALIGNMENT_CENTER, br.size.x, 3)
+	else:
+		_text(Vector2(bx, r.position.y + 19), "Mondphase: " + info, 15, MUTED)
+
+
+## Gleichklang: Einklang as six small bells, a beat dot and the state.
+func _draw_klang_panel(r: Rect2, g: KlangCaster) -> void:
+	var ink := Color("2f5d9e")
+	var full_col := Color("6a3fc0")
+	_panel(r, PANEL, 13, Color("8fd3ff", 0.6))
+	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, TEXT)
+	var full := g.klang >= KlangCaster.MAX_KLANG
+	for i in KlangCaster.MAX_KLANG:
+		var c := Vector2(r.position.x + 124 + i * 17, r.get_center().y + 1)
+		var on := g.klang > i
+		var col := full_col if full else ink
+		var bell := PackedVector2Array([c + Vector2(-5, 4), c + Vector2(-4, -2), c + Vector2(-2, -5), c + Vector2(2, -5), c + Vector2(4, -2), c + Vector2(5, 4)])
+		if on:
+			if full:
+				draw_circle(c, 8 + 1.5 * sin(_t * 12.0 + i), Color(Color("a884f3"), 0.35))
+			draw_colored_polygon(bell, col)
+			draw_circle(c + Vector2(0, 5), 1.6, Color("c07a30"))
+		else:
+			bell.append(bell[0])
+			draw_polyline(bell, Color(ink, 0.35), 1.2)
+	# beat: a dot that flashes on every beat (grey while the beat is lost)
+	var bp := 1.0 - g.beat_progress()
+	var bc := Vector2(r.position.x + 236, r.get_center().y)
+	var lost := g._lost > 0.0
+	draw_circle(bc, 3.0 + 4.0 * pow(bp, 6.0), Color(0.5, 0.5, 0.55) if lost else Color(ink, 0.45 + 0.55 * pow(bp, 6.0)))
+	var info := "EINKLANG" if full else ("Takt weg" if lost else "Takt")
+	_text(Vector2(r.position.x + 246, r.position.y + 19), info, 13, full_col if full else MUTED)
+
+
 func _draw_notice(W: float) -> void:
+	var wv := room.waves
+	var msg2 := ""
+	if wv != null and wv.wave >= 0:
+		var left := wv.alive.filter(func(e): return is_instance_valid(e) and e.state != "dead").size() + wv.pending()
+		msg2 = "Welle %d  ·  %d Gegner" % [wv.wave + 1 + wv.round_no * EnemyWaves.WAVES.size(), left] if left > 0 else "Welle geschafft!"
+	elif wv != null:
+		msg2 = "Gegner warten rechts hinter den Puppen  →"
+	if msg2 != "":
+		var tw := font.get_string_size(msg2, HORIZONTAL_ALIGNMENT_LEFT, -1, 18).x + 36
+		var wr := Rect2(W / 2 - tw / 2, 16, tw, 30)
+		_panel(wr, PANEL, 15, Color("ff9a2a", 0.6))
+		_text(Vector2(wr.position.x, 37), msg2, 18, TEXT, HORIZONTAL_ALIGNMENT_CENTER, tw)
+	return
 	var r := Rect2(480, 16, maxf(W - 480 - 352 - 16, 160), 26)
 	_panel(r, PANEL, 13)
+	var klang := room.player.glut is KlangCaster
 	var tips := [
-		"Glutatem: L + Richtung, L halten = verstärkt",
-		"Verschiedene Züge im Combo heizen die Klinge",
+		"%s: L + Richtung, L halten = verstärkt" % room.player.style.style_name() if room.player.style != null else "L + Richtung = Zug",
+		"Treffer im Takt füllen den Einklang" if klang else "Verschiedene Züge im Combo heizen die Klinge",
 		"Tab: Kampfstil, Alternativen und Slots",
 		"Der Sparringspfahl rechts schlägt zurück!",
 		"Willkommen im Trainingswald der Akademie!",
@@ -328,7 +440,7 @@ func _draw_right_column(W: float) -> void:
 	_panel(Rect2(x, 16, w, 26), PANEL, 13)
 	_text(Vector2(x + 14, 35), "Akademie  ·  Trainingswald", 17, TEXT)
 	# minimap
-	var mm := Rect2(x, 50, w, 108)
+	var mm := Rect2(x, 50, w, 70)
 	_panel(mm, PANEL, 10, Color(TRIM, 0.5))
 	var inner := mm.grow(-8)
 	var sx := inner.size.x / TrainingRoom.WIDTH
@@ -347,7 +459,11 @@ func _draw_right_column(W: float) -> void:
 	var pp: Vector2 = to_map.call(room.player.global_position)
 	var blink := 1.0 if fmod(_t, 0.8) < 0.6 else 0.6
 	draw_rect(Rect2(pp - Vector2(4, 10), Vector2(8, 10)), Color(1.0, 0.85, 0.3, blink))
-	# quests
+	# quest: one line in the fight, the full list with H
+	if not show_help:
+		_panel(Rect2(x, 128, w, 26), PANEL, 13)
+		_text(Vector2(x + 14, 147), "Quest: Alle Reaktionen (%d/4)" % room.reactions_found.size(), 15, MUTED)
+		return
 	var q := Rect2(x, 166, w, 168)
 	_panel(q, PANEL, 10)
 	_panel(Rect2(x, 166, w, 30), PANEL_LIGHT, 10)
@@ -404,11 +520,11 @@ func _draw_skill_bar(W: float, H: float) -> void:
 		slots.append({"label": s.name, "key": arrows[i] + sk, "icon": p.build[i], "cd": p.cooldowns[i], "max": s.cooldown, "cost": s.cost})
 	var sup: Dictionary = GameData.SUPER
 	slots.append({"label": sup.name, "key": GameInput.key_label("super"), "icon": sup.id, "cd": p.super_cd, "max": sup.cooldown, "cost": sup.cost})
-	var slot := 62.0
+	var slot := 46.0
 	var gap := 8.0
 	var total := slots.size() * (slot + gap) - gap + 24
-	var bar := Rect2(W - 16 - total, H - 156, total, slot + 24)
-	_panel(bar, PANEL, int(bar.size.y / 2), Color(TRIM, 0.55))
+	var bar := Rect2(W / 2 - total / 2, H - 22 - slot - 30, total, slot + 24)
+	_panel(bar, Color(PANEL, 0.6), int(bar.size.y / 2), Color(TRIM, 0.35))
 	for i in slots.size():
 		var sl: Dictionary = slots[i]
 		var r := Rect2(bar.position.x + 12 + i * (slot + gap), bar.position.y + 12, slot, slot)
@@ -417,7 +533,7 @@ func _draw_skill_bar(W: float, H: float) -> void:
 		if sl.cd > 0.0:
 			var frac: float = clampf(sl.cd / sl.max, 0.0, 1.0)
 			draw_rect(Rect2(r.position, Vector2(r.size.x, r.size.y * frac)), Color(0, 0, 0, 0.62))
-			_text(Vector2(r.position.x, r.position.y + 40), "%.1f" % sl.cd, 20, TEXT, HORIZONTAL_ALIGNMENT_CENTER, slot)
+			_text(Vector2(r.position.x, r.position.y + 31), "%.1f" % sl.cd, 17, TEXT, HORIZONTAL_ALIGNMENT_CENTER, slot)
 		elif sl.has("cost") and not p.infinite_aura and p.aura < sl.cost:
 			draw_rect(r, Color(0.1, 0.2, 0.6, 0.45))
 		var kw := maxf(24.0, font.get_string_size(sl.key, HORIZONTAL_ALIGNMENT_LEFT, -1, 15).x + 10)
@@ -439,11 +555,11 @@ func _draw_style_slots(slots: Array, arrows: Array, sk: String) -> void:
 			continue
 		slots.append({"label": p.style.zug(z).name, "key": arrows[i] + sk, "icon": z, "cd": g.cooldowns.get(z, 0.0), "max": float(p.style.zug(z).get("cd", 1.0)), "zug": true})
 	slots.append({"label": p.style.variant().get("name", "Meisterzug"), "key": GameInput.key_label("super"), "icon": "meisterzug", "cd": 0.0, "max": 1.0, "super": true})
-	var slot := 62.0
+	var slot := 46.0
 	var gap := 8.0
 	var total := slots.size() * (slot + gap) - gap + 24
-	var bar := Rect2(W - 16 - total, H - 170, total, slot + 38)
-	_panel(bar, PANEL, 22, Color("ff9a2a", 0.55))
+	var bar := Rect2(W / 2 - total / 2, H - 22 - slot - 30, total, slot + 24)
+	_panel(bar, Color(PANEL, 0.6), 18, Color("8fd3ff", 0.35) if p.glut is KlangCaster else Color("ff9a2a", 0.35))
 	for i in slots.size():
 		var sl: Dictionary = slots[i]
 		var r := Rect2(bar.position.x + 12 + i * (slot + gap), bar.position.y + 12, slot, slot)
@@ -455,7 +571,7 @@ func _draw_style_slots(slots: Array, arrows: Array, sk: String) -> void:
 		if sl.cd > 0.0:
 			var frac: float = clampf(sl.cd / sl.max, 0.0, 1.0)
 			draw_rect(Rect2(r.position, Vector2(r.size.x, r.size.y * frac)), Color(0, 0, 0, 0.62))
-			_text(Vector2(r.position.x, r.position.y + 40), "%.1f" % sl.cd, 20, TEXT, HORIZONTAL_ALIGNMENT_CENTER, slot)
+			_text(Vector2(r.position.x, r.position.y + 31), "%.1f" % sl.cd, 17, TEXT, HORIZONTAL_ALIGNMENT_CENTER, slot)
 		if sl.has("super"):
 			if p.gauge < p.style.super_cost() and not p.infinite_aura:
 				draw_rect(r, Color(0.05, 0.02, 0.05, 0.55))
@@ -469,10 +585,6 @@ func _draw_style_slots(slots: Array, arrows: Array, sk: String) -> void:
 		var kw := maxf(24.0, font.get_string_size(sl.key, HORIZONTAL_ALIGNMENT_LEFT, -1, 15).x + 10)
 		_panel(Rect2(r.position + Vector2(-4, -6), Vector2(kw, 20)), Color("2a2140"), 5, Color(TRIM, 0.8))
 		_text(Vector2(r.position.x - 4, r.position.y + 10), sl.key, 15, TEXT, HORIZONTAL_ALIGNMENT_CENTER, kw, 0)
-		var lbl: String = sl.label
-		if font.get_string_size(lbl, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x > slot + 6:
-			lbl = lbl.substr(0, 8) + "."
-		_text(Vector2(r.position.x - 4, r.end.y + 15), lbl, 12, MUTED, HORIZONTAL_ALIGNMENT_CENTER, slot + 8, 3)
 
 
 func _slot(r: Rect2) -> void:
@@ -576,17 +688,12 @@ func _draw_menu_icon(c: Vector2, i: int) -> void:
 
 
 func _draw_bottom_left(H: float) -> void:
-	_panel(Rect2(16, H - 66, 170, 32), PANEL, 16)
-	draw_colored_polygon(PackedVector2Array([Vector2(36, H - 61), Vector2(46, H - 50), Vector2(36, H - 39), Vector2(26, H - 50)]), Color("ff8fc8"))
-	_text(Vector2(56, H - 43), "0  Sternkristalle", 16, TEXT)
-	_panel(Rect2(194, H - 66, 140, 32), PANEL, 16)
-	draw_circle(Vector2(214, H - 50), 8, Color("7fd8ff"))
-	_text(Vector2(230, H - 43), "0  Splitter", 16, TEXT)
+	if not show_help:
+		_text(Vector2(16, H - 30), "H  Hilfe & Steuerung    Esc  Menü", 14, Color(MUTED, 0.8))
 	# EXP bar
 	_panel(Rect2(0, H - 22, size.x, 22), Color(0.05, 0.04, 0.1, 0.95), 0)
-	# EXP from defeated enemies (training forest), one bar = EXP_PER_LEVEL
-	var xp: float = room.exp_points if room != null else 0.0
-	var frac := fmod(xp, TrainingRoom.EXP_PER_LEVEL) / TrainingRoom.EXP_PER_LEVEL
+	# EXP toward the next level (Profile: lasts beyond the fight)
+	var frac := Profile.exp_fraction()
 	_text(Vector2(10, H - 5), "EXP %.2f %%" % (frac * 100.0), 15, TRIM, HORIZONTAL_ALIGNMENT_LEFT, -1, 0)
 	var x := 110.0
 	var seg := (size.x - x - 10) / 10.0
@@ -600,15 +707,16 @@ func _draw_bottom_left(H: float) -> void:
 
 func _draw_help() -> void:
 	var glut := room.player.glut != null
-	var r := Rect2(16, 286, 400, 382)
+	var r := Rect2(16, 280, 400, 404)
 	_panel(r, PANEL, 10)
 	_text(Vector2(32, 312), "Steuerung", 17, TRIM)
 	var lines := [
 		["A / D", "Laufen"], ["Leertaste", "Springen, 2x Doppelsprung"], ["Shift", "Dash (in der Luft 1x)"],
 		["J / K", "Leicht (3er-Kette) / Schwer"], ["W/S/A/D +", "Richtung: oben/unten/vor"],
-		["L (+ Richtung)", "Zug von Glutatem"], ["L halten", "Verstärkt (1 Stufe Leiste)"],
+		["L (+ Richtung)", "Zug von " + room.player.style.style_name()], ["L halten", "Verstärkt (1 Stufe Leiste)"],
 		["P", "Meisterzug (3 Stufen)"], ["Tab / M", "Kampfstil: Alternativen, Slots"],
-		["J + K", "Griff (Wurf)"], ["U", "Unendlich Legendenleiste"], ["R", "Abklingzeiten zurück"],
+		["J + K", "Griff (Wurf)"], ["Q halten", "Blocken (kurz vorher = Perfekt)"],
+		["Shift im Treffer", "Befreiungsstoß (1 Stufe)"], ["U / R", "Unendlich Leiste / Abklingzeiten"],
 		["N", "Abendlicht an/aus"], ["V", "Effekt-Stärke"], ["T / C / H", "Figur / Charaktere / Hilfe"],
 		["F / I", "Kämpfer wechseln / UI-Stil"],
 	] if glut else [

@@ -90,7 +90,7 @@ Text-Encoder `t5gemma_b_b_ul2`). Die Skripte sprechen die ComfyUI-API direkt an,
 4. In `assets/audio/sfx_map.json` eintragen und in `assets/audio/SOURCES.md` Prompt und Seed notieren.
 
 Stil-Ereignisse heißen `<stil>_cast`, `_attack`, `_impact`, `_super` mit den Kürzeln glut, mond, klang, bollwerk,
-grenz, wirbel, spann, lauf. Glutatem nutzt sie schon; die anderen Stile rufen sie auf, sobald es sie im Code gibt.
+grenz, wirbel, spann, lauf. Glutatem und Schwarzmond nutzen sie schon, Gleichklang nur beim Meisterzug (sonst eigene Glocken aus `synth_bell.py`); die übrigen Stile rufen sie auf, sobald es sie im Code gibt.
 
 Lizenz: Stability AI Community License. Ausgaben dürfen kommerziell genutzt werden, solange der Jahresumsatz unter
 1 Mio. US-Dollar liegt (darüber Enterprise-Lizenz); zusätzlich gelten die Gemma-Bedingungen des Text-Encoders.

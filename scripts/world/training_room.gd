@@ -30,6 +30,7 @@ var dust: Dust  # footstep / landing puffs
 ## Off when another view draws the ground (HD-2D variant B builds it in 3D).
 var draw_terrain := true
 var glut_fx: GlutFx  # fire effects of the fighting style
+var klang_fx: KlangFx  # effects of Gleichklang (created by its caster)
 var stage: DuskStage  # dusk light look (only in the "Licht" view, see Main)
 var post: SparringPost
 var waves: EnemyWaves  # first real enemies behind the dummies
@@ -117,15 +118,42 @@ func on_enemy_died(e: Enemy) -> void:
 	enemies_defeated += 1
 	exp_points += float(e.data.exp)
 	player.add_gauge(8.0)
+	Profile.add_splitter(int(ceil(float(e.data.exp) / 4.0)))
+	if Profile.add_exp(float(e.data.exp)) > 0:
+		_level_up()
+	_drop_loot(e)
 	# kill feel: a short slow motion, longer and with a zoom for the last one of a wave
 	var last := waves != null and waves.alive.filter(func(x): return is_instance_valid(x) and x.state != "dead").is_empty()
 	if last or e.is_elite():
 		_slowmo(0.55, 0.25)
 		fx.punch(0.12)
 		if glut_fx != null:
-			glut_fx.word(e.head_position() + Vector2(0, -20), "VERGLÜHT!" if e.status.has("brand") or player.glut != null and player.glut.busy() else "BESIEGT!", Color("fff4d0"), 30)
+			glut_fx.word(e.head_position() + Vector2(0, -20), "VERGLÜHT!" if e.status.has("brand") or player.glut != null and player.glut.busy() and player.style.id == "glutatem" else "BESIEGT!", Color("fff4d0"), 30)
 	else:
 		_slowmo(0.16, 0.4)
+
+
+## Loot: elites always drop something good, the rest sometimes.
+func _drop_loot(e: Enemy) -> void:
+	var chance := 1.0 if e.is_elite() else 0.35
+	if randf() >= chance:
+		return
+	var d := LootDrop.new()
+	d.world = self
+	d.item = Loot.roll(Profile.level, Loot.roll_rarity(e.is_elite()))
+	d.position = e.global_position + Vector2(0, -20)
+	add_child.call_deferred(d)
+
+
+func _level_up() -> void:
+	player.apply_profile(true)
+	toast("Stufe %d erreicht! Mehr Leben und Schaden" % Profile.level)
+	fx.flash(0.35, Color("fff4d0"))
+	Sfx.play("super_flash", -4.0)
+	effects.ring(player.global_position + Vector2(0, -20), 40.0, Color("f9c22b"))
+	effects.burst(player.global_position + Vector2(0, -20), Color("f9c22b"), 24, 140.0, -60.0)
+	if glut_fx != null:
+		glut_fx.word(player.global_position + Vector2(0, -96), "STUFE %d!" % Profile.level, Color("f9c22b"), 32)
 
 
 var _slow_until := 0
@@ -136,6 +164,9 @@ func _slowmo(seconds: float, scale: float) -> void:
 
 func _process(delta: float) -> void:
 	_clock += delta
+	combo_time += delta
+	if combo_time >= COMBO_GAP:
+		combo = 0
 	if _slow_until > 0 and Time.get_ticks_msec() >= _slow_until:
 		_slow_until = 0
 		Engine.time_scale = 1.0
@@ -322,7 +353,8 @@ func cast_super(p: Player, s: Dictionary) -> void:
 ## number of their own; the beam adds them up and shows one big total.
 func deal_hit(target: Node2D, base: float, element: String, from_x: float, knockback: float, profile := "", launch := 0.0) -> int:
 	var res := Reactions.resolve(target.status, element, base)
-	var dmg := int(round(res.damage * randf_range(0.92, 1.08)))
+	var crit := randf() < 0.05 + Profile.bonus("crit")
+	var dmg := int(round(res.damage * randf_range(0.92, 1.08) * _combo_scale(target) * (1.0 + Profile.bonus("atk")) * (1.5 if crit else 1.0)))
 	var col: Color = GameData.ELEMENTS[element].color if element != "" else Color("ff4b3e")
 	hit_landed.emit(target.get_hurt_rect().get_center(), col, res.reaction != "")
 	target.take_hit(knockback, from_x)
@@ -332,7 +364,9 @@ func deal_hit(target: Node2D, base: float, element: String, from_x: float, knock
 	if target.has_method("apply_damage"):
 		target.apply_damage(dmg)
 	if not profile.begins_with("super"):
-		numbers.spawn_number(target.head_position(), dmg, col, target.get_instance_id(), res.reaction != "")
+		numbers.spawn_number(target.head_position(), dmg, Color("ffd84a") if crit else col, target.get_instance_id(), res.reaction != "" or crit)
+		if crit:
+			numbers.spawn_text(target.head_position() + Vector2(0, -26), "KRITISCH!", Color("ffd84a"))
 	var center: Vector2 = target.get_hurt_rect().get_center()
 	effects.burst(center, col, 6)
 	if profile == "":
@@ -350,6 +384,24 @@ func deal_hit(target: Node2D, base: float, element: String, from_x: float, knock
 		fx.hit(center, element, "super_final" if profile == "super_final" else "heavy", dir)
 		_trigger_reaction(target, res)
 	return dmg
+
+
+## Combo: hits on enemies less than COMBO_GAP apart count up. Long combos
+## lose damage (from the 5th hit 6 % less per hit, at most -50 %), so a
+## juggle never kills an elite on its own.
+const COMBO_GAP := 1.2
+var combo := 0
+var combo_time := 0.0  # seconds since the last combo hit
+var best_combo := 0
+
+
+func _combo_scale(target: Node2D) -> float:
+	if not target is Enemy:
+		return 1.0
+	combo = combo + 1 if combo_time < COMBO_GAP else 1
+	combo_time = 0.0
+	best_combo = maxi(best_combo, combo)
+	return maxf(0.5, 1.0 - 0.06 * maxi(0, combo - 4))
 
 
 func _trigger_reaction(target: Node2D, res: Dictionary) -> void:

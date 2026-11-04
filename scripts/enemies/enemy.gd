@@ -83,6 +83,11 @@ var _burn_timer := 0.0
 var _hp_shown := 0.0  # HP bar shows for a while after a hit
 var _hp_trail := 1.0  # the white "lost HP" part of the bar
 var _squash := Vector2.ONE
+## Haltung: hidden resistance of armored enemies (brutes, the elite). Only
+## Druckbruch (enhanced Schwarzmond Züge) wears it down; when it is empty
+## the armor is gone for a moment and the enemy reels.
+var haltung := 0.0
+var _broken := 0.0
 var _t := 0.0
 var _anim := ""
 var _anim_t := 0.0
@@ -157,7 +162,7 @@ func take_hit(knockback: float, from_x: float) -> void:
 	if dir == 0.0:
 		dir = -facing
 	# brutes keep swinging through hits; the elite golem barely moves at all
-	var armored: bool = data.kind == "brute" and (state == "strike" or (is_elite() and state == "windup"))
+	var armored: bool = data.kind == "brute" and (state == "strike" or (is_elite() and state == "windup")) and not status.has("seelenbruch") and _broken <= 0.0
 	var k := 0.3 if armored else (0.5 if is_elite() else 1.0)
 	vel.x = dir * clampf(knockback, 20.0, 260.0) * 0.9 * k
 	if armored:
@@ -167,6 +172,44 @@ func take_hit(knockback: float, from_x: float) -> void:
 		return  # light hits only flash the golem
 	if data.kind != "brute" or knockback >= 100.0 or state != "windup":
 		_enter("hurt")
+
+
+## Perfekt-Block by the player: the attack bounces off, the enemy reels.
+func parried(from_x: float) -> void:
+	if state == "dead":
+		return
+	_enter("hurt")
+	_st = -0.7  # a long stagger: time for a punish
+	flash = 0.15
+	vel.x = signf(global_position.x - from_x) * 160.0
+	_cd = maxf(_cd, 1.2)
+	if world.glut_fx != null:
+		world.glut_fx.word(head_position() + Vector2(0, -10), "BENOMMEN", Color("ffd25c"), 14)
+
+
+func haltung_max() -> float:
+	if is_elite():
+		return 90.0
+	return 50.0 if data.kind == "brute" else 30.0
+
+
+## Druckbruch: posture damage. Returns true when the Haltung broke.
+func posture_hit(amount: float, from_x: float) -> bool:
+	if state == "dead" or _broken > 0.0:
+		return false
+	haltung += amount
+	if haltung < haltung_max():
+		return false
+	haltung = 0.0
+	_broken = 1.5
+	_enter("hurt")
+	_st = -1.0
+	flash = 0.2
+	vel.x = signf(global_position.x - from_x) * 140.0
+	_cd = maxf(_cd, 1.5)
+	if world.glut_fx != null:
+		world.glut_fx.word(head_position() + Vector2(0, -12), "HALTUNG GEBROCHEN", Color("f4f8ff"), 15)
+	return true
 
 
 ## Juggle: thrown up (positive) or slammed down (negative).
@@ -229,6 +272,9 @@ func _physics_process(delta: float) -> void:
 	_st += delta
 	_anim_t += delta
 	flash = maxf(0.0, flash - delta)
+	_broken = maxf(0.0, _broken - delta)
+	if _broken <= 0.0 and haltung > 0.0:
+		haltung = maxf(0.0, haltung - delta * 6.0)  # recovers slowly
 	_hp_shown = maxf(0.0, _hp_shown - delta)
 	_hp_trail = move_toward(_hp_trail, hp / max_hp, delta * (0.0 if flash > 0.0 else 0.8))
 	_squash = _squash.lerp(Vector2.ONE, 1.0 - exp(-12.0 * delta))

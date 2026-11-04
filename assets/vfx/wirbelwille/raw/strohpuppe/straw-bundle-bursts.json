@@ -1,0 +1,261 @@
+{
+ "frames": [
+  {
+   "filename": "straw-bundle-bursts 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 98,
+    "h": 229
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 98,
+    "h": 229
+   },
+   "sourceSize": {
+    "w": 98,
+    "h": 229
+   },
+   "pivot": {
+    "x": 0.9285714285714286,
+    "y": 0.39737991266375544
+   },
+   "duration": 50
+  },
+  {
+   "filename": "straw-bundle-bursts 1.png",
+   "frame": {
+    "x": 98,
+    "y": 0,
+    "w": 98,
+    "h": 229
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 98,
+    "h": 229
+   },
+   "sourceSize": {
+    "w": 98,
+    "h": 229
+   },
+   "pivot": {
+    "x": 0.9285714285714286,
+    "y": 0.39737991266375544
+   },
+   "duration": 50
+  },
+  {
+   "filename": "straw-bundle-bursts 2.png",
+   "frame": {
+    "x": 196,
+    "y": 0,
+    "w": 98,
+    "h": 229
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 98,
+    "h": 229
+   },
+   "sourceSize": {
+    "w": 98,
+    "h": 229
+   },
+   "pivot": {
+    "x": 0.9285714285714286,
+    "y": 0.39737991266375544
+   },
+   "duration": 50
+  },
+  {
+   "filename": "straw-bundle-bursts 3.png",
+   "frame": {
+    "x": 0,
+    "y": 229,
+    "w": 98,
+    "h": 229
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 98,
+    "h": 229
+   },
+   "sourceSize": {
+    "w": 98,
+    "h": 229
+   },
+   "pivot": {
+    "x": 0.9285714285714286,
+    "y": 0.39737991266375544
+   },
+   "duration": 50
+  },
+  {
+   "filename": "straw-bundle-bursts 4.png",
+   "frame": {
+    "x": 98,
+    "y": 229,
+    "w": 98,
+    "h": 229
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 98,
+    "h": 229
+   },
+   "sourceSize": {
+    "w": 98,
+    "h": 229
+   },
+   "pivot": {
+    "x": 0.9285714285714286,
+    "y": 0.39737991266375544
+   },
+   "duration": 50
+  },
+  {
+   "filename": "straw-bundle-bursts 5.png",
+   "frame": {
+    "x": 196,
+    "y": 229,
+    "w": 98,
+    "h": 229
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 98,
+    "h": 229
+   },
+   "sourceSize": {
+    "w": 98,
+    "h": 229
+   },
+   "pivot": {
+    "x": 0.9285714285714286,
+    "y": 0.39737991266375544
+   },
+   "duration": 50
+  },
+  {
+   "filename": "straw-bundle-bursts 6.png",
+   "frame": {
+    "x": 0,
+    "y": 458,
+    "w": 98,
+    "h": 229
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 98,
+    "h": 229
+   },
+   "sourceSize": {
+    "w": 98,
+    "h": 229
+   },
+   "pivot": {
+    "x": 0.9285714285714286,
+    "y": 0.39737991266375544
+   },
+   "duration": 50
+  },
+  {
+   "filename": "straw-bundle-bursts 7.png",
+   "frame": {
+    "x": 98,
+    "y": 458,
+    "w": 98,
+    "h": 229
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 98,
+    "h": 229
+   },
+   "sourceSize": {
+    "w": 98,
+    "h": 229
+   },
+   "pivot": {
+    "x": 0.9285714285714286,
+    "y": 0.39737991266375544
+   },
+   "duration": 50
+  },
+  {
+   "filename": "straw-bundle-bursts 8.png",
+   "frame": {
+    "x": 196,
+    "y": 458,
+    "w": 98,
+    "h": 229
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 98,
+    "h": 229
+   },
+   "sourceSize": {
+    "w": 98,
+    "h": 229
+   },
+   "pivot": {
+    "x": 0.9285714285714286,
+    "y": 0.39737991266375544
+   },
+   "duration": 50
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "straw-bundle-bursts.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 294,
+   "h": 687
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "origin",
+   "x": 91,
+   "y": 91
+  },
+  "frameTags": [
+   {
+    "name": "straw-bundle-bursts",
+    "from": 0,
+    "to": 8,
+    "direction": "forward"
+   }
+  ]
+ }
+}
