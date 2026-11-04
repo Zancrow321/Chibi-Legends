@@ -432,6 +432,12 @@
    "text": "Federleib: dehnbare Fäuste, Spannen und Rückschwung (Legendär)",
    "unlock": "",
    "weapon": "none"
+  },
+  "grenzbrecher": {
+   "name": "Grenzbrecher",
+   "text": "Ki-Kampfkunst: Ki-Leiste, Kernstrahl, Fernschritt (Legendär)",
+   "unlock": "",
+   "weapon": "none"
   }
  },
  "start_items_note": "Teile ohne unlock-Eintrag sind von Anfang an frei. CreatorUnlocks.unlock(slot, id) schaltet frei."

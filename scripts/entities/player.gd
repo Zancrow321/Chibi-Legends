@@ -146,6 +146,8 @@ func init_style() -> void:
 		glut = KlangCaster.new()
 	elif style.id == "spannkraft":
 		glut = FederCaster.new()
+	elif style.id == "grenzbrecher":
+		glut = GrenzCaster.new()
 	else:
 		glut = GlutCaster.new()
 	add_child(glut)
@@ -372,7 +374,7 @@ func _physics_process(delta: float) -> void:
 			ghost_timer = 0.04
 			world.spawn_ghost(self)
 	else:
-		var target_speed := dir * RUN_SPEED
+		var target_speed := dir * RUN_SPEED * (glut.move_speed() if glut != null else 1.0)
 		if busy and on_floor:
 			target_speed *= ATTACK_DRIFT
 			if not move.is_empty() and MoveSet.phase_at(move, move_t) != "recovery":
@@ -798,6 +800,16 @@ func _use_meisterzug() -> void:
 		ms.variant = style.super_variant
 		ms.title = style.variant().get("name", "Meisterzug")
 		world.add_child(ms)
+		return
+	if glut is GrenzCaster:
+		var gs := GrenzSuper.new()
+		gs.room = world
+		gs.player = self
+		gs.caster = glut
+		gs.gfx = glut.gfx
+		gs.variant = style.super_variant
+		gs.title = style.variant().get("name", "Meisterzug")
+		world.add_child(gs)
 		return
 	if glut is FederCaster:
 		var fs := FederSuper.new()

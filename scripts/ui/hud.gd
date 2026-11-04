@@ -308,6 +308,9 @@ func _draw_style_panel(r: Rect2) -> void:
 	if g is FederCaster:
 		_draw_feder_panel(r, g)
 		return
+	if g is GrenzCaster:
+		_draw_grenz_panel(r, g)
+		return
 	_panel(r, PANEL, 13, Color("ff9a2a", 0.6))
 	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, Color("ffb347"))
 	var names := ["Rot", "Orange", "Weiß"]
@@ -407,6 +410,49 @@ func _draw_feder_panel(r: Rect2, g: FederCaster) -> void:
 	elif g._snap_t > 0.0 and g.chain_left > 0:
 		info = "Schwung!"
 	_text(Vector2(r.position.x + 176 + n * 14 + 4, r.position.y + 19), info, 13, yellow if g.is_free() else MUTED)
+
+
+## Grenzbrecher: the Ki-Leiste in 5 Abschnitte, Überhitzung and state.
+func _draw_grenz_panel(r: Rect2, g: GrenzCaster) -> void:
+	var sky := Color("6fd0ff")
+	var white := Color("f4fbff")
+	var orange := Color("ff9a3c")
+	_panel(r, PANEL, 13, Color(sky, 0.55))
+	_text(Vector2(r.position.x + 12, r.position.y + 19), room.player.style.style_name(), 13, TEXT)
+	var bar := Rect2(r.position.x + 108, r.get_center().y - 7, r.size.x - 118, 14)
+	draw_rect(bar.grow(2), Color(0.02, 0.03, 0.08))
+	var seg := bar.size.x / 5.0
+	for i in 5:
+		var fill := clampf((g.ki - i * 20.0) / 20.0, 0.0, 1.0)
+		var sr := Rect2(bar.position.x + i * seg + 1, bar.position.y, seg - 2, bar.size.y)
+		draw_rect(sr, Color(sky, 0.12))
+		if fill > 0.0:
+			var col := sky if fill >= 1.0 else sky.darkened(0.3)
+			if g.burst_time > 0.0:
+				col = white.lerp(sky, 0.3 + 0.3 * sin(_t * 10.0))
+			elif g.gathering():
+				col = sky.lerp(white, 0.3 + 0.3 * sin(_t * 14.0))
+			draw_rect(Rect2(sr.position, Vector2(sr.size.x * fill, sr.size.y)), col)
+			draw_rect(Rect2(sr.position, Vector2(sr.size.x * fill, 3)), Color(1, 1, 1, 0.35))
+	# the 20 Ki line (below it: no Ki-Züge)
+	draw_line(Vector2(bar.position.x + seg, bar.position.y - 3), Vector2(bar.position.x + seg, bar.end.y + 3), Color(white, 0.6), 1.0)
+	var info := "Ki %d" % int(g.ki)
+	var col2 := MUTED
+	if g.burst_time > 0.0:
+		info = "GRENZBRUCH %.1f s" % g.burst_time
+		col2 = white
+	elif g.gathering():
+		info = "SAMMELN…"
+		col2 = sky
+	elif g.heat > 0:
+		info = "ÜBERHITZT +%d %%" % (g.heat * 50)
+		col2 = orange
+	elif g.exhaust > 0.0:
+		info = "erschöpft"
+	elif g.ki < 20.0:
+		info = "KI-MANGEL"
+		col2 = orange
+	_text(Vector2(bar.position.x, bar.end.y - 2), info, 11, col2 if col2 != MUTED else TEXT, HORIZONTAL_ALIGNMENT_CENTER, bar.size.x, 4)
 
 
 ## Gleichklang: Einklang as six small bells, a beat dot and the state.

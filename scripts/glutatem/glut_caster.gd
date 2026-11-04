@@ -117,6 +117,11 @@ func normal_speed() -> float:
 	return 1.0
 
 
+## Run speed factor (Grenzbruch makes the figure faster).
+func move_speed() -> float:
+	return 1.0
+
+
 ## Once-per-fight state (R in the training room resets it).
 func reset_fight() -> void:
 	pass

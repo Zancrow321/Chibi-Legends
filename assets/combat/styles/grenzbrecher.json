@@ -1,0 +1,93 @@
+{
+	"_doc": "Kampfstil Grenzbrecher (Ki-Kampfkunst). Konzept: docs/stil-grenzbrecher.md. 6 Zuege fuer die Spezial-Taste + Meisterzug, je 3 Alternativen. frames = [Anlauf, aktiv, Erholung] bei 60 fps. ki = Ki-Kosten (Ki-Leiste 0-100, eigene Anzeige). L halten = verstaerkte Fassung (1 Stufe Legendenleiste), beim Kernstrahl = voll laden. Schaden: 8 entspricht einem normalen Leichtschlag (100 %). Am Boden 0,4 s runter halten (ohne L) = Ki sammeln.",
+	"id": "grenzbrecher",
+	"name": "Grenzbrecher",
+	"element": "",
+	"subtitle": "Ki im Fluss  ·  Treffer laden Ki, Strahlen verbrauchen es  ·  runter halten = Ki sammeln",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"colors": {"ink": "101626", "sky": "6fd0ff", "blue": "3f8fff", "white": "f4fbff", "gold": "ffd25c", "orange": "ff9a3c", "pale": "cfeaff", "deep": "1d3a7a"},
+	"loadout": {"neutral": "steilpfad_folge", "forward": "kernstrahl", "up": "himmelsauftakt", "down": "meteor_abschluss"},
+	"zuege": {
+		"steilpfad_folge": {
+			"name": "Steilpfad-Folge", "dir": "neutral", "sp": 1, "cd": 0.6, "frames": [5, 30, 14],
+			"desc": "Gerade, Haken, Ellbogen und ein Drehtritt. Jeder Treffer lädt Ki.",
+			"pose": {"startup": [1], "active": [3, 1, 3, 4], "recovery": [6]},
+			"params": {"hits": 3, "damage": 4.8, "finish": 9.6, "reach": 30, "advance": 0},
+			"enhanced": {"heel": true, "finish_add": 4},
+			"alts": [
+				{"id": "schnell", "name": "Schnelle Hände", "sp": 2, "desc": "Sechs kurze Treffer statt drei, geringe Reichweite. Ideal zum Ki-Laden.", "frames": [4, 30, 12], "params": {"hits": 6, "damage": 2.8, "finish": 6, "reach": 24}},
+				{"id": "schwer", "name": "Schwerer Abschluss", "sp": 2, "desc": "Nur zwei Schläge, dann ein langsamer Tritt mit Ki-Erschütterung.", "frames": [6, 34, 18], "params": {"hits": 2, "finish": 16, "heavy_finish": true}},
+				{"id": "wandernd", "name": "Wandernde Kombo", "sp": 2, "desc": "Jeder Treffer bringt dich ein Stück nach vorn und drückt Gegner an die Wand.", "params": {"advance": 12}}
+			]
+		},
+		"kernstrahl": {
+			"name": "Kernstrahl", "dir": "forward", "sp": 1, "cd": 0.9, "frames": [6, 22, 16], "ki": 20, "ranged": true,
+			"desc": "Faust an der Schulter laden (L halten, bis 0,8 s), dann ein Ki-Strahl aus dem Handballen. Hoch/runter kippt ihn leicht.",
+			"pose": {"startup": [1], "active": [3], "recovery": [6]},
+			"params": {"charge": 0.8, "min_dmg": 12, "max_dmg": 24, "length": 320, "width": 16, "pierce": false, "recoil": 0},
+			"enhanced": {"shock": true},
+			"alts": [
+				{"id": "schnell", "name": "Schnellschuss", "sp": 2, "desc": "Kaum Ladezeit, halbe Reichweite, kostet nur 15 Ki.", "ki": 15, "params": {"charge": 0.2, "length": 170, "max_dmg": 16}},
+				{"id": "verdichtet", "name": "Verdichteter Strahl", "sp": 2, "desc": "Längere Ladung, durchschlägt alle Gegner auf der Linie, +50 % Schaden. 30 Ki.", "ki": 30, "params": {"charge": 1.2, "pierce": true, "min_dmg": 18, "max_dmg": 36, "width": 22}},
+				{"id": "rueckstoss", "name": "Rückstoß-Strahl", "sp": 2, "desc": "Der Rückstoß schiebt dich zwei Körperbreiten zurück, in der Luft als kleiner Rückwärtssprung.", "params": {"recoil": 1}}
+			]
+		},
+		"himmelsauftakt": {
+			"name": "Himmelsauftakt", "dir": "up", "sp": 1, "cd": 0.9, "frames": [5, 10, 22],
+			"desc": "Aufsteigender Schlag hebt den Gegner an. Sprung kurz danach: Lufttritt hinterher.",
+			"pose": {"startup": [1], "active": [4], "recovery": [5]},
+			"params": {"damage": 10.4, "launch": 380, "rise": 260, "w": 34, "kick": 7.2, "kind": "upper"},
+			"enhanced": {"launch_mul": 1.6, "shock": true},
+			"alts": [
+				{"id": "hoch", "name": "Hoher Aufsteiger", "sp": 2, "desc": "Mehr Höhe gegen ein einzelnes Ziel.", "params": {"launch": 520, "rise": 340, "single": true}},
+				{"id": "dreh", "name": "Drehkick", "sp": 2, "desc": "Halbkreis über dir, trifft mehrere, geringere Höhe.", "params": {"kind": "spin", "launch": 260, "w": 70, "damage": 8}},
+				{"id": "auftrieb", "name": "Ki-Auftrieb", "sp": 2, "desc": "In der Luft: 20 Ki für einen zusätzlichen Aufstieg mitten in der Luftkombo (einmal pro Sprung).", "ki": 20, "params": {"boost": true}}
+			]
+		},
+		"ruhiger_gegenschlag": {
+			"name": "Ruhiger Gegenschlag", "dir": "neutral", "sp": 1, "cd": 1.0, "frames": [3, 15, 18],
+			"desc": "Ruhige Deckung (0,25 s). Wirst du darin getroffen, lenkst du ab und konterst sofort (+15 Ki).",
+			"pose": {"startup": [6], "active": [6], "recovery": [6]},
+			"params": {"stance": 0.25, "counter_damage": 14.4, "mode": "parry"},
+			"enhanced": {"shock": true, "counter_damage_add": 4},
+			"alts": [
+				{"id": "parade", "name": "Handparade", "sp": 2, "desc": "Fenster nur 0,12 s, dafür ein viel stärkerer Konter.", "params": {"stance": 0.12, "counter_damage": 20.8}},
+				{"id": "deckung", "name": "Ki-Deckung", "sp": 2, "desc": "L halten verlängert die Deckung bis 1 s (10 Ki je 0,2 s), schwächerer Konter.", "params": {"mode": "ki_guard", "counter_damage": 9.6}},
+				{"id": "ausweich", "name": "Ausweichschritt", "sp": 2, "desc": "Weicht durch den Angriff aus; L danach = Rücktritt.", "params": {"mode": "evade", "counter_damage": 12}}
+			]
+		},
+		"fernschritt": {
+			"name": "Fernschritt", "dir": "forward", "sp": 1, "cd": 4.0, "frames": [18, 6, 10], "ki": 20,
+			"desc": "Augen zu, Faust in die Handfläche, dann erscheinst du vor dem erfassten Gegner. Höchstens 2 in 10 s.",
+			"pose": {"startup": [6], "active": [0], "recovery": [1]},
+			"params": {"range": 320, "mode": "front"},
+			"enhanced": {"strike": true},
+			"alts": [
+				{"id": "flanke", "name": "Flankenwechsel", "sp": 2, "desc": "Du erscheinst hinter dem Ziel.", "params": {"mode": "behind"}},
+				{"id": "rueckzug", "name": "Rückzug", "sp": 2, "desc": "Teleport weg vom nächsten Gegner, bis zu einem halben Bildschirm.", "params": {"mode": "retreat"}},
+				{"id": "luft", "name": "Luftverfolgung", "sp": 2, "desc": "Erreicht einen angehobenen Gegner in der Luft. +15 Ki (gegen angehobene nur die Hälfte).", "ki": 35, "params": {"mode": "air"}}
+			]
+		},
+		"meteor_abschluss": {
+			"name": "Meteor-Abschluss", "dir": "down", "sp": 1, "cd": 0.9, "frames": [8, 8, 18],
+			"desc": "In der Luft ein beidhändiger Hammerschlag nach unten, der Gegner prallt ab. Am Boden ein tiefer Feger.",
+			"pose": {"startup": [5], "active": [4], "recovery": [3]},
+			"params": {"damage": 13.6, "sweep": 7.2, "slam": 620, "kind": "hammer"},
+			"enhanced": {"shock": true, "wave": true},
+			"alts": [
+				{"id": "schwer", "name": "Schwerer Hammer", "sp": 2, "desc": "Stärkerer Einzeltreffer mit Ki-Erschütterung, langsamer.", "frames": [20, 8, 20], "params": {"damage": 20, "heavy_finish": true}},
+				{"id": "fallend", "name": "Fallender Tritt", "sp": 2, "desc": "Du folgst selbst zum Boden und landest direkt neben dem Gegner.", "params": {"kind": "follow"}},
+				{"id": "nachschuss", "name": "Ki-Nachschuss", "sp": 2, "desc": "Du bleibst oben und schickst drei kleine Ki-Kugeln hinterher (15 Ki).", "ki": 15, "params": {"kind": "volley", "orb": 3.2}}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug", "sp": 4, "cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Staub hebt sich, Steine schweben, die Aura flammt auf; die Alternativen sind drei verschiedene Supers.",
+		"variants": [
+			{"id": "grenzbruch", "name": "Grenzbruch", "sp": 0, "desc": "10 s weiß-blaue Flammenaura: +50 % Ki, +25 % Tempo, Fernschritt ohne Abklingzeit. Danach 1 s erschöpft."},
+			{"id": "fernstrahl", "name": "Fernstrahl", "sp": 2, "desc": "Sichtbar laden, Zielmarke blinkt, dann Teleport zum Ziel und Kernstrahl aus nächster Nähe."},
+			{"id": "sonnenkern", "name": "Sonnenkern", "sp": 2, "desc": "Eine Mini-Sonne wächst über deiner Faust (2,5 s, ein Treffer bricht ab und erstattet 2 Stufen), dann riesiger Flächenschaden."}
+		]
+	}
+}
