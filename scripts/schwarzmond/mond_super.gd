@@ -33,6 +33,7 @@ var _add: Node2D
 var _wave_x := 0.0
 var _wave_y := 0.0
 var _wave_hit: Dictionary = {}
+var _wave_clip: MondClip
 var _cut_y := 0.0
 
 
@@ -148,6 +149,9 @@ func _process(delta: float) -> void:
 		"end":
 			if _t >= 0.4:
 				_finish()
+	if phase != "wave" and _wave_clip != null and is_instance_valid(_wave_clip):
+		_wave_clip.queue_free()
+		_wave_clip = null
 	queue_redraw()
 	_add.queue_redraw()
 
@@ -235,6 +239,9 @@ func _blut_charge(delta: float) -> void:
 		_next("wave")
 		_wave_x = player.global_position.x + player.facing * 20.0
 		_wave_y = player.global_position.y - 40.0
+		_wave_clip = MondClip.play(room, "blutmond", Vector2(_wave_x, _wave_y), player.facing > 0, 1.7, 0.0, true, 2.0)  # the sheet bulges left
+		if _wave_clip != null:
+			_wave_clip.z_index = CombatFx.FOCUS_Z + 3
 		_set_pose(3)
 		room.fx.shake(10.0 * FxSettings.factor("shake"), player.facing)
 		room.fx.flash(0.18 * FxSettings.factor("flash"), Color(1.0, 0.3, 0.35))
@@ -245,6 +252,8 @@ func _blut_wave(delta: float) -> void:
 	_set_pose(4)
 	var speed := 620.0
 	_wave_x += player.facing * speed * delta
+	if _wave_clip != null and is_instance_valid(_wave_clip):
+		_wave_clip.global_position = Vector2(_wave_x, _wave_y)
 	var area := Rect2(_wave_x - 36.0, _wave_y - 60.0, 72.0, 110.0)
 	for t in _targets():
 		var id: int = t.get_instance_id()
@@ -292,6 +301,9 @@ func _eclipse_cut() -> void:
 		room.fx.dim(0.0)
 		player.sprite.modulate = Color.WHITE
 		fx.word(player.global_position + Vector2(0, -70), "ZAAASH!", MondFx.WHITE, 44)
+		var ec := MondClip.play(room, "mondfinsternis", Vector2(v.get_center().x, _cut_y), false, 2.5)
+		if ec != null:
+			ec.z_index = CombatFx.FOCUS_Z + 3
 		# everything is spent
 		caster.stage = 0
 		caster.larve_time = 0.0

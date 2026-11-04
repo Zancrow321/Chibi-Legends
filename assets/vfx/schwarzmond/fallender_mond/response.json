@@ -1,0 +1,48 @@
+{
+ "usage": {
+  "type": "generations",
+  "generations": 1.0
+ },
+ "id": "7d9703ee-a335-40e3-aa43-ba2b229a14b8",
+ "status": "completed",
+ "created_at": "2026-11-04T18:48:41.510737+00:00",
+ "last_response": {
+  "fps": 16,
+  "kind": "new",
+  "loop": false,
+  "name": "Black energy ground shockwave",
+  "files": {
+   "black-energy-ground-shockwave.gif": "https://api.pixellab.ai/mcp/pixel-tools/32d2addf-4bf2-462c-b0a2-db9920e88b70/black-energy-ground-shockwave.gif",
+   "black-energy-ground-shockwave.png": "https://api.pixellab.ai/mcp/pixel-tools/32d2addf-4bf2-462c-b0a2-db9920e88b70/black-energy-ground-shockwave.png",
+   "black-energy-ground-shockwave.json": "https://api.pixellab.ai/mcp/pixel-tools/32d2addf-4bf2-462c-b0a2-db9920e88b70/black-energy-ground-shockwave.json"
+  },
+  "parts": [],
+  "anchor": {
+   "x": 100,
+   "y": 40,
+   "kind": "origin"
+  },
+  "artist": "lite",
+  "canvas": {
+   "h": 60,
+   "w": 200
+  },
+  "frames": 8,
+  "message": "A 0.5-second one-shot ground shockwave: a black energy mass spreads left and right along the floor, with a cyan rim and white-hot edge, a flash at the impact, black ink chunks thrown up and settling, and cyan streaks running out along the ground. Side view with a transparent background. The black body reads best on light backgrounds, since it blends into dark ones. The edge flicker is subtle; the body's erosion and the rim's width are the places to push it further.",
+  "edit_url": "https://pixellab.ai/create-vfx?effect=8d5d4a46-03fa-4582-bf57-e872eded4bdc",
+  "effect_id": "8d5d4a46-03fa-4582-bf57-e872eded4bdc",
+  "gif_exact": true,
+  "result_id": "32d2addf-4bf2-462c-b0a2-db9920e88b70",
+  "conversation": "ILXlQrm6dynL8cfw-UeIeQ.384e89810857e506e5703a2bc84714c4166087516b0c16b44322a4232331cd53",
+  "billing_usage": {
+   "usd": 0.0,
+   "type": "generations",
+   "generations": 1.0
+  },
+  "generation_id": "f32e8ee6-788a-4625-8c63-120d65c3d8bc",
+  "billing_charged": true,
+  "generation_mode": "vfx",
+  "pixel_tools_image": true,
+  "quoted_generations": 1
+ }
+}

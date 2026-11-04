@@ -25,6 +25,8 @@ var _hit: Dictionary = {}
 var _fade := -1.0
 var _add: Node2D
 var _trail := 0.0
+var _clip: MondClip  # PixelLab sprite of the crescent, when it exists
+var clip_id := "mondsichel"
 
 
 func _ready() -> void:
@@ -41,6 +43,15 @@ func _ready() -> void:
 	_add.draw.connect(_draw_rim)
 	add_child(_add)
 	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	if MondClip.available(clip_id):
+		_clip = MondClip.new()
+		_clip.id = clip_id
+		_clip.loop = true
+		var flip := dir.x < 0.0
+		var k := r / 26.0
+		_clip.scale = Vector2(-k if flip else k, k)
+		_clip.rotation = -(dir * Vector2(-1, 1)).angle() if flip else dir.angle()
+		add_child(_clip)
 
 
 func _area() -> Rect2:
@@ -99,6 +110,7 @@ func _physics_process(delta: float) -> void:
 
 func _burst() -> void:
 	_fade = 0.0
+	MondClip.play(world, "mondsichel_treffer", global_position, dir.x < 0.0, clampf(r / 22.0, 0.7, 2.0))
 	if caster != null:
 		caster.mfx.ink(global_position, 8, 110.0, 0.5)
 		caster.mfx.streaks(global_position, dir.angle(), 0.9, 6, 220.0, 0.25, rim_col)
@@ -114,6 +126,9 @@ func _alpha() -> float:
 
 
 func _draw() -> void:
+	if _clip != null:
+		_clip.modulate.a = _alpha()
+		return
 	var grow := 1.0 + (_fade if _fade >= 0.0 else 0.0) * 2.0
 	MondFx.draw_crescent(self, null, Vector2.ZERO, dir, r * grow, _alpha(), rim_col, 1.25, 1.3)
 
@@ -124,7 +139,8 @@ func _draw_rim() -> void:
 	var tex := GlutFx.glow_texture()
 	var s := r * 0.6 * grow
 	_add.draw_texture_rect(tex, Rect2(dir * r * 1.15 - Vector2(s, s), Vector2(s, s) * 2.0), false, Color(rim_col, 0.12 * a))
-	MondFx.draw_crescent(null, _add, Vector2.ZERO, dir, r * grow, a, rim_col, 1.25, 1.3)
+	if _clip == null:
+		MondFx.draw_crescent(null, _add, Vector2.ZERO, dir, r * grow, a, rim_col, 1.25, 1.3)
 	# motion smear behind the crescent
 	for i in 3:
 		var back := -dir * (8.0 + i * 9.0)
