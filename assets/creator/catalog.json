@@ -106,8 +106,8 @@
    "texture": "res://assets/creator/weapons/sense_nachhall.png",
    "scale": 2,
    "grip": [
-    11.0,
-    31.0
+    11.5,
+    30.5
    ],
    "tip": [
     29.0,
