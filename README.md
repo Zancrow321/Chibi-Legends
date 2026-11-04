@@ -8,7 +8,9 @@ Spielwelt: die Multiversum-Akademie. Fähigkeiten und Outfits sind eigene Entwü
 ## Stand: Phase 1 (Fundament)
 
 - Chibi-Spielfigur (ca. 32 × 48 Pixel, in Ebenen gezeichnet) mit Laufen, Doppelsprung, Dash und Durch-Plattform-Fallen
-- Katana-Combo mit drei Hieben und vier Fähigkeiten: Flammenschnitt, Frostlanze, Kettenblitz, Sturmklinge
+- Kampfsystem (Prototyp): Leicht, Schwer und Spezial, jeweils mit Richtung (neutral, vor, oben, unten, Luft), Leicht-Kette mit 3 Hieben, Griff, Abbrechen in stärkere Angriffe nach einem Treffer, Puppen lassen sich hochschleudern. Angriffswerte stehen als Bilder-Daten (60 fps) in `assets/combat/movesets/`, siehe `docs/kampfsystem.md`
+- Testfigur 2 (Manga-Chibi-Stil) als Kämpfer; T schaltet auf die Figur aus der Sammlung
+- Vier Fähigkeiten als Spezial-Richtungen: Flammenschnitt, Frostlanze, Kettenblitz, Sturmklinge
 - Element-Reaktionen: Dampfexplosion, Überladung, Kristallbruch, Feuersturm
 - Trainingswald mit Trainingspuppen, Schaden pro Sekunde, Gesamtschaden und Reaktions-Quest
 - HUD: Leisten oben links, Minikarte und Quests oben rechts, Fähigkeiten-Leiste und Menüleiste unten
@@ -20,12 +22,16 @@ Spielwelt: die Multiversum-Akademie. Fähigkeiten und Outfits sind eigene Entwü
 | Aktion | Tastatur | Gamepad |
 | --- | --- | --- |
 | Laufen | A / D oder Pfeiltasten | Linker Stick / Steuerkreuz |
-| Springen (2x = Doppelsprung) | Leertaste, W oder Pfeil hoch | A |
+| Springen (2x = Doppelsprung) | Leertaste | A |
+| Richtung oben / unten | W / S oder Pfeiltasten | Linker Stick / Steuerkreuz |
 | Durch Plattform fallen | S + Leertaste | Unten + A |
-| Dash | Shift | B |
-| Katana-Combo | J | X |
-| Fähigkeiten 1–4 | K, L, I, O (oder 1–4) | Y, RB, LB, RT |
-| Super „Legendenstrahl“ | P (oder 5) | LT |
+| Dash (in der Luft 1x pro Sprung) | Shift | RB |
+| Leicht (3er-Kette, mit Richtung: vor, oben, unten, Luft) | J | X |
+| Schwer (mit Richtung) | K | Y |
+| Spezial: neutral, vor, oben, unten = Fähigkeit 1–4 | L | B |
+| Griff (Wurf) | J + K zusammen | X + Y |
+| Super „Legendenstrahl“ | P | LT |
+| Figur wechseln (Testfigur / Sammlung) | T | – |
 | Effekt-Stärke (Dezent / Kräftig / Maximal) | V | – |
 | Unendlich Aura / Abklingzeiten zurücksetzen | U / R | – / Back |
 | Charaktere (Sammlung) | C | Start |

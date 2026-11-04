@@ -244,12 +244,15 @@ func _draw_training() -> void:
 func _draw_skill_bar(W: float, H: float) -> void:
 	var p := room.player
 	var slots := [
-		{"label": "Angriff", "key": GameInput.key_label("attack"), "icon": "attack", "cd": 0.0, "max": 1.0},
+		{"label": "Leicht", "key": GameInput.key_label("light"), "icon": "attack", "cd": 0.0, "max": 1.0},
+		{"label": "Schwer", "key": GameInput.key_label("heavy"), "icon": "heavy", "cd": 0.0, "max": 1.0},
 		{"label": "Dash", "key": "Shift", "icon": "dash", "cd": p.dash_cd, "max": Player.DASH_COOLDOWN},
 	]
+	var arrows := ["", "→", "↑", "↓"]
+	var sk := GameInput.key_label("special")
 	for i in p.build.size():
 		var s: Dictionary = GameData.SKILLS[p.build[i]]
-		slots.append({"label": s.name, "key": GameInput.key_label("skill_%d" % (i + 1)), "icon": p.build[i], "cd": p.cooldowns[i], "max": s.cooldown, "cost": s.cost})
+		slots.append({"label": s.name, "key": arrows[i] + sk, "icon": p.build[i], "cd": p.cooldowns[i], "max": s.cooldown, "cost": s.cost})
 	var sup: Dictionary = GameData.SUPER
 	slots.append({"label": sup.name, "key": GameInput.key_label("super"), "icon": sup.id, "cd": p.super_cd, "max": sup.cooldown, "cost": sup.cost})
 	var slot := 62.0
@@ -276,6 +279,11 @@ func _draw_skill_bar(W: float, H: float) -> void:
 func _draw_icon(r: Rect2, icon: String) -> void:
 	var c := r.get_center()
 	match icon:
+		"heavy":
+			_panel(r, Color("6a3a4a"), 6)
+			draw_line(c + Vector2(-14, 14), c + Vector2(14, -14), Color("e8eef2"), 9)
+			draw_line(c + Vector2(-14, 14), c + Vector2(14, -14), Color.WHITE, 4)
+			draw_line(c + Vector2(-17, 5), c + Vector2(-5, 17), TRIM, 6)
 		"attack":
 			_panel(r, Color("4a4d6a"), 6)
 			draw_line(c + Vector2(-14, 14), c + Vector2(14, -14), Color("e8eef2"), 5)
@@ -375,19 +383,20 @@ func _draw_bottom_left(H: float) -> void:
 
 
 func _draw_help() -> void:
-	var r := Rect2(16, 286, 360, 272)
+	var r := Rect2(16, 286, 400, 360)
 	_panel(r, PANEL, 10)
 	_text(Vector2(32, 312), "Steuerung", 17, TRIM)
 	var lines := [
 		["A / D", "Laufen"], ["Leertaste", "Springen, 2x Doppelsprung"], ["S + Leertaste", "Durch Plattform fallen"],
-		["Shift", "Dash"], ["J", "Katana-Combo (3 Hiebe)"], ["K L I O", "Fähigkeiten 1–4"],
-		["P", "Super: Legendenstrahl"], ["V", "Effekt-Stärke wechseln"],
-		["C", "Look wechseln"], ["H", "Hilfe ein/aus"],
+		["Shift", "Dash (in der Luft 1x)"], ["J", "Leicht (3er-Kette)"], ["K", "Schwer"],
+		["L", "Spezial (Fähigkeit)"], ["W/S/A/D +", "Richtung: oben/unten/vor"],
+		["J + K", "Griff (Wurf)"], ["P", "Super: Legendenstrahl"], ["V", "Effekt-Stärke wechseln"],
+		["T", "Figur: Testfigur / Sammlung"], ["C", "Charaktere"], ["H", "Hilfe ein/aus"],
 	]
 	var y := 338.0
 	for l in lines:
 		_text(Vector2(32, y), l[0], 15, TEXT)
-		_text(Vector2(160, y), l[1], 15, MUTED)
+		_text(Vector2(150, y), l[1], 15, MUTED)
 		y += 22.0
 
 
