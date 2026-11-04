@@ -34,6 +34,7 @@ var klang_fx: KlangFx  # effects of Gleichklang (created by its caster)
 var stage: DuskStage  # dusk light look (only in the "Licht" view, see Main)
 var post: SparringPost
 var waves: EnemyWaves  # first real enemies behind the dummies
+var debug: CombatDebug  # hitbox view and slow motion (keys 0 and 9)
 var enemies_defeated := 0
 var exp_points := 0.0  # EXP from enemies (shown in the HUD's EXP bar)
 const EXP_PER_LEVEL := 300.0
@@ -50,7 +51,7 @@ var _clock := 0.0
 
 
 func _ready() -> void:
-	Engine.time_scale = 1.0  # a kill slow motion never survives a scene reload
+	Engine.time_scale = CombatDebug.time_factor  # a kill slow motion never survives a scene reload
 	_build_terrain()
 	attacks = Node2D.new()
 	effects = Effects.new()
@@ -107,6 +108,9 @@ func _ready() -> void:
 	waves = EnemyWaves.new()
 	waves.world = self
 	add_child(waves)
+	debug = CombatDebug.new()
+	debug.room = self
+	add_child(debug)
 
 
 ## Enemies live in their own layer (behind the player and the attacks).
@@ -158,7 +162,7 @@ func _level_up() -> void:
 
 var _slow_until := 0
 func _slowmo(seconds: float, scale: float) -> void:
-	Engine.time_scale = scale
+	Engine.time_scale = scale * CombatDebug.time_factor
 	_slow_until = Time.get_ticks_msec() + int(seconds * 1000.0)
 
 
@@ -169,7 +173,7 @@ func _process(delta: float) -> void:
 		combo = 0
 	if _slow_until > 0 and Time.get_ticks_msec() >= _slow_until:
 		_slow_until = 0
-		Engine.time_scale = 1.0
+		Engine.time_scale = CombatDebug.time_factor
 	toast_time = maxf(0.0, toast_time - delta)
 	camera.global_position = player.global_position + Vector2(player.facing * 30.0, -40.0)
 	if Input.is_action_just_pressed("cycle_fx"):
@@ -357,6 +361,8 @@ func deal_hit(target: Node2D, base: float, element: String, from_x: float, knock
 	var dmg := int(round(res.damage * randf_range(0.92, 1.08) * _combo_scale(target) * (1.0 + Profile.bonus("atk")) * (1.5 if crit else 1.0)))
 	var col: Color = GameData.ELEMENTS[element].color if element != "" else Color("ff4b3e")
 	hit_landed.emit(target.get_hurt_rect().get_center(), col, res.reaction != "")
+	# still staggered from the last hit = a real combo (no gap to escape)
+	var linked: bool = target is Enemy and target.state == "hurt"
 	target.take_hit(knockback, from_x)
 	if launch != 0.0 and target.has_method("launch"):
 		target.launch(launch)
@@ -373,11 +379,17 @@ func deal_hit(target: Node2D, base: float, element: String, from_x: float, knock
 		profile = "heavy" if knockback >= 120.0 else "light"
 	var dir := signf(center.x - from_x)
 	var strong: bool = res.reaction != "" or profile == "heavy" or profile == "super_final"
-	# hitstun: long enough to link the next hit, shorter late in long combos
+	# hitstun: long enough to link the next hit, longer for strong hits,
+	# shorter late in long ground combos (HitFeel)
+	if stun < 0.0:
+		stun = 0.45 if strong else 0.36
+	var weight: float = target.weight() if target.has_method("weight") else 1.0
+	var airborne: bool = target is Enemy and not target.on_ground
+	stun = HitFeel.final_stun(stun, knockback, launch, weight, combo, airborne)
 	if target.has_method("set_hitstun"):
-		if stun < 0.0:
-			stun = 0.45 if strong else 0.36
-		target.set_hitstun(stun * maxf(0.55, 1.0 - 0.03 * maxi(0, combo - 8)))
+		target.set_hitstun(stun)
+	if debug != null:
+		debug.note_hit(target, stun, linked, combo, profile)
 	if not profile.begins_with("super") or profile == "super_final":
 		Sfx.play("hit_heavy" if strong else "hit_light")
 		if element == "" and not strong:
