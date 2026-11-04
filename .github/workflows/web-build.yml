@@ -46,14 +46,17 @@ jobs:
           path: build/web
 
       - uses: actions/upload-pages-artifact@v3
-        if: github.event_name != 'pull_request' && vars.DEPLOY_PAGES == 'true'
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         with:
           path: build/web
 
   deploy:
-    # Nur aktiv, wenn GitHub Pages eingerichtet ist und die Repo-Variable DEPLOY_PAGES=true gesetzt ist.
-    if: github.event_name != 'pull_request' && vars.DEPLOY_PAGES == 'true'
+    # Lädt jeden Stand von main auf GitHub Pages hoch.
+    # Einmalig nötig: Settings > Pages > Source: "GitHub Actions".
+    # Solange Pages nicht aktiv ist, schlägt nur dieser Schritt fehl, der Build bleibt grün.
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: build
+    continue-on-error: true
     runs-on: ubuntu-latest
     permissions:
       pages: write
