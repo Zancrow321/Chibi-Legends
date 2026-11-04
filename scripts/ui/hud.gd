@@ -298,6 +298,9 @@ func _draw_gauge(r: Rect2) -> void:
 
 ## Style, Atemrhythmus (glow stage of the blade) and the Weißglut timer.
 func _draw_style_panel(r: Rect2) -> void:
+	if room.player.glut is MondCaster:
+		_draw_mond_panel(r, room.player.glut)
+		return
 	var g := room.player.glut
 	if g is KlangCaster:
 		_draw_klang_panel(r, g)
@@ -323,6 +326,51 @@ func _draw_style_panel(r: Rect2) -> void:
 		_text(Vector2(br.position.x, r.position.y + r.size.y - 2), "Weißglut +%d %%" % int(round(g.buff_bonus * 100.0)), 11, TEXT, HORIZONTAL_ALIGNMENT_CENTER, br.size.x, 3)
 	else:
 		_text(Vector2(r.position.x + 176, r.position.y + 19), "Klinge: " + info, 15, MUTED)
+
+
+## Schwarzmond: the Mondphase as a moon that fills, plus the timers of the
+## Schattenlarve, the Neumond form or the Erschöpfung.
+func _draw_mond_panel(r: Rect2, g: MondCaster) -> void:
+	var cyan := Color("6fe3ff")
+	_panel(r, PANEL, 13, Color(cyan, 0.55))
+	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, Color("cfe9ff"))
+	var c := Vector2(r.position.x + 132, r.get_center().y)
+	var rad := 8.0
+	draw_circle(c, rad + 1.5, Color(0.02, 0.02, 0.05))
+	draw_circle(c, rad, Color("1c1b33"))
+	# lit part of the moon: Sichel, Halbmond, Vollmond
+	if g.stage >= 3:
+		var pulse := 0.5 + 0.5 * sin(_t * 10.0)
+		draw_circle(c, rad + 3.0 * pulse, Color(cyan, 0.25))
+		draw_circle(c, rad, Color("f4f8ff"))
+	elif g.stage == 1:
+		draw_colored_polygon(MondFx.crescent(c, Vector2.RIGHT, rad, 1.5, 1.0), Color("f4f8ff"))
+	elif g.stage == 2:
+		var pts := PackedVector2Array()
+		for i in 17:
+			var a := -PI / 2.0 + PI * i / 16.0
+			pts.append(c + Vector2(cos(a), sin(a)) * rad)
+		draw_colored_polygon(pts, Color("f4f8ff"))
+	draw_arc(c, rad, 0, TAU, 20, Color(cyan, 0.7), 1.2)
+	var info := g.phase_name()
+	var bx := r.position.x + 150
+	var timer := 0.0
+	var tmax := 1.0
+	var tcol := cyan
+	var tname := ""
+	if g.larve_time > 0.0:
+		timer = g.larve_time; tmax = MondCaster.LARVE_TIME; tcol = Color("ff3b4a"); tname = "Schattenlarve"
+	elif g.neumond_time > 0.0:
+		timer = g.neumond_time; tmax = g.neumond_max; tcol = Color("f4f8ff"); tname = "Neumond"
+	elif g.erschoepft > 0.0:
+		timer = g.erschoepft; tmax = 10.0; tcol = Color("8a8fa8"); tname = "Erschöpft"
+	if timer > 0.0:
+		var br := Rect2(bx, r.position.y + 8, 146, 10)
+		draw_rect(br, Color(0.05, 0.03, 0.06))
+		draw_rect(Rect2(br.position, Vector2(br.size.x * timer / maxf(0.01, tmax), br.size.y)), tcol)
+		_text(Vector2(br.position.x, r.position.y + r.size.y - 2), "%s · %s" % [tname, info], 11, TEXT, HORIZONTAL_ALIGNMENT_CENTER, br.size.x, 3)
+	else:
+		_text(Vector2(bx, r.position.y + 19), "Mondphase: " + info, 15, MUTED)
 
 
 ## Gleichklang: Einklang as six small bells, a beat dot and the state.

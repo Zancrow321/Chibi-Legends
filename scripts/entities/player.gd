@@ -140,7 +140,12 @@ func _ready() -> void:
 func init_style() -> void:
 	if style == null or style.zuege.is_empty():
 		return
-	glut = KlangCaster.new() if style.id == "gleichklang" else GlutCaster.new()
+	if style.data.get("caster", "") == "schwarzmond":
+		glut = MondCaster.new()
+	elif style.id == "gleichklang":
+		glut = KlangCaster.new()
+	else:
+		glut = GlutCaster.new()
 	add_child(glut)
 	glut.setup(self, style)
 
@@ -171,6 +176,8 @@ func receive_hit(damage: float, from_x: float, source: Node = null) -> bool:
 		return false
 	if glut != null and glut.try_counter(from_x, source if source != null and source.has_method("burn") else null):
 		return false
+	if glut != null and glut.guard_hit(damage, from_x, source):
+		return true
 	var dir := signf(global_position.x - from_x)
 	if dir == 0.0:
 		dir = -facing
@@ -620,7 +627,7 @@ func _start_move(m: Dictionary) -> void:
 func _tick_move(delta: float) -> void:
 	if move.is_empty():
 		return
-	move_t += delta
+	move_t += delta * (glut.normal_speed() if glut != null else 1.0)
 	var ph := MoveSet.phase_at(move, move_t)
 	if ph != "startup" and not _move_spawned:
 		_move_spawned = true
@@ -766,6 +773,10 @@ func _use_meisterzug() -> void:
 	if in_super or _glut_busy() or dash_timer > 0.0:
 		return
 	var cost := style.super_cost()
+	var mond := glut as MondCaster
+	if mond != null and style.super_variant == "mondfinsternis" and mond.eclipse_used:
+		world.toast("Mondfinsternis gibt es nur einmal pro Kampf (R setzt zurück)")
+		return
 	if not infinite_aura and gauge < cost:
 		world.toast("Legendenleiste: %d von 3 Stufen" % int(gauge / 100.0))
 		return
@@ -776,6 +787,16 @@ func _use_meisterzug() -> void:
 	move = {}
 	_queued = ""
 	Sfx.play("super_flash")
+	if mond != null:
+		var ms := MondSuper.new()
+		ms.room = world
+		ms.player = self
+		ms.caster = mond
+		ms.fx = world.glut_fx
+		ms.variant = style.super_variant
+		ms.title = style.variant().get("name", "Meisterzug")
+		world.add_child(ms)
+		return
 	if glut is KlangCaster:
 		var ks := KlangSuper.new()
 		ks.room = world
@@ -800,6 +821,7 @@ func reset_cooldowns() -> void:
 	if glut != null:
 		for z in glut.cooldowns:
 			glut.cooldowns[z] = 0.0
+		glut.reset_fight()
 	super_cd = 0.0
 	for i in cooldowns.size():
 		cooldowns[i] = 0.0
