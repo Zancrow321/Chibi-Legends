@@ -1,0 +1,878 @@
+{
+ "swing_light": {
+  "prompt": "Fast thin katana sword swing whoosh, sharp air cut, short, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1 seconds",
+  "takes": 6,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/swing_light_1.wav",
+    "seed": 218130614783266,
+    "score": -0.9,
+    "len": 0.17
+   },
+   {
+    "file": "assets/audio/sfx/sa3/swing_light_2.wav",
+    "seed": 265492286995357,
+    "score": -2.6,
+    "len": 0.19
+   },
+   {
+    "file": "assets/audio/sfx/sa3/swing_light_3.wav",
+    "seed": 56713148432062,
+    "score": -7.0,
+    "len": 0.14
+   }
+  ]
+ },
+ "swing_heavy": {
+  "prompt": "Heavy greatsword swing, deep powerful whoosh with low rumble, anime fighting game, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 5,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/swing_heavy_1.wav",
+    "seed": 122759855380989,
+    "score": 8.3,
+    "len": 0.29
+   },
+   {
+    "file": "assets/audio/sfx/sa3/swing_heavy_2.wav",
+    "seed": 4060450336529,
+    "score": 6.9,
+    "len": 0.31
+   }
+  ]
+ },
+ "dash": {
+  "prompt": "Super fast anime dash, quick air burst whoosh with slight sparkle tail, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1 seconds",
+  "takes": 5,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/dash_1.wav",
+    "seed": 225434081182639,
+    "score": -8.6,
+    "len": 0.27
+   },
+   {
+    "file": "assets/audio/sfx/sa3/dash_2.wav",
+    "seed": 80211636102721,
+    "score": -8.6,
+    "len": 0.31
+   }
+  ]
+ },
+ "hit_light": {
+  "prompt": "Quick punchy anime punch impact, snappy body hit, tight transient, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1 seconds",
+  "takes": 6,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/hit_light_1.wav",
+    "seed": 97943694665155,
+    "score": 4.2,
+    "len": 0.17
+   },
+   {
+    "file": "assets/audio/sfx/sa3/hit_light_2.wav",
+    "seed": 232182165985365,
+    "score": 4.0,
+    "len": 0.21
+   },
+   {
+    "file": "assets/audio/sfx/sa3/hit_light_3.wav",
+    "seed": 107369911730462,
+    "score": -5.5,
+    "len": 0.29
+   }
+  ]
+ },
+ "hit_heavy": {
+  "prompt": "Massive heavy hit impact, bass thump with crunchy crack and short boom, fighting game critical hit, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 6,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/hit_heavy_1.wav",
+    "seed": 104081402288228,
+    "score": 11.8,
+    "len": 0.6
+   },
+   {
+    "file": "assets/audio/sfx/sa3/hit_heavy_2.wav",
+    "seed": 142155924706530,
+    "score": 10.0,
+    "len": 0.56
+   },
+   {
+    "file": "assets/audio/sfx/sa3/hit_heavy_3.wav",
+    "seed": 220738910343642,
+    "score": 9.5,
+    "len": 0.54
+   }
+  ]
+ },
+ "hit_blade": {
+  "prompt": "Sword slash hitting flesh, sharp slicing impact with metallic ring, anime slash, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1 seconds",
+  "takes": 6,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/hit_blade_1.wav",
+    "seed": 162056016375268,
+    "score": 5.2,
+    "len": 0.43
+   },
+   {
+    "file": "assets/audio/sfx/sa3/hit_blade_2.wav",
+    "seed": 21619609234006,
+    "score": 1.0,
+    "len": 0.47
+   },
+   {
+    "file": "assets/audio/sfx/sa3/hit_blade_3.wav",
+    "seed": 71524465652403,
+    "score": 0.9,
+    "len": 0.5
+   }
+  ]
+ },
+ "block": {
+  "prompt": "Sword blocking sword, loud metal clang with bright spark ring, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 5,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/block_1.wav",
+    "seed": 231954852144550,
+    "score": 10.5,
+    "len": 0.39
+   },
+   {
+    "file": "assets/audio/sfx/sa3/block_2.wav",
+    "seed": 86347404949752,
+    "score": 8.7,
+    "len": 0.35
+   }
+  ]
+ },
+ "parry": {
+  "prompt": "Perfect parry, crisp high metallic shing with shimmering glint, anime counter, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/parry_1.wav",
+    "seed": 172360620360124,
+    "score": -9.6,
+    "len": 0.44
+   }
+  ]
+ },
+ "guard_break": {
+  "prompt": "Shield shattering, glass and metal break burst with heavy thud, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/guard_break_1.wav",
+    "seed": 276540521127030,
+    "score": 7.2,
+    "len": 0.6
+   }
+  ]
+ },
+ "super_flash": {
+  "prompt": "Anime super move activation, bright energy flash swell with deep boom and shimmering ring, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 2 seconds",
+  "takes": 5,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/super_flash_1.wav",
+    "seed": 56368856208383,
+    "score": 12.3,
+    "len": 0.94
+   }
+  ]
+ },
+ "ko": {
+  "prompt": "Final knockout blow, huge slow-motion impact boom with long reverb tail, epic, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 3 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/ko_1.wav",
+    "seed": 132275808179920,
+    "score": 11.0,
+    "len": 1.51
+   }
+  ]
+ },
+ "enemy_death": {
+  "prompt": "Monster defeated, puff of magic smoke dissolve with sparkle, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/enemy_death_1.wav",
+    "seed": 241012035119139,
+    "score": 9.4,
+    "len": 0.7
+   },
+   {
+    "file": "assets/audio/sfx/sa3/enemy_death_2.wav",
+    "seed": 178790698264567,
+    "score": 3.7,
+    "len": 0.59
+   }
+  ]
+ },
+ "glut_cast": {
+  "prompt": "Deep fire breath inhale then roaring flame ignition, blacksmith forge, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 2 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/glut_cast_1.wav",
+    "seed": 142342543584849,
+    "score": 4.6,
+    "len": 0.98
+   },
+   {
+    "file": "assets/audio/sfx/sa3/glut_cast_2.wav",
+    "seed": 170697456592026,
+    "score": 2.0,
+    "len": 0.86
+   }
+  ]
+ },
+ "glut_attack": {
+  "prompt": "Hammer striking glowing iron on an anvil with burst of fire and crackling sparks, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/glut_attack_1.wav",
+    "seed": 36360555332254,
+    "score": 10.0,
+    "len": 0.2
+   },
+   {
+    "file": "assets/audio/sfx/sa3/glut_attack_2.wav",
+    "seed": 198407328997122,
+    "score": 9.1,
+    "len": 0.28
+   }
+  ]
+ },
+ "glut_impact": {
+  "prompt": "Fiery explosion impact, whoosh of flames and crackling embers, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/glut_impact_1.wav",
+    "seed": 125199071451904,
+    "score": 9.4,
+    "len": 0.7
+   },
+   {
+    "file": "assets/audio/sfx/sa3/glut_impact_2.wav",
+    "seed": 72398455546110,
+    "score": 7.5,
+    "len": 0.63
+   }
+  ]
+ },
+ "glut_super": {
+  "prompt": "Massive inferno eruption, roaring fire tornado with deep boom and molten metal hiss, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 3 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/glut_super_1.wav",
+    "seed": 172418822044938,
+    "score": 12.1,
+    "len": 1.47
+   }
+  ]
+ },
+ "mond_cast": {
+  "prompt": "Dark shadow energy gathering, eerie low hum with reversed whisper swell, black moon magic, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 2 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/mond_cast_1.wav",
+    "seed": 103813770722050,
+    "score": -8.0,
+    "len": 1.3
+   },
+   {
+    "file": "assets/audio/sfx/sa3/mond_cast_2.wav",
+    "seed": 12019546531702,
+    "score": -8.4,
+    "len": 1.3
+   }
+  ]
+ },
+ "mond_attack": {
+  "prompt": "Crescent moon shaped dark sword slash, sharp swoosh with ghostly echo, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/mond_attack_1.wav",
+    "seed": 137684733485215,
+    "score": 11.0,
+    "len": 0.57
+   },
+   {
+    "file": "assets/audio/sfx/sa3/mond_attack_2.wav",
+    "seed": 89250556861048,
+    "score": 9.6,
+    "len": 0.61
+   }
+  ]
+ },
+ "mond_impact": {
+  "prompt": "Dark void energy hit, deep distorted thud with shadow crackle, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/mond_impact_1.wav",
+    "seed": 22069810931132,
+    "score": 14.7,
+    "len": 0.83
+   },
+   {
+    "file": "assets/audio/sfx/sa3/mond_impact_2.wav",
+    "seed": 39830501590598,
+    "score": 13.0,
+    "len": 1.0
+   }
+  ]
+ },
+ "mond_super": {
+  "prompt": "Eclipse dark power explosion, giant black hole implosion then deep boom with haunting choir-like drone, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 3 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/mond_super_1.wav",
+    "seed": 71310496332631,
+    "score": 15.7,
+    "len": 2.6
+   }
+  ]
+ },
+ "klang_cast": {
+  "prompt": "Resonant tuning fork hum rising, crystal harmonic chime, sound wave magic, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 2 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/klang_cast_1.wav",
+    "seed": 77446592498162,
+    "score": -1.2,
+    "len": 1.3
+   },
+   {
+    "file": "assets/audio/sfx/sa3/klang_cast_2.wav",
+    "seed": 16016102997853,
+    "score": -6.3,
+    "len": 1.3
+   }
+  ]
+ },
+ "klang_attack": {
+  "prompt": "Sonic blade pulse, bright harmonic ring with wobbling sound wave whoosh, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/klang_attack_1.wav",
+    "seed": 74524380469933,
+    "score": 5.5,
+    "len": 0.44
+   },
+   {
+    "file": "assets/audio/sfx/sa3/klang_attack_2.wav",
+    "seed": 205193871791773,
+    "score": 3.7,
+    "len": 0.44
+   }
+  ]
+ },
+ "klang_impact": {
+  "prompt": "Resonance shockwave hit, glass bell strike with ringing harmonic burst, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/klang_impact_1.wav",
+    "seed": 116857765429872,
+    "score": 14.6,
+    "len": 0.56
+   },
+   {
+    "file": "assets/audio/sfx/sa3/klang_impact_2.wav",
+    "seed": 122369863318778,
+    "score": 13.9,
+    "len": 0.62
+   }
+  ]
+ },
+ "klang_super": {
+  "prompt": "Perfect harmony shockwave, huge crystal bell chord blast expanding with shimmering overtones, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 3 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/klang_super_1.wav",
+    "seed": 144591946578463,
+    "score": 12.9,
+    "len": 1.29
+   }
+  ]
+ },
+ "bollwerk_cast": {
+  "prompt": "Heavy stone wall rising from the ground, rocks grinding and rumbling earth, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 2 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/bollwerk_cast_1.wav",
+    "seed": 80282553250826,
+    "score": 10.8,
+    "len": 0.95
+   },
+   {
+    "file": "assets/audio/sfx/sa3/bollwerk_cast_2.wav",
+    "seed": 263160210210119,
+    "score": 3.2,
+    "len": 1.05
+   }
+  ]
+ },
+ "bollwerk_attack": {
+  "prompt": "Giant shield bash, huge metal and stone thud with deep slam, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/bollwerk_attack_1.wav",
+    "seed": 188558439565092,
+    "score": 11.9,
+    "len": 0.8
+   },
+   {
+    "file": "assets/audio/sfx/sa3/bollwerk_attack_2.wav",
+    "seed": 186475555342633,
+    "score": 10.2,
+    "len": 0.78
+   }
+  ]
+ },
+ "bollwerk_impact": {
+  "prompt": "Ground pound earthquake impact, rocks cracking and debris falling, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/bollwerk_impact_1.wav",
+    "seed": 195140827818954,
+    "score": 6.3,
+    "len": 0.63
+   },
+   {
+    "file": "assets/audio/sfx/sa3/bollwerk_impact_2.wav",
+    "seed": 35847663933597,
+    "score": 5.0,
+    "len": 0.68
+   }
+  ]
+ },
+ "bollwerk_super": {
+  "prompt": "Colossal fortress slam, mountain crashing down, massive earthquake boom with rumbling debris, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 3 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/bollwerk_super_1.wav",
+    "seed": 41709284729149,
+    "score": 7.6,
+    "len": 1.61
+   }
+  ]
+ },
+ "grenz_cast": {
+  "prompt": "Anime power up aura charging, rising electric energy roar, limit break, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 2 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/grenz_cast_1.wav",
+    "seed": 281044611153237,
+    "score": -0.6,
+    "len": 1.5
+   },
+   {
+    "file": "assets/audio/sfx/sa3/grenz_cast_2.wav",
+    "seed": 182353453877783,
+    "score": -2.1,
+    "len": 1.5
+   }
+  ]
+ },
+ "grenz_attack": {
+  "prompt": "Explosive energy punch, compressed air blast with sonic boom crack, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/grenz_attack_1.wav",
+    "seed": 89799736249339,
+    "score": 5.2,
+    "len": 0.5
+   },
+   {
+    "file": "assets/audio/sfx/sa3/grenz_attack_2.wav",
+    "seed": 259181006874175,
+    "score": -5.8,
+    "len": 0.39
+   }
+  ]
+ },
+ "grenz_impact": {
+  "prompt": "Huge ki energy explosion impact, crunchy blast with debris and shockwave, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/grenz_impact_1.wav",
+    "seed": 226442555169643,
+    "score": 7.9,
+    "len": 0.84
+   },
+   {
+    "file": "assets/audio/sfx/sa3/grenz_impact_2.wav",
+    "seed": 200405563073362,
+    "score": 6.9,
+    "len": 0.77
+   }
+  ]
+ },
+ "grenz_super": {
+  "prompt": "Breaking the limit, glass reality shatter then gigantic energy explosion with roaring shockwave, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 3 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/grenz_super_1.wav",
+    "seed": 152079050802316,
+    "score": 5.9,
+    "len": 1.49
+   }
+  ]
+ },
+ "wirbel_cast": {
+  "prompt": "Wind swirling up into a vortex, rising airy whoosh, wind magic, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 2 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/wirbel_cast_1.wav",
+    "seed": 169019348581788,
+    "score": 5.0,
+    "len": 1.25
+   },
+   {
+    "file": "assets/audio/sfx/sa3/wirbel_cast_2.wav",
+    "seed": 247601947438207,
+    "score": 3.8,
+    "len": 1.4
+   }
+  ]
+ },
+ "wirbel_attack": {
+  "prompt": "Spinning blade tornado, fast repeating whooshes circling, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/wirbel_attack_1.wav",
+    "seed": 79512730097282,
+    "score": 0.6,
+    "len": 0.69
+   },
+   {
+    "file": "assets/audio/sfx/sa3/wirbel_attack_2.wav",
+    "seed": 209412118015537,
+    "score": -1.3,
+    "len": 0.56
+   }
+  ]
+ },
+ "wirbel_impact": {
+  "prompt": "Gust of wind slamming, blast of air with flapping and whistle, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/wirbel_impact_1.wav",
+    "seed": 216310162316021,
+    "score": 0.7,
+    "len": 0.7
+   },
+   {
+    "file": "assets/audio/sfx/sa3/wirbel_impact_2.wav",
+    "seed": 181278993097647,
+    "score": 0.0,
+    "len": 0.43
+   }
+  ]
+ },
+ "wirbel_super": {
+  "prompt": "Giant tornado unleashed, howling storm wind roar with swirling debris and thunder, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 3 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/wirbel_super_1.wav",
+    "seed": 263762444231221,
+    "score": 13.1,
+    "len": 1.32
+   }
+  ]
+ },
+ "spann_cast": {
+  "prompt": "Bowstring tension creaking and electric charge buzzing, building tension, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 2 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/spann_cast_1.wav",
+    "seed": 27616120557439,
+    "score": -5.4,
+    "len": 1.3
+   },
+   {
+    "file": "assets/audio/sfx/sa3/spann_cast_2.wav",
+    "seed": 115342323031170,
+    "score": -10.0,
+    "len": 1.3
+   }
+  ]
+ },
+ "spann_attack": {
+  "prompt": "Snapping release, sharp lightning zap with elastic twang, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/spann_attack_1.wav",
+    "seed": 197113531815261,
+    "score": 3.0,
+    "len": 0.25
+   },
+   {
+    "file": "assets/audio/sfx/sa3/spann_attack_2.wav",
+    "seed": 149975534590776,
+    "score": 1.6,
+    "len": 0.2
+   }
+  ]
+ },
+ "spann_impact": {
+  "prompt": "Lightning strike impact, electric crack and sizzling discharge, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/spann_impact_1.wav",
+    "seed": 277442766437893,
+    "score": -1.3,
+    "len": 0.28
+   },
+   {
+    "file": "assets/audio/sfx/sa3/spann_impact_2.wav",
+    "seed": 274143292964937,
+    "score": -2.0,
+    "len": 0.43
+   }
+  ]
+ },
+ "spann_super": {
+  "prompt": "Thunderbolt railgun, high pitched charge whine then massive thunder crack and electric boom, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 3 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/spann_super_1.wav",
+    "seed": 191541743802790,
+    "score": 11.4,
+    "len": 1.44
+   }
+  ]
+ },
+ "lauf_cast": {
+  "prompt": "Flame trail igniting along the ground, fast spreading fire crackle, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 2 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/lauf_cast_1.wav",
+    "seed": 147074077296668,
+    "score": 8.4,
+    "len": 1.14
+   },
+   {
+    "file": "assets/audio/sfx/sa3/lauf_cast_2.wav",
+    "seed": 116609794190704,
+    "score": 2.1,
+    "len": 1.2
+   }
+  ]
+ },
+ "lauf_attack": {
+  "prompt": "Blazing fast fire dash, rushing flame whoosh with crackle, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/lauf_attack_1.wav",
+    "seed": 148450778155214,
+    "score": 5.3,
+    "len": 0.47
+   },
+   {
+    "file": "assets/audio/sfx/sa3/lauf_attack_2.wav",
+    "seed": 213025730125065,
+    "score": 3.4,
+    "len": 0.43
+   }
+  ]
+ },
+ "lauf_impact": {
+  "prompt": "Rapid multiple fire hits, quick burst of small flame explosions, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1.5 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/lauf_impact_1.wav",
+    "seed": 194646639878622,
+    "score": 14.5,
+    "len": 1.0
+   },
+   {
+    "file": "assets/audio/sfx/sa3/lauf_impact_2.wav",
+    "seed": 21219049051246,
+    "score": 5.8,
+    "len": 1.0
+   }
+  ]
+ },
+ "lauf_super": {
+  "prompt": "Wildfire storm, roaring firestorm racing forward with explosive crackling bursts, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 3 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/lauf_super_1.wav",
+    "seed": 92780452679029,
+    "score": 10.6,
+    "len": 1.09
+   }
+  ]
+ },
+ "ui_hover": {
+  "prompt": "Tiny soft UI hover tick, subtle airy blip, game menu, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1 seconds",
+  "takes": 5,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/ui_hover_1.wav",
+    "seed": 59841172436577,
+    "score": -3.1,
+    "len": 0.04
+   },
+   {
+    "file": "assets/audio/sfx/sa3/ui_hover_2.wav",
+    "seed": 149442465001532,
+    "score": -3.4,
+    "len": 0.04
+   }
+  ]
+ },
+ "ui_click": {
+  "prompt": "Crisp game menu button click, clean short pop, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1 seconds",
+  "takes": 5,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/ui_click_1.wav",
+    "seed": 278670005616868,
+    "score": 0.1,
+    "len": 0.04
+   },
+   {
+    "file": "assets/audio/sfx/sa3/ui_click_2.wav",
+    "seed": 236324481947929,
+    "score": -0.7,
+    "len": 0.03
+   }
+  ]
+ },
+ "ui_confirm": {
+  "prompt": "Satisfying game menu confirm, bright two-note chime with sparkle, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1 seconds",
+  "takes": 5,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/ui_confirm_1.wav",
+    "seed": 55503489019173,
+    "score": 9.3,
+    "len": 0.48
+   }
+  ]
+ },
+ "ui_back": {
+  "prompt": "Game menu cancel back sound, soft descending swoosh blip, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1 seconds",
+  "takes": 5,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/ui_back_1.wav",
+    "seed": 29016164086171,
+    "score": 17.6,
+    "len": 0.23
+   }
+  ]
+ },
+ "ui_error": {
+  "prompt": "Game menu error buzz, short low double beep denied, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1 seconds",
+  "takes": 5,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/ui_error_1.wav",
+    "seed": 213883245715028,
+    "score": 3.3,
+    "len": 0.3
+   }
+  ]
+ },
+ "menu_open": {
+  "prompt": "Fantasy game menu opening, paper scroll swoosh with magical shimmer, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1 seconds",
+  "takes": 5,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/menu_open_1.wav",
+    "seed": 201239381294560,
+    "score": -8.5,
+    "len": 0.34
+   }
+  ]
+ },
+ "menu_close": {
+  "prompt": "Fantasy game menu closing, quick reverse swoosh with soft thump, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1 seconds",
+  "takes": 5,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/menu_close_1.wav",
+    "seed": 146766394993807,
+    "score": -6.9,
+    "len": 0.25
+   }
+  ]
+ },
+ "pickup": {
+  "prompt": "Collecting a coin, bright sparkly pickup jingle, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 1 seconds",
+  "takes": 5,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/pickup_1.wav",
+    "seed": 7311546927415,
+    "score": -1.2,
+    "len": 0.25
+   }
+  ]
+ },
+ "level_up": {
+  "prompt": "Level up fanfare, rising magical sparkle arpeggio with triumphant shine, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 3 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/level_up_1.wav",
+    "seed": 43016447530917,
+    "score": 1.3,
+    "len": 1.23
+   }
+  ]
+ },
+ "rare_drop": {
+  "prompt": "Legendary item drop, glowing magical reveal with heavenly shimmer and deep boom, dry close-up game sound effect, punchy, high fidelity, no music, no voice. Length: 3 seconds",
+  "takes": 4,
+  "files": [
+   {
+    "file": "assets/audio/sfx/sa3/rare_drop_1.wav",
+    "seed": 76870513311580,
+    "score": 7.3,
+    "len": 1.49
+   }
+  ]
+ }
+}

@@ -474,6 +474,7 @@ func _die() -> void:
 	_play("death" if _textures.has("death") else "hurt", true)
 	var c := global_position + Vector2(0, -data.hurt.y * 0.5)
 	world.fx.hit(c, "", "heavy", -facing)
+	Sfx.play("enemy_death", -6.0)
 	world.numbers.spawn_text(head_position() + Vector2(0, -12), "+%d EXP" % data.exp, Color("9ef0ff"))
 	world.on_enemy_died(self)
 	died.emit(self)

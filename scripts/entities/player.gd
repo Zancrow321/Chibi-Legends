@@ -652,6 +652,7 @@ func _use_meisterzug() -> void:
 	move = {}
 	_queued = ""
 	Sfx.play("super_flash")
+	Sfx.play("glut_super", -2.0)
 	var s := GlutSuper.new()
 	s.room = world
 	s.player = self

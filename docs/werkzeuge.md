@@ -77,12 +77,24 @@ Rauschen: `python3 tools/audio/synth_whoosh.py` schreibt sie nach `assets/audio/
 
 ## 3. Eigene Sounds (Stable Audio 3)
 
-1. In Stable Audio kurze Effekte erzeugen (Prompt-Tipp: „short punchy anime sword slash, dry, no music, 0.5 seconds“).
-2. Rohdateien aufbereiten: `python3 tools/audio/prepare_sfx.py rohdaten/ --out assets/audio/sfx/kampf --max-len 1.5`
-   (Stille abschneiden, Lautheit angleichen, Mono-OGG).
-3. In `assets/audio/sfx_map.json` eintragen und in `assets/audio/SOURCES.md` Werkzeug, Prompt und Datum notieren.
+Stable Audio 3 Medium läuft auf Kaisers PC in ComfyUI (`http://127.0.0.1:8188`, Modell `stable_audio_3_medium`,
+Text-Encoder `t5gemma_b_b_ul2`). Die Skripte sprechen die ComfyUI-API direkt an, ein Clip braucht etwa eine Sekunde.
 
-Vor dem Echtgeld-Start die Lizenzbedingungen der genutzten Stable-Audio-Version für kommerzielle Nutzung prüfen.
+1. Prompts pflegen: `tools/audio/sa3_prompts.json` (je Ereignis Prompt, Länge, Anzahl Seeds, wie viele ins Spiel).
+2. Erzeugen: `python tools/audio/sa3_generate.py` (alle) oder `python tools/audio/sa3_generate.py dash glut_super`.
+   Rohdateien (FLAC) landen in ComfyUIs Output-Ordner unter `chibi-sfx/<ereignis>/`.
+3. Auswählen und aufbereiten (braucht PyAV + numpy, z. B. Pythons aus ComfyUIs `.venv`):
+   `<comfy-venv>/python.exe -I tools/audio/sa3_finish.py G:/Comfy-Desktop/ComfyUI-Shared/output/chibi-sfx [ereignis ...]`
+   schneidet Stille, kürzt, gleicht die Lautheit an, wählt die besten Takes und schreibt Mono-WAVs nach
+   `assets/audio/sfx/sa3/` (Godot komprimiert sie beim Import zu QOA) plus `picks.json` mit Seeds.
+4. In `assets/audio/sfx_map.json` eintragen und in `assets/audio/SOURCES.md` Prompt und Seed notieren.
+
+Stil-Ereignisse heißen `<stil>_cast`, `_attack`, `_impact`, `_super` mit den Kürzeln glut, mond, klang, bollwerk,
+grenz, wirbel, spann, lauf. Glutatem nutzt sie schon; die anderen Stile rufen sie auf, sobald es sie im Code gibt.
+
+Lizenz: Stability AI Community License. Ausgaben dürfen kommerziell genutzt werden, solange der Jahresumsatz unter
+1 Mio. US-Dollar liegt (darüber Enterprise-Lizenz); zusätzlich gelten die Gemma-Bedingungen des Text-Encoders.
+Vor dem Echtgeld-Start noch einmal unter https://stability.ai/license prüfen.
 
 ## 4. Aseprite
 
