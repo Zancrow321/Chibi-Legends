@@ -243,12 +243,14 @@ func cast_super(p: Player, s: Dictionary) -> void:
 ## depending on knockback.
 ## Returns the damage dealt. Super hits ("super", "super_final") show no
 ## number of their own; the beam adds them up and shows one big total.
-func deal_hit(target: Node2D, base: float, element: String, from_x: float, knockback: float, profile := "") -> int:
+func deal_hit(target: Node2D, base: float, element: String, from_x: float, knockback: float, profile := "", launch := 0.0) -> int:
 	var res := Reactions.resolve(target.status, element, base)
 	var dmg := int(round(res.damage * randf_range(0.92, 1.08)))
 	var col: Color = GameData.ELEMENTS[element].color if element != "" else Color("ff4b3e")
 	hit_landed.emit(target.get_hurt_rect().get_center(), col, res.reaction != "")
 	target.take_hit(knockback, from_x)
+	if launch != 0.0 and target.has_method("launch"):
+		target.launch(launch)
 	_record(dmg)
 	if not profile.begins_with("super"):
 		numbers.spawn_number(target.head_position(), dmg, col, target.get_instance_id(), res.reaction != "")

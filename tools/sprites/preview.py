@@ -1,7 +1,6 @@
 """Render colored previews of a look (same compositing as the game).
 
-    python3 tools/sprites/preview.py out.png                 # all presets, idle/run/attack
-    python3 tools/sprites/preview.py out.png --item haar_lang # every frame with one item swapped in
+    python3 tools/sprites/preview.py out.png   # every character and skin in several animations
 """
 
 from __future__ import annotations
@@ -19,20 +18,28 @@ import rig  # noqa: E402
 ROOT = Path(__file__).resolve().parents[2]
 CHAR_DIR = ROOT / "assets" / "characters"
 
-GEAR_SLOTS = ["top", "pants", "shoes", "accessory", "headgear", "weapon"]
-START_EQUIPMENT = {"weapon": "waffe_katana", "top": "oberteil_akademie", "pants": "hose_lang", "shoes": "schuhe_stiefel", "accessory": "accessoire_schal"}
 
-PRESETS = [
-    {"hair": "haar_stachelig", "colors": {"skin": "haut_1", "hair": "haar_rot", "eyes": "augen_braun"}},
-    {"hair": "haar_lang", "face": "gesicht_entschlossen", "colors": {"skin": "haut_2", "hair": "haar_schwarz", "eyes": "augen_rot"},
-     "cosmetics": {"top": "oberteil_shirt"}, "item_colors": {"oberteil_shirt": ["schwarz", "rot"]}},
-    {"hair": "haar_zopf", "colors": {"skin": "haut_1", "hair": "haar_rosa", "eyes": "augen_blau"},
-     "cosmetics": {"headgear": "kopf_stirnband"}, "item_colors": {"oberteil_akademie": ["blau", "weiss"], "haar_zopf": [None, "gelb"]}},
-    {"hair": "haar_wuschel", "colors": {"skin": "haut_3", "hair": "haar_blond", "eyes": "augen_gruen"},
-     "cosmetics": {"pants": "hose_kurz", "accessory": "none"}, "item_colors": {"oberteil_akademie": ["gruen", "weiss"]}},
-    {"hair": "haar_kurz", "face": "gesicht_entschlossen", "colors": {"skin": "haut_5", "hair": "haar_weiss", "eyes": "augen_violett"},
-     "item_colors": {"oberteil_akademie": ["violett", "gelb"], "accessoire_schal": ["schwarz"]}},
-]
+
+def characters() -> dict:
+    return json.loads((CHAR_DIR / "characters.json").read_text(encoding="utf-8"))
+
+
+def merged(base: dict, patch: dict) -> dict:
+    """Base look with a skin patch on top (same as Appearance.merged)."""
+    out = json.loads(json.dumps(base))
+    for key in ("parts", "colors", "item_colors"):
+        out.setdefault(key, {}).update(patch.get(key, {}))
+    return out
+
+
+def looks() -> list:
+    """(label, look) for every character and skin."""
+    out = []
+    for cid, c in characters()["characters"].items():
+        out.append((c["name"], c["look"]))
+        for skin in c.get("skins", []):
+            out.append((c["name"] + " / " + skin["name"], merged(c["look"], skin["look"])))
+    return out
 
 
 def load():
@@ -42,19 +49,9 @@ def load():
     return catalog, colors
 
 
-def resolve(look: dict, equipment: dict) -> dict:
-    """slot -> item id (empty slots left out). Cosmetic beats equipment; 'none' hides."""
-    out = {k: look.get(k, d) for k, d in (("body", "koerper_basis"), ("face", "gesicht_standard"), ("hair", "haar_stachelig"))}
-    out = {k: v for k, v in out.items() if v}
-    cos = look.get("cosmetics", {})
-    for slot in GEAR_SLOTS:
-        c = cos.get(slot, "")
-        if c == "none":
-            continue
-        item = c or equipment.get(slot, "")
-        if item:
-            out[slot] = item
-    return out
+def parts(look: dict, catalog: dict) -> dict:
+    """slot -> item id for every part that exists."""
+    return {k: v for k, v in look.get("parts", {}).items() if v and v in catalog["items"]}
 
 
 def item_palette(item: dict, look: dict, colors: dict, fixed: list) -> dict:
@@ -73,10 +70,10 @@ def item_palette(item: dict, look: dict, colors: dict, fixed: list) -> dict:
     return table
 
 
-def compose(catalog: dict, colors: dict, look: dict, equipment: dict) -> Image.Image:
+def compose(catalog: dict, colors: dict, look: dict) -> Image.Image:
     """Full colored sheet for a look."""
     out = Image.new("RGBA", rig.SHEET_SIZE, (0, 0, 0, 0))
-    slots = resolve(look, equipment)
+    slots = parts(look, catalog)
     by_layer = {}
     for slot, item_id in slots.items():
         item = catalog["items"][item_id]
@@ -112,9 +109,10 @@ def main() -> None:
     catalog, colors = load()
     picks = [("idle", 0), ("run", 1), ("run", 5), ("jump", 0), ("attack_1", 0), ("attack_2", 1), ("attack_3", 1), ("cast", 1), ("hit", 1)]
     c = rig.CELL
-    img = Image.new("RGBA", (len(picks) * c, len(PRESETS) * c), (*rig.hex_rgb(args.bg), 255))
-    for r, look in enumerate(PRESETS):
-        sheet = compose(catalog, colors, look, START_EQUIPMENT)
+    all_looks = looks()
+    img = Image.new("RGBA", (len(picks) * c, len(all_looks) * c), (*rig.hex_rgb(args.bg), 255))
+    for r, (_label, look) in enumerate(all_looks):
+        sheet = compose(catalog, colors, look)
         for k, (anim, i) in enumerate(picks):
             f = frame(sheet, anim, i, catalog)
             img.alpha_composite(f, (k * c, r * c))

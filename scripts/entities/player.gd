@@ -1,7 +1,10 @@
 class_name Player
 extends CharacterBody2D
-## Player character: movement (run, double jump, dash, drop-through),
-## 3-hit katana combo and four equipped skills paid with Aura.
+## Player character: movement (run, double jump, dash, air dash, drop-through)
+## and the fighter controls: light, heavy and special, each with a direction
+## (neutral, forward, up, down, air). Light + heavy together is a grab.
+## Normal attacks come from a MoveSet (frame data in JSON); specials use the
+## four skill slots: neutral, forward, up, down (air = neutral).
 
 const GRAVITY := 980.0
 const MAX_FALL := 520.0
@@ -12,25 +15,35 @@ const MAX_JUMPS := 2
 const DASH_SPEED := 380.0
 const DASH_TIME := 0.16
 const DASH_COOLDOWN := 0.55
-const ATTACK_COOLDOWN := 0.26
-const COMBO_WINDOW := 0.6
 const CAST_TIME := 0.22
+## A second button within this time after the first turns the move into a grab.
+const GRAB_WINDOW := 3.0 / 60.0
+## Special slot per direction (index into build).
+const SPECIAL_SLOT := {"neutral": 0, "forward": 1, "up": 2, "down": 3, "air": 0}
 
 const LAYER_GROUND := 1
 const LAYER_PLATFORM := 2
 
 var world: Node  # TrainingRoom (spawns attacks, numbers, fx)
-var visual: ChibiVisual
+var visual: ChibiVisual  # roster look (shown with T)
+var sprite: FighterSprite  # test figure 2 (default)
+var moveset: MoveSet = MoveSet.load_file("res://assets/combat/movesets/testfigur2.json")
 
 var facing := 1
 var jumps_used := 0
 var dash_timer := 0.0
 var dash_cd := 0.0
-var attack_timer := 0.0
-var attack_cd := 0.0
-var combo := 0
-var combo_timer := 0.0
+var air_dash_used := false
+## Current normal attack (empty = none), time into it, whether it hit,
+## whether its hitbox was spawned, and the next button pressed meanwhile.
+var move: Dictionary = {}
+var move_t := 0.0
+var move_hit := false
+var _move_spawned := false
+var _queued := ""
+var _queued_dir := ""
 var cast_timer := 0.0
+var last_move_name := ""
 var drop_timer := 0.0
 var ghost_timer := 0.0
 
@@ -45,7 +58,7 @@ var infinite_aura := false
 ## Presses are buffered briefly, so a tap is never lost between physics
 ## ticks (low frame rates) and a jump pressed just before landing still counts.
 const BUFFER_TIME := 0.12
-const BUFFERED := ["jump", "dash", "attack", "skill_1", "skill_2", "skill_3", "skill_4", "super", "cycle_look"]
+const BUFFERED := ["jump", "dash", "light", "heavy", "special", "super", "cycle_look", "toggle_figure"]
 var _buffer: Dictionary = {}
 var _jump_held := false
 
@@ -67,7 +80,10 @@ func _ready() -> void:
 	shape.position = Vector2(0, -20)
 	add_child(shape)
 	visual = ChibiVisual.new()
+	visual.visible = false
 	add_child(visual)
+	sprite = FighterSprite.new()
+	add_child(sprite)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -90,9 +106,11 @@ func _take(action: String) -> bool:
 
 func _physics_process(delta: float) -> void:
 	_tick_timers(delta)
+	_tick_move(delta)
 	var on_floor := is_on_floor()
 	if on_floor:
 		jumps_used = 0
+		air_dash_used = false
 
 	if in_super:
 		velocity.x = 0.0
@@ -102,6 +120,7 @@ func _physics_process(delta: float) -> void:
 		return
 
 	var dir := Input.get_axis("move_left", "move_right")
+	var busy := not move.is_empty() or cast_timer > 0.0
 
 	if dash_timer > 0.0:
 		velocity = Vector2(facing * DASH_SPEED, 0.0)
@@ -111,27 +130,34 @@ func _physics_process(delta: float) -> void:
 			world.spawn_ghost(self)
 	else:
 		var target_speed := dir * RUN_SPEED
-		if (attack_timer > 0.0 or cast_timer > 0.0) and on_floor:
-			target_speed *= 0.35
+		if busy and on_floor:
+			target_speed = 0.0
+			if not move.is_empty() and MoveSet.phase_at(move, move_t) != "recovery":
+				target_speed = float(move.get("lunge", 0.0)) * facing
+		elif busy:
+			target_speed *= 0.6
 		velocity.x = move_toward(velocity.x, target_speed, ACCEL * delta)
-		if dir != 0.0 and attack_timer <= 0.0 and cast_timer <= 0.0:
+		if dir != 0.0 and not busy:
 			facing = 1 if dir > 0.0 else -1
 		velocity.y = minf(velocity.y + GRAVITY * delta, MAX_FALL)
 
-	_handle_jump(on_floor)
-	if _take("dash") and dash_cd <= 0.0:
+	if move.is_empty():
+		_handle_jump(on_floor)
+	if _take("dash") and dash_cd <= 0.0 and move.is_empty() and (on_floor or not air_dash_used):
 		dash_timer = DASH_TIME
 		dash_cd = DASH_COOLDOWN
 		ghost_timer = 0.0
-	if _take("attack") and attack_cd <= 0.0 and dash_timer <= 0.0:
-		_basic_attack()
-	for i in 4:
-		if _take("skill_%d" % (i + 1)):
-			use_skill(i)
+		if not on_floor:
+			air_dash_used = true
+	_handle_attacks(on_floor, dir)
 	if _take("super"):
 		use_super()
 	if _take("cycle_look"):
-		get_tree().call_group("character_creator", "open_for", visual)
+		get_tree().call_group("character_select", "open_for", visual)
+	if _take("toggle_figure"):
+		visual.visible = not visual.visible
+		sprite.visible = not visual.visible
+		world.toast("Figur: " + ("Sammlung" if visual.visible else "Testfigur 2"))
 
 	if infinite_aura:
 		aura = max_aura
@@ -149,12 +175,7 @@ func _tick_timers(delta: float) -> void:
 			_buffer.erase(key)
 	dash_timer = maxf(0.0, dash_timer - delta)
 	dash_cd = maxf(0.0, dash_cd - delta)
-	attack_timer = maxf(0.0, attack_timer - delta)
-	attack_cd = maxf(0.0, attack_cd - delta)
 	cast_timer = maxf(0.0, cast_timer - delta)
-	combo_timer = maxf(0.0, combo_timer - delta)
-	if combo_timer <= 0.0:
-		combo = 0
 	for i in cooldowns.size():
 		cooldowns[i] = maxf(0.0, cooldowns[i] - delta)
 	super_cd = maxf(0.0, super_cd - delta)
@@ -190,20 +211,130 @@ func _handle_jump(on_floor: bool) -> void:
 			velocity.y *= 0.5
 
 
-func _basic_attack() -> void:
-	attack_cd = ATTACK_COOLDOWN
-	attack_timer = 0.2
-	visual.attack_phase = combo
-	var dmg: float = GameData.COMBO_DAMAGE[combo]
-	var finisher := combo == 2
-	world.spawn_attack({
-		"owner": self, "kind": "slash", "element": "", "damage": dmg,
-		"size": Vector2(40, 34) if finisher else Vector2(34, 30),
-		"offset": Vector2(22, -20), "follow": true, "life": 0.12,
-		"knockback": 180.0 if finisher else 60.0, "phase": combo,
-	})
-	combo = (combo + 1) % 3
-	combo_timer = COMBO_WINDOW
+## Direction held right now, relative to facing. Up and down win over sideways.
+func _input_dir(dir_x: float) -> String:
+	if Input.is_action_pressed("move_up"):
+		return "up"
+	if Input.is_action_pressed("move_down"):
+		return "down"
+	if dir_x != 0.0:
+		return "forward"
+	return "neutral"
+
+
+func _handle_attacks(on_floor: bool, dir_x: float) -> void:
+	var light := _take("light")
+	var heavy := _take("heavy")
+	var special := _take("special")
+	if dash_timer > 0.0 or in_super:
+		return
+	var d := _input_dir(dir_x)
+	# a grab: both buttons together, or the second one right after the first
+	if (light and heavy) or (not move.is_empty() and move_t < GRAB_WINDOW
+			and ((light and move.button == "heavy") or (heavy and move.button == "light"))):
+		_start_move(moveset.pick("grab", "neutral", false))
+		return
+	var pressed := "light" if light else ("heavy" if heavy else ("special" if special else ""))
+	if pressed == "":
+		_try_queued(on_floor)
+		return
+	if move.is_empty() and cast_timer <= 0.0:
+		if dir_x != 0.0:
+			facing = 1 if dir_x > 0.0 else -1
+		_start(pressed, d, on_floor)
+	else:
+		_queued = pressed
+		_queued_dir = d
+		_try_queued(on_floor)
+
+
+## Run a button pressed during a move as soon as the rules allow:
+## light chains into the next light from the first active frame on;
+## after a hit, light cancels into heavy and anything into special;
+## otherwise it waits for the move to end.
+func _try_queued(on_floor: bool) -> void:
+	if _queued == "" or cast_timer > 0.0:
+		return
+	if move.is_empty():
+		var q := _queued
+		_queued = ""
+		var dx := Input.get_axis("move_left", "move_right")
+		if dx != 0.0:
+			facing = 1 if dx > 0.0 else -1
+		_start(q, _queued_dir, on_floor)
+		return
+	var ph := MoveSet.phase_at(move, move_t)
+	if ph == "startup":
+		return
+	var rank := {"light": 0, "heavy": 1, "grab": 1, "special": 2}
+	var chain: String = move.get("chain", "")
+	if _queued == "light" and chain != "" and _queued_dir == "neutral" and ph == "recovery":
+		_queued = ""
+		_start_move(moveset.get_move(chain))
+	elif move_hit and rank[_queued] > rank[move.button]:
+		var q := _queued
+		_queued = ""
+		move = {}
+		_start(q, _queued_dir, on_floor)
+
+
+func _start(button: String, d: String, on_floor: bool) -> void:
+	if button == "special":
+		use_skill(SPECIAL_SLOT[d if on_floor else "air"])
+	else:
+		_start_move(moveset.pick(button, d, not on_floor))
+
+
+func _start_move(m: Dictionary) -> void:
+	if m.is_empty():
+		return
+	move = m
+	move_t = 0.0
+	move_hit = false
+	_move_spawned = false
+	last_move_name = m.name
+	if not is_on_floor() and velocity.y > 0.0:
+		velocity.y *= 0.4  # air attacks hang a little
+
+
+func _tick_move(delta: float) -> void:
+	if move.is_empty():
+		return
+	move_t += delta
+	var ph := MoveSet.phase_at(move, move_t)
+	if ph != "startup" and not _move_spawned:
+		_move_spawned = true
+		var hb: Array = move.hitbox
+		world.spawn_attack({
+			"owner": self, "kind": move.get("draw", "slash"), "element": move.get("element", ""),
+			"damage": float(move.damage), "size": Vector2(hb[2], hb[3]), "offset": Vector2(hb[0], hb[1]),
+			"follow": true, "life": float(move.active) / MoveSet.FPS,
+			"knockback": float(move.get("knockback", 0.0)), "launch": float(move.get("launch", 0.0)),
+			"profile": move.get("profile", "light"), "phase": int(move.get("phase", 0)),
+			"angle": float(move.get("angle", 0.0)),
+		})
+	if move_t >= MoveSet.length(move):
+		move = {}
+
+
+## Called by Attack when the current move's hitbox connects.
+func on_attack_hit() -> void:
+	move_hit = true
+
+
+func _attack_frame() -> int:
+	var ph := MoveSet.phase_at(move, move_t)
+	var pose: Array = move.get("pose", {}).get(ph, [3])
+	var start := 0.0
+	var dur := float(move.startup)
+	if ph == "active":
+		start = move.startup
+		dur = move.active
+	elif ph == "recovery":
+		start = move.startup + move.active
+		dur = move.recovery
+	var k := clampf((move_t * MoveSet.FPS - start) / maxf(1.0, dur), 0.0, 0.999)
+	return int(pose[int(k * pose.size())])
 
 
 func use_skill(slot: int) -> void:
@@ -222,7 +353,6 @@ func use_skill(slot: int) -> void:
 	cast_timer = CAST_TIME
 	match s.kind:
 		"melee":
-			attack_timer = 0.22
 			visual.attack_phase = 2
 			world.spawn_attack({
 				"owner": self, "kind": id, "element": s.element, "damage": s.damage,
@@ -265,18 +395,22 @@ func reset_cooldowns() -> void:
 
 func _update_visual() -> void:
 	visual.scale.x = facing
+	sprite.scale.x = facing
+	var st := "idle"
 	if dash_timer > 0.0:
-		visual.set_state("dash")
-	elif attack_timer > 0.0:
-		visual.set_state("attack")
+		st = "dash"
+	elif not move.is_empty():
+		st = "attack"
+		visual.attack_phase = int(move.get("phase", 0))
+		sprite.attack_frame = _attack_frame()
 	elif cast_timer > 0.0:
-		visual.set_state("cast")
+		st = "cast"
 	elif not is_on_floor():
-		visual.set_state("jump" if velocity.y < 0.0 else "fall")
+		st = "jump" if velocity.y < 0.0 else "fall"
 	elif absf(velocity.x) > 10.0:
-		visual.set_state("run")
-	else:
-		visual.set_state("idle")
+		st = "run"
+	visual.set_state(st)
+	sprite.set_state(st)
 
 
 func combat_power() -> int:

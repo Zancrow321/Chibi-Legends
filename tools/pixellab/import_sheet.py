@@ -32,7 +32,8 @@ import rig  # noqa: E402
 
 ROOT = TOOLS.parent
 ITEMS_DIR = ROOT / "assets" / "characters" / "items"
-BASE_LOOK = {"hair": "", "colors": preview.PRESETS[0]["colors"], "cosmetics": {s: "none" for s in preview.GEAR_SLOTS}}
+BASE_COLORS = {"skin": "haut_1", "hair": "haar_rot", "eyes": "augen_braun"}
+BASE_LOOK = {"parts": {"body": "koerper_basis", "face": "gesicht_standard"}, "colors": BASE_COLORS}
 
 
 def reference_colors(meta: dict, colors: dict) -> list:
@@ -41,7 +42,7 @@ def reference_colors(meta: dict, colors: dict) -> list:
     for i, ch in enumerate(meta["channels"]):
         pid = ch.get("default")
         if ch.get("appearance"):
-            pid = preview.PRESETS[0]["colors"].get(ch["key"])
+            pid = BASE_COLORS.get(ch["key"])
         for t, rgb in enumerate(rig.ramp_colors(colors[pid])):
             if t > 0:
                 refs.append((rgb, i, t))
@@ -70,7 +71,7 @@ def _nearest(rgb: tuple, refs: list) -> tuple:
 
 def base_sheet(catalog: dict, colors: dict) -> Image.Image:
     """Colored sheet of the bare base figure (body + face)."""
-    return preview.compose(catalog, colors, BASE_LOOK, {})
+    return preview.compose(catalog, colors, BASE_LOOK)
 
 
 def body_mask(catalog: dict) -> Image.Image:

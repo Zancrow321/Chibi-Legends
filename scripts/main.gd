@@ -62,17 +62,15 @@ func _ready() -> void:
 	add_child(hud_layer)
 	room.numbers = numbers
 
-	# Character creator: opens with C / Start, and on the very first start.
-	var creator_layer := CanvasLayer.new()
-	creator_layer.layer = 20
-	var creator := CharacterCreator.new()
-	creator_layer.add_child(creator)
-	add_child(creator_layer)
-	var saved := Appearance.load_look()
-	if saved.is_empty():
-		creator.open_for.call_deferred(room.player.visual, true)
-	else:
-		room.player.visual.look = saved
+	# Character collection: opens with C / Start; on the first start you pick a free starter.
+	var select_layer := CanvasLayer.new()
+	select_layer.layer = 20
+	var select := CharacterSelect.new()
+	select_layer.add_child(select)
+	add_child(select_layer)
+	room.player.visual.look = Roster.look(Roster.selected(), Roster.selected_skin())
+	if Roster.needs_starter():
+		select.open_for.call_deferred(room.player.visual, true)
 
 
 func _process(_delta: float) -> void:
