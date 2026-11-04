@@ -9,7 +9,16 @@
    "items": {
     "kampfweste": "Kampfweste",
     "wanderer": "Wanderjacke",
-    "ronin": "Ronin-Gi"
+    "ronin": "Ronin-Gi",
+    "schatten": "Schattenwickel",
+    "schmied": "Schmiede-Schürze",
+    "akademie": "Akademie-Jacke"
+   },
+   "unlock": {
+    "wanderer": "Trainingswald abschließen",
+    "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
+    "schatten": "Glutschmiede-Tor öffnen",
+    "schmied": "Bei Schmiedin Hino (Akademie-Hof)"
    }
   },
   "pants": {
@@ -17,7 +26,16 @@
    "items": {
     "kampfweste": "Kampfhose",
     "wanderer": "Reisehose",
-    "ronin": "Weite Hose"
+    "ronin": "Weite Hose",
+    "schatten": "Wickelhose",
+    "schmied": "Arbeitshose",
+    "akademie": "Uniformhose"
+   },
+   "unlock": {
+    "wanderer": "Trainingswald abschließen",
+    "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
+    "schatten": "Glutschmiede-Tor öffnen",
+    "schmied": "Bei Schmiedin Hino (Akademie-Hof)"
    }
   },
   "shoes": {
@@ -25,7 +43,16 @@
    "items": {
     "kampfweste": "Lederstiefel",
     "wanderer": "Knöchelstiefel",
-    "ronin": "Wickel-Sandalen"
+    "ronin": "Wickel-Sandalen",
+    "schatten": "Tabi-Stiefel",
+    "schmied": "Eisenkappen-Stiefel",
+    "akademie": "Turnschuhe"
+   },
+   "unlock": {
+    "wanderer": "Trainingswald abschließen",
+    "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
+    "schatten": "Glutschmiede-Tor öffnen",
+    "schmied": "Bei Schmiedin Hino (Akademie-Hof)"
    }
   },
   "hair": {
@@ -34,14 +61,24 @@
     "stachel": "Stachelkopf",
     "zopf": "Hoher Zopf",
     "wuschel": "Wuschelmähne",
-    "dutt": "Undercut-Dutt"
+    "dutt": "Undercut-Dutt",
+    "kurz": "Kurzhaar",
+    "zwillinge": "Zwillingszöpfe",
+    "lang": "Lange Mähne",
+    "kamm": "Stachelkamm"
+   },
+   "unlock": {
+    "wuschel": "Saisonpass, Stufe 5",
+    "zwillinge": "Erfolg: 3 Super-Treffer in einem Kampf",
+    "kamm": "Herausforderung im Trainingswald"
    }
   },
   "weapon": {
    "label": "Waffe",
    "items": {
     "schwert_kaiser": "Verband-Zweihänder"
-   }
+   },
+   "unlock": {}
   }
  },
  "weapons": {
@@ -94,22 +131,26 @@
   {
    "name": "Nacht",
    "color": "3b2f7a",
-   "amount": 1.0
+   "amount": 1.0,
+   "unlock": "Farbstoff aus Truhen"
   },
   {
    "name": "Kirsche",
    "color": "c23a7a",
-   "amount": 1.0
+   "amount": 1.0,
+   "unlock": "Farbstoff aus Truhen"
   },
   {
    "name": "Schnee",
    "color": "e8e6e0",
-   "amount": 1.0
+   "amount": 1.0,
+   "unlock": "Farbstoff aus Truhen"
   },
   {
    "name": "Schatten",
    "color": "3a3440",
-   "amount": 1.0
+   "amount": 1.0,
+   "unlock": "Farbstoff aus Truhen"
   }
  ],
  "skins": [
@@ -334,5 +375,13 @@
    "lie_0": -90,
    "knock_1": -60
   }
- }
+ },
+ "styles": {
+  "glutatem": {
+   "name": "Glutatem",
+   "text": "Feuer-Atemtechnik aus der Glutschmiede",
+   "unlock": ""
+  }
+ },
+ "start_items_note": "Teile ohne unlock-Eintrag sind von Anfang an frei. CreatorUnlocks.unlock(slot, id) schaltet frei."
 }

@@ -5,11 +5,13 @@ extends Control
 ## und Farbfeldern, in der Mitte die große Vorschau auf einer Bühne, rechts die
 ## Animationen zum Durchprobieren. Gespeichert wird in user://figur.json.
 ## Steuerung: Maus, oder Hoch/Runter = Zeile, Links/Rechts = Teil, Q/E = Farbe,
-## Enter = Fertig, Esc = Abbrechen. Öffnen: call_group("creator", "open").
+## Enter = Fertig, Esc = Abbrechen, F9 = alles freischalten (Test).
+## Gesperrte Teile kann man ansehen, aber erst nach dem Freischalten tragen
+## (siehe CreatorUnlocks). Öffnen: call_group("creator", "open").
 
 signal finished(look: Dictionary)
 
-const ROWS := [["hair", "Frisur"], ["top", "Oberteil"], ["pants", "Hose"], ["shoes", "Schuhe"], ["weapon", "Waffe"], ["skin", "Haut"]]
+const ROWS := [["hair", "Frisur"], ["top", "Oberteil"], ["pants", "Hose"], ["shoes", "Schuhe"], ["weapon", "Waffe"], ["skin", "Haut"], ["style", "Kampfstil"]]
 const ANIMS := [["idle", "Stehen"], ["walk", "Gehen"], ["run", "Sprint"], ["combo", "Kombo"], ["slash", "Schwert"],
 	["twohand", "Zweihand"], ["cast", "Technik"], ["knockdown", "Treffer"], ["win", "Sieg"]]
 const PREVIEW_SCALE := 5.0
@@ -28,6 +30,8 @@ var _font: Font
 var _t := 0.0
 var _stage: Control
 var _turn := 1
+var _hint: Label
+var _done: Button
 
 
 func _ready() -> void:
@@ -35,7 +39,11 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	CreatorCatalog.ensure()
-	_font = load("res://assets/fonts/PixelifySans-SemiBold.ttf")
+	# Ohne Ligaturen, sonst wird "fi" in "Pfirsich" zu einem Zeichen ohne i.
+	var fv := FontVariation.new()
+	fv.base_font = load("res://assets/fonts/PixelifySans-SemiBold.ttf")
+	fv.opentype_features = {TextServerManager.get_primary_interface().name_to_tag("liga"): 0}
+	_font = fv
 	look = CreatorCatalog.load_look()
 	_build()
 	visible = false
@@ -51,6 +59,8 @@ func open() -> void:
 
 
 func close(save: bool) -> void:
+	if save and _locked_reason() != "":
+		return
 	if save:
 		CreatorCatalog.save_look(look)
 		finished.emit(look)
@@ -62,9 +72,9 @@ func close(save: bool) -> void:
 
 func _build() -> void:
 	var left := VBoxContainer.new()
-	left.position = Vector2(48, 116)
-	left.size = Vector2(400, 520)
-	left.add_theme_constant_override("separation", 8)
+	left.position = Vector2(48, 100)
+	left.size = Vector2(400, 540)
+	left.add_theme_constant_override("separation", 6)
 	add_child(left)
 	for r in ROWS:
 		var row := _make_row(r[0], r[1])
@@ -103,7 +113,16 @@ func _build() -> void:
 	turn.pressed.connect(func(): _turn = -_turn; _body.facing = _turn)
 	right.add_child(turn)
 
+	_hint = Label.new()
+	_hint.position = Vector2(470, 600)
+	_hint.size = Vector2(500, 40)
+	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_style_label(_hint, 18, PAPER)
+	add_child(_hint)
+
 	var done := _button("Fertig", 24)
+	_done = done
 	done.position = Vector2(1000, 640)
 	done.size = Vector2(230, 52)
 	done.pressed.connect(close.bind(true))
@@ -144,7 +163,9 @@ func _make_row(slot: String, label: String) -> Control:
 	prev.pressed.connect(_cycle.bind(slot, -1))
 	h.add_child(prev)
 	var val := Label.new()
-	val.custom_minimum_size = Vector2(170, 0)
+	val.custom_minimum_size = Vector2(210, 0)
+	val.clip_text = true
+	val.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	val.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_style_label(val, 18, INK)
 	h.add_child(val)
@@ -154,7 +175,7 @@ func _make_row(slot: String, label: String) -> Control:
 	nxt.pressed.connect(_cycle.bind(slot, 1))
 	h.add_child(nxt)
 	# Farbfelder (Haut hat eigene Töne, Waffe keine)
-	if slot != "weapon":
+	if not slot in ["weapon", "style"]:
 		var sw := HBoxContainer.new()
 		sw.add_theme_constant_override("separation", 4)
 		v.add_child(sw)
@@ -216,6 +237,12 @@ func _cycle(slot: String, dir: int) -> void:
 	if slot == "skin":
 		var n: int = CreatorCatalog.data["skins"].size()
 		look["skin"] = (int(look.get("skin", 1)) + dir + n) % n
+	elif slot == "style":
+		var ids: Array = CreatorCatalog.data.get("styles", {}).keys()
+		if ids.is_empty():
+			return
+		var j := ids.find(str(look.get("style", ids[0])))
+		look["style"] = ids[(j + dir + ids.size()) % ids.size()]
 	else:
 		var items: Array = CreatorCatalog.slot_items(slot)
 		var opts: Array = [""] + items if slot in ["hair", "weapon", "top", "pants", "shoes"] else items
@@ -237,10 +264,14 @@ func _set_color(slot: String, i: int) -> void:
 
 
 func _randomize() -> void:
+	var free_colors := []
+	for i in CreatorCatalog.data["colors"].size():
+		if CreatorUnlocks.is_color_unlocked(i):
+			free_colors.append(i)
 	for slot in ["hair", "top", "pants", "shoes"]:
-		var items: Array = CreatorCatalog.slot_items(slot)
+		var items: Array = CreatorCatalog.slot_items(slot).filter(func(id): return CreatorUnlocks.is_unlocked(slot, id))
 		look[slot] = items[randi() % items.size()]
-		look["colors"][slot] = randi() % CreatorCatalog.data["colors"].size()
+		look["colors"][slot] = free_colors[randi() % free_colors.size()]
 	look["skin"] = randi() % CreatorCatalog.data["skins"].size()
 	_apply()
 
@@ -260,10 +291,19 @@ func _refresh() -> void:
 	for r in ROWS:
 		var slot: String = r[0]
 		var lbl: Label = _value_labels[slot]
+		var locked := false
 		if slot == "skin":
 			lbl.text = CreatorCatalog.data["skins"][int(look.get("skin", 1))]["name"]
+		elif slot == "style":
+			var st: Dictionary = CreatorCatalog.data.get("styles", {})
+			var sid := str(look.get("style", st.keys()[0] if st.size() > 0 else ""))
+			lbl.text = str(st.get(sid, {}).get("name", "-"))
 		else:
 			lbl.text = CreatorCatalog.item_name(slot, str(look.get(slot, "")))
+			locked = not CreatorUnlocks.is_unlocked(slot, str(look.get(slot, "")))
+		if locked:
+			lbl.text = "x " + lbl.text
+		lbl.add_theme_color_override("font_color", ACCENT if locked else INK)
 		if _swatches.has(slot):
 			var cur := int(look.get("skin", 1)) if slot == "skin" else int(look.get("colors", {}).get(slot, 0))
 			var list: Array = CreatorCatalog.data["skins"] if slot == "skin" else CreatorCatalog.data["colors"]
@@ -271,11 +311,41 @@ func _refresh() -> void:
 				var b: Button = _swatches[slot][i]
 				var sb := StyleBoxFlat.new()
 				sb.bg_color = _swatch_color(list[i], slot == "skin")
+				var c_locked := slot != "skin" and not CreatorUnlocks.is_color_unlocked(i)
+				if c_locked:
+					sb.bg_color = sb.bg_color.darkened(0.55)
+				b.text = "x" if c_locked else ""
+				b.add_theme_color_override("font_color", PAPER)
+				b.add_theme_font_size_override("font_size", 12)
+				b.tooltip_text = list[i]["name"] + ("  (gesperrt: %s)" % CreatorUnlocks.color_hint(i) if c_locked else "")
 				sb.border_color = ACCENT if i == cur else INK
 				sb.set_border_width_all(3 if i == cur else 2)
 				sb.set_corner_radius_all(2)
 				for st in ["normal", "hover", "pressed"]:
 					b.add_theme_stylebox_override(st, sb)
+	var why := _locked_reason()
+	if why != "":
+		_hint.text = "Gesperrt - " + why
+		_hint.add_theme_color_override("font_color", Color("f9c22b"))
+	else:
+		var st2: Dictionary = CreatorCatalog.data.get("styles", {}).get(str(look.get("style", "glutatem")), {})
+		_hint.text = str(st2.get("text", ""))
+		_hint.add_theme_color_override("font_color", PAPER)
+	_done.disabled = why != ""
+	_done.modulate = Color(1, 1, 1, 0.45) if why != "" else Color.WHITE
+
+
+## Leer, wenn alles Gewählte freigeschaltet ist; sonst der Hinweis, wie man es bekommt.
+func _locked_reason() -> String:
+	for slot in ["hair", "top", "pants", "shoes", "weapon"]:
+		var id := str(look.get(slot, ""))
+		if not CreatorUnlocks.is_unlocked(slot, id):
+			return "%s: %s" % [CreatorCatalog.item_name(slot, id), CreatorUnlocks.hint(slot, id)]
+	var cols: Dictionary = look.get("colors", {})
+	for slot in cols:
+		if not CreatorUnlocks.is_color_unlocked(int(cols[slot])):
+			return "Farbe %s: %s" % [CreatorCatalog.data["colors"][int(cols[slot])]["name"], CreatorUnlocks.color_hint(int(cols[slot]))]
+	return ""
 
 
 ## Vorschaufarbe eines Farbfelds (ungefähr, wie der Shader eine mittlere Farbe umfärbt).
@@ -315,6 +385,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			close(true)
 		KEY_ESCAPE:
 			close(false)
+		KEY_F9:
+			CreatorUnlocks.unlock_all()
+			_refresh()
 		_:
 			return
 	get_viewport().set_input_as_handled()
@@ -350,6 +423,6 @@ func _draw() -> void:
 	draw_circle(Vector2.ZERO, 120.0, Color(0, 0, 0, 0.45))
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	# Titel
-	draw_string_outline(_font, Vector2(48, 72), "CHARACTER CREATOR", HORIZONTAL_ALIGNMENT_LEFT, -1, 40, 10, INK)
-	draw_string(_font, Vector2(48, 72), "CHARACTER CREATOR", HORIZONTAL_ALIGNMENT_LEFT, -1, 40, PAPER)
-	draw_string(_font, Vector2(52, 100), "Pfeile: Teil wählen   Q/E: Farbe   Enter: Fertig", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color(1, 1, 1, 0.55))
+	draw_string_outline(_font, Vector2(48, 58), "CHARACTER CREATOR", HORIZONTAL_ALIGNMENT_LEFT, -1, 40, 10, INK)
+	draw_string(_font, Vector2(48, 58), "CHARACTER CREATOR", HORIZONTAL_ALIGNMENT_LEFT, -1, 40, PAPER)
+	draw_string(_font, Vector2(52, 84), "Pfeile: Teil wählen   Q/E: Farbe   Enter: Fertig   x = noch gesperrt", HORIZONTAL_ALIGNMENT_LEFT, -1, 16, Color(1, 1, 1, 0.55))

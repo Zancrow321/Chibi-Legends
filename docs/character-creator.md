@@ -59,3 +59,20 @@ in einem `edit-image-pixen`-Aufruf (1 Generierung), statt 10 Generierungen pro E
 - Die Frisur dreht sich nur bei deutlicher Kopfneigung mit. Bei liegenden Posen
   kann sie leicht verrutschen.
 - Pixel-Art-Drehung der Waffe in Godot ist etwas kantig.
+
+## Phase 3: mehr Teile und Freischalten (2026-11-04)
+
+- Neu: Outfits **Schattenwickel** (schatten), **Schmiede-Schürze** (schmied), **Akademie-Jacke** (akademie),
+  Frisuren **Kurzhaar, Zwillingszöpfe, Lange Mähne, Stachelkamm**. Kosten: je Outfit 5 Generierungen
+  (pixen auf 16er-Raster), je Frisur 1. Zusammen 19.
+- Freischalten: `scripts/creator/creator_unlocks.gd` (CreatorUnlocks). Ein Teil ist frei, wenn es in
+  `catalog.json` unter `slots.<slot>.unlock` keinen Eintrag hat; der Eintrag ist der Hinweistext.
+  Farben 5 bis 8 haben `unlock` in `colors`. Hauttöne sind immer frei.
+  Spielcode schaltet frei mit `CreatorUnlocks.unlock("top", "ronin")` bzw. `unlock_color(6)`;
+  gespeichert in `user://freigeschaltet.json`.
+- Im Creator: gesperrte Teile/Farben sind sichtbar (rot mit "x", Farbfeld abgedunkelt), lassen sich
+  ansehen, aber "Fertig" ist gesperrt, solange etwas Gesperrtes gewählt ist; unter der Bühne steht,
+  wie man es bekommt. Zufall nimmt nur Freies. F9 schaltet zum Testen alles frei.
+- Kampfstil-Zeile: `look.style` (Liste in `catalog.json` unter `styles`), der Spieler lädt
+  `FightingStyle.load_style(look.style)`. Bisher nur Glutatem.
+- Offen: Freischalt-Aufrufe an echte Ereignisse hängen (NPC-Dialoge, Trainingswald-Abschluss, Truhen).
