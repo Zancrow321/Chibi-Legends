@@ -104,8 +104,8 @@ func _draw() -> void:
 			var start := -1.3 if phase != 1 else 1.3
 			var sweep := 2.4 * (1.0 if phase != 1 else -1.0)
 			var from := start + sweep * p * 0.3
-			draw_arc(Vector2(-6, 0), r, from, from + sweep * 0.8, 10, Color(trail, a * 0.6), 7.0)
-			draw_arc(Vector2(-6, 0), r, from, from + sweep * 0.8, 10, col, 3.0)
+			_smear(Vector2(-6, 0), r, from, from + sweep * 0.8, 9.0 if profile == "heavy" else 6.0, a)
+			draw_arc(Vector2(-6, 0), r, from, from + sweep * 0.8, 10, col, 2.0)
 		"flammenschnitt":
 			var r := size.y * 0.6
 			draw_arc(Vector2(-8, 0), r, -1.5, 1.4, 12, Color("ff3d1f", a), 10.0)
@@ -120,3 +120,26 @@ func _draw() -> void:
 			var wob := sin(_t * 30.0) * 1.5
 			draw_arc(Vector2(-6 + wob, 0), 15, -1.2, 1.2, 10, Color("4fd18a", 0.8), 6.0)
 			draw_arc(Vector2(-4 + wob, 0), 14, -1.0, 1.0, 10, Color("d8ffe6", 0.95), 2.0)
+
+
+## Filled crescent smear (thick in the middle, thin at both ends) like the
+## swipe frames of anime fighters, with a white-hot inner edge.
+func _smear(c: Vector2, r: float, a0: float, a1: float, thick: float, alpha: float) -> void:
+	var n := 14
+	var outer := PackedVector2Array()
+	var inner := PackedVector2Array()
+	for i in n + 1:
+		var t := float(i) / n
+		var ang := lerpf(a0, a1, t)
+		var w := thick * sin(t * PI) * (0.4 + 0.6 * t)  # grows towards the leading edge
+		var d := Vector2(cos(ang), sin(ang))
+		outer.append(c + d * (r + w * 0.5))
+		inner.append(c + d * (r - w * 0.5))
+	inner.reverse()
+	var poly := outer + inner
+	draw_colored_polygon(poly, Color(trail, alpha * 0.55))
+	var core := PackedVector2Array()
+	for i in range(n / 3, n + 1):
+		var ang2 := lerpf(a0, a1, float(i) / n)
+		core.append(c + Vector2(cos(ang2), sin(ang2)) * (r + 1.0))
+	draw_polyline(core, Color(1.4, 1.4, 1.4, alpha), 1.5)

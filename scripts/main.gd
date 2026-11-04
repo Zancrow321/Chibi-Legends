@@ -47,6 +47,12 @@ func _ready() -> void:
 			add_child(room)
 			bg.camera = room.camera
 
+	if view_mode == 0 or view_mode == 3:
+		# 2D views: HDR bloom on effects (the 3D views have their own environment)
+		var bloom := Bloom.new()
+		bloom.room = room
+		add_child(bloom)
+
 	var hud_layer := CanvasLayer.new()
 	hud_layer.layer = 10
 	hud_layer.add_child(numbers)

@@ -97,7 +97,17 @@ func hit(pos: Vector2, element: String, s: float, dir: float, heavy := false) ->
 			if heavy:
 				_add({"type": "slash", "pos": pos, "life": 0.16, "col": col, "size": 22.0 * s, "rot": -0.6 * dir})
 			_streaks(pos, col, int(5 * s) + 2, dir, 220.0 * s)
+	if heavy:
+		focus_lines(pos, col, 70.0 * s)
 	_sprite(_sprite_id(element, heavy), pos, s, dir)
+
+
+## Manga focus lines: thin wedges rushing in towards the hit point.
+func focus_lines(pos: Vector2, col: Color, radius: float, life := 0.2) -> void:
+	var rays: Array = []
+	for i in 22:
+		rays.append([randf() * TAU, randf_range(0.55, 1.0), randf_range(1.0, 2.6)])
+	_add({"type": "focus", "pos": pos, "life": life, "col": col.lerp(Color.WHITE, 0.5), "size": radius, "rays": rays})
 
 
 ## Big reaction blast: double ring, long star, many streaks.
@@ -222,6 +232,17 @@ func _draw() -> void:
 				var e := 1.0 - pow(1.0 - p, 3.0)
 				var rr: float = f.size * (0.2 + 0.8 * e)
 				draw_arc(pos, rr, 0.0, TAU, 28, Color(c, 1.0 - p), 5.0 * (1.0 - p) + 1.0)
+			"focus":
+				# lines start far out and rush inwards, leaving the centre free
+				var inner: float = f.size * (0.35 + 0.25 * p)
+				for ray in f.rays:
+					var d := Vector2(cos(ray[0]), sin(ray[0]))
+					var outer: float = f.size * (1.25 - 0.3 * p) * (0.8 + 0.4 * ray[1])
+					var w: float = ray[2]
+					var a0: Vector2 = pos + d * outer
+					var a1: Vector2 = pos + d * (inner + (outer - inner) * (1.0 - ray[1]) * 0.5)
+					var nrm: Vector2 = d.orthogonal() * w
+					draw_colored_polygon(PackedVector2Array([a0 + nrm, a0 - nrm, a1]), Color(c, (1.0 - p) * 0.8))
 			"streak":
 				var v: Vector2 = f.vel
 				var tail := v * 0.045 * (1.0 - p * 0.5)
