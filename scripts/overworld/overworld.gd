@@ -157,6 +157,10 @@ func _update_focus() -> void:
 
 
 func _use(s: OverworldSpot) -> void:
+	if s.id == "sternschrein":
+		Sfx.play("ui_confirm")
+		get_tree().call_group("gacha", "open")
+		return
 	match s.kind:
 		OverworldSpot.Kind.DOOR:
 			var info := GameFlow.area_info(s.target_area)
@@ -286,9 +290,13 @@ func _build_spots() -> void:
 		"Sobald das Inventar steht, schmiede ich dir Waffen. Bis dahin: Trainingswald, Puppen, üben.",
 	])
 	_npc("hueterin", "Schreinhüterin Kiyo", 1190.0, "npc_hueter", Color("4d9be6"), [
-		"Das ist der Sternschrein. Der Stern in seiner Mitte schläft noch.",
-		"Wenn er erwacht, kannst du hier Outfits und Auren freischalten. Die Chancen hängen dann offen hier aus, versprochen.",
+		"Das ist der Sternschrein. Der Stern in seiner Mitte ist erwacht!",
+		"Mit Sternkristallen rufst du hier Kampfstile, Outfits und Farbstoffe. Die Chancen hängen offen aus, versprochen.",
+		"Jeden Tag lege ich dir ein Geschenk an den Schrein. Und spätestens beim 60. Ruf antwortet ein legendärer Stil.",
 	])
+	var shrine := _spot(OverworldSpot.Kind.SIGN, "sternschrein", "Sternschrein", 1270.0, [], "", 30.0, -112.0)
+	shrine.verb = "Beschwören"
+	shrine.accent = Color("f9c22b")
 	_npc("waechter", "Torwächter Gonta", 1620.0, "npc_waechter", Color("1ebc73"), [
 		"Halt! ... Ach, ein Schüler. Das Waldtor ist offen. Drinnen warten Trainingspuppen und der Sparringspfahl.",
 		"Das Tor zur Glutschmiede ist versiegelt. Erst wenn du Glutatem meisterst, brennt das Siegel durch.",

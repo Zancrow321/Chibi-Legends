@@ -34,6 +34,8 @@ static func hint(slot: String, id: String) -> String:
 	CreatorCatalog.ensure()
 	if id == "":
 		return ""
+	if slot == "style":  # fighting styles come from the Sternschrein (Gacha)
+		return "" if Gacha.owns_style(id) else Gacha.style_hint(id)
 	var u: Dictionary = CreatorCatalog.data["slots"].get(slot, {}).get("unlock", {})
 	return str(u.get(id, ""))
 
@@ -84,3 +86,4 @@ static func unlock_all() -> void:
 			unlock(slot, id)
 	for i in CreatorCatalog.data["colors"].size():
 		unlock_color(i)
+	Gacha.unlock_all()

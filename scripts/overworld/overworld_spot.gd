@@ -18,6 +18,8 @@ var reach := 34.0
 var prompt_offset := Vector2(0, -70)
 ## Accent colour of the name tag and the marker.
 var accent := Color("e83b3b")
+## Own prompt word instead of Sprechen / Lesen (e.g. "Beschwören").
+var verb := ""
 ## NPC drawing (optional): a still or a strip, foot at the bottom centre.
 var sprite: Sprite2D
 var _t := 0.0
@@ -25,6 +27,8 @@ var _base_y := 0.0
 
 
 func prompt() -> String:
+	if verb != "":
+		return verb
 	match kind:
 		Kind.DOOR:
 			return "Versiegelt" if GameFlow.area_info(target_area).get("locked", false) else "Betreten"

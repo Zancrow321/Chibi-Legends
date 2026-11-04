@@ -307,6 +307,7 @@ func _refresh() -> void:
 			var st: Dictionary = CreatorCatalog.data.get("styles", {})
 			var sid := str(look.get("style", st.keys()[0] if st.size() > 0 else ""))
 			lbl.text = str(st.get(sid, {}).get("name", "-"))
+			locked = not CreatorUnlocks.is_unlocked("style", sid)
 		else:
 			lbl.text = CreatorCatalog.item_name(slot, str(look.get(slot, "")))
 			locked = not CreatorUnlocks.is_unlocked(slot, str(look.get(slot, "")))
@@ -350,6 +351,9 @@ func _locked_reason() -> String:
 		var id := str(look.get(slot, ""))
 		if not CreatorUnlocks.is_unlocked(slot, id):
 			return "%s: %s" % [CreatorCatalog.item_name(slot, id), CreatorUnlocks.hint(slot, id)]
+	var sid := str(look.get("style", ""))
+	if sid != "" and not CreatorUnlocks.is_unlocked("style", sid):
+		return "Kampfstil %s: %s" % [Gacha.style_name(sid), CreatorUnlocks.hint("style", sid)]
 	var cols: Dictionary = look.get("colors", {})
 	for slot in cols:
 		if not CreatorUnlocks.is_color_unlocked(int(cols[slot])):
