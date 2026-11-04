@@ -1,0 +1,338 @@
+{
+ "cols": 10,
+ "cell": 64,
+ "body": "res://assets/creator/body/sheet.png",
+ "anchors": "res://assets/creator/base/anchors.json",
+ "slots": {
+  "top": {
+   "label": "Oberteil",
+   "items": {
+    "kampfweste": "Kampfweste",
+    "wanderer": "Wanderjacke",
+    "ronin": "Ronin-Gi"
+   }
+  },
+  "pants": {
+   "label": "Hose",
+   "items": {
+    "kampfweste": "Kampfhose",
+    "wanderer": "Reisehose",
+    "ronin": "Weite Hose"
+   }
+  },
+  "shoes": {
+   "label": "Schuhe",
+   "items": {
+    "kampfweste": "Lederstiefel",
+    "wanderer": "Knöchelstiefel",
+    "ronin": "Wickel-Sandalen"
+   }
+  },
+  "hair": {
+   "label": "Frisur",
+   "items": {
+    "stachel": "Stachelkopf",
+    "zopf": "Hoher Zopf",
+    "wuschel": "Wuschelmähne",
+    "dutt": "Undercut-Dutt"
+   }
+  },
+  "weapon": {
+   "label": "Waffe",
+   "items": {
+    "schwert_kaiser": "Verband-Zweihänder"
+   }
+  }
+ },
+ "weapons": {
+  "schwert_kaiser": {
+   "texture": "res://assets/creator/weapons/schwert_kaiser.png",
+   "scale": 2,
+   "grip": [
+    9.5,
+    22.5
+   ],
+   "tip": [
+    29.0,
+    2.0
+   ],
+   "ribbon": {
+    "length": 11,
+    "segment": 2.4,
+    "color": "e0e0e0",
+    "shade": "c4c4c4",
+    "outline": "3d3d3d"
+   }
+  }
+ },
+ "colors": [
+  {
+   "name": "Original",
+   "color": "",
+   "amount": 0.0
+  },
+  {
+   "name": "Glut",
+   "color": "d23a2a",
+   "amount": 1.0
+  },
+  {
+   "name": "Gold",
+   "color": "e0a630",
+   "amount": 1.0
+  },
+  {
+   "name": "Jade",
+   "color": "2f9e6a",
+   "amount": 1.0
+  },
+  {
+   "name": "Meer",
+   "color": "2f6fc8",
+   "amount": 1.0
+  },
+  {
+   "name": "Nacht",
+   "color": "3b2f7a",
+   "amount": 1.0
+  },
+  {
+   "name": "Kirsche",
+   "color": "c23a7a",
+   "amount": 1.0
+  },
+  {
+   "name": "Schnee",
+   "color": "e8e6e0",
+   "amount": 1.0
+  },
+  {
+   "name": "Schatten",
+   "color": "3a3440",
+   "amount": 1.0
+  }
+ ],
+ "skins": [
+  {
+   "name": "Hell",
+   "hue": 0.0,
+   "sat": 0.8,
+   "sat_add": 0.0,
+   "val": 1.08
+  },
+  {
+   "name": "Pfirsich",
+   "hue": 0.0,
+   "sat": 1.0,
+   "sat_add": 0.0,
+   "val": 1.0
+  },
+  {
+   "name": "Gebräunt",
+   "hue": -0.01,
+   "sat": 1.05,
+   "sat_add": 0.0,
+   "val": 0.82
+  },
+  {
+   "name": "Braun",
+   "hue": -0.015,
+   "sat": 1.0,
+   "sat_add": 0.0,
+   "val": 0.62
+  },
+  {
+   "name": "Dunkel",
+   "hue": -0.02,
+   "sat": 0.9,
+   "sat_add": 0.0,
+   "val": 0.46
+  }
+ ],
+ "animations": {
+  "idle": {
+   "frames": [
+    "idle_0",
+    "idle_1",
+    "idle_2",
+    "idle_3"
+   ],
+   "fps": 6,
+   "loop": true
+  },
+  "walk": {
+   "frames": [
+    "walk_0",
+    "walk_1",
+    "walk_2",
+    "walk_3",
+    "walk_4",
+    "walk_5"
+   ],
+   "fps": 10,
+   "loop": true
+  },
+  "run": {
+   "frames": [
+    "run_0",
+    "run_1",
+    "run_2",
+    "run_3"
+   ],
+   "fps": 12,
+   "loop": true
+  },
+  "jump": {
+   "frames": [
+    "jump_0",
+    "jump_1"
+   ],
+   "fps": 8,
+   "loop": false
+  },
+  "fall": {
+   "frames": [
+    "fall_0",
+    "fall_1"
+   ],
+   "fps": 6,
+   "loop": true
+  },
+  "land": {
+   "frames": [
+    "land_0"
+   ],
+   "fps": 10,
+   "loop": false
+  },
+  "dash": {
+   "frames": [
+    "dash_0",
+    "dash_1"
+   ],
+   "fps": 12,
+   "loop": false
+  },
+  "block": {
+   "frames": [
+    "block_0"
+   ],
+   "fps": 6,
+   "loop": true
+  },
+  "hit": {
+   "frames": [
+    "hit_0",
+    "hit_1"
+   ],
+   "fps": 10,
+   "loop": false
+  },
+  "knockdown": {
+   "frames": [
+    "knock_0",
+    "knock_1",
+    "lie_0",
+    "getup_0",
+    "getup_1"
+   ],
+   "fps": 7,
+   "loop": false
+  },
+  "combo": {
+   "frames": [
+    "jab_wind",
+    "jab_hit",
+    "cross_hit",
+    "hook_hit",
+    "lowkick_wind",
+    "lowkick_hit",
+    "highkick_wind",
+    "highkick_hit"
+   ],
+   "fps": 9,
+   "loop": true
+  },
+  "slash": {
+   "frames": [
+    "slash_wind",
+    "slash_hit",
+    "slash_side",
+    "upper_wind",
+    "upper_hit",
+    "thrust_hit"
+   ],
+   "fps": 8,
+   "loop": true
+  },
+  "twohand_idle": {
+   "frames": [
+    "th_idle_0",
+    "th_idle_1"
+   ],
+   "fps": 3,
+   "loop": true
+  },
+  "twohand": {
+   "frames": [
+    "th_wind_up",
+    "th_overhead_hit",
+    "th_side_wind",
+    "th_side_hit",
+    "th_thrust",
+    "th_rise"
+   ],
+   "fps": 7,
+   "loop": true
+  },
+  "cast": {
+   "frames": [
+    "cast_wind",
+    "cast_hit",
+    "charge_0",
+    "super_0"
+   ],
+   "fps": 6,
+   "loop": true
+  },
+  "win": {
+   "frames": [
+    "win_0",
+    "win_1",
+    "taunt_0",
+    "taunt_1"
+   ],
+   "fps": 4,
+   "loop": true
+  }
+ },
+ "weapon_hold": {
+  "default_offset": 80,
+  "blade": {
+   "slash_wind": 205,
+   "slash_hit": 70,
+   "slash_side": 95,
+   "upper_wind": 20,
+   "upper_hit": 178,
+   "thrust_hit": 92,
+   "dashpunch_hit": 92,
+   "jab_hit": 100,
+   "cross_hit": 120,
+   "hook_hit": 150,
+   "cast_hit": 150,
+   "super_0": 175,
+   "win_0": 178,
+   "charge_0": 30,
+   "th_idle_0": 140,
+   "th_idle_1": 138,
+   "th_wind_up": 205,
+   "th_overhead_hit": 60,
+   "th_side_wind": -110,
+   "th_side_hit": 95,
+   "th_thrust": 92,
+   "th_rise": 172,
+   "lie_0": -90,
+   "knock_1": -60
+  }
+ }
+}

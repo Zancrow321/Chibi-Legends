@@ -269,7 +269,7 @@ func _spot(kind: int, id: String, name: String, x: float, lines: Array, target :
 
 func _build_spots() -> void:
 	_spot(OverworldSpot.Kind.SIGN, "wohnheim", "Wohnheim", 76.0, [
-		"Dein Zimmer im Wohnheim. Bald ziehst du dich hier um: Frisur, Kleidung und Waffe wählst du im Character Creator.",
+		"Dein Zimmer im Wohnheim. Hier ziehst du dich um: Taste O öffnet den Character Creator für Frisur, Kleidung und Waffe.",
 	], "", 24.0, -100.0)
 	_spot(OverworldSpot.Kind.SIGN, "questbrett", "Questbrett", 250.0, [
 		"AUSHANG: Erste Lektion. Löse im Trainingswald alle vier Element-Reaktionen aus.",

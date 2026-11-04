@@ -24,6 +24,12 @@ static var _intro_shown := false
 
 func _ready() -> void:
 	_read_url()
+	for a in [["cycle_view", KEY_B], ["cycle_quality", KEY_G], ["open_creator", KEY_O]]:
+		if not InputMap.has_action(a[0]):
+			InputMap.add_action(a[0])
+			var ev := InputEventKey.new()
+			ev.physical_keycode = a[1]
+			InputMap.action_add_event(a[0], ev)
 	GameFlow.read_url()
 	if not _intro_shown:
 		_intro_shown = true
@@ -31,12 +37,6 @@ func _ready() -> void:
 	if GameFlow.is_overworld():
 		_build_overworld()
 		return
-	for a in [["cycle_view", KEY_B], ["cycle_quality", KEY_G]]:
-		if not InputMap.has_action(a[0]):
-			InputMap.add_action(a[0])
-			var ev := InputEventKey.new()
-			ev.physical_keycode = a[1]
-			InputMap.action_add_event(a[0], ev)
 
 	DuskStage.enabled = view_mode == 3  # the room builds the dusk light look itself
 	var room := TrainingRoom.new()
@@ -99,8 +99,22 @@ func _ready() -> void:
 	select_layer.add_child(select)
 	add_child(select_layer)
 	room.player.visual.look = Roster.look(Roster.selected(), Roster.selected_skin())
-	if Roster.needs_starter():
+	if not _add_creator() and Roster.needs_starter():
 		select.open_for.call_deferred(room.player.visual, true)
+
+
+## Character Creator: Taste O. Beim allerersten Start öffnet er sich von selbst.
+## Returns true when it opens by itself (first start).
+func _add_creator() -> bool:
+	var creator_layer := CanvasLayer.new()
+	creator_layer.layer = 21
+	var creator := CreatorScreen.new()
+	creator_layer.add_child(creator)
+	add_child(creator_layer)
+	if not FileAccess.file_exists(CreatorCatalog.SAVE):
+		creator.open.call_deferred()
+		return true
+	return false
 
 
 ## Overworld: the courtyard, bloom for everything that glows, the quiet HUD
@@ -124,12 +138,15 @@ func _build_overworld() -> void:
 	select_layer.add_child(select)
 	add_child(select_layer)
 	hud.select = select
+	var creator_open := _add_creator()
 	world.walker.visual.look = Roster.look(Roster.selected(), Roster.selected_skin())
-	if Roster.needs_starter():
+	if not creator_open and Roster.needs_starter():
 		select.open_for.call_deferred(world.walker.visual, true)
 
 
 func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("open_creator"):
+		get_tree().call_group("creator", "open")
 	if GameFlow.is_overworld():
 		return  # the look test (views, quality) belongs to the combat areas
 	if Input.is_action_just_pressed("cycle_view"):
