@@ -1,5 +1,7 @@
 # Chibi Legends
 
+<p align="center"><img src="docs/logo.gif" alt="Chibi Legends Logo" width="480"></p>
+
 2D-Action-Plattformer im Pixel-Art-Stil für den Browser, gebaut mit **Godot 4.7** (GDScript, Web-Export).
 Spielwelt: die Multiversum-Akademie. Fähigkeiten und Outfits sind eigene Entwürfe nach typischen Anime-Archetypen.
 
@@ -20,6 +22,14 @@ Spielwelt: die Multiversum-Akademie. Fähigkeiten und Outfits sind eigene Entwü
 - Kampfeffekte im Stil klassischer 2D-Fighter: Trefferpause (Hit-Stop), Screenshake, leuchtende Treffer-Funken je Element, große Reaktions-Explosionen und der Super „Legendenstrahl“ (Bildschirm-Abdunkeln, Cut-in, Energiestrahl, Finale). Stärke per V umschaltbar.
 
 ![Glutatem: Meisterzug „Letzte Esse“ im Abendlicht](docs/screenshots/glutatem-meisterzug.png)
+
+## Titelbildschirm und Logo
+
+Beim Start zeigt das Spiel das animierte Logo auf Schwarz, eine Taste (oder Klick, Pad-Knopf) geht weiter zur Titelkarte des Gebiets.
+`?titel=0` in der Web-URL überspringt ihn. Die Logo-Dateien (Standbild, Animations-Blatt, Boot-Splash, Favicon/Icons)
+entstehen mit `tools/branding/make_logo_assets.py` aus der GIF-Vorlage, siehe Kopf von `scripts/ui/title_screen.gd`.
+
+![Titelbildschirm](docs/screenshots/titelbildschirm.png)
 
 ## Overworld und Kampfareale
 
