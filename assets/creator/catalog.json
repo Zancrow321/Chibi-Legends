@@ -12,9 +12,11 @@
     "ronin": "Ronin-Gi",
     "schatten": "Schattenwickel",
     "schmied": "Schmiede-Schürze",
-    "akademie": "Akademie-Jacke"
+    "akademie": "Akademie-Jacke",
+    "steilpfad": "Steilpfad-Gi"
    },
    "unlock": {
+    "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
     "wanderer": "Trainingswald abschließen",
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
@@ -29,9 +31,11 @@
     "ronin": "Weite Hose",
     "schatten": "Wickelhose",
     "schmied": "Arbeitshose",
-    "akademie": "Uniformhose"
+    "akademie": "Uniformhose",
+    "steilpfad": "Steilpfad-Wickelhose"
    },
    "unlock": {
+    "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
     "wanderer": "Trainingswald abschließen",
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
@@ -46,9 +50,11 @@
     "ronin": "Wickel-Sandalen",
     "schatten": "Tabi-Stiefel",
     "schmied": "Eisenkappen-Stiefel",
-    "akademie": "Turnschuhe"
+    "akademie": "Turnschuhe",
+    "steilpfad": "Stoffschuhe"
    },
    "unlock": {
+    "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
     "wanderer": "Trainingswald abschließen",
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
