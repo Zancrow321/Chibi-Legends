@@ -276,10 +276,33 @@ Feuerfläche deckt den ganzen Bildschirm.
 6 Züge à 1 SP + 18 Alternativen à 2 SP + Meisterzug 4 SP + 2 Varianten à 2 SP
 = 6 + 36 + 8 = **50 SP**.
 
+## Erzeugte Effekte (PixelLab, 2026-11-04)
+
+Mit Kaisers Freigabe (max. 15) über PixelLab REST `/vfx` (Artist „lite“)
+erzeugt, zusammen **12,8 Generierungen** inkl. Testlauf und zwei Neuversuchen.
+Streifen in `assets/vfx/lauffeuer/` (Frames nebeneinander, Maße und Dauer in
+`fx.json`), Werkzeuge in `tools/lauffeuer/`. Im Spiel additiv mit Bloom abspielen.
+
+| Datei | Für | Frames |
+|---|---|---|
+| `flammenfaust.png` | Flammenfaust, Großer Brand (hochskaliert) | 10 à 96×64 |
+| `flammenfaust_knoechel.png` | Alternative Faustform mit erkennbaren Knöcheln | 10 à 96×64 |
+| `ausbruch.png` | Zündung eines Brandherds | 10 à 64×96 |
+| `brandherd.png` | Brandherd am Boden (Schleife) | 8 à 48×32 |
+| `steigflamme.png` | Steigflamme | 10 à 64×96 |
+| `feuerstrom.png` | Feuerstrom (Schleife) | 8 à 96×48 |
+| `feuerschirm.png` | Feuerschirm | 10 à 48×96 |
+| `brandgestirn.png` | Brandgestirn-Kugel (Schleife) | 8 à 128×128 |
+| `einschlag.png` | Einschlag von Brandgestirn, Glühender Niederschlag | 12 à 128×96 |
+| `zunderflocke.png` | Leuchtfeuer-Flocken (Schleife) | 8 à 24×24 |
+
+Vorschau mit Bloom: `/mnt/project-files/chibi-legends/lauffeuer/effekte-bloom.gif`.
+
 ## Bedarf für den Einbau (später, noch nicht freigegeben)
 
 - **Keine Waffe**, also keine Waffen-Generierungen.
-- PixelLab nur für die Outfit-Ebenen (Jacke, Schal, Bandagen, Stiefel), ca.
+- Effekt-Streifen: erledigt (siehe oben).
+- PixelLab nur noch für die Outfit-Ebenen (Jacke, Schal, Bandagen, Stiefel), ca.
   6–10 Generierungen. Wird vor dem Start mit Anzahl angefragt.
 - Posen: zurückgezogene Faust, erhobener Arm, Daumen am Schal; Rest aus der
   Posen-Bibliothek. Flammenarme als Overlay im Code.
