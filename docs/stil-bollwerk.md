@@ -288,6 +288,44 @@ Granaten (2 Ladungen).
 - Effekte im Code: Geschossspuren (Line2D), Mündungsblitz, Sechseck-Schild (Shader),
   Zielstrahl, Explosionen.
 
+## Stand im Spiel (2026-11-04, spielbar)
+
+Bollwerk ist im Charakter-Creator wählbar und komplett spielbar.
+
+- **Code:** `scripts/bollwerk/`. `bollwerk_caster.gd` enthält Schild, Einsatzenergie,
+  Magazin, Granaten und alle 6 Züge mit je 3 Alternativen. `bollwerk_super.gd` enthält die
+  3 Meisterzüge. Dazu Granate, Schutzwand, Effekte (`bollwerk_fx.gd`) und Icons. Die Werte
+  stehen in `assets/combat/styles/bollwerk.json`.
+- **Schild:** Er hat 40 % der max. HP und fängt Treffer vor den HP ab. Nach 3,5 s ohne
+  Treffer lädt er in 2 s voll. Beim Bruch fliegen blaue Splitter, das Visier blinkt rot und
+  die HP liegen offen. Die Schutzwand fängt Treffer von ihrer anderen Seite ab, Nahkampf
+  zählt dort doppelt.
+- **Einsatzenergie:** 3 Zellen.
+  - Eine Zelle füllen: eine Salve mit mindestens 3 von 4 Treffern, je 3 Pistolentreffer,
+    jeder Durchbruch-Treffer, ein Abschluss-Schlag oder ein Orbitalsturz-Treffer.
+  - Granate, Schildprotokoll und Kettenhaken verbrauchen alle Zellen und werden dafür
+    stärker: größerer Radius bzw. 2 Granaten, eine haltbarere Wand bzw. Schild-Aufladung,
+    mehr Schaden bzw. keine Abklingzeit.
+  - Ab 6 s ohne Einsatz verfällt alle 2 s eine Zelle.
+- **Magazin:** 32 / 36 / 12 Schuss, je nach Waffe. Nachladen dauert 1,2 s, mit der Pistole
+  0,6 s. Manuell nachladen: am Boden 0,3 s runter halten. Mit leerem Magazin klickt die
+  Waffe („LEER“) und lädt nach.
+- **Waffenwechsel:** Die Waffe in der Hand wechselt je nach Zug, Alternative und Meisterzug,
+  zum Beispiel Fremdklinge, Schrotflinte oder Zwillingsrohr. Hoch/runter kippt den Lauf.
+- **Schildstörung:** Gegner haben hier keine Energieschilde. Darum gibt die Schildstörung
+  3 s den Status „Schildstörung“ und 50 % mehr Haltungsschaden. Die Kombi „Nass“ fehlt noch,
+  weil es noch keinen Nass-Status gibt.
+- **HUD:** Neben dem Stilnamen stehen Schildleiste, 3 Energiezellen, Magazin bzw.
+  Nachladebalken und 2 Granaten-Ladungen.
+- **PixelLab:** 12 Generierungen für 10 Effekt-Sprites in `assets/combat/vfx/bollwerk/`,
+  davon 2 Nachbesserungen beim Orbitalsturz. Die Sprites dienen zugleich als Skill-Icons.
+  Werkzeug: `tools/bollwerk/gen_fx.py`.
+- **Sounds:** eigene Synth-Sounds, `tools/audio/synth_guns.py` (`bw_*.wav`).
+- **Test:** `xvfb-run godot --path . --fixed-fps 60 -s res://tools/bollwerk/probe.gd -- <ordner>`.
+  Das Skript wirkt alle Züge, Alternativen und Meisterzüge, bricht den Schild, leert das
+  Magazin und speichert 22 Screenshots, etwa `docs/screenshots/bollwerk-orbitalsturz.png`
+  und `bollwerk-lanzenstrahl.png`.
+
 ---
 
 ## Was umbenannt wurde

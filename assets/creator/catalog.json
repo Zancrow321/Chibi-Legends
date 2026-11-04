@@ -105,9 +105,24 @@
    "label": "Waffe",
    "items": {
     "schwert_kaiser": "Verband-Zweihänder",
-    "sense_nachhall": "Glockensense Nachhall"
+    "sense_nachhall": "Glockensense Nachhall",
+    "wachhund": "Sturmgewehr „Wachhund“",
+    "dreischlag": "Salvengewehr „Dreischlag“",
+    "kurzwort": "Dienstpistole „Kurzwort“",
+    "fremdklinge": "Fremdklinge",
+    "zwillingsrohr": "Zwillingsrohr",
+    "lanzenstrahl": "Lanzenstrahl",
+    "schrotflinte": "Schrotflinte"
    },
-   "unlock": {}
+   "unlock": {
+    "wachhund": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "dreischlag": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "kurzwort": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "fremdklinge": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "zwillingsrohr": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "lanzenstrahl": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "schrotflinte": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)"
+   }
   }
  },
  "weapons": {
@@ -146,6 +161,97 @@
     29.0,
     13.0
    ]
+  },
+  "wachhund": {
+   "texture": "res://assets/creator/weapons/bollwerk/wachhund.png",
+   "scale": 1,
+   "grip": [
+    15.0,
+    17.5
+   ],
+   "tip": [
+    46.5,
+    11.5
+   ],
+   "hold": "gun"
+  },
+  "dreischlag": {
+   "texture": "res://assets/creator/weapons/bollwerk/dreischlag.png",
+   "scale": 1,
+   "grip": [
+    6.5,
+    11.5
+   ],
+   "tip": [
+    45.5,
+    7.0
+   ],
+   "hold": "gun"
+  },
+  "kurzwort": {
+   "texture": "res://assets/creator/weapons/bollwerk/kurzwort.png",
+   "scale": 1,
+   "grip": [
+    5.0,
+    19.5
+   ],
+   "tip": [
+    32.5,
+    8.5
+   ],
+   "hold": "gun"
+  },
+  "fremdklinge": {
+   "texture": "res://assets/creator/weapons/bollwerk/fremdklinge.png",
+   "scale": 1,
+   "grip": [
+    7.5,
+    6.0
+   ],
+   "tip": [
+    44.5,
+    6.0
+   ],
+   "hold": "gun"
+  },
+  "zwillingsrohr": {
+   "texture": "res://assets/creator/weapons/bollwerk/zwillingsrohr.png",
+   "scale": 1,
+   "grip": [
+    13.1,
+    28.5
+   ],
+   "tip": [
+    60.5,
+    14.833333333333334
+   ],
+   "hold": "gun"
+  },
+  "lanzenstrahl": {
+   "texture": "res://assets/creator/weapons/bollwerk/lanzenstrahl.png",
+   "scale": 1,
+   "grip": [
+    8.7,
+    18.5
+   ],
+   "tip": [
+    56.5,
+    13.5
+   ],
+   "hold": "gun"
+  },
+  "schrotflinte": {
+   "texture": "res://assets/creator/weapons/bollwerk/schrotflinte.png",
+   "scale": 1,
+   "grip": [
+    6.0,
+    8.5
+   ],
+   "tip": [
+    44.5,
+    4.0
+   ],
+   "hold": "gun"
   }
  },
  "colors": [
@@ -420,6 +526,40 @@
    "th_rise": 172,
    "lie_0": -90,
    "knock_1": -60
+  },
+  "gun": {
+   "default": 90,
+   "poses": {
+    "run_0": 96,
+    "run_1": 94,
+    "run_2": 96,
+    "run_3": 94,
+    "jump_0": 100,
+    "jump_1": 96,
+    "fall_0": 84,
+    "fall_1": 82,
+    "hit_0": 120,
+    "hit_1": 125,
+    "knock_0": 150,
+    "knock_1": -60,
+    "lie_0": -90,
+    "getup_0": 60,
+    "getup_1": 75,
+    "dash_0": 95,
+    "dash_1": 95,
+    "cast_wind": 140,
+    "cast_hit": 100,
+    "throw_0": 130,
+    "stomp_hit": 60,
+    "airpunch_hit": 60,
+    "block_0": 150,
+    "win_0": 160,
+    "win_1": 160,
+    "taunt_0": 150,
+    "taunt_1": 150,
+    "charge_0": 70,
+    "super_0": 100
+   }
   }
  },
  "styles": {
@@ -467,6 +607,12 @@
    "unlock": "",
    "weapon": "",
    "unarmed": true
+  },
+  "bollwerk": {
+   "name": "Bollwerk",
+   "text": "Gepanzerter Supersoldat: Salven, Schild, Granaten (Legendär)",
+   "unlock": "",
+   "weapon": "wachhund"
   }
  },
  "start_items_note": "Teile ohne unlock-Eintrag sind von Anfang an frei. CreatorUnlocks.unlock(slot, id) schaltet frei."

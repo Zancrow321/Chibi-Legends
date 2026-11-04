@@ -55,6 +55,9 @@ static func draw(ci: CanvasItem, r: Rect2, id: String, t := 0.0) -> void:
 	if style_id == "wirbelwille":
 		WirbelIcons.draw(ci, r, id, t)
 		return
+	if style_id == "bollwerk":
+		BollwerkIcons.draw(ci, r, id, t)
+		return
 	if MondIcons.has(id) and (id != "meisterzug" or style_id == "schwarzmond"):
 		MondIcons.draw(ci, r, id, t)
 		return
