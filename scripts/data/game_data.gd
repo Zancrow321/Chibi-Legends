@@ -66,23 +66,4 @@ const REACTIONS := {
 ## Basic attack combo of the starting katana.
 const COMBO_DAMAGE := [8.0, 8.0, 14.0]
 
-# --- Character looks (parts and colors live in assets/characters, see Appearance) ---
-
-## Visual item per gear slot of the starting equipment. Later the inventory
-## fills this; the look can override each slot (switchable transmog).
-const START_EQUIPMENT := {
-	"weapon": "waffe_katana", "top": "oberteil_akademie", "pants": "hose_lang",
-	"shoes": "schuhe_stiefel", "accessory": "accessoire_schal",
-}
-
-const LOOK_PRESETS := [
-	{"hair": "haar_stachelig", "colors": {"skin": "haut_1", "hair": "haar_rot", "eyes": "augen_braun"}},
-	{"hair": "haar_lang", "face": "gesicht_entschlossen", "colors": {"skin": "haut_2", "hair": "haar_schwarz", "eyes": "augen_rot"},
-		"cosmetics": {"top": "oberteil_shirt"}, "item_colors": {"oberteil_shirt": ["schwarz", "rot"]}},
-	{"hair": "haar_zopf", "colors": {"skin": "haut_1", "hair": "haar_rosa", "eyes": "augen_blau"},
-		"cosmetics": {"headgear": "kopf_stirnband"}, "item_colors": {"oberteil_akademie": ["blau", "weiss"], "haar_zopf": ["", "gelb"]}},
-	{"hair": "haar_wuschel", "colors": {"skin": "haut_3", "hair": "haar_blond", "eyes": "augen_gruen"},
-		"cosmetics": {"pants": "hose_kurz", "accessory": "none"}, "item_colors": {"oberteil_akademie": ["gruen", "weiss"]}},
-	{"hair": "haar_kurz", "face": "gesicht_entschlossen", "colors": {"skin": "haut_5", "hair": "haar_weiss", "eyes": "augen_violett"},
-		"item_colors": {"oberteil_akademie": ["violett", "gelb"], "accessoire_schal": ["schwarz"]}},
-]
+# Characters, their looks and skins: assets/characters/characters.json (see Roster).

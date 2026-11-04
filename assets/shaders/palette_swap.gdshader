@@ -5,6 +5,7 @@ shader_type canvas_item;
 
 uniform sampler2D palette : filter_nearest, repeat_disable;
 uniform float flash : hint_range(0.0, 1.0) = 0.0;  // white hit flash
+uniform float shadow : hint_range(0.0, 1.0) = 0.0;  // dark silhouette (locked characters)
 
 void fragment() {
 	vec4 src = texture(TEXTURE, UV);
@@ -14,5 +15,7 @@ void fragment() {
 	int tone = clamp(int(floor(src.r * 255.0 / 32.0)), 0, 7);
 	int slot = clamp(int(floor(src.g * 255.0 / 64.0)), 0, 3);
 	vec4 c = texelFetch(palette, ivec2(tone, slot), 0);
-	COLOR = vec4(mix(c.rgb, vec3(1.0), flash), c.a * COLOR.a);
+	vec3 rgb = mix(c.rgb, vec3(1.0), flash);
+	rgb = mix(rgb, vec3(0.08, 0.07, 0.14), shadow);
+	COLOR = vec4(rgb, c.a * COLOR.a);
 }
