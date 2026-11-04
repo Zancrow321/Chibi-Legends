@@ -1,0 +1,17 @@
+{
+  "id": "hose_kurz",
+  "name": "Kurze Hose",
+  "slot": "pants",
+  "channels": [
+    {
+      "key": "c0",
+      "label": "Hose",
+      "group": "stoff",
+      "default": "marine"
+    }
+  ],
+  "layers": {
+    "pants": "pants.png"
+  },
+  "source": "platzhalter"
+}

@@ -115,9 +115,7 @@ func _physics_process(delta: float) -> void:
 		if _take("skill_%d" % (i + 1)):
 			use_skill(i)
 	if _take("cycle_look"):
-		look_index = (look_index + 1) % GameData.LOOK_PRESETS.size()
-		visual.look = GameData.LOOK_PRESETS[look_index].duplicate()
-		world.toast("Look %d von %d (Customizing folgt in Phase 2)" % [look_index + 1, GameData.LOOK_PRESETS.size()])
+		get_tree().call_group("character_creator", "open_for", visual)
 
 	if infinite_aura:
 		aura = max_aura

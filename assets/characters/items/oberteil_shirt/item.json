@@ -1,0 +1,23 @@
+{
+  "id": "oberteil_shirt",
+  "name": "Trainingsshirt",
+  "slot": "top",
+  "channels": [
+    {
+      "key": "c0",
+      "label": "Shirt",
+      "group": "stoff",
+      "default": "blau"
+    },
+    {
+      "key": "c1",
+      "label": "Saum",
+      "group": "stoff",
+      "default": "weiss"
+    }
+  ],
+  "layers": {
+    "top": "top.png"
+  },
+  "source": "platzhalter"
+}

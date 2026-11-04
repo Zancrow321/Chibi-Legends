@@ -1,0 +1,17 @@
+{
+  "id": "schuhe_stiefel",
+  "name": "Stiefel",
+  "slot": "shoes",
+  "channels": [
+    {
+      "key": "c0",
+      "label": "Leder",
+      "group": "stoff",
+      "default": "dunkelbraun"
+    }
+  ],
+  "layers": {
+    "shoes": "shoes.png"
+  },
+  "source": "platzhalter"
+}
