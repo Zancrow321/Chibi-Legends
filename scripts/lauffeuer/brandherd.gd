@@ -16,6 +16,7 @@ var wide := 1.0  # wider with wind (later)
 var _strip: FeuerStrip
 var _t := 0.0
 var _gone := false
+var _seen: Dictionary = {}  # attacks that already touched this Brandherd
 
 
 func _ready() -> void:
@@ -36,12 +37,38 @@ func _process(delta: float) -> void:
 		caster.fx.smoke(global_position + Vector2(0, -4), 7.0, Vector2(0, -20), 0.8)
 		remove()
 		return
+	_element_check()
 	if fmod(_t, 0.18) < delta:
 		caster.fx.embers(global_position + Vector2(randf_range(-6, 6), -6), 1, 4.0, 30.0, 0.6)
 	if fmod(_t, 0.12) < delta:
 		var f := 0.6 + 0.3 * sin(_t * 17.0)
 		caster.fx.light(global_position + Vector2(0, -8), Color(1.0, 0.55, 0.25), f, 0.35, 0.14)
 	queue_redraw()
+
+
+## Wind fans the fire (+50 % width, once); water shortens it and steams.
+func _element_check() -> void:
+	var area := hit_area().grow(6.0)
+	for a in caster.world.attacks.get_children():
+		var el = a.get("element")
+		if not (el is String) or el == "" or el == "feuer" or not (a is Node2D):
+			continue
+		if not area.has_point(a.global_position) or _seen.has(a.get_instance_id()):
+			continue
+		_seen[a.get_instance_id()] = true
+		if el == "wind" and wide < 1.5:
+			wide = 1.5
+			_strip.size = 0.9 * wide
+			caster.fx.ring(global_position + Vector2(0, -6), 26.0, Color("9cf2b4"), 0.3, 3.0)
+			caster.fx.word(global_position + Vector2(0, -40), "ANGEFACHT!", Color("9cf2b4"), 16)
+		elif el in ["wasser", "frost"]:
+			if life < 1.0:
+				life = 0.0
+			else:
+				life *= 0.5
+			for i in 4:
+				caster.fx.smoke(global_position + Vector2(randf_range(-10, 10), -8), 10.0, Vector2(0, -30), 1.0)
+			caster.fx.word(global_position + Vector2(0, -40), "DAMPF", Color("e8eef2"), 16)
 
 
 func remove() -> void:

@@ -532,8 +532,8 @@ func _draw_training() -> void:
 func _draw_skill_bar(W: float, H: float) -> void:
 	var p := room.player
 	var slots := [
-		{"label": "Leicht", "key": GameInput.key_label("light"), "icon": "attack", "cd": 0.0, "max": 1.0},
-		{"label": "Schwer", "key": GameInput.key_label("heavy"), "icon": "heavy", "cd": 0.0, "max": 1.0},
+		{"label": "Leicht", "key": GameInput.key_label("light"), "icon": "faust" if room.player.glut is FeuerCaster else "attack", "cd": 0.0, "max": 1.0},
+		{"label": "Schwer", "key": GameInput.key_label("heavy"), "icon": "tritt" if room.player.glut is FeuerCaster else "heavy", "cd": 0.0, "max": 1.0},
 		{"label": "Dash", "key": "Shift", "icon": "dash", "cd": p.dash_cd, "max": Player.DASH_COOLDOWN},
 	]
 	var arrows := ["", "→", "↑", "↓"]
@@ -633,6 +633,21 @@ func _draw_icon(r: Rect2, icon: String) -> void:
 			draw_line(c + Vector2(-14, 14), c + Vector2(14, -14), Color("e8eef2"), 5)
 			draw_line(c + Vector2(-14, 14), c + Vector2(14, -14), Color.WHITE, 2)
 			draw_line(c + Vector2(-16, 6), c + Vector2(-6, 16), TRIM, 4)
+		"faust", "tritt":
+			# Lauffeuer is unarmed: a fist / a kicking boot instead of a sword
+			_panel(r, Color("6a2a1a"), 6)
+			var hot := Color("ffc94a") if room.player.glut != null and room.player.glut.normal_element() == "feuer" else Color("e8d6c0")
+			if icon == "faust":
+				draw_rect(Rect2(c + Vector2(-10, -8), Vector2(18, 16)), hot)
+				for k in 4:
+					draw_line(c + Vector2(-10 + k * 4.5, -8), c + Vector2(-10 + k * 4.5, -3), Color("6a2a1a"), 1.5)
+				draw_rect(Rect2(c + Vector2(-16, -4), Vector2(6, 10)), hot)
+				draw_line(c + Vector2(10, -6), c + Vector2(17, -6), Color("ff8a2a"), 2)
+				draw_line(c + Vector2(10, 0), c + Vector2(19, 0), Color("ff8a2a"), 2)
+				draw_line(c + Vector2(10, 6), c + Vector2(17, 6), Color("ff8a2a"), 2)
+			else:
+				draw_colored_polygon(PackedVector2Array([c + Vector2(-14, -14), c + Vector2(-6, -14), c + Vector2(-4, 4), c + Vector2(14, 6), c + Vector2(14, 13), c + Vector2(-14, 13)]), hot)
+				draw_arc(c + Vector2(4, 0), 18, -2.2, -0.6, 10, Color("ff8a2a"), 3)
 		"dash":
 			_panel(r, Color("3a5a7a"), 6)
 			for k in 3:

@@ -309,8 +309,9 @@ Vorschau mit Bloom: `/mnt/project-files/chibi-legends/lauffeuer/effekte-bloom.gi
 - Kleidung **Feuerwacht-Kluft** (Jacke, Hose, Stiefel) als Creator-Teile, 5 Generierungen,
   freizuschalten über das Banner. Testen: F9 im Creator schaltet alles frei.
 - Testlauf: `tools/lauffeuer/probe.gd` (Screenshots in `/mnt/project-files/chibi-legends/lauffeuer/spiel/`).
-- Noch offen: Wind/Wasser-Kombis (es gibt noch keine Wind/Wasser-Angriffe), J/K-Symbole im HUD
-  zeigen noch Schwerter.
+- Kombis: Wind-Angriffe fachen einen Brandherd an (+50 % Breite); Wasser (bis es eigene
+  Wasser-Angriffe gibt, auch Frost) halbiert die Restdauer, unter 1 s erlischt er, mit Dampf.
+- HUD zeigt für J/K Faust und Tritt statt Schwert (glühend, solange die Fäuste brennen).
 
 ## Bedarf für den Einbau (später, noch nicht freigegeben)
 
