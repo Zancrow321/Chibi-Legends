@@ -273,6 +273,9 @@ die Steinarena von Siebengipfel. Satz-Vorschläge (eigene): „Noch ein Stück w
 - Neue Systeme im Code: Ki-Leiste mit Sammeln, Fluss-Bonus und Überhitzung,
   Strahl mit begrenzter Drehung, Zielerfassung + Teleport, Ladung des Sonnenkerns.
   Strahl und Ki-Leiste sind wiederverwendbar für spätere Energie-Stile.
+- **Skill-Icons erledigt 2026-11-04** (Kaiser freigegeben): 10 Icons mit Pixen (48 px,
+  je 1 Generierung) in `assets/combat/icons/grenzbrecher/`, Werkzeug
+  `tools/grenzbrecher/gen_icons.py`, Vorschau `docs/screenshots/grenzbrecher-icons.png`.
 - Keine Waffe, darum **kein PixelLab-Bedarf für Waffen**. Möglich später:
   Outfit-Ebenen für den Steilpfad-Gi (ca. 6–10 Generierungen) und die Posen unten.
   Beides erst nach Kaisers Freigabe mit genauer Anzahl.
