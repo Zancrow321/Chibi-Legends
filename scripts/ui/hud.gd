@@ -33,6 +33,8 @@ var _t := 0.0
 var _cutin_text := ""
 var _cutin_color := Color.WHITE
 var _cutin_t := -1.0  # seconds since the super cut-in started, <0 = off
+var menu: GlutatemMenu
+var _gauge_shown := 0.0
 
 const CUTIN_TIME := 1.0
 
@@ -41,6 +43,9 @@ func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_PASS
 	font = load("res://assets/fonts/PixelifySans-SemiBold.ttf")
+	menu = GlutatemMenu.new()
+	menu.room = room
+	add_child(menu)
 
 
 func show_cutin(text: String, col: Color) -> void:
@@ -154,18 +159,81 @@ func _draw_status() -> void:
 	# bars
 	var x := 152.0
 	_panel(Rect2(x, 16, 310, 26), PANEL, 13)
-	_text(Vector2(x, 35), "Akademie-Schüler", 17, TEXT, HORIZONTAL_ALIGNMENT_CENTER, 310)
+	if p.glut != null:
+		_text(Vector2(x + 14, 35), "Akademie-Schüler", 17, TEXT)
+		_text(Vector2(x + 180, 35), "KK " + _fmt(p.combat_power()), 16, TRIM)
+	else:
+		_text(Vector2(x, 35), "Akademie-Schüler", 17, TEXT, HORIZONTAL_ALIGNMENT_CENTER, 310)
 	_bar(Rect2(x, 48, 310, 26), p.hp / p.max_hp, HP, "%s / %s" % [_fmt(p.hp), _fmt(p.max_hp)])
-	_bar(Rect2(x, 80, 310, 22), p.aura / p.max_aura, AURA, "Aura %d / %d%s" % [int(p.aura), int(p.max_aura), "  (unendlich)" if p.infinite_aura else ""])
-	_panel(Rect2(x, 108, 240, 26), PANEL, 13, Color(TRIM, 0.7))
-	_text(Vector2(x + 14, 127), "Kampfkraft", 16, TRIM)
-	_text(Vector2(x + 124, 127), _fmt(p.combat_power()), 18, TEXT)
+	if p.glut == null:
+		_bar(Rect2(x, 80, 310, 22), p.aura / p.max_aura, AURA, "Aura %d / %d%s" % [int(p.aura), int(p.max_aura), "  (unendlich)" if p.infinite_aura else ""])
+		_panel(Rect2(x, 108, 240, 26), PANEL, 13, Color(TRIM, 0.7))
+		_text(Vector2(x + 14, 127), "Kampfkraft", 16, TRIM)
+		_text(Vector2(x + 124, 127), _fmt(p.combat_power()), 18, TEXT)
+		return
+	_draw_gauge(Rect2(x, 80, 310, 22))
+	_draw_style_panel(Rect2(x, 108, 310, 26))
+
+
+## Legendenleiste: three Stufen of 100; full Stufen glow, a full bar pulses.
+func _draw_gauge(r: Rect2) -> void:
+	var p := room.player
+	_gauge_shown = move_toward(_gauge_shown, p.gauge, get_process_delta_time() * 400.0)
+	_panel(r, Color(0.05, 0.04, 0.1, 0.95), int(r.size.y / 2), Color(1, 1, 1, 0.15))
+	var inner := r.grow(-3)
+	var seg := inner.size.x / 3.0
+	var full := int(p.gauge / 100.0)
+	for i in 3:
+		var sr := Rect2(inner.position.x + i * seg + (1 if i > 0 else 0), inner.position.y, seg - 2, inner.size.y)
+		var f := clampf((_gauge_shown - i * 100.0) / 100.0, 0.0, 1.0)
+		if f <= 0.0:
+			continue
+		var fr := Rect2(sr.position, Vector2(sr.size.x * f, sr.size.y))
+		var col := Color("ff7a2a") if i < full else Color("c2331f")
+		if full >= 3:
+			col = Color("ff9a2a").lerp(Color("fff4d0"), 0.3 + 0.3 * sin(_t * 8.0))
+		_panel(fr, col, 6)
+		_panel(Rect2(fr.position + Vector2(3, 2), Vector2(maxf(fr.size.x - 6, 0), fr.size.y * 0.3)), Color(1, 1, 1, 0.25), 3)
+	for i in range(1, 3):
+		draw_rect(Rect2(inner.position.x + i * seg - 1, inner.position.y - 1, 2, inner.size.y + 2), Color(0.05, 0.04, 0.1))
+	var label := "Legendenleiste  %d / 3%s" % [full, "  (unendlich)" if p.infinite_aura else ""]
+	_text(Vector2(r.position.x, r.position.y + r.size.y * 0.72), label, int(r.size.y * 0.62), TEXT, HORIZONTAL_ALIGNMENT_CENTER, r.size.x)
+
+
+## Style, Atemrhythmus (glow stage of the blade) and the Weißglut timer.
+func _draw_style_panel(r: Rect2) -> void:
+	var g := room.player.glut
+	_panel(r, PANEL, 13, Color("ff9a2a", 0.6))
+	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, Color("ffb347"))
+	var names := ["Rot", "Orange", "Weiß"]
+	var cols := [Color("ff3b1f"), Color("ff9a2a"), Color("fff4d0")]
+	for i in 3:
+		var c := Vector2(r.position.x + 106 + i * 22, r.get_center().y)
+		var on := g.stage > i
+		draw_circle(c, 7, Color(0.05, 0.03, 0.06))
+		if on:
+			draw_circle(c, 9 + (2 if i == 2 and g.stage == 3 else 0) * (0.5 + 0.5 * sin(_t * 12.0)), Color(cols[i], 0.25))
+			draw_circle(c, 5.5, cols[i])
+		else:
+			draw_arc(c, 5.5, 0, TAU, 12, Color(cols[i], 0.35), 1.5)
+	var info: String = names[g.stage - 1] if g.stage > 0 else "kalt"
+	if g.buff_time > 0.0:
+		var br := Rect2(r.position.x + 176, r.position.y + 8, 120, 10)
+		draw_rect(br, Color(0.05, 0.03, 0.06))
+		draw_rect(Rect2(br.position, Vector2(br.size.x * g.buff_time / maxf(0.01, g.buff_max), br.size.y)), Color("fff4d0").lerp(Color("ffd25c"), 0.5 + 0.5 * sin(_t * 10.0)))
+		_text(Vector2(br.position.x, r.position.y + r.size.y - 2), "Weißglut +%d %%" % int(round(g.buff_bonus * 100.0)), 11, TEXT, HORIZONTAL_ALIGNMENT_CENTER, br.size.x, 3)
+	else:
+		_text(Vector2(r.position.x + 176, r.position.y + 19), "Klinge: " + info, 15, MUTED)
 
 
 func _draw_notice(W: float) -> void:
 	var r := Rect2(480, 16, maxf(W - 480 - 352 - 16, 160), 26)
 	_panel(r, PANEL, 13)
 	var tips := [
+		"Glutatem: L + Richtung, L halten = verstärkt",
+		"Verschiedene Züge im Combo heizen die Klinge",
+		"Tab: Kampfstil, Alternativen und Slots",
+		"Der Sparringspfahl rechts schlägt zurück!",
 		"Willkommen im Trainingswald der Akademie!",
 		"Frost + Blitz ergibt einen Kristallbruch.",
 		"Wind verteilt Brand als Feuersturm.",
@@ -238,7 +306,7 @@ func _draw_training() -> void:
 		lr = GameData.REACTIONS[room.last_reaction].name
 		lc = GameData.REACTIONS[room.last_reaction].color
 	_text(Vector2(x + 190, 240), lr, 17, lc)
-	_text(Vector2(x + 16, 266), "[U] Unendlich Aura   [R] Abklingzeiten", 15, MUTED)
+	_text(Vector2(x + 16, 266), "[U] Unendlich Leiste   [R] Abklingzeiten" if room.player.glut != null else "[U] Unendlich Aura   [R] Abklingzeiten", 15, MUTED)
 
 
 func _draw_skill_bar(W: float, H: float) -> void:
@@ -250,6 +318,9 @@ func _draw_skill_bar(W: float, H: float) -> void:
 	]
 	var arrows := ["", "→", "↑", "↓"]
 	var sk := GameInput.key_label("special")
+	if p.glut != null:
+		_draw_style_slots(slots, arrows, sk)
+		return
 	for i in p.build.size():
 		var s: Dictionary = GameData.SKILLS[p.build[i]]
 		slots.append({"label": s.name, "key": arrows[i] + sk, "icon": p.build[i], "cd": p.cooldowns[i], "max": s.cooldown, "cost": s.cost})
@@ -274,6 +345,56 @@ func _draw_skill_bar(W: float, H: float) -> void:
 		var kw := maxf(24.0, font.get_string_size(sl.key, HORIZONTAL_ALIGNMENT_LEFT, -1, 15).x + 10)
 		_panel(Rect2(r.position + Vector2(-4, -6), Vector2(kw, 20)), Color("2a2140"), 5, Color(TRIM, 0.8))
 		_text(Vector2(r.position.x - 4, r.position.y + 10), sl.key, 15, TEXT, HORIZONTAL_ALIGNMENT_CENTER, kw, 0)
+
+
+## Skill bar with the style: J, K, dash, the four Züge of the special
+## button and the Meisterzug.
+func _draw_style_slots(slots: Array, arrows: Array, sk: String) -> void:
+	var p := room.player
+	var g := p.glut
+	var W := size.x
+	var H := size.y
+	for i in FightingStyle.DIRS.size():
+		var z: String = p.style.zug_in(FightingStyle.DIRS[i])
+		if z == "":
+			slots.append({"label": "leer", "key": arrows[i] + sk, "icon": "", "cd": 0.0, "max": 1.0})
+			continue
+		slots.append({"label": p.style.zug(z).name, "key": arrows[i] + sk, "icon": z, "cd": g.cooldowns.get(z, 0.0), "max": float(p.style.zug(z).get("cd", 1.0)), "zug": true})
+	slots.append({"label": p.style.variant().get("name", "Meisterzug"), "key": GameInput.key_label("super"), "icon": "meisterzug", "cd": 0.0, "max": 1.0, "super": true})
+	var slot := 62.0
+	var gap := 8.0
+	var total := slots.size() * (slot + gap) - gap + 24
+	var bar := Rect2(W - 16 - total, H - 170, total, slot + 38)
+	_panel(bar, PANEL, 22, Color("ff9a2a", 0.55))
+	for i in slots.size():
+		var sl: Dictionary = slots[i]
+		var r := Rect2(bar.position.x + 12 + i * (slot + gap), bar.position.y + 12, slot, slot)
+		_panel(r, Color(0.04, 0.03, 0.08, 0.95), 8, Color(1, 1, 1, 0.18))
+		if sl.has("zug") or sl.has("super") or sl.icon == "":
+			GlutIcons.draw(self, r.grow(-6), sl.icon, _t)
+		else:
+			_draw_icon(r.grow(-6), sl.icon)
+		if sl.cd > 0.0:
+			var frac: float = clampf(sl.cd / sl.max, 0.0, 1.0)
+			draw_rect(Rect2(r.position, Vector2(r.size.x, r.size.y * frac)), Color(0, 0, 0, 0.62))
+			_text(Vector2(r.position.x, r.position.y + 40), "%.1f" % sl.cd, 20, TEXT, HORIZONTAL_ALIGNMENT_CENTER, slot)
+		if sl.has("super"):
+			if p.gauge < p.style.super_cost() and not p.infinite_aura:
+				draw_rect(r, Color(0.05, 0.02, 0.05, 0.55))
+			else:
+				var pulse := 0.5 + 0.5 * sin(_t * 8.0)
+				_panel(r.grow(2), Color(0, 0, 0, 0), 9, Color(Color("ffd25c"), 0.5 + 0.5 * pulse))
+		elif sl.has("zug") and (p.gauge >= 100.0 or p.infinite_aura) and sl.cd <= 0.0:
+			# enough Leiste for a verstärkt Zug: small flame mark
+			draw_circle(r.end - Vector2(9, 9), 6, Color(0.05, 0.02, 0.02))
+			draw_circle(r.end - Vector2(9, 9), 4, Color("ff9a2a").lerp(Color("fff4d0"), 0.5 + 0.5 * sin(_t * 9.0)))
+		var kw := maxf(24.0, font.get_string_size(sl.key, HORIZONTAL_ALIGNMENT_LEFT, -1, 15).x + 10)
+		_panel(Rect2(r.position + Vector2(-4, -6), Vector2(kw, 20)), Color("2a2140"), 5, Color(TRIM, 0.8))
+		_text(Vector2(r.position.x - 4, r.position.y + 10), sl.key, 15, TEXT, HORIZONTAL_ALIGNMENT_CENTER, kw, 0)
+		var lbl: String = sl.label
+		if font.get_string_size(lbl, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x > slot + 6:
+			lbl = lbl.substr(0, 8) + "."
+		_text(Vector2(r.position.x - 4, r.end.y + 15), lbl, 12, MUTED, HORIZONTAL_ALIGNMENT_CENTER, slot + 8, 3)
 
 
 func _draw_icon(r: Rect2, icon: String) -> void:
@@ -383,10 +504,18 @@ func _draw_bottom_left(H: float) -> void:
 
 
 func _draw_help() -> void:
+	var glut := room.player.glut != null
 	var r := Rect2(16, 286, 400, 360)
 	_panel(r, PANEL, 10)
 	_text(Vector2(32, 312), "Steuerung", 17, TRIM)
 	var lines := [
+		["A / D", "Laufen"], ["Leertaste", "Springen, 2x Doppelsprung"], ["Shift", "Dash (in der Luft 1x)"],
+		["J / K", "Leicht (3er-Kette) / Schwer"], ["W/S/A/D +", "Richtung: oben/unten/vor"],
+		["L (+ Richtung)", "Zug von Glutatem"], ["L halten", "Verstärkt (1 Stufe Leiste)"],
+		["P", "Meisterzug (3 Stufen)"], ["Tab / M", "Kampfstil: Alternativen, Slots"],
+		["J + K", "Griff (Wurf)"], ["U", "Unendlich Legendenleiste"], ["R", "Abklingzeiten zurück"],
+		["N", "Abendlicht an/aus"], ["V", "Effekt-Stärke"], ["T / C / H", "Figur / Charaktere / Hilfe"],
+	] if glut else [
 		["A / D", "Laufen"], ["Leertaste", "Springen, 2x Doppelsprung"], ["S + Leertaste", "Durch Plattform fallen"],
 		["Shift", "Dash (in der Luft 1x)"], ["J", "Leicht (3er-Kette)"], ["K", "Schwer"],
 		["L", "Spezial (Fähigkeit)"], ["W/S/A/D +", "Richtung: oben/unten/vor"],
@@ -397,7 +526,7 @@ func _draw_help() -> void:
 	for l in lines:
 		_text(Vector2(32, y), l[0], 15, TEXT)
 		_text(Vector2(150, y), l[1], 15, MUTED)
-		y += 22.0
+		y += 20.0 if glut else 22.0
 
 
 ## Fighting-game super cut-in: a diagonal band slides in with speed lines
