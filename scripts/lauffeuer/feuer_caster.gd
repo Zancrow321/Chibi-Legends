@@ -302,12 +302,14 @@ func _tick_knoechel() -> void:
 				fx.word(fist + Vector2(0, -26), "FWOOSH!", style.color("gold"), 20)
 				world.fx.shake(3.0 * FxSettings.factor("shake"), player.facing)
 				Sfx.play("swing_heavy")
+				Sfx.play("lauf_attack", -4.0)
 				if params.get("herd", false):
 					place_herd(player.global_position.x + player.facing * (reach + 6.0))
 			else:
 				fx.flame(fist, 5.0, Vector2(player.facing * 60.0, -20), 0.2)
 				fx.glow(fist, Color(style.color("orange"), 0.7), 9.0, 0.12)
 				Sfx.play("swing_light")
+				Sfx.play("lauf_attack", -8.0)
 			if not tg.is_empty() and last:
 				world.fx.freeze(0.04 * FxSettings.factor("stop"))
 		if t >= _f(1):
@@ -359,6 +361,7 @@ func _throw_fist() -> void:
 	world.fx.shake((3.0 + 4.0 * k) * FxSettings.factor("shake"), player.facing)
 	world.fx.punch(0.03 + 0.04 * k)
 	Sfx.play("swing_heavy", 2.0)
+	Sfx.play("lauf_attack", -4.0)
 
 
 # --- Steigflamme -----------------------------------------------------------------------
@@ -393,6 +396,7 @@ func _tick_steig() -> void:
 			if params.get("ride", false):
 				player.velocity = Vector2(player.facing * 60.0, -480.0)
 			Sfx.play("swing_heavy")
+			Sfx.play("lauf_attack", -4.0)
 	elif phase == "active" and t >= _f(1):
 		_next_phase()
 	elif phase == "recovery" and t >= _f(2):
@@ -514,6 +518,7 @@ func _tick_strom() -> void:
 			fx.anvil(_center(), 14.0, 6)
 			fx.word(_center() + Vector2(0, -36), "FWOOSH!", style.color("gold"), 22)
 			Sfx.play("swing_heavy")
+			Sfx.play("lauf_attack", -4.0)
 	elif phase == "active":
 		player.sprite.modulate.a = 0.25
 		_ghost_t -= get_physics_process_delta_time()
@@ -607,6 +612,7 @@ func _shoot_down() -> void:
 	fx.anvil(_hand(), 12.0, 6)
 	fx.word(_hand() + Vector2(0, -26), "FWOOSH!", style.color("gold"), 20)
 	Sfx.play("swing_heavy")
+	Sfx.play("lauf_attack", -4.0)
 	player.velocity.y = minf(player.velocity.y, -120.0)
 
 

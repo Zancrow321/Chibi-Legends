@@ -107,6 +107,7 @@ func ignite(mul := 1.0, delay := 0.0) -> void:
 	room.fx.shake(minf(3.0 + caster.chain_n * 1.5, 9.0) * FxSettings.factor("shake"))
 	caster.chain_n += 1
 	Sfx.play("hit_heavy", -4.0)
+	Sfx.play("lauf_impact", -4.0)
 	var out: Array = []
 	var area := Rect2(p.x - 22.0 * wide, p.y - 110.0, 44.0 * wide, 112.0)
 	for tg in room.get_tree().get_nodes_in_group("targets"):

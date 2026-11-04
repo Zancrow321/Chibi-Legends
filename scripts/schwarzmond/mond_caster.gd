@@ -132,6 +132,7 @@ func cast(dir: String) -> bool:
 	var cd := float(style.zug(z).get("cd", 1.0))
 	cooldowns[z] = cd * (0.6 if neumond_time > 0.0 else 1.0)
 	player.move = {}
+	Sfx.play("mond_cast", -8.0 + stage * 2.0)
 	if _vollmond:
 		stage = 0
 		var c := _blade_mid()
@@ -259,6 +260,7 @@ func _set_stage(s: int) -> void:
 	fx.glow(c, Color(rim_color(), 0.6), 8.0 + stage * 4.0, 0.3)
 	if stage == 3:
 		fx.word(c + Vector2(-player.facing * 16.0, -52), "VOLLMOND!", MondFx.WHITE, 20)
+		Sfx.play("mond_impact", -2.0)
 		mfx.sichel(c + Vector2(0, -26), Vector2(-1, -0.2), 14.0, 0.5, MondFx.WHITE, 1.4)
 
 
@@ -367,6 +369,7 @@ func _tick_mondschnitt() -> void:
 				mc.scale.y = -mc.scale.y  # the upswing mirrors the arc
 			if last:
 				fx.word(player.global_position + Vector2(player.facing * 40.0, -48), "ZASH!", MondFx.WHITE, 22 if charge <= 0.0 else 22 + int(_charge_k * 10.0))
+				Sfx.play("mond_attack", -2.0)
 				world.fx.shake((3.0 + _charge_k * 4.0) * FxSettings.factor("shake"), player.facing)
 				if params.get("extra_wave", false):
 					_wave(Vector2(player.facing, 0), 4.0, 14.0, 120.0)
@@ -404,6 +407,7 @@ func _tick_mondsichel() -> void:
 		var a1 := 1.1 if player.facing > 0 else PI - 1.1
 		mfx.slash(c, 18.0, a0, a1, 0.2, rim_color(), 8.0)
 		fx.word(player.global_position + Vector2(player.facing * 46.0, -50), "KSHH!", MondFx.CYAN if larve_time <= 0.0 else MondFx.EMBER, 22)
+		Sfx.play("mond_attack", -5.0)
 		world.fx.shake(3.0 * FxSettings.factor("shake"), player.facing)
 		_lunge = -40.0
 	elif phase == "active" and t >= _f(1):
@@ -429,6 +433,7 @@ func _tick_aufsteigend() -> void:
 			mfx.streaks(c + Vector2(0, -20), -PI / 2.0, 0.3, 8, 260.0, 0.3, rim_color())
 			_clip("aufsteigender_mond", c + Vector2(player.facing * 12.0, -26.0), maxf(0.6, w / 60.0))
 			fx.word(c + Vector2(player.facing * 20.0, -48), "ZASH!", MondFx.WHITE, 20)
+			Sfx.play("mond_attack", -2.0)
 			if params.get("wave", false):
 				_wave(Vector2(player.facing * 0.72, -0.7), float(params.get("damage", 8)) * 0.8, 16.0, 200.0, 420.0)
 	elif phase == "active" and t >= _f(1):
@@ -472,6 +477,7 @@ func _tick_abwehr() -> void:
 			var a1 := 1.2 if player.facing > 0 else PI - 1.2
 			mfx.slash(c2, 26.0, a0, a1, 0.3, MondFx.WHITE, 12.0)
 			fx.word(c2 + Vector2(player.facing * 20.0, -40), "ZASH!", MondFx.WHITE, 26)
+			Sfx.play("mond_attack", -2.0)
 		if t >= at + 0.22:
 			_next_phase()
 	elif phase == "recovery" and t >= _f(2) * 0.6:
@@ -494,6 +500,8 @@ func try_counter(from_x: float, projectile: Node = null) -> bool:
 	mfx.streaks(c, PI if player.facing > 0 else 0.0, 1.0, 16, 260.0, 0.35, MondFx.CYAN)
 	fx.word(c + Vector2(0, -44), "KONTER!", MondFx.WHITE, 28)
 	_clip("konter", c, 0.8)
+	Sfx.play("parry", 0.0)
+	Sfx.play("mond_impact", -4.0)
 	world.fx.flash(0.2 * FxSettings.factor("flash"), Color(0.75, 0.85, 1.0))
 	world.fx.freeze(0.12 * FxSettings.factor("stop"))
 	world.fx.shake(5.0 * FxSettings.factor("shake"))
@@ -521,6 +529,7 @@ func _push_back() -> void:
 	var c := player.global_position + Vector2(0, -22)
 	mfx.shock(c, 60.0, 0.35, MondFx.CYAN)
 	fx.word(c + Vector2(0, -50), "DOOM", MondFx.CYAN, 20)
+	Sfx.play("mond_impact", -3.0)
 	for e in world.get_tree().get_nodes_in_group("targets"):
 		if (e.global_position - player.global_position).length() < 80.0:
 			e.take_hit(240.0, player.global_position.x)
@@ -586,6 +595,7 @@ func _end_dash() -> void:
 		fx.glow_line(a + Vector2(0, -24), b + Vector2(0, -24), Color(MondFx.WHITE, 1.0), 3.0)
 		mfx.slash((a + b) * 0.5 + Vector2(0, -24), maxf(20.0, a.distance_to(b) * 0.5), PI if b.x > a.x else 0.0, 0.0 if b.x > a.x else PI, 0.3, rim_color(), 3.0)
 		fx.word(b + Vector2(player.facing * 10.0, -56), "ZASH!", MondFx.WHITE, 24)
+		Sfx.play("mond_attack", -2.0)
 		world.fx.freeze(0.05 * FxSettings.factor("stop"))
 	for i in ghosts:
 		var p := a.lerp(b, (i + 1.0) / (ghosts + 1.0))
@@ -605,6 +615,7 @@ func _tick_fallend() -> void:
 				_hover = 0.3
 				_wave(Vector2(player.facing * 0.75, 0.66), float(params.get("damage", 9)), 16.0, 220.0, 460.0)
 				fx.word(player.global_position + Vector2(player.facing * 30.0, -30), "KSHH!", MondFx.CYAN, 20)
+				Sfx.play("mond_attack", -5.0)
 				return
 			phase = "fall"
 			t = 0.0
@@ -643,6 +654,7 @@ func _impact() -> void:
 	mfx.sichel(p + Vector2(player.facing * 12.0, -14), Vector2(0, 1), 18.0, 0.25, MondFx.WHITE, 1.5)
 	fx.word(p + Vector2(0, -56), "DOOM!", MondFx.WHITE, 30)
 	_clip("fallender_mond", p + Vector2(0, -4), clampf(wv / 50.0, 0.8, 2.0))
+	Sfx.play("mond_impact", 0.0)
 	world.fx.shake(6.0 * FxSettings.factor("shake"))
 	world.fx.punch(0.04)
 	world.fx.freeze(0.05 * FxSettings.factor("stop"))

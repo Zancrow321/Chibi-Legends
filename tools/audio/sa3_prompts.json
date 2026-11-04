@@ -1,0 +1,69 @@
+{
+  "_info": "Prompts fuer Stable Audio 3 Medium (ComfyUI). Je Ereignis: prompt, seconds (Latent-Laenge), variants (Anzahl Seeds), keep (wie viele Varianten ins Spiel kommen), max_len (Schnitt in s), lufs (Ziel-Lautheit). tools/audio/sa3_generate.py erzeugt die Rohdateien, tools/audio/sa3_finish.py waehlt aus und schreibt OGG.",
+  "style": "dry close-up game sound effect, punchy, high fidelity, no music, no voice",
+  "events": {
+    "swing_light":  {"prompt": "Fast thin katana sword swing whoosh, sharp air cut, short", "seconds": 1.0, "variants": 6, "keep": 3, "max_len": 0.45, "lufs": -18},
+    "swing_heavy":  {"prompt": "Heavy greatsword swing, deep powerful whoosh with low rumble, anime fighting game", "seconds": 1.5, "variants": 5, "keep": 2, "max_len": 0.7, "lufs": -17},
+    "dash":         {"prompt": "Super fast anime dash, quick air burst whoosh with slight sparkle tail", "seconds": 1.0, "variants": 5, "keep": 2, "max_len": 0.5, "lufs": -18},
+    "hit_light":    {"prompt": "Quick punchy anime punch impact, snappy body hit, tight transient", "seconds": 1.0, "variants": 6, "keep": 3, "max_len": 0.35, "lufs": -16},
+    "hit_heavy":    {"prompt": "Massive heavy hit impact, bass thump with crunchy crack and short boom, fighting game critical hit", "seconds": 1.5, "variants": 6, "keep": 3, "max_len": 0.8, "lufs": -15},
+    "hit_blade":    {"prompt": "Sword slash hitting flesh, sharp slicing impact with metallic ring, anime slash", "seconds": 1.0, "variants": 6, "keep": 3, "max_len": 0.5, "lufs": -16},
+    "block":        {"prompt": "Sword blocking sword, loud metal clang with bright spark ring", "seconds": 1.5, "variants": 5, "keep": 2, "max_len": 0.7, "lufs": -16},
+    "parry":        {"prompt": "Perfect parry, crisp high metallic shing with shimmering glint, anime counter", "seconds": 1.5, "variants": 4, "keep": 1, "max_len": 0.9, "lufs": -16},
+    "guard_break":  {"prompt": "Shield shattering, glass and metal break burst with heavy thud", "seconds": 1.5, "variants": 4, "keep": 1, "max_len": 1.0, "lufs": -16},
+    "super_flash":  {"prompt": "Anime super move activation, bright energy flash swell with deep boom and shimmering ring", "seconds": 2.0, "variants": 5, "keep": 1, "max_len": 1.4, "lufs": -15},
+    "ko":           {"prompt": "Final knockout blow, huge slow-motion impact boom with long reverb tail, epic", "seconds": 3.0, "variants": 4, "keep": 1, "max_len": 2.5, "lufs": -15},
+    "enemy_death":  {"prompt": "Monster defeated, puff of magic smoke dissolve with sparkle", "seconds": 1.5, "variants": 4, "keep": 2, "max_len": 1.0, "lufs": -18},
+
+    "glut_cast":    {"prompt": "Deep fire breath inhale then roaring flame ignition, blacksmith forge", "seconds": 2.0, "variants": 4, "keep": 2, "max_len": 1.4, "lufs": -17},
+    "glut_attack":  {"prompt": "Hammer striking glowing iron on an anvil with burst of fire and crackling sparks", "seconds": 1.5, "variants": 4, "keep": 2, "max_len": 1.0, "lufs": -16},
+    "glut_impact":  {"prompt": "Fiery explosion impact, whoosh of flames and crackling embers", "seconds": 1.5, "variants": 4, "keep": 2, "max_len": 1.1, "lufs": -16},
+    "glut_super":   {"prompt": "Massive inferno eruption, roaring fire tornado with deep boom and molten metal hiss", "seconds": 3.0, "variants": 4, "keep": 1, "max_len": 2.6, "lufs": -15},
+
+    "mond_cast":    {"prompt": "Dark shadow energy gathering, eerie low hum with reversed whisper swell, black moon magic", "seconds": 2.0, "variants": 4, "keep": 2, "max_len": 1.3, "lufs": -17},
+    "mond_attack":  {"prompt": "Crescent moon shaped dark sword slash, sharp swoosh with ghostly echo", "seconds": 1.5, "variants": 4, "keep": 2, "max_len": 0.9, "lufs": -16},
+    "mond_impact":  {"prompt": "Dark void energy hit, deep distorted thud with shadow crackle", "seconds": 1.5, "variants": 4, "keep": 2, "max_len": 1.0, "lufs": -16},
+    "mond_super":   {"prompt": "Eclipse dark power explosion, giant black hole implosion then deep boom with haunting choir-like drone", "seconds": 3.0, "variants": 4, "keep": 1, "max_len": 2.6, "lufs": -15},
+
+    "klang_cast":   {"prompt": "Resonant tuning fork hum rising, crystal harmonic chime, sound wave magic", "seconds": 2.0, "variants": 4, "keep": 2, "max_len": 1.3, "lufs": -18},
+    "klang_attack": {"prompt": "Sonic blade pulse, bright harmonic ring with wobbling sound wave whoosh", "seconds": 1.5, "variants": 4, "keep": 2, "max_len": 0.9, "lufs": -17},
+    "klang_impact": {"prompt": "Resonance shockwave hit, glass bell strike with ringing harmonic burst", "seconds": 1.5, "variants": 4, "keep": 2, "max_len": 1.0, "lufs": -17},
+    "klang_super":  {"prompt": "Perfect harmony shockwave, huge crystal bell chord blast expanding with shimmering overtones", "seconds": 3.0, "variants": 4, "keep": 1, "max_len": 2.6, "lufs": -16},
+
+    "bollwerk_cast":   {"prompt": "Heavy stone wall rising from the ground, rocks grinding and rumbling earth", "seconds": 2.0, "variants": 4, "keep": 2, "max_len": 1.4, "lufs": -16},
+    "bollwerk_attack": {"prompt": "Giant shield bash, huge metal and stone thud with deep slam", "seconds": 1.5, "variants": 4, "keep": 2, "max_len": 0.9, "lufs": -15},
+    "bollwerk_impact": {"prompt": "Ground pound earthquake impact, rocks cracking and debris falling", "seconds": 1.5, "variants": 4, "keep": 2, "max_len": 1.1, "lufs": -15},
+    "bollwerk_super":  {"prompt": "Colossal fortress slam, mountain crashing down, massive earthquake boom with rumbling debris", "seconds": 3.0, "variants": 4, "keep": 1, "max_len": 2.6, "lufs": -14},
+
+    "grenz_cast":   {"prompt": "Anime power up aura charging, rising electric energy roar, limit break", "seconds": 2.0, "variants": 4, "keep": 2, "max_len": 1.5, "lufs": -16},
+    "grenz_attack": {"prompt": "Explosive energy punch, compressed air blast with sonic boom crack", "seconds": 1.5, "variants": 4, "keep": 2, "max_len": 0.9, "lufs": -15},
+    "grenz_impact": {"prompt": "Huge ki energy explosion impact, crunchy blast with debris and shockwave", "seconds": 1.5, "variants": 4, "keep": 2, "max_len": 1.1, "lufs": -15},
+    "grenz_super":  {"prompt": "Breaking the limit, glass reality shatter then gigantic energy explosion with roaring shockwave", "seconds": 3.0, "variants": 4, "keep": 1, "max_len": 2.6, "lufs": -14},
+
+    "wirbel_cast":  {"prompt": "Wind swirling up into a vortex, rising airy whoosh, wind magic", "seconds": 2.0, "variants": 4, "keep": 2, "max_len": 1.4, "lufs": -18},
+    "wirbel_attack":{"prompt": "Spinning blade tornado, fast repeating whooshes circling", "seconds": 1.5, "variants": 4, "keep": 2, "max_len": 1.0, "lufs": -17},
+    "wirbel_impact":{"prompt": "Gust of wind slamming, blast of air with flapping and whistle", "seconds": 1.5, "variants": 4, "keep": 2, "max_len": 1.0, "lufs": -17},
+    "wirbel_super": {"prompt": "Giant tornado unleashed, howling storm wind roar with swirling debris and thunder", "seconds": 3.0, "variants": 4, "keep": 1, "max_len": 2.6, "lufs": -15},
+
+    "spann_cast":   {"prompt": "Bowstring tension creaking and electric charge buzzing, building tension", "seconds": 2.0, "variants": 4, "keep": 2, "max_len": 1.3, "lufs": -17},
+    "spann_attack": {"prompt": "Snapping release, sharp lightning zap with elastic twang", "seconds": 1.5, "variants": 4, "keep": 2, "max_len": 0.8, "lufs": -16},
+    "spann_impact": {"prompt": "Lightning strike impact, electric crack and sizzling discharge", "seconds": 1.5, "variants": 4, "keep": 2, "max_len": 1.0, "lufs": -16},
+    "spann_super":  {"prompt": "Thunderbolt railgun, high pitched charge whine then massive thunder crack and electric boom", "seconds": 3.0, "variants": 4, "keep": 1, "max_len": 2.6, "lufs": -14},
+
+    "lauf_cast":    {"prompt": "Flame trail igniting along the ground, fast spreading fire crackle", "seconds": 2.0, "variants": 4, "keep": 2, "max_len": 1.2, "lufs": -17},
+    "lauf_attack":  {"prompt": "Blazing fast fire dash, rushing flame whoosh with crackle", "seconds": 1.5, "variants": 4, "keep": 2, "max_len": 0.8, "lufs": -16},
+    "lauf_impact":  {"prompt": "Rapid multiple fire hits, quick burst of small flame explosions", "seconds": 1.5, "variants": 4, "keep": 2, "max_len": 1.0, "lufs": -16},
+    "lauf_super":   {"prompt": "Wildfire storm, roaring firestorm racing forward with explosive crackling bursts", "seconds": 3.0, "variants": 4, "keep": 1, "max_len": 2.6, "lufs": -15},
+
+    "ui_hover":     {"prompt": "Tiny soft UI hover tick, subtle airy blip, game menu", "seconds": 1.0, "variants": 5, "keep": 2, "max_len": 0.15, "lufs": -24},
+    "ui_click":     {"prompt": "Crisp game menu button click, clean short pop", "seconds": 1.0, "variants": 5, "keep": 2, "max_len": 0.2, "lufs": -20},
+    "ui_confirm":   {"prompt": "Satisfying game menu confirm, bright two-note chime with sparkle", "seconds": 1.0, "variants": 5, "keep": 1, "max_len": 0.7, "lufs": -19},
+    "ui_back":      {"prompt": "Game menu cancel back sound, soft descending swoosh blip", "seconds": 1.0, "variants": 5, "keep": 1, "max_len": 0.4, "lufs": -20},
+    "ui_error":     {"prompt": "Game menu error buzz, short low double beep denied", "seconds": 1.0, "variants": 5, "keep": 1, "max_len": 0.5, "lufs": -20},
+    "menu_open":    {"prompt": "Fantasy game menu opening, paper scroll swoosh with magical shimmer", "seconds": 1.0, "variants": 5, "keep": 1, "max_len": 0.6, "lufs": -20},
+    "menu_close":   {"prompt": "Fantasy game menu closing, quick reverse swoosh with soft thump", "seconds": 1.0, "variants": 5, "keep": 1, "max_len": 0.5, "lufs": -20},
+    "pickup":       {"prompt": "Collecting a coin, bright sparkly pickup jingle", "seconds": 1.0, "variants": 5, "keep": 1, "max_len": 0.6, "lufs": -19},
+    "level_up":     {"prompt": "Level up fanfare, rising magical sparkle arpeggio with triumphant shine", "seconds": 3.0, "variants": 4, "keep": 1, "max_len": 2.5, "lufs": -17},
+    "rare_drop":    {"prompt": "Legendary item drop, glowing magical reveal with heavenly shimmer and deep boom", "seconds": 3.0, "variants": 4, "keep": 1, "max_len": 2.5, "lufs": -17}
+  }
+}

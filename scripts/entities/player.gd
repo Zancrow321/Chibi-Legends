@@ -907,6 +907,7 @@ func _use_meisterzug() -> void:
 		ms.fx = world.glut_fx
 		ms.variant = style.super_variant
 		ms.title = style.variant().get("name", "Meisterzug")
+		Sfx.play("mond_super", -2.0)
 		world.add_child(ms)
 		return
 	if glut is GrenzCaster:
@@ -957,8 +958,10 @@ func _use_meisterzug() -> void:
 		ks.kfx = glut.kfx
 		ks.variant = style.super_variant
 		ks.title = style.variant().get("name", "Meisterzug")
+		Sfx.play("klang_super", -4.0)
 		world.add_child(ks)
 		return
+	Sfx.play("glut_super", -2.0)
 	var s := GlutSuper.new()
 	s.room = world
 	s.player = self

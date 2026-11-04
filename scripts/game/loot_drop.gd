@@ -38,7 +38,7 @@ func _physics_process(delta: float) -> void:
 			world.dust.land(global_position, 0.6)
 			if int(item.rarity) >= 2:
 				world.effects.ring(global_position + Vector2(0, -4), 22.0, Loot.color(item))
-				Sfx.play("super_flash", -14.0)
+				Sfx.play("rare_drop", -8.0 + float(item.rarity) * 2.0)
 	elif _t > 3.2 or global_position.distance_to(p) < 46.0:
 		_fly = true
 		_t = 0.0
@@ -56,7 +56,7 @@ func _collect() -> void:
 		Profile.add_splitter(gain)
 		world.toast("Tasche voll: +%d Splitter" % gain)
 	world.effects.burst(global_position, col, 10, 90.0, 160.0)
-	Sfx.play("ui_click", -2.0)
+	Sfx.play("pickup", -2.0)
 	queue_free()
 
 

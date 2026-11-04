@@ -166,6 +166,7 @@ func cast(dir: String) -> bool:
 	player.move = {}
 	var mouth := _mouth()
 	fx.breath(mouth, player.facing, 0.3 + stage * 0.2)
+	Sfx.play("glut_cast", -8.0 + stage * 2.0)
 	if _bonus:
 		fx.glow(_blade_mid(), style.color("white"), 22.0, 0.3)
 		fx.light(_blade_mid(), Color(1, 0.9, 0.7), 2.0, 0.7, 0.3)
@@ -288,7 +289,8 @@ func _on_start() -> void:
 
 
 func _on_active() -> void:
-	pass
+	if zug_id != "ambosshaltung":
+		Sfx.play("glut_attack", -4.0)
 
 
 func _on_recovery() -> void:
@@ -314,6 +316,7 @@ func on_zug_hit(zid: String, targets: Array) -> void:
 		fx.anvil(c, 22.0, 10)
 		fx.ring(c, 28.0, style.color("white"), 0.35, 5.0)
 		fx.word(c + Vector2(0, -40), "WEISSGLUT!", style.color("white"), 24)
+		Sfx.play("glut_impact")
 		_cool_down()
 		return
 	if zid == zug_id and _reported:
@@ -596,6 +599,8 @@ func try_counter(from_x: float, projectile: Node = null) -> bool:
 	fx.ring(c, 30.0, style.color("yellow"), 0.4, 5.0)
 	fx.sparks(c, -PI / 2.0, PI, 30, 320.0, 0.7)
 	fx.word(c + Vector2(0, -44), "KONTER!", style.color("white"), 28)
+	Sfx.play("parry")
+	Sfx.play("glut_impact", -4.0)
 	world.fx.flash(0.22 * FxSettings.factor("flash"), Color(1, 0.8, 0.5))
 	world.fx.freeze(0.12 * FxSettings.factor("stop"))
 	world.fx.shake(6.0 * FxSettings.factor("shake"))
@@ -691,6 +696,7 @@ func _impact() -> void:
 	for i in 6:
 		fx.smoke(p + Vector2(randf_range(-20, 20), -6), randf_range(9, 15), Vector2(randf_range(-30, 30), -20), 1.3)
 	fx.word(p + Vector2(0, -56), "DONG!", style.color("yellow"), 30)
+	Sfx.play("glut_impact")
 	world.fx.shake(7.0 * FxSettings.factor("shake"))
 	world.fx.punch(0.04)
 	world.fx.freeze(0.05 * FxSettings.factor("stop"))

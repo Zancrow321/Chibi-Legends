@@ -56,6 +56,7 @@ func _ready() -> void:
 		var x := player.global_position.x + player.facing * 170.0
 		_target_pos = Vector2(x, _ground(x, player.global_position.y))
 	Sfx.play("super_flash")
+	Sfx.play("lauf_super", -2.0)
 
 
 # --- helpers -------------------------------------------------------------------------
