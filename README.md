@@ -95,6 +95,8 @@ Web-Build: `?view=licht` (Standard) oder `?abend=0` für flach.
 
 ## Starten
 
+**Unter Windows mit einem Klick:** `Spielen.bat` doppelklicken. Sie holt den neuesten Stand von main, importiert die Assets und startet das Spiel (Pfade zu Projekt und Godot stehen oben in der Datei).
+
 **Im Godot-Editor:** Godot 4.7 öffnen, `project.godot` importieren, F5 drücken.
 
 **Als Web-Build:** Jeder Push baut über GitHub Actions einen Web-Export (Artefakt `chibi-legends-web`).
