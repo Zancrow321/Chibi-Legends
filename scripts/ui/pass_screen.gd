@@ -94,6 +94,8 @@ func _tex(name: String) -> Texture2D:
 	if _tex_cache.has(name):
 		return _tex_cache[name]
 	var path := ART + name + ".png"
+	if not ResourceLoader.exists(path):
+		path = "res://assets/gacha/" + name + ".png"  # shared icons (splitter, dye, outfit)
 	var t: Texture2D = load(path) if ResourceLoader.exists(path) else null
 	_tex_cache[name] = t
 	return t
@@ -275,7 +277,7 @@ func _bar(r: Rect2, frac: float, col: Color) -> void:
 ## Reward icon: PixelLab art when there, else a drawn stand-in.
 func _reward_icon(r: Dictionary, c: Vector2, s: float) -> void:
 	var kind := str(r.get("kind", ""))
-	var name: String = {"crystals": "icon_crystals", "splitter": "icon_splitter", "gear": "icon_chest", "part": "icon_outfit", "color": "icon_dye"}.get(kind, "")
+	var name: String = {"crystals": "crystal", "splitter": "icon_splitter", "gear": "icon_chest", "part": "icon_outfit", "color": "icon_dye"}.get(kind, "")
 	var t: Texture2D = _tex(name) if name != "" else null
 	if t == null and kind == "crystals":
 		t = load("res://assets/gacha/crystal.png") if ResourceLoader.exists("res://assets/gacha/crystal.png") else null
