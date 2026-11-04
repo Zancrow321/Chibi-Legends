@@ -14,7 +14,8 @@
     "schmied": "Schmiede-Schürze",
     "akademie": "Akademie-Jacke",
     "steilpfad": "Steilpfad-Gi",
-    "bollwerk": "Bollwerk-Panzer"
+    "bollwerk": "Bollwerk-Panzer",
+    "feuerwacht": "Feuerwacht-Jacke"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -22,7 +23,8 @@
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
     "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
-    "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)"
+    "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "feuerwacht": "Kampfstil Lauffeuer (Banner „Wer am Feuer sitzt“)"
    }
   },
   "pants": {
@@ -35,7 +37,8 @@
     "schmied": "Arbeitshose",
     "akademie": "Uniformhose",
     "steilpfad": "Steilpfad-Wickelhose",
-    "bollwerk": "Bollwerk-Beinpanzer"
+    "bollwerk": "Bollwerk-Beinpanzer",
+    "feuerwacht": "Feuerwacht-Hose"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -43,7 +46,8 @@
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
     "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
-    "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)"
+    "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "feuerwacht": "Kampfstil Lauffeuer (Banner „Wer am Feuer sitzt“)"
    }
   },
   "shoes": {
@@ -56,7 +60,8 @@
     "schmied": "Eisenkappen-Stiefel",
     "akademie": "Turnschuhe",
     "steilpfad": "Stoffschuhe",
-    "bollwerk": "Bollwerk-Stiefel"
+    "bollwerk": "Bollwerk-Stiefel",
+    "feuerwacht": "Feuerstein-Stiefel"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -64,7 +69,8 @@
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
     "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
-    "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)"
+    "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "feuerwacht": "Kampfstil Lauffeuer (Banner „Wer am Feuer sitzt“)"
    }
   },
   "hair": {
@@ -432,6 +438,13 @@
    "text": "Federleib: dehnbare Fäuste, Spannen und Rückschwung (Legendär)",
    "unlock": "",
    "weapon": "none"
+  },
+  "lauffeuer": {
+   "name": "Lauffeuer",
+   "text": "Flammenleib: Brandherde legen und mit der Flammenfaust zünden",
+   "unlock": "",
+   "weapon": "",
+   "unarmed": true
   }
  },
  "start_items_note": "Teile ohne unlock-Eintrag sind von Anfang an frei. CreatorUnlocks.unlock(slot, id) schaltet frei."

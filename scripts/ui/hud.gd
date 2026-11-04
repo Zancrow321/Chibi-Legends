@@ -305,6 +305,9 @@ func _draw_style_panel(r: Rect2) -> void:
 	if g is KlangCaster:
 		_draw_klang_panel(r, g)
 		return
+	if g is FeuerCaster:
+		_draw_feuer_panel(r, g)
+		return
 	if g is FederCaster:
 		_draw_feder_panel(r, g)
 		return
@@ -329,6 +332,29 @@ func _draw_style_panel(r: Rect2) -> void:
 		_text(Vector2(br.position.x, r.position.y + r.size.y - 2), "Weißglut +%d %%" % int(round(g.buff_bonus * 100.0)), 11, TEXT, HORIZONTAL_ALIGNMENT_CENTER, br.size.x, 3)
 	else:
 		_text(Vector2(r.position.x + 176, r.position.y + 19), "Klinge: " + info, 15, MUTED)
+
+
+## Lauffeuer: the Brandherde on the field (at most 3) as little flames.
+func _draw_feuer_panel(r: Rect2, g: FeuerCaster) -> void:
+	_panel(r, PANEL, 13, Color("ff8a2a", 0.6))
+	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, Color("ffc94a"))
+	var n := g.herd_count()
+	for i in FeuerCaster.MAX_HERDE:
+		var c := Vector2(r.position.x + 112 + i * 22, r.get_center().y + 2)
+		var on := n > i
+		var col := Color("ff8a2a") if on else Color("ff8a2a", 0.3)
+		var fl := 1.0 + (0.15 * sin(_t * 14.0 + i) if on else 0.0)
+		var pts := PackedVector2Array([c + Vector2(-5, 4), c + Vector2(5, 4), c + Vector2(3, -2) * fl, c + Vector2(0, -9) * fl, c + Vector2(-3, -2) * fl])
+		if on:
+			draw_circle(c + Vector2(0, -1), 9, Color(col, 0.22))
+			draw_colored_polygon(pts, col)
+			draw_circle(c + Vector2(0, 1), 2.5, Color("fff3c8"))
+		else:
+			draw_polyline(pts + PackedVector2Array([pts[0]]), col, 1.5)
+	var info := "Brandherde: %d / %d" % [n, FeuerCaster.MAX_HERDE]
+	if g.normal_element() == "feuer":
+		info = "Fäuste brennen!"
+	_text(Vector2(r.position.x + 182, r.position.y + 19), info, 15, MUTED if g.normal_element() == "" else Color("ffc94a"))
 
 
 ## Schwarzmond: the Mondphase as a moon that fills, plus the timers of the
@@ -457,7 +483,7 @@ func _draw_notice(W: float) -> void:
 	var klang := room.player.glut is KlangCaster
 	var tips := [
 		"%s: L + Richtung, L halten = verstärkt" % room.player.style.style_name() if room.player.style != null else "L + Richtung = Zug",
-		"Treffer im Takt füllen den Einklang" if klang else "Verschiedene Züge im Combo heizen die Klinge",
+		"Treffer im Takt füllen den Einklang" if klang else ("Brandherde legen, mit der Flammenfaust zünden" if room.player.glut is FeuerCaster else "Verschiedene Züge im Combo heizen die Klinge"),
 		"Tab: Kampfstil, Alternativen und Slots",
 		"Der Sparringspfahl rechts schlägt zurück!",
 		"Willkommen im Trainingswald der Akademie!",
@@ -542,8 +568,8 @@ func _draw_training() -> void:
 func _draw_skill_bar(W: float, H: float) -> void:
 	var p := room.player
 	var slots := [
-		{"label": "Leicht", "key": GameInput.key_label("light"), "icon": "attack", "cd": 0.0, "max": 1.0},
-		{"label": "Schwer", "key": GameInput.key_label("heavy"), "icon": "heavy", "cd": 0.0, "max": 1.0},
+		{"label": "Leicht", "key": GameInput.key_label("light"), "icon": "faust" if room.player.glut is FeuerCaster else "attack", "cd": 0.0, "max": 1.0},
+		{"label": "Schwer", "key": GameInput.key_label("heavy"), "icon": "tritt" if room.player.glut is FeuerCaster else "heavy", "cd": 0.0, "max": 1.0},
 		{"label": "Dash", "key": "Shift", "icon": "dash", "cd": p.dash_cd, "max": Player.DASH_COOLDOWN},
 	]
 	var arrows := ["", "→", "↑", "↓"]
@@ -643,6 +669,21 @@ func _draw_icon(r: Rect2, icon: String) -> void:
 			draw_line(c + Vector2(-14, 14), c + Vector2(14, -14), Color("e8eef2"), 5)
 			draw_line(c + Vector2(-14, 14), c + Vector2(14, -14), Color.WHITE, 2)
 			draw_line(c + Vector2(-16, 6), c + Vector2(-6, 16), TRIM, 4)
+		"faust", "tritt":
+			# Lauffeuer is unarmed: a fist / a kicking boot instead of a sword
+			_panel(r, Color("6a2a1a"), 6)
+			var hot := Color("ffc94a") if room.player.glut != null and room.player.glut.normal_element() == "feuer" else Color("e8d6c0")
+			if icon == "faust":
+				draw_rect(Rect2(c + Vector2(-10, -8), Vector2(18, 16)), hot)
+				for k in 4:
+					draw_line(c + Vector2(-10 + k * 4.5, -8), c + Vector2(-10 + k * 4.5, -3), Color("6a2a1a"), 1.5)
+				draw_rect(Rect2(c + Vector2(-16, -4), Vector2(6, 10)), hot)
+				draw_line(c + Vector2(10, -6), c + Vector2(17, -6), Color("ff8a2a"), 2)
+				draw_line(c + Vector2(10, 0), c + Vector2(19, 0), Color("ff8a2a"), 2)
+				draw_line(c + Vector2(10, 6), c + Vector2(17, 6), Color("ff8a2a"), 2)
+			else:
+				draw_colored_polygon(PackedVector2Array([c + Vector2(-14, -14), c + Vector2(-6, -14), c + Vector2(-4, 4), c + Vector2(14, 6), c + Vector2(14, 13), c + Vector2(-14, 13)]), hot)
+				draw_arc(c + Vector2(4, 0), 18, -2.2, -0.6, 10, Color("ff8a2a"), 3)
 		"dash":
 			_panel(r, Color("3a5a7a"), 6)
 			for k in 3:
