@@ -61,5 +61,12 @@
    22.9
   ],
   "angle": 1.3
+ },
+ "deckshand_muetze": {
+  "neck": [
+   30.6,
+   22.9
+  ],
+  "angle": 1.3
  }
 }

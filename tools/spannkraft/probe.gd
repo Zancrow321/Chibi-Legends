@@ -20,6 +20,10 @@ func _initialize() -> void:
 	var look := CreatorCatalog.load_look()
 	look["style"] = "spannkraft"
 	look["weapon"] = ""
+	if OS.get_environment("PROBE_OUTFIT") != "":
+		for slot in ["top", "pants", "shoes"]:
+			look[slot] = "deckshand"
+		look["hair"] = "deckshand_muetze"
 	CreatorCatalog.save_look(look)
 	DirAccess.remove_absolute(ProjectSettings.globalize_path("user://style_spannkraft.json"))
 	GameFlow.area = "trainingswald"

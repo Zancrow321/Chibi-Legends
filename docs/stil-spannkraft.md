@@ -289,6 +289,9 @@ Korallenrot), alle Effekte bekommen dicke, schwarze Umrisslinien.
 - Klänge selbst synthetisiert (`tools/audio/synth_rubber.py`): Boing, Dehnen,
   Schnapp, Prall.
 - Testlauf mit Screenshots: `tools/spannkraft/probe.gd`.
+- Outfit Deckshand-Tracht (Hemd, Segeltuchhose, Stiefel) und Segeltuch-Kapitänsmütze
+  (Frisur-Slot) mit PixelLab, 6 Generierungen; im Creator gesperrt, Freischaltung
+  über das Gacha-Banner „Kein Meer zu weit“.
 
 ---
 
