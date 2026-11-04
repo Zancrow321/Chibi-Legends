@@ -1,0 +1,146 @@
+{
+ "wachhund_s3": {
+  "prompt": "compact futuristic bullpup assault rifle, graphite gray metal body with orange stripe markings, boxy magazine in front of the grip, short barrel, small amber holo sight on top, single weapon only, pixel art game item, side view, lying horizontal, muzzle pointing right, stock or grip on the left, bold dark outline, cel shading with hard edges, clean readable silhouette, original sci-fi military design, no hands, no character, whole weapon fits inside the canvas",
+  "seed": 3,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "dreischlag_s3": {
+  "prompt": "long precise burst rifle, gunmetal gray, slim long barrel, small scope on top with amber lens, angular stock, orange accent line, single weapon only, pixel art game item, side view, lying horizontal, muzzle pointing right, stock or grip on the left, bold dark outline, cel shading with hard edges, clean readable silhouette, original sci-fi military design, no hands, no character, whole weapon fits inside the canvas",
+  "seed": 3,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "kurzwort_s3": {
+  "prompt": "compact heavy sidearm pistol, dark steel slide with orange grip panels, chunky boxy shape, single weapon only, pixel art game item, side view, lying horizontal, muzzle pointing right, stock or grip on the left, bold dark outline, cel shading with hard edges, clean readable silhouette, original sci-fi military design, no hands, no character, whole weapon fits inside the canvas",
+  "seed": 3,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "fremdklinge_s3": {
+  "prompt": "alien energy blade weapon, short dark violet hilt with hexagon pattern, one straight glowing cyan plasma blade with white core pointing right, single blade, single weapon only, pixel art game item, side view, lying horizontal, muzzle pointing right, stock or grip on the left, bold dark outline, cel shading with hard edges, clean readable silhouette, original sci-fi military design, no hands, no character, whole weapon fits inside the canvas",
+  "seed": 3,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "zwillingsrohr_s3": {
+  "prompt": "heavy shoulder rocket launcher with two stacked fat tubes, olive drab and graphite, orange warning stripes at the muzzle, chunky grip and sight, single weapon only, pixel art game item, side view, lying horizontal, muzzle pointing right, stock or grip on the left, bold dark outline, cel shading with hard edges, clean readable silhouette, original sci-fi military design, no hands, no character, whole weapon fits inside the canvas",
+  "seed": 3,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "lanzenstrahl_s3": {
+  "prompt": "long heavy energy lance cannon, graphite body with glowing cyan coils along the barrel, glowing cyan lens at the muzzle, shoulder stock, large and powerful, single weapon only, pixel art game item, side view, lying horizontal, muzzle pointing right, stock or grip on the left, bold dark outline, cel shading with hard edges, clean readable silhouette, original sci-fi military design, no hands, no character, whole weapon fits inside the canvas",
+  "seed": 3,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "schrotflinte_s3": {
+  "prompt": "short pump action combat shotgun, graphite gray with orange pump grip, thick barrel, sturdy stock, single weapon only, pixel art game item, side view, lying horizontal, muzzle pointing right, stock or grip on the left, bold dark outline, cel shading with hard edges, clean readable silhouette, original sci-fi military design, no hands, no character, whole weapon fits inside the canvas",
+  "seed": 3,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "wachhund_s11": {
+  "prompt": "compact futuristic bullpup assault rifle, graphite gray metal body with orange stripe markings, boxy magazine in front of the grip, short barrel, small amber holo sight on top, single weapon only, pixel art game item, side view, lying horizontal, muzzle pointing right, stock or grip on the left, bold dark outline, cel shading with hard edges, clean readable silhouette, original sci-fi military design, no hands, no character, whole weapon fits inside the canvas",
+  "seed": 11,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "dreischlag_s11": {
+  "prompt": "long precise burst rifle, gunmetal gray, slim long barrel, small scope on top with amber lens, angular stock, orange accent line, single weapon only, pixel art game item, side view, lying horizontal, muzzle pointing right, stock or grip on the left, bold dark outline, cel shading with hard edges, clean readable silhouette, original sci-fi military design, no hands, no character, whole weapon fits inside the canvas",
+  "seed": 11,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "kurzwort_s11": {
+  "prompt": "compact heavy sidearm pistol, dark steel slide with orange grip panels, chunky boxy shape, single weapon only, pixel art game item, side view, lying horizontal, muzzle pointing right, stock or grip on the left, bold dark outline, cel shading with hard edges, clean readable silhouette, original sci-fi military design, no hands, no character, whole weapon fits inside the canvas",
+  "seed": 11,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "fremdklinge_s11": {
+  "prompt": "alien energy blade weapon, short dark violet hilt with hexagon pattern, one straight glowing cyan plasma blade with white core pointing right, single blade, single weapon only, pixel art game item, side view, lying horizontal, muzzle pointing right, stock or grip on the left, bold dark outline, cel shading with hard edges, clean readable silhouette, original sci-fi military design, no hands, no character, whole weapon fits inside the canvas",
+  "seed": 11,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "zwillingsrohr_s11": {
+  "prompt": "heavy shoulder rocket launcher with two stacked fat tubes, olive drab and graphite, orange warning stripes at the muzzle, chunky grip and sight, single weapon only, pixel art game item, side view, lying horizontal, muzzle pointing right, stock or grip on the left, bold dark outline, cel shading with hard edges, clean readable silhouette, original sci-fi military design, no hands, no character, whole weapon fits inside the canvas",
+  "seed": 11,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "lanzenstrahl_s11": {
+  "prompt": "long heavy energy lance cannon, graphite body with glowing cyan coils along the barrel, glowing cyan lens at the muzzle, shoulder stock, large and powerful, single weapon only, pixel art game item, side view, lying horizontal, muzzle pointing right, stock or grip on the left, bold dark outline, cel shading with hard edges, clean readable silhouette, original sci-fi military design, no hands, no character, whole weapon fits inside the canvas",
+  "seed": 11,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "schrotflinte_s11": {
+  "prompt": "short pump action combat shotgun, graphite gray with orange pump grip, thick barrel, sturdy stock, single weapon only, pixel art game item, side view, lying horizontal, muzzle pointing right, stock or grip on the left, bold dark outline, cel shading with hard edges, clean readable silhouette, original sci-fi military design, no hands, no character, whole weapon fits inside the canvas",
+  "seed": 11,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "zwillingsrohr_s21": {
+  "prompt": "long slim shoulder rocket launcher seen from the side, exactly two thin tubes stacked on top of each other, long and flat, length four times its height, olive drab and graphite, orange warning stripes at the muzzle, chunky grip and sight, single weapon only, pixel art game item, side view, lying horizontal, muzzle pointing right, stock or grip on the left, bold dark outline, cel shading with hard edges, clean readable silhouette, original sci-fi military design, no hands, no character, whole weapon fits inside the canvas",
+  "seed": 21,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "lanzenstrahl_s21": {
+  "prompt": "very long slim energy lance rifle seen from the side, flat profile, length five times its height, graphite body with glowing cyan coils along the barrel, glowing cyan lens at the muzzle, shoulder stock, single weapon only, pixel art game item, side view, lying horizontal, muzzle pointing right, stock or grip on the left, bold dark outline, cel shading with hard edges, clean readable silhouette, original sci-fi military design, no hands, no character, whole weapon fits inside the canvas",
+  "seed": 21,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "zwillingsrohr_s27": {
+  "prompt": "long slim shoulder rocket launcher seen from the side, exactly two thin tubes stacked on top of each other, long and flat, length four times its height, olive drab and graphite, orange warning stripes at the muzzle, chunky grip and sight, single weapon only, pixel art game item, side view, lying horizontal, muzzle pointing right, stock or grip on the left, bold dark outline, cel shading with hard edges, clean readable silhouette, original sci-fi military design, no hands, no character, whole weapon fits inside the canvas",
+  "seed": 27,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "lanzenstrahl_s27": {
+  "prompt": "very long slim energy lance rifle seen from the side, flat profile, length five times its height, graphite body with glowing cyan coils along the barrel, glowing cyan lens at the muzzle, shoulder stock, single weapon only, pixel art game item, side view, lying horizontal, muzzle pointing right, stock or grip on the left, bold dark outline, cel shading with hard edges, clean readable silhouette, original sci-fi military design, no hands, no character, whole weapon fits inside the canvas",
+  "seed": 27,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ }
+}

@@ -268,15 +268,17 @@ Granaten (2 Ladungen).
 6 Züge à 1 SP + 18 Alternativen à 2 SP + Meisterzug 4 SP + 2 Varianten à 2 SP
 = 6 + 36 + 8 = **50 SP**.
 
-## Bedarf für den Einbau (später, noch nicht freigegeben)
+## Bedarf für den Einbau
 
 - Neue Systeme im Code: Schildleiste über HP, Magazin/Nachladen, Ladungen für Granaten,
   Fernkampf-Geschosse mit Streuung, Wand als zerstörbares Objekt, Greifhaken. Das ist
   der erste Fernkampf-Stil und deutlich mehr Code als Glutatem oder Schwarzmond.
-- PixelLab: 7 Waffen (Sturmgewehr, Salvengewehr, Pistole, Fremdklinge, Werfer,
-  Lanze, Schrotflinte) × 8 Winkel = 56 Generierungen (mit Nachbesserung ca. 70);
-  Rüstung als Outfit-Ebenen für den Creator ca. 10–20. Wird vor dem Start mit Anzahl
-  angefragt.
+- PixelLab: **erledigt 2026-11-04** (Kaiser freigegeben). 7 Waffen mit Pixen, je 2 Kandidaten,
+  Zwillingsrohr und Lanzenstrahl je 2 weitere = 19 Generierungen. Ergebnis in
+  `assets/creator/weapons/bollwerk/` (Griff/Mündung in `weapons.json`, Werkzeuge in
+  `tools/bollwerk/`). Waffen werden in Godot gedreht, darum reicht ein Bild pro Waffe statt
+  8 Winkeln. Vorschau: `docs/screenshots/bollwerk-waffen.png`.
+  Rüstung als Outfit-Ebenen für den Creator (ca. 10–20) steht noch aus.
 - Posen: Anschlag (Gewehr angelegt), Wurf, Knien (Werfer), Nachladen,
   Zielschweben in der Luft.
 - Effekte im Code: Geschossspuren (Line2D), Mündungsblitz, Sechseck-Schild (Shader),
