@@ -21,13 +21,28 @@ Spielwelt: die Multiversum-Akademie. Fähigkeiten und Outfits sind eigene Entwü
 
 ![Glutatem: Meisterzug „Letzte Esse“ im Abendlicht](docs/screenshots/glutatem-meisterzug.png)
 
-## Steuerung
+## Overworld und Kampfareale
+
+Das Spiel startet im **Akademie-Hof**, der ruhigen Overworld mit eigenem HUD: NPCs ansprechen, das Questbrett lesen,
+auf die Terrasse und die schwebenden Runensteine springen. Das **Waldtor** (rechts, E) führt per Manga-Blende in den
+Trainingswald mit dem Kampf-HUD, das Tor links im Trainingswald zurück. Details und Entscheidungen: `docs/overworld.md`.
+Im Web-Build startet `?modus=dungeon` direkt im Trainingswald.
+
+| Overworld | Kampfareal |
+| --- | --- |
+| ![Akademie-Hof](docs/screenshots/overworld-hof.png) | ![Trainingswald mit Ausgangstor](docs/screenshots/dungeon-ausgang.png) |
+
+**Overworld:** A/D laufen, Shift joggen, Leertaste springen (2x), S + Leertaste durch Plattform, E (oder W, Gamepad X)
+sprechen/betreten, C Sammlung, H Hilfe.
+
+## Steuerung (Kampfareal)
 
 | Aktion | Tastatur | Gamepad |
 | --- | --- | --- |
 | Laufen | A / D oder Pfeiltasten | Linker Stick / Steuerkreuz |
 | Springen (2x = Doppelsprung) | Leertaste | A |
 | Richtung oben / unten | W / S oder Pfeiltasten | Linker Stick / Steuerkreuz |
+| Zurück zur Akademie (vor dem Tor ganz links) | E oder W | Steuerkreuz hoch |
 | Durch Plattform fallen | S + Leertaste | Unten + A |
 | Dash (in der Luft 1x pro Sprung) | Shift | RB |
 | Leicht (3er-Kette, mit Richtung: vor, oben, unten, Luft) | J | X |
@@ -106,7 +121,11 @@ scripts/
   fx/combat_fx.gd          Hit-Stop, Screenshake, Zoom, Abdunkeln, Bildschirm-Blitz
   fx/hit_sparks.gd         Additive Treffer-Funken (optional mit Pixel-Frames aus assets/vfx/)
   fx/fx_settings.gd        Treffer-Profile und Effekt-Stärke zum Feintunen
-  ui/hud.gd                HUD
+  ui/hud.gd                HUD (Kampfareal)
+  ui/overworld_hud.gd      ruhiges HUD der Overworld
+  game/game_flow.gd        Modus (Overworld / Kampfareal), Gebiete, Rückkehr-Tor
+  autoload/area_transition.gd  Manga-Blende mit Titelkarte zwischen den Modi
+  overworld/               Akademie-Hof: Gelände, NPCs, Tore, Licht, Ausgangstor im Kampfareal
   hd2d/                    HD-2D-Test: 3D-Wald, Effekt-Kette, Variante A und B
   lightlook/               Licht-Test: 2D-Lichter, Dämmerung, Parallax
   ui/character_select.gd   Sammlung: Charaktere ansehen, Skins, Charakter wählen (C / Start)

@@ -1,0 +1,98 @@
+{
+ "gate_wald": {
+  "prompt": "tall stone archway gate of a magic academy, carved pale stone pillars with green moss and small vines, glowing teal rune circle portal inside the arch, little green leaves floating, stone steps at the base, pixel art game asset, side view, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 7,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "npc_schmiedin": {
+  "prompt": "young blacksmith girl, short messy red hair with goggles on her head, rolled up sleeves, brown leather apron over a white shirt, big hammer on her shoulder, chibi anime character, 2.7 heads tall, big head with large expressive anime eyes, slim body with real arms and legs, standing calm idle pose, side view facing right, full body, bright saturated colors, cel shading, bold dark outline, whole body fits inside the canvas with a small margin",
+  "seed": 11,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gate_glut": {
+  "prompt": "tall dark basalt archway gate, sealed with heavy iron chains and a big glowing orange padlock seal, orange glowing cracks and embers, hot forge theme, stone steps at the base, pixel art game asset, side view, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 7,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "fountain": {
+  "prompt": "round white marble fountain on a town plaza, two tiers, clear blue water splashing, a small golden star ornament on top, pixel art game asset, side view, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 7,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "board": {
+  "prompt": "wooden quest notice board on two posts, small paper notes pinned on it, little red roof on top, pixel art game asset, side view, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 7,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "forge_stall": {
+  "prompt": "small blacksmith market stall with a red cloth awning, stone forge with glowing orange coals, anvil in front, swords and a hammer hanging on the wall, pixel art game asset, side view, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 7,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "shrine": {
+  "prompt": "small elegant star shrine, white stone pedestal with a floating glowing blue star crystal, dark blue tiled roof with golden trim, lanterns at both sides, pixel art game asset, side view, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 7,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sakura": {
+  "prompt": "big cherry blossom tree with a thick curved trunk and a wide crown of pink blossoms, a few petals falling, pixel art game asset, side view, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 7,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "dorm": {
+  "prompt": "front of a cozy academy dormitory building, cream plaster walls with dark wood beams, dark teal tiled roof, warm lit windows, wooden double door with three stone steps, flower boxes, pixel art game asset, side view, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 7,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "npc_rektorin": {
+  "prompt": "elegant academy headmistress woman, long silver hair in a high ponytail, calm smile, long navy blue coat with golden trim, holding a closed book, chibi anime character, 2.7 heads tall, big head with large expressive anime eyes, slim body with real arms and legs, standing calm idle pose, side view facing right, full body, bright saturated colors, cel shading, bold dark outline, whole body fits inside the canvas with a small margin",
+  "seed": 11,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "npc_hueter": {
+  "prompt": "gentle shrine keeper boy, black hair tied back, white and light blue robe with wide sleeves, holding a small glowing star lantern, chibi anime character, 2.7 heads tall, big head with large expressive anime eyes, slim body with real arms and legs, standing calm idle pose, side view facing right, full body, bright saturated colors, cel shading, bold dark outline, whole body fits inside the canvas with a small margin",
+  "seed": 11,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "npc_waechter": {
+  "prompt": "big friendly academy gate guard, broad shoulders, short dark green hair, light steel armor over a green tunic, holding a spear upright, chibi anime character, 2.7 heads tall, big head with large expressive anime eyes, slim body with real arms and legs, standing calm idle pose, side view facing right, full body, bright saturated colors, cel shading, bold dark outline, whole body fits inside the canvas with a small margin",
+  "seed": 11,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ }
+}
