@@ -1,0 +1,261 @@
+{
+ "frames": [
+  {
+   "filename": "ink-crescent-impact 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 87,
+    "h": 132
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 87,
+    "h": 132
+   },
+   "sourceSize": {
+    "w": 87,
+    "h": 132
+   },
+   "pivot": {
+    "x": 0.1724137931034483,
+    "y": 0.3939393939393939
+   },
+   "duration": 50
+  },
+  {
+   "filename": "ink-crescent-impact 1.png",
+   "frame": {
+    "x": 87,
+    "y": 0,
+    "w": 87,
+    "h": 132
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 87,
+    "h": 132
+   },
+   "sourceSize": {
+    "w": 87,
+    "h": 132
+   },
+   "pivot": {
+    "x": 0.1724137931034483,
+    "y": 0.3939393939393939
+   },
+   "duration": 50
+  },
+  {
+   "filename": "ink-crescent-impact 2.png",
+   "frame": {
+    "x": 174,
+    "y": 0,
+    "w": 87,
+    "h": 132
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 87,
+    "h": 132
+   },
+   "sourceSize": {
+    "w": 87,
+    "h": 132
+   },
+   "pivot": {
+    "x": 0.1724137931034483,
+    "y": 0.3939393939393939
+   },
+   "duration": 50
+  },
+  {
+   "filename": "ink-crescent-impact 3.png",
+   "frame": {
+    "x": 0,
+    "y": 132,
+    "w": 87,
+    "h": 132
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 87,
+    "h": 132
+   },
+   "sourceSize": {
+    "w": 87,
+    "h": 132
+   },
+   "pivot": {
+    "x": 0.1724137931034483,
+    "y": 0.3939393939393939
+   },
+   "duration": 50
+  },
+  {
+   "filename": "ink-crescent-impact 4.png",
+   "frame": {
+    "x": 87,
+    "y": 132,
+    "w": 87,
+    "h": 132
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 87,
+    "h": 132
+   },
+   "sourceSize": {
+    "w": 87,
+    "h": 132
+   },
+   "pivot": {
+    "x": 0.1724137931034483,
+    "y": 0.3939393939393939
+   },
+   "duration": 50
+  },
+  {
+   "filename": "ink-crescent-impact 5.png",
+   "frame": {
+    "x": 174,
+    "y": 132,
+    "w": 87,
+    "h": 132
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 87,
+    "h": 132
+   },
+   "sourceSize": {
+    "w": 87,
+    "h": 132
+   },
+   "pivot": {
+    "x": 0.1724137931034483,
+    "y": 0.3939393939393939
+   },
+   "duration": 50
+  },
+  {
+   "filename": "ink-crescent-impact 6.png",
+   "frame": {
+    "x": 0,
+    "y": 264,
+    "w": 87,
+    "h": 132
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 87,
+    "h": 132
+   },
+   "sourceSize": {
+    "w": 87,
+    "h": 132
+   },
+   "pivot": {
+    "x": 0.1724137931034483,
+    "y": 0.3939393939393939
+   },
+   "duration": 50
+  },
+  {
+   "filename": "ink-crescent-impact 7.png",
+   "frame": {
+    "x": 87,
+    "y": 264,
+    "w": 87,
+    "h": 132
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 87,
+    "h": 132
+   },
+   "sourceSize": {
+    "w": 87,
+    "h": 132
+   },
+   "pivot": {
+    "x": 0.1724137931034483,
+    "y": 0.3939393939393939
+   },
+   "duration": 50
+  },
+  {
+   "filename": "ink-crescent-impact 8.png",
+   "frame": {
+    "x": 174,
+    "y": 264,
+    "w": 87,
+    "h": 132
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 87,
+    "h": 132
+   },
+   "sourceSize": {
+    "w": 87,
+    "h": 132
+   },
+   "pivot": {
+    "x": 0.1724137931034483,
+    "y": 0.3939393939393939
+   },
+   "duration": 50
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "ink-crescent-impact.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 261,
+   "h": 396
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "origin",
+   "x": 15,
+   "y": 52
+  },
+  "frameTags": [
+   {
+    "name": "ink-crescent-impact",
+    "from": 0,
+    "to": 8,
+    "direction": "forward"
+   }
+  ]
+ }
+}

@@ -727,8 +727,9 @@ func drive_velocity(v: Vector2, delta: float, on_floor: bool) -> Vector2:
 	return Vector2(gx, minf(v.y + fall, Player.MAX_FALL))
 
 
-## Creator pose name for the figure while a Zug runs ("" = use pose_frame()).
-func pose_name() -> String:
+## Creator pose for the current Zug, or "" to use the sword strip frame
+## (pose_frame). Unarmed styles override this.
+func creator_pose() -> String:
 	return ""
 
 

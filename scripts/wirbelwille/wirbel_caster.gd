@@ -90,7 +90,7 @@ const STATE_POSE := {"jump": "jump_0", "fall": "fall_0", "dash": "dash_0", "idle
 
 
 ## Creator pose for the figure while a Zug runs (Player asks every frame).
-func pose_name() -> String:
+func creator_pose() -> String:
 	if not busy():
 		return ""
 	return STATE_POSE.get(_pose, _pose)

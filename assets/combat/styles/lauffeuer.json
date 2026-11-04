@@ -1,0 +1,93 @@
+{
+	"_doc": "Kampfstil Lauffeuer (Flammenleib, Brandherde). Konzept: docs/stil-lauffeuer.md. 6 Zuege fuer die Spezial-Taste + Meisterzug, je 3 Alternativen, pro Zug genau eine aktiv (oder die Grundform). frames = [Anlauf, aktiv, Erholung] bei 60 fps. params = Grundform; Alternative ueberschreibt einzelne Werte. enhanced = verstaerkt (L halten = 1 Stufe Legendenleiste): _add addiert, _mul multipliziert, andere ersetzen. Schaden: 8 entspricht einem normalen Leichtschlag (100 %). herd = legt einen Brandherd. Waffenlos: creator = Posen des Creator-Koerpers je Phase.",
+	"id": "lauffeuer",
+	"name": "Lauffeuer",
+	"element": "feuer",
+	"subtitle": "Flammenleib · Brandherde legen, mit der Flammenfaust zünden  ·  höchstens 3 Herde",
+	"moveset": "res://assets/combat/movesets/lauffeuer.json",
+	"colors": {"ink": "1a1210", "red": "d8362a", "orange": "ff8a2a", "gold": "ffc94a", "white": "fff3c8", "ash": "8a8090", "blue": "6fb8ff"},
+	"loadout": {"neutral": "flammenknoechel", "forward": "flammenfaust", "up": "steigflamme", "down": "niederschlag"},
+	"zuege": {
+		"flammenknoechel": {
+			"name": "Flammenknöchel", "dir": "neutral", "sp": 1, "cd": 0.7, "frames": [6, 22, 12],
+			"desc": "Kurze Faustkombination, die mit einem flammenden Hieb endet.",
+			"creator": {"startup": ["jab_wind"], "active": ["jab_hit", "cross_hit", "hook_hit"], "recovery": ["hook_hit"]},
+			"params": {"damage": [5, 5, 11], "reach": 34, "wide": false, "herd": false},
+			"enhanced": {"herd": true, "damage_add": 0},
+			"alts": [
+				{"id": "faeuste", "name": "Glühende Fäuste", "sp": 2, "desc": "Schnelle Nahkampffolge aus sechs Treffern.", "frames": [5, 26, 10], "params": {"damage": [3, 3, 3, 3, 3, 5], "reach": 30}},
+				{"id": "schweif", "name": "Flammenschweif", "sp": 2, "desc": "Breiter Bogen als Abschluss, trifft mehrere Gegner.", "frames": [7, 24, 14], "params": {"wide": true, "reach": 52}},
+				{"id": "herdsetzer", "name": "Herdsetzer", "sp": 2, "desc": "Weniger direkter Schaden, legt immer einen kleinen Brandherd.", "params": {"damage": [3, 3, 7], "herd": true}}
+			]
+		},
+		"flammenfaust": {
+			"name": "Flammenfaust", "dir": "forward", "sp": 1, "cd": 1.0, "frames": [10, 6, 16],
+			"desc": "Eine große Faust aus Feuer schießt nach vorn und zündet jeden Brandherd, den sie berührt.",
+			"creator": {"startup": ["charge_0"], "active": ["cross_hit"], "recovery": ["cross_hit"]},
+			"params": {"damage": 16, "dist": 300, "speed": 520, "scale": 1.0, "pierce": false, "charge": 0.0},
+			"enhanced": {"scale_mul": 1.8, "pierce": true, "damage_add": 4},
+			"alts": [
+				{"id": "direkt", "name": "Direkte Faust", "sp": 2, "desc": "Schnell und schmal, fliegt über die ganze Bildschirmbreite.", "frames": [7, 6, 14], "params": {"dist": 480, "speed": 720, "scale": 0.75, "damage": 13}},
+				{"id": "breit", "name": "Breite Faust", "sp": 2, "desc": "Größere Trefferfläche, nur ein Drittel Bildschirm Reichweite.", "params": {"dist": 200, "scale": 1.6}},
+				{"id": "geladen", "name": "Geladene Faust", "sp": 2, "desc": "L halten lädt bis 0,8 s: bis 28 Schaden und hoher Haltungsschaden. In der Ladezeit unterbrechbar.", "frames": [10, 6, 18], "params": {"charge": 0.8}}
+			]
+		},
+		"steigflamme": {
+			"name": "Steigflamme", "dir": "up", "sp": 1, "cd": 1.1, "frames": [9, 14, 16],
+			"desc": "Eine Flamme schießt vor dir aus dem Boden und hebt leichte Gegner an. Ein Brandherd an der Stelle wird verbraucht und macht sie doppelt so hoch.",
+			"creator": {"startup": ["upper_wind"], "active": ["upper_hit"], "recovery": ["upper_hit"]},
+			"params": {"damage": 12, "launch": 360, "width": 30, "at": 40, "ride": false},
+			"enhanced": {"launch_add": 120, "burn": true},
+			"alts": [
+				{"id": "schmal", "name": "Schmale Flamme", "sp": 2, "desc": "Hoher Auftrieb gegen ein einzelnes Ziel.", "params": {"launch": 470, "width": 20}},
+				{"id": "breit", "name": "Breiter Ausbruch", "sp": 2, "desc": "Größere Fläche, geringere Höhe.", "params": {"launch": 220, "width": 64}},
+				{"id": "aufwind", "name": "Aufwind", "sp": 2, "desc": "Du steigst selbst mit nach oben und kannst in der Luft weiterkämpfen.", "params": {"ride": true, "at": 14}}
+			]
+		},
+		"flammenleib": {
+			"name": "Flammenleib", "dir": "neutral", "sp": 1, "cd": 1.2, "frames": [2, 14, 12],
+			"desc": "Du löst dich kurz in Feuer auf und weichst einen Schritt aus. Unverwundbar nur 0,2 s; zu früh = 0,35 s offen.",
+			"creator": {"startup": ["dash_0"], "active": ["dash_1"], "recovery": ["land_0"]},
+			"params": {"window": 0.2, "dist": 46, "herd": false, "wall": false, "punish": 0.35},
+			"enhanced": {"quick": true},
+			"alts": [
+				{"id": "schritt", "name": "Flammenschritt", "sp": 2, "desc": "Größeres Ausweichfenster (0,3 s), kein Schaden.", "params": {"window": 0.3}},
+				{"id": "antwort", "name": "Herdantwort", "sp": 2, "desc": "Engeres Fenster (0,12 s), legt bei erfolgreichem Ausweichen einen Brandherd am alten Platz.", "params": {"window": 0.12, "herd": true}},
+				{"id": "schirm", "name": "Feuerschirm", "sp": 2, "desc": "Statt Ausweichen eine kurze Feuerwand, die leichte Geschosse abfängt.", "frames": [6, 36, 12], "params": {"wall": true, "dist": 0}}
+			]
+		},
+		"feuerstrom": {
+			"name": "Feuerstrom", "dir": "forward", "sp": 1, "cd": 1.0, "frames": [5, 12, 12],
+			"desc": "Du ziehst als Flammenstrom über eine kurze Strecke. Gegner auf dem Weg erhalten einen leichten Treffer.",
+			"creator": {"startup": ["dash_0"], "active": ["dashpunch_hit"], "recovery": ["land_0"]},
+			"params": {"dist": 120, "damage": 7, "curve": false, "herd": false},
+			"enhanced": {"dist_mul": 2.0, "trail": true},
+			"alts": [
+				{"id": "gerade", "name": "Gerader Strom", "sp": 2, "desc": "Mehr Reichweite, kaum Steuerung.", "params": {"dist": 170}},
+				{"id": "schwenk", "name": "Flammenschwenk", "sp": 2, "desc": "Kurze Kurve nach oben, auch über Plattformkanten.", "params": {"curve": true, "dist": 100}},
+				{"id": "glutspur", "name": "Glutspur", "sp": 2, "desc": "Kürzere Bewegung, legt einen Brandherd am Ausgangspunkt.", "params": {"dist": 80, "herd": true}}
+			]
+		},
+		"niederschlag": {
+			"name": "Glühender Niederschlag", "dir": "down", "sp": 1, "cd": 1.2, "frames": [8, 8, 18],
+			"desc": "Feuerstoß schräg nach unten (in der Luft) oder in den Boden vor dir. Verfehlt bist du kurz offen.",
+			"creator": {"startup": ["airpunch_hit"], "active": ["stomp_hit"], "recovery": ["land_0"]},
+			"params": {"damage": 14, "dive": false, "fan": 0, "herd": false},
+			"enhanced": {"ground_burn": true, "damage_add": 3},
+			"alts": [
+				{"id": "sturz", "name": "Flammensturz", "sp": 2, "desc": "Du folgst dem Stoß selbst zum Boden, kleiner Aufprall.", "params": {"dive": true}},
+				{"id": "faecher", "name": "Feuerfächer", "sp": 2, "desc": "Fünf kleine Geschosse decken eine breitere Fläche ab.", "params": {"fan": 5, "damage": 5}},
+				{"id": "herdkern", "name": "Herdkern", "sp": 2, "desc": "Langsameres Geschoss, legt beim Aufprall einen Brandherd.", "params": {"herd": true, "damage": 10}}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug", "sp": 4, "cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die Welt dunkelt ab, das Feuer leuchtet dich von unten an, hinter dir lodert ein Signalturm auf.",
+		"variants": [
+			{"id": "grosser_brand", "name": "Großer Brand", "sp": 0, "desc": "Eine gewaltige Flammenfaust rollt durch einen breiten Korridor und zündet alle Brandherde darin."},
+			{"id": "brandgestirn", "name": "Brandgestirn", "sp": 2, "desc": "Feuer sammelt sich über dir zu einer riesigen glühenden Kugel. Lange Vorbereitung, gewaltiger Einschlag, kurzer Restbrand."},
+			{"id": "leuchtfeuer", "name": "Leuchtfeuer", "sp": 2, "desc": "Acht Zunderflocken schweben im Zielbereich auf und zünden nach 1,5 s gleichzeitig. Flocken an Brandherden lösen Ausbrüche aus."}
+		]
+	}
+}

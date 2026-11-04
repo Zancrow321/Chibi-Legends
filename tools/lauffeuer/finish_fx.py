@@ -17,6 +17,18 @@ USE = {  # Zielname: Rohordner
 }
 LOOP = {"brandherd", "feuerstrom", "brandgestirn", "zunderflocke"}
 
+def no_blue(im):
+    """Blue blobs (prompt artefact) -> hot white-yellow core."""
+    px = im.load()
+    for y in range(im.height):
+        for x in range(im.width):
+            r, g, b, a = px[x, y]
+            if a and b > r + 20:
+                v = (r + g + b) // 3
+                px[x, y] = (255, min(255, 200 + v // 4), min(255, 120 + v // 3), a)
+    return im
+
+
 def frames(d):
     png = [p for p in glob.glob(os.path.join(SRC, d, "*.png"))][0]
     js = [p for p in glob.glob(os.path.join(SRC, d, "*.json")) if "response" not in p][0]
@@ -24,7 +36,7 @@ def frames(d):
     out = []
     for f in meta["frames"]:
         r = f["frame"]
-        out.append((sheet.crop((r["x"], r["y"], r["x"] + r["w"], r["y"] + r["h"])), f.get("duration", 83)))
+        out.append((no_blue(sheet.crop((r["x"], r["y"], r["x"] + r["w"], r["y"] + r["h"]))), f.get("duration", 83)))
     return out
 
 if __name__ == "__main__":
