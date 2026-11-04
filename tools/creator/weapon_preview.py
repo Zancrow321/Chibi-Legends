@@ -14,12 +14,13 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw
 
-PAD = 24                    # Rand um die 64er-Zelle, damit die Klinge Platz hat
+PAD = 56                    # Rand um die 64er-Zelle, damit die Klinge Platz hat
 SCALE = 4                   # Vergrößerung für die Vorschau
-GRIP = (11.0, 21.5)         # Griffpunkt im 32er-Schwertbild
+WEAPON_SCALE = 2            # Zweihänder: doppelt so groß wie das 32er-Bild
+GRIP = (9.5, 22.5)          # Griffpunkt im 32er-Schwertbild (unteres Ende, wo der Verband sitzt)
 TIP = (29.0, 2.0)           # Klingenspitze
-POMMEL_BACK = 2.5           # Knauf liegt so weit hinter dem Griff
-FIST = 2.5                  # Faustmitte liegt so weit vor dem Handgelenk-Anker
+POMMEL_BACK = 4.0           # Knauf liegt so weit hinter dem Griff
+FIST = 2.0                  # Faustmitte liegt so weit vor dem Handgelenk-Anker
 RIBBON_LIGHT = (224, 224, 224, 255)
 RIBBON_SHADE = (196, 196, 196, 255)
 RIBBON_LINE = (61, 61, 61, 255)
@@ -39,6 +40,11 @@ def load_blade(path):
                 c = p[x * f + f // 2, y * f + f // 2]
                 q[x, y] = (0, 0, 0, 0) if abs(c[1] - 148) < 10 and abs(c[2] - 111) < 10 else c
         im = small
+    im = _cut(im)
+    return im.resize((im.width * WEAPON_SCALE, im.height * WEAPON_SCALE), Image.NEAREST)
+
+
+def _cut(im):
     ax, ay = TIP[0] - GRIP[0], TIP[1] - GRIP[1]
     L = math.hypot(ax, ay)
     px = im.load()
@@ -48,7 +54,7 @@ def load_blade(path):
                 continue
             t = ((x - GRIP[0]) * ax + (y - GRIP[1]) * ay) / L
             d = abs((x - GRIP[0]) * ay - (y - GRIP[1]) * ax) / L
-            if d > 5.0 or t < -3.5:
+            if d > 5.0 or t < -2.0:
                 px[x, y] = (0, 0, 0, 0)
     return im
 
@@ -68,12 +74,13 @@ def rotate_about(im, pivot, deg, k=8):
 def place_blade(blade, hand, hand_angle, size):
     """Schwert so setzen, dass der Griff auf der Hand liegt und die Klinge dem Unterarm folgt."""
     canvas = Image.new("RGBA", (size, size))
-    big = Image.new("RGBA", (96, 96))
-    off = (48 - GRIP[0], 48 - GRIP[1])
+    big = Image.new("RGBA", (160, 160))
+    g = (GRIP[0] * WEAPON_SCALE, GRIP[1] * WEAPON_SCALE)
+    off = (80 - g[0], 80 - g[1])
     big.alpha_composite(blade, (int(off[0]), int(off[1])))
     # PIL dreht gegen den Uhrzeigersinn; unser Winkel wächst im Uhrzeigersinn-Sinn der Bildschirmachsen
-    rot = rotate_about(big, (48, 48), hand_angle - BLADE_ANGLE)
-    canvas.alpha_composite(rot, (int(round(hand[0] - 48)), int(round(hand[1] - 48))))
+    rot = rotate_about(big, (80, 80), hand_angle - BLADE_ANGLE, k=4)
+    canvas.alpha_composite(rot, (int(round(hand[0] - 80)), int(round(hand[1] - 80))))
     return canvas
 
 
