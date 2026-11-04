@@ -98,6 +98,17 @@ func _twohand() -> bool:
 	return bool(w.get("twohand", float(w.get("scale", 1)) >= 2.0))
 
 
+## How much further the creator weapon reaches than the sword the movesets
+## were tuned for (about 30 px from hand to tip): hitboxes grow with it.
+func reach() -> float:
+	if not use_body or body._wdata.is_empty():
+		return 1.0
+	var g: Array = body._wdata["grip"]
+	var t: Array = body._wdata["tip"]
+	var len := Vector2(t[0] - g[0], t[1] - g[1]).length() * float(body._wdata.get("scale", 1))
+	return clampf(len / 30.0, 1.0, 1.4)
+
+
 ## Hand and tip of the weapon in the world, or [] without a creator weapon.
 func blade_line() -> Array:
 	if not use_body or not visible or body._weapon == null or body._weapon.texture == null or body._wdata.is_empty():
