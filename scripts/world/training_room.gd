@@ -32,6 +32,10 @@ var draw_terrain := true
 var glut_fx: GlutFx  # fire effects of the fighting style
 var stage: DuskStage  # dusk light look (only in the "Licht" view, see Main)
 var post: SparringPost
+var waves: EnemyWaves  # first real enemies behind the dummies
+var enemies_defeated := 0
+var exp_points := 0.0  # EXP from enemies (shown in the HUD's EXP bar)
+const EXP_PER_LEVEL := 300.0
 
 # stats for the HUD
 var total_damage := 0.0
@@ -40,10 +44,12 @@ var reactions_found: Dictionary = {}
 var toast_text := ""
 var toast_time := 0.0
 var _hits: Array = []  # [time, damage]
+var _enemy_layer: Node2D
 var _clock := 0.0
 
 
 func _ready() -> void:
+	Engine.time_scale = 1.0  # a kill slow motion never survives a scene reload
 	_build_terrain()
 	attacks = Node2D.new()
 	effects = Effects.new()
@@ -65,6 +71,8 @@ func _ready() -> void:
 	add_child(afterimages)
 	dust = Dust.new()
 	add_child(player)
+	_enemy_layer = Node2D.new()
+	add_child(_enemy_layer)
 	add_child(attacks)
 	add_child(dust)
 	add_child(effects)
@@ -95,10 +103,42 @@ func _ready() -> void:
 		stage.room = self
 		add_child(stage)
 		glut_fx.stage = stage
+	waves = EnemyWaves.new()
+	waves.world = self
+	add_child(waves)
+
+
+## Enemies live in their own layer (behind the player and the attacks).
+func add_enemy(e: Enemy) -> void:
+	_enemy_layer.add_child(e)
+
+
+func on_enemy_died(e: Enemy) -> void:
+	enemies_defeated += 1
+	exp_points += float(e.data.exp)
+	player.add_gauge(8.0)
+	# kill feel: a short slow motion, longer and with a zoom for the last one of a wave
+	var last := waves != null and waves.alive.filter(func(x): return is_instance_valid(x) and x.state != "dead").is_empty()
+	if last or e.is_elite():
+		_slowmo(0.55, 0.25)
+		fx.punch(0.12)
+		if glut_fx != null:
+			glut_fx.word(e.head_position() + Vector2(0, -20), "VERGLÜHT!" if e.status.has("brand") or player.glut != null and player.glut.busy() else "BESIEGT!", Color("fff4d0"), 30)
+	else:
+		_slowmo(0.16, 0.4)
+
+
+var _slow_until := 0
+func _slowmo(seconds: float, scale: float) -> void:
+	Engine.time_scale = scale
+	_slow_until = Time.get_ticks_msec() + int(seconds * 1000.0)
 
 
 func _process(delta: float) -> void:
 	_clock += delta
+	if _slow_until > 0 and Time.get_ticks_msec() >= _slow_until:
+		_slow_until = 0
+		Engine.time_scale = 1.0
 	toast_time = maxf(0.0, toast_time - delta)
 	camera.global_position = player.global_position + Vector2(player.facing * 30.0, -40.0)
 	if Input.is_action_just_pressed("cycle_fx"):
@@ -289,6 +329,8 @@ func deal_hit(target: Node2D, base: float, element: String, from_x: float, knock
 	if launch != 0.0 and target.has_method("launch"):
 		target.launch(launch)
 	_record(dmg)
+	if target.has_method("apply_damage"):
+		target.apply_damage(dmg)
 	if not profile.begins_with("super"):
 		numbers.spawn_number(target.head_position(), dmg, col, target.get_instance_id(), res.reaction != "")
 	var center: Vector2 = target.get_hurt_rect().get_center()
@@ -326,6 +368,8 @@ func _trigger_reaction(target: Node2D, res: Dictionary) -> void:
 				_record(aoe)
 				numbers.spawn_number(t.head_position(), aoe, info.color, t.get_instance_id(), true)
 				t.take_hit(80.0, center.x)
+				if t.has_method("apply_damage"):
+					t.apply_damage(aoe)
 				if res.spread_status != "":
 					t.status[res.spread_status] = Reactions.STATUS_DURATION
 
@@ -334,6 +378,8 @@ func deal_dot(target: Node2D, amount: float, element: String) -> void:
 	var dmg := int(round(amount))
 	_record(dmg)
 	numbers.spawn_number(target.head_position(), dmg, GameData.ELEMENTS[element].color.darkened(0.1), target.get_instance_id())
+	if target.has_method("apply_damage"):
+		target.apply_damage(dmg)
 
 
 func _record(dmg: float) -> void:

@@ -42,3 +42,22 @@ Jeder Charakter hat eine Datei `assets/combat/movesets/<id>.json`. Pro Angriff:
 Legendenleiste mit 3 Stufen, Block, Perfekt-Block, Ausweich-Dash mit Unverwundbarkeit, Befreiungsstoß, Schadensformel mit Kombo-Abschwächung, Gewichtsklassen, Statuseffekte, Arena mit Pickups, Helfer, KI-Gegner. Der Super läuft bis Schritt 3 weiter über die Abklingzeit.
 
 Die Testfigur hat bisher nur Stand- und Schwertbilder. Laufen, Springen und Dash sind daraus mit Neigung und Stauchung im Code gebaut, bis eigene Bilder kommen.
+
+## Erste Gegner (Trainingswald)
+
+Hinter den Trainingspuppen (ab x = 760) beginnt die Kampfzone: Gegner steigen in
+Wellen aus dem Boden (4 Wellen, danach von vorn mit je einem Gegner mehr).
+Gegner haben echte HP, eine HP-Leiste (Elite: immer sichtbar, mit Krone), kündigen
+Angriffe mit rotem Pulsieren und „!“ an, lassen sich jonglieren, brennen mit Brand
+und geben EXP (Leiste unten im HUD, Legendenleiste +8 je Kill). Der letzte Gegner
+einer Welle und Elites lösen eine kurze Zeitlupe aus.
+
+| Art | Verhalten | Gegner |
+| --- | --- | --- |
+| slime | hüpft heran, plättet sich, Bauchklatscher | Moosling |
+| brute | läuft, holt aus, Schlag nach vorn (Super-Rüstung im Schlag) | Rindenwicht, Moosgolem (Elite) |
+| beast | duckt sich, Sprungangriff durch den Spieler | Sumpfdorn, Säbeltiger |
+| breather | Feueratem-Kegel auf kurze Distanz | Glutigel |
+
+Grafiken und Herkunft: `assets/enemies/README.md` (eigene PixelLab-Figuren und
+CC0-Figuren aus dem Godot-Asset „Duelyst Animated Sprites“).

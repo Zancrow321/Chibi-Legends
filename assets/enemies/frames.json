@@ -1,0 +1,170 @@
+{
+ "moosling": {
+  "source": "pixellab",
+  "cell": [
+   64,
+   64
+  ],
+  "foot": 59,
+  "anims": {
+   "idle": [
+    9,
+    8.0
+   ],
+   "attack": [
+    6,
+    12.0
+   ],
+   "hurt": [
+    4,
+    14.0
+   ]
+  }
+ },
+ "rindenwicht": {
+  "source": "pixellab",
+  "cell": [
+   64,
+   64
+  ],
+  "foot": 59,
+  "anims": {
+   "walk": [
+    8,
+    10.0
+   ],
+   "attack": [
+    9,
+    12.0
+   ],
+   "hurt": [
+    4,
+    14.0
+   ],
+   "death": [
+    9,
+    11.0
+   ]
+  }
+ },
+ "moosgolem": {
+  "source": "duelyst:neutral_golemnature",
+  "anims": {
+   "idle": [
+    12,
+    9.0
+   ],
+   "walk": [
+    8,
+    9.0
+   ],
+   "attack": [
+    8,
+    9.0
+   ],
+   "hurt": [
+    3,
+    9.0
+   ],
+   "death": [
+    9,
+    9.0
+   ]
+  },
+  "cell": [
+   80,
+   80
+  ],
+  "foot": 64
+ },
+ "sumpfdorn": {
+  "source": "duelyst:neutral_beastswamp",
+  "anims": {
+   "idle": [
+    12,
+    9.0
+   ],
+   "walk": [
+    10,
+    9.0
+   ],
+   "attack": [
+    12,
+    9.0
+   ],
+   "hurt": [
+    3,
+    9.0
+   ],
+   "death": [
+    8,
+    9.0
+   ]
+  },
+  "cell": [
+   80,
+   80
+  ],
+  "foot": 64
+ },
+ "saebeltiger": {
+  "source": "duelyst:neutral_beastsaberspinetiger",
+  "anims": {
+   "idle": [
+    10,
+    9.0
+   ],
+   "walk": [
+    8,
+    9.0
+   ],
+   "attack": [
+    10,
+    9.0
+   ],
+   "hurt": [
+    3,
+    9.0
+   ],
+   "death": [
+    8,
+    9.0
+   ]
+  },
+  "cell": [
+   80,
+   80
+  ],
+  "foot": 64
+ },
+ "glutigel": {
+  "source": "duelyst:neutral_gro",
+  "anims": {
+   "idle": [
+    16,
+    9.0
+   ],
+   "walk": [
+    8,
+    9.0
+   ],
+   "attack": [
+    24,
+    9.0
+   ],
+   "hurt": [
+    3,
+    9.0
+   ],
+   "death": [
+    13,
+    9.0
+   ]
+  },
+  "cell": [
+   80,
+   80
+  ],
+  "foot": 64
+ }
+}
