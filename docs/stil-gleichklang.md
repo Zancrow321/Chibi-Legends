@@ -278,6 +278,35 @@ für einen Moment als weiße Linie stehen (Manga-Panel-Cut-in, dann zurück).
 
 ---
 
+## Im Spiel (Stand 2026-11-04)
+
+Spielbar im Trainingswald. Auswahl im Character Creator (Taste O), Zeile
+„Kampfstil“: Gleichklang. Die Waffe wechselt dabei auf die Sense Nachhall.
+
+- **Steuerung:** L + Richtung = Zug, L halten = verstärkt, P = Meisterzug,
+  Tab = Stilmenü (Alternativen, Slots, Meisterzug-Variante). Erneut L während
+  eines Zugs: Hinterherspringen (Himmelsreigen), Rückholschnitt
+  (Seelensichel-Alternative), seitlicher Schnitt (Sichelschritt).
+- **Standard-Slots:** neutral Sicheltakt, vor Seelensichel, oben Himmelsreigen,
+  unten Fallende Sichel. Seelenlauschen und Sichelschritt per Tab-Menü in einen
+  Slot legen.
+- **HUD:** Einklang als 6 Glocken, daneben ein Punkt, der im Takt blinkt.
+  Um die Figur zieht sich ein Ring bis zum nächsten Schlag zusammen, das
+  Klangloch der Sense pulsiert, ein leiser Glockenton zählt mit.
+- **Seelenbruch:** Statussymbol violett. Gegner nehmen 3 s lang +25 % Schaden
+  (es gibt noch keine eigene Haltungsleiste), Brutes verlieren ihre Rüstung.
+- **Code:** `scripts/gleichklang/` (Caster, Effekte, Welle, Meisterzug, Icons),
+  Daten in `assets/combat/styles/gleichklang.json`.
+- **Grafik und Ton ohne PixelLab:** Sense als Pixelbild aus
+  `tools/gleichklang/gen_sense.py`, Glocken aus `tools/audio/synth_bell.py`.
+  Beides kann später durch PixelLab-Bilder bzw. eigene Aufnahmen ersetzt werden.
+
+![Einklang voll, verstärkte Seelensichel](screenshots/gleichklang-einklang.png)
+![Meisterzug Erntebogen](screenshots/gleichklang-erntebogen.png)
+![Konter aus dem Seelenlauschen](screenshots/gleichklang-konter.png)
+
+---
+
 ## Was umbenannt wurde
 
 Das Spiel verwendet nur eigene Namen, Figuren und Markenzeichen. Kaisers Mechanik

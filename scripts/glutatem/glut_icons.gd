@@ -35,7 +35,14 @@ static func texture(id: String) -> Texture2D:
 	return _tex[id]
 
 
+## Style whose icons are shown (set by the caster of the player's style).
+static var style_id := "glutatem"
+
+
 static func draw(ci: CanvasItem, r: Rect2, id: String, t := 0.0) -> void:
+	if style_id == "gleichklang":
+		KlangIcons.draw(ci, r, id, t)
+		return
 	var tex := texture(id)
 	if tex != null:
 		_draw_texture(ci, r, tex, id, t)
