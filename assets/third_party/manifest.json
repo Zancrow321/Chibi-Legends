@@ -1,0 +1,203 @@
+[
+  {
+    "pack": "UI Pack - Pixel Adventure",
+    "author": "Kenney (www.kenney.nl)",
+    "license": "CC0-1.0",
+    "page": "https://kenney.nl/assets/ui-pack-pixel-adventure",
+    "source": "https://github.com/shorepine/kenney@3694c6879e48",
+    "path": "assets/third_party/kenney/ui/pixel_adventure",
+    "sheets": {
+      "large_tiles_thick_outline.png": {
+        "tiles": 91,
+        "tile_size": [
+          32,
+          32
+        ],
+        "columns": 32
+      },
+      "large_tiles_thin_outline.png": {
+        "tiles": 91,
+        "tile_size": [
+          32,
+          32
+        ],
+        "columns": 32
+      },
+      "small_tiles_thick_outline.png": {
+        "tiles": 161,
+        "tile_size": [
+          16,
+          16
+        ],
+        "columns": 32
+      },
+      "small_tiles_thin_outline.png": {
+        "tiles": 161,
+        "tile_size": [
+          16,
+          16
+        ],
+        "columns": 32
+      }
+    }
+  },
+  {
+    "pack": "Fantasy UI Borders",
+    "author": "Kenney (www.kenney.nl)",
+    "license": "CC0-1.0",
+    "page": "https://kenney.nl/assets/fantasy-ui-borders",
+    "source": "https://github.com/shorepine/kenney@3694c6879e48",
+    "path": "assets/third_party/kenney/ui/fantasy_borders",
+    "files": 280
+  },
+  {
+    "pack": "Input Prompts Pixel",
+    "author": "Kenney (www.kenney.nl)",
+    "license": "CC0-1.0",
+    "page": "https://kenney.nl/assets/input-prompts-pixel-16",
+    "source": "https://github.com/shorepine/kenney@3694c6879e48",
+    "path": "assets/third_party/kenney/ui/input_prompts",
+    "sheets": {
+      "tiles.png": {
+        "tiles": 816,
+        "tile_size": [
+          16,
+          16
+        ],
+        "columns": 32
+      }
+    }
+  },
+  {
+    "pack": "Game Icons",
+    "author": "Kenney (www.kenney.nl)",
+    "license": "CC0-1.0",
+    "page": "https://kenney.nl/assets/game-icons",
+    "source": "https://github.com/shorepine/kenney@3694c6879e48",
+    "path": "assets/third_party/kenney/ui/game_icons",
+    "files": 105
+  },
+  {
+    "pack": "Mobile Controls",
+    "author": "Kenney (www.kenney.nl)",
+    "license": "CC0-1.0",
+    "page": "https://kenney.nl/assets/mobile-controls",
+    "source": "https://github.com/shorepine/kenney@3694c6879e48",
+    "path": "assets/third_party/kenney/ui/mobile_controls",
+    "files": 46
+  },
+  {
+    "pack": "Mobile Controls (Icons)",
+    "author": "Kenney (www.kenney.nl)",
+    "license": "CC0-1.0",
+    "page": "https://kenney.nl/assets/mobile-controls",
+    "source": "https://github.com/shorepine/kenney@3694c6879e48",
+    "path": "assets/third_party/kenney/ui/mobile_controls/icons",
+    "files": 42
+  },
+  {
+    "pack": "Interface Sounds",
+    "author": "Kenney (www.kenney.nl)",
+    "license": "CC0-1.0",
+    "page": "https://kenney.nl/assets/interface-sounds",
+    "source": "https://github.com/Calinou/kenney-interface-sounds@4596a49eaf5a",
+    "path": "assets/third_party/kenney/sfx/interface",
+    "files": 100
+  },
+  {
+    "pack": "UI Audio",
+    "author": "Kenney (www.kenney.nl)",
+    "license": "CC0-1.0",
+    "page": "https://kenney.nl/assets/ui-audio",
+    "source": "https://github.com/Calinou/kenney-ui-audio@8c3d81b9159d",
+    "path": "assets/third_party/kenney/sfx/ui",
+    "files": 51
+  },
+  {
+    "pack": "Impact Sounds",
+    "author": "Kenney (www.kenney.nl)",
+    "license": "CC0-1.0",
+    "page": "https://kenney.nl/assets/impact-sounds",
+    "source": "https://github.com/Boyquotes/kenney-impact-sounds-for-godot@999dd1684873",
+    "path": "assets/third_party/kenney/sfx/impact",
+    "files": 130
+  },
+  {
+    "pack": "Starter Kit 3D Platformer (Sounds)",
+    "author": "Kenney (www.kenney.nl)",
+    "license": "CC0-1.0",
+    "page": "https://github.com/KenneyNL/Starter-Kit-3D-Platformer",
+    "source": "https://github.com/KenneyNL/Starter-Kit-3D-Platformer@3fa8a04b1c01",
+    "path": "assets/third_party/kenney/sfx/movement",
+    "files": 6
+  },
+  {
+    "pack": "Particle Pack",
+    "author": "Kenney (www.kenney.nl)",
+    "license": "CC0-1.0",
+    "page": "https://kenney.nl/assets/particle-pack",
+    "source": "https://github.com/Calinou/kenney-particle-pack@ab7086639ee7",
+    "path": "assets/third_party/kenney/vfx/particles",
+    "files": 80
+  },
+  {
+    "pack": "Explosion Pack (Pixel)",
+    "author": "Kenney (www.kenney.nl)",
+    "license": "CC0-1.0",
+    "page": "https://kenney.nl/assets/explosion-pack",
+    "source": "https://github.com/shorepine/kenney@3694c6879e48",
+    "path": "assets/third_party/kenney/vfx/explosions/pixel_explosion.png",
+    "frames": 9,
+    "cell": 96
+  },
+  {
+    "pack": "Explosion Pack (Regular)",
+    "author": "Kenney (www.kenney.nl)",
+    "license": "CC0-1.0",
+    "page": "https://kenney.nl/assets/explosion-pack",
+    "source": "https://github.com/shorepine/kenney@3694c6879e48",
+    "path": "assets/third_party/kenney/vfx/explosions/regular_explosion.png",
+    "frames": 9,
+    "cell": 192
+  },
+  {
+    "pack": "Explosion Pack (Simple)",
+    "author": "Kenney (www.kenney.nl)",
+    "license": "CC0-1.0",
+    "page": "https://kenney.nl/assets/explosion-pack",
+    "source": "https://github.com/shorepine/kenney@3694c6879e48",
+    "path": "assets/third_party/kenney/vfx/explosions/simple_explosion.png",
+    "frames": 9,
+    "cell": 186
+  },
+  {
+    "pack": "Explosion Pack (Sonic)",
+    "author": "Kenney (www.kenney.nl)",
+    "license": "CC0-1.0",
+    "page": "https://kenney.nl/assets/explosion-pack",
+    "source": "https://github.com/shorepine/kenney@3694c6879e48",
+    "path": "assets/third_party/kenney/vfx/explosions/sonic_explosion.png",
+    "frames": 9,
+    "cell": 284
+  },
+  {
+    "pack": "Smoke Particles (White puff)",
+    "author": "Kenney (www.kenney.nl)",
+    "license": "CC0-1.0",
+    "page": "https://kenney.nl/assets/smoke-particles",
+    "source": "https://github.com/shorepine/kenney@3694c6879e48",
+    "path": "assets/third_party/kenney/vfx/smoke/white_puff.png",
+    "frames": 25,
+    "cell": 64
+  },
+  {
+    "pack": "Smoke Particles (Flash)",
+    "author": "Kenney (www.kenney.nl)",
+    "license": "CC0-1.0",
+    "page": "https://kenney.nl/assets/smoke-particles",
+    "source": "https://github.com/shorepine/kenney@3694c6879e48",
+    "path": "assets/third_party/kenney/vfx/smoke/flash.png",
+    "frames": 9,
+    "cell": 64
+  }
+]

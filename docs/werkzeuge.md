@@ -1,0 +1,99 @@
+# Werkzeuge: Palette, Fremd-Assets, Sound
+
+Kurzüberblick, welches Werkzeug wofür da ist und wie die Dateien ins Spiel kommen.
+
+## 1. Master-Palette (Lospec)
+
+Alle Figuren, Effekte und Kulissen verwenden **eine** gemeinsame Palette. Das hält den Stil
+zusammen (Figuren ~28×56 px, 13–16 Farben pro Figur, dunkler Umriss) und erlaubt Farbvarianten per Shader.
+
+- Aktiv: **Resurrect 64** (Kerrie Lake, lospec.com/palette-list/resurrect-64), eingetragen in `assets/palettes/config.json`.
+- Alternative im Repo: **Endesga 32** (lospec.com/palette-list/endesga-32). Umstellen = Name in `config.json` ändern
+  und `python3 tools/palette/build.py` ausführen.
+- Weitere Lospec-Paletten: `python3 tools/palette/fetch_lospec.py <slug>` (braucht lospec.com in der Netzwerk-Freigabe).
+
+Dateien in `assets/palettes/` (von `build.py` erzeugt):
+
+| Datei | Wofür |
+| --- | --- |
+| `<name>.gpl` | Aseprite: *Palette → Load Palette* (oder in den Paletten-Ordner von Aseprite kopieren) |
+| `<name>.png` | N×1-Streifen für den Shader |
+| `<name>_swatches.png` | Übersicht; auch als PixelLab *color image* (erzwingt die Palette beim Generieren) |
+| `swaps_lut.png` / `.json` | Farbvarianten aus `swaps.json` für den Shader |
+
+### PixelLab-Ausgaben quantisieren
+
+```bash
+# rohe PixelLab-Bilder -> saubere Sprites (harte Kanten, nur Palettenfarben, max. 16 Farben, Umriss)
+python3 tools/palette/quantize.py pixellab_raw/ -o assets/characters/raw --max-colors 16 --outline
+
+# prüfen (z. B. vor dem Commit): Exit-Code 1 bei Fremdfarben, Halbtransparenz oder zu vielen Farben
+python3 tools/palette/quantize.py assets/characters/raw --check --max-colors 16
+
+# als indizierte PNG für Aseprite
+python3 tools/palette/quantize.py bild.png --indexed
+```
+
+Ein Sprite-Sheet zählt als ein Sprite: alle Frames teilen dieselben Farben. In Python-Skripten liefert
+`palette.pixellab_color_image()` das Farbbild für PixelLab-Aufrufe mit `color_image`.
+
+### Farbvarianten (Palette-Swap)
+
+`assets/shaders/palette_remap.gdshader` tauscht Palettenfarben gegen eine Zeile aus `swaps_lut.png`.
+In GDScript:
+
+```gdscript
+sprite.material = PaletteRemap.material("raiga_gi_blau")
+PaletteRemap.set_variant(sprite.material, "original")
+```
+
+Varianten stehen in `assets/palettes/swaps.json` (`"alte Farbe": "neue Farbe"`). **Regel:** Haut und
+umfärbbare Kleidung dürfen sich keine Palettenfarbe teilen, sonst färbt sich beides um. Beim Zeichnen oder
+Nachbearbeiten in Aseprite also je Material eigene Töne verwenden.
+
+Der bestehende `palette_swap.gdshader` (Paper-Doll-Format mit Slot/Ton-Kodierung) bleibt für den
+Character Creator; der neue Shader ist für normal gemalte Sprites.
+
+## 2. Platzhalter-Assets (CC0)
+
+`python3 tools/assets/import_cc0.py` holt eine kuratierte Auswahl aus Kenneys Paketen (alles CC0) nach
+`assets/third_party/kenney/` und schreibt `assets/third_party/LICENSES.md` + `manifest.json`.
+Quellen sind GitHub-Spiegel mit festem Commit, weil kenney.nl und opengameart.org aus der Cloud nicht erreichbar sind.
+
+| Bereich | Inhalt |
+| --- | --- |
+| `ui/` | UI Pack Pixel Adventure (Atlas), Fantasy UI Borders, Input Prompts Pixel (Atlas, Tastatur/Gamepad), Game Icons, Mobile Controls |
+| `sfx/` | Interface Sounds, UI Audio, Impact Sounds (Treffer, Schritte), Sprung/Landung/Münze |
+| `vfx/` | Particle Pack (auf 64 px verkleinert), Explosionen und Rauch als Streifen (gleiches Format wie `assets/vfx/`) |
+
+Atlas-Index = Kachelnummer aus Kenneys Paket, 32 Spalten (siehe `manifest.json`).
+Neue Pakete nur über `PACKS` im Skript ergänzen, damit die Lizenzliste stimmt.
+
+Sounds spielt `Sfx.play("jump")` (`scripts/audio/sfx.gd`) ab; welches Ereignis welche Datei nutzt, steht in
+`assets/audio/sfx_map.json`. Final-Sounds ersetzen dort einfach den Pfad.
+
+## 3. Eigene Sounds (Stable Audio 3)
+
+1. In Stable Audio kurze Effekte erzeugen (Prompt-Tipp: „short punchy anime sword slash, dry, no music, 0.5 seconds“).
+2. Rohdateien aufbereiten: `python3 tools/audio/prepare_sfx.py rohdaten/ --out assets/audio/sfx/kampf --max-len 1.5`
+   (Stille abschneiden, Lautheit angleichen, Mono-OGG).
+3. In `assets/audio/sfx_map.json` eintragen und in `assets/audio/SOURCES.md` Werkzeug, Prompt und Datum notieren.
+
+Vor dem Echtgeld-Start die Lizenzbedingungen der genutzten Stable-Audio-Version für kommerzielle Nutzung prüfen.
+
+## 4. Aseprite
+
+- Palette laden: `assets/palettes/resurrect-64.gpl`.
+- Export per Kommandozeile (Pfad zur `Aseprite.exe` anpassen):
+
+```bash
+Aseprite.exe -b figur.aseprite --sheet figur.png --data figur.json --format json-array --sheet-type horizontal --list-tags
+```
+
+- Danach zur Sicherheit: `python3 tools/palette/quantize.py figur.png --check --max-colors 16`.
+
+## 5. Godot-MCP
+
+Nicht eingerichtet. Godot-MCP braucht eine laufende Godot-Installation auf demselben Rechner wie Claude Code.
+In der Cloud gibt es nur die Prüfung über GitHub Actions (Import, Skriptfehler, Web-Export).
+Auf Kaisers PC ginge es über eine Remote-Control-Sitzung (MCP-Server lokal eintragen, nicht ins Repo).

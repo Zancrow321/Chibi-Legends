@@ -1,0 +1,20 @@
+{
+  "_info": "Spiel-Ereignis -> Sound-Dateien (eine wird zufällig gewählt). Pfade relativ zu res://. Platzhalter von Kenney (CC0); eigene Sounds (z. B. Stable Audio 3) nach assets/audio/sfx/ legen und hier eintragen. volume_db und pitch_jitter optional.",
+  "ui_hover":   {"files": ["assets/third_party/kenney/sfx/ui/rollover1.ogg", "assets/third_party/kenney/sfx/ui/rollover2.ogg"], "volume_db": -10},
+  "ui_click":   {"files": ["assets/third_party/kenney/sfx/interface/click_001.ogg", "assets/third_party/kenney/sfx/interface/click_002.ogg"]},
+  "ui_confirm": {"files": ["assets/third_party/kenney/sfx/interface/confirmation_001.ogg"]},
+  "ui_back":    {"files": ["assets/third_party/kenney/sfx/interface/back_001.ogg"]},
+  "ui_error":   {"files": ["assets/third_party/kenney/sfx/interface/error_004.ogg"]},
+  "menu_open":  {"files": ["assets/third_party/kenney/sfx/interface/open_001.ogg"]},
+  "menu_close": {"files": ["assets/third_party/kenney/sfx/interface/close_001.ogg"]},
+  "jump":       {"files": ["assets/third_party/kenney/sfx/movement/jump.ogg"], "pitch_jitter": 0.06},
+  "land":       {"files": ["assets/third_party/kenney/sfx/movement/land.ogg"], "volume_db": -4},
+  "footstep":   {"files": ["assets/third_party/kenney/sfx/impact/footstep_grass_000.ogg", "assets/third_party/kenney/sfx/impact/footstep_grass_001.ogg", "assets/third_party/kenney/sfx/impact/footstep_grass_002.ogg", "assets/third_party/kenney/sfx/impact/footstep_grass_003.ogg"], "volume_db": -12, "pitch_jitter": 0.08},
+  "hit_light":  {"files": ["assets/third_party/kenney/sfx/impact/impact_punch_medium_000.ogg", "assets/third_party/kenney/sfx/impact/impact_punch_medium_001.ogg", "assets/third_party/kenney/sfx/impact/impact_punch_medium_002.ogg"], "pitch_jitter": 0.08},
+  "hit_heavy":  {"files": ["assets/third_party/kenney/sfx/impact/impact_punch_heavy_000.ogg", "assets/third_party/kenney/sfx/impact/impact_punch_heavy_001.ogg", "assets/third_party/kenney/sfx/impact/impact_punch_heavy_002.ogg"], "pitch_jitter": 0.05},
+  "hit_blade":  {"files": ["assets/third_party/kenney/sfx/impact/impact_metal_light_000.ogg", "assets/third_party/kenney/sfx/impact/impact_metal_light_001.ogg", "assets/third_party/kenney/sfx/impact/impact_metal_light_002.ogg"], "pitch_jitter": 0.1},
+  "block":      {"files": ["assets/third_party/kenney/sfx/impact/impact_plate_medium_000.ogg", "assets/third_party/kenney/sfx/impact/impact_plate_medium_001.ogg"]},
+  "break":      {"files": ["assets/third_party/kenney/sfx/movement/break.ogg"]},
+  "pickup":     {"files": ["assets/third_party/kenney/sfx/movement/coin.ogg"]},
+  "super_flash": {"files": ["assets/third_party/kenney/sfx/interface/maximize_006.ogg"], "volume_db": 2}
+}
