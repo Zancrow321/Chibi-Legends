@@ -52,6 +52,12 @@ func _physics_process(delta: float) -> void:
 		_pause = PAUSE
 		if wave >= 0:
 			world.toast("Welle %d geschafft!" % (wave + 1 + round_no * WAVES.size()))
+			SeasonPass.track("wave")
+			if wave == WAVES.size() - 1 and not CreatorUnlocks.is_unlocked("top", "wanderer"):
+				# "Trainingswald abschließen": every wave of the forest done once
+				for slot in ["top", "pants", "shoes"]:
+					CreatorUnlocks.unlock(slot, "wanderer")
+				world.toast("Trainingswald abgeschlossen! Wanderer-Kleidung im Creator (O)")
 			if world.glut_fx != null:
 				world.glut_fx.word(world.player.global_position + Vector2(0, -80), "GESCHAFFT!", Color("ffd25c"), 24)
 

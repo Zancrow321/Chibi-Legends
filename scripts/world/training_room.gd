@@ -51,6 +51,8 @@ var _clock := 0.0
 
 
 func _ready() -> void:
+	add_to_group("toaster")
+	SeasonPass.new_fight()
 	Engine.time_scale = CombatDebug.time_factor  # a kill slow motion never survives a scene reload
 	_build_terrain()
 	attacks = Node2D.new()
@@ -120,6 +122,9 @@ func add_enemy(e: Enemy) -> void:
 
 func on_enemy_died(e: Enemy) -> void:
 	enemies_defeated += 1
+	SeasonPass.track("kill")
+	if e.is_elite():
+		SeasonPass.track("elite")
 	exp_points += float(e.data.exp)
 	player.add_gauge(8.0)
 	Profile.add_splitter(int(ceil(float(e.data.exp) / 4.0)))
@@ -418,12 +423,14 @@ func _combo_scale(target: Node2D) -> float:
 	combo = combo + 1 if combo_time < COMBO_GAP else 1
 	combo_time = 0.0
 	best_combo = maxi(best_combo, combo)
+	SeasonPass.track("combo", combo)
 	return maxf(0.5, 1.0 - 0.06 * maxi(0, combo - 4))
 
 
 func _trigger_reaction(target: Node2D, res: Dictionary) -> void:
 	var info: Dictionary = GameData.REACTIONS[res.reaction]
 	last_reaction = res.reaction
+	SeasonPass.track("reaction")
 	reactions_found[res.reaction] = true
 	var center: Vector2 = target.get_hurt_rect().get_center()
 	hit_landed.emit(center, info.color, true)

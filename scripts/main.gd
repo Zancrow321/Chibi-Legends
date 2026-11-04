@@ -114,6 +114,7 @@ func _add_menu() -> GameMenu:
 	var menu := GameMenu.new()
 	layer.add_child(menu)
 	layer.add_child(GachaScreen.new())  # Sternschrein (gacha for fighting styles)
+	layer.add_child(PassScreen.new())  # Herausforderungen + Saison-Pass (P)
 	add_child(layer)
 	return menu
 

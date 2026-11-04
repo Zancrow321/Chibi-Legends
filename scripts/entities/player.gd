@@ -862,6 +862,7 @@ func use_super() -> void:
 	if not infinite_aura:
 		aura -= s.cost
 	super_cd = s.cooldown
+	SeasonPass.track("meisterzug")
 	in_super = true
 	velocity.x = 0.0
 	visual.set_state("cast")
@@ -883,6 +884,7 @@ func _use_meisterzug() -> void:
 		return
 	if not infinite_aura:
 		gauge -= cost
+	SeasonPass.track("meisterzug")
 	if _glut_busy():
 		glut.interrupt()  # super cancel out of a Zug that hit
 	in_super = true

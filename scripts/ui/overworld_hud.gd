@@ -13,6 +13,7 @@ const MENU := [
 	["Inventar", "", "", 1],
 	["Kampfstil", "", "Den Kampfstil stellst du im Kampfareal ein (Tab)", -1],
 	["Schrein", "", "", -2],
+	["Pass", "P", "", -3],
 	["Optionen", "", "", 2],
 ]
 const TYPE_SPEED := 52.0  # characters per second
@@ -46,6 +47,7 @@ func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_PASS
 	font = load("res://assets/fonts/PixelifySans-SemiBold.ttf")
+	add_to_group("toaster")
 
 
 func dialog_open() -> bool:
@@ -124,6 +126,8 @@ func _gui_input(event: InputEvent) -> void:
 				select.open_for(world.walker.visual)
 			elif MENU[i][3] == -2:
 				get_tree().call_group("gacha", "open")
+			elif MENU[i][3] == -3:
+				get_tree().call_group("season_pass", "open")
 			elif MENU[i][3] >= 0 and menu != null:
 				menu.open(MENU[i][3])
 			else:

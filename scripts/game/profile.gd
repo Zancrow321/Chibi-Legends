@@ -72,6 +72,7 @@ static func add_exp(amount: float) -> int:
 	save()
 	if ups > 0:
 		Gacha.on_level_up(ups)
+		SeasonPass.track("level", ups)
 	return ups
 
 

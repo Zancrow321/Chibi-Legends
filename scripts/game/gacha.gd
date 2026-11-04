@@ -230,6 +230,7 @@ static func pull(banner: Dictionary, n: int) -> Array:
 			r = 1  # the 10-pull guarantee
 		out.append(_prize(banner, r))
 	pulls_total += n
+	SeasonPass.track("gacha", n)
 	for res in out:
 		history.push_front({"r": res.rarity, "name": res.name, "banner": banner.get("title", "")})
 	history = history.slice(0, 40)

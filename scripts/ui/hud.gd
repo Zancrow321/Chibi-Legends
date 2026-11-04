@@ -15,7 +15,7 @@ const BADGE := Color("ff7a59")
 
 const MENU := [
 	["Charakter", "Customizing und Ausrüstung kommen in Phase 2"],
-	["Fähigkeiten", "Fähigkeiten-Auswahl und Set-Boni kommen in Phase 2"],
+	["Pass", "Herausforderungen und Saison-Pass (P)"],
 	["Inventar", "Inventar kommt in Phase 2"],
 	["Gruppe", "Koop für bis zu 4 Spieler kommt in Phase 4"],
 	["Gilde", "Gilden kommen in Phase 3"],
@@ -89,6 +89,8 @@ func _gui_input(event: InputEvent) -> void:
 					get_tree().call_group("game_menu", "open", 2)
 				"Gacha":
 					get_tree().call_group("gacha", "open")
+				"Pass":
+					get_tree().call_group("season_pass", "open")
 				_:
 					room.toast(MENU[i][1])
 			accept_event()
