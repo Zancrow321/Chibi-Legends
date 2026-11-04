@@ -447,6 +447,13 @@
    "unlock": "",
    "weapon": "none"
   },
+  "wirbelwille": {
+   "name": "Wirbelwille",
+   "text": "Windschatten, Kreiselfaust, Teamwork-Marken (Legendär)",
+   "unlock": "",
+   "weapon": "none",
+   "unarmed": true
+  },
   "lauffeuer": {
    "name": "Lauffeuer",
    "text": "Flammenleib: Brandherde legen und mit der Flammenfaust zünden",

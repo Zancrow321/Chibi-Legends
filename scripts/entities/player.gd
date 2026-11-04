@@ -149,6 +149,8 @@ func init_style() -> void:
 		glut = KlangCaster.new()
 	elif style.id == "spannkraft":
 		glut = FederCaster.new()
+	elif style.id == "wirbelwille":
+		glut = WirbelCaster.new()
 	else:
 		glut = GlutCaster.new()
 	add_child(glut)
@@ -811,6 +813,16 @@ func _use_meisterzug() -> void:
 		ms.variant = style.super_variant
 		ms.title = style.variant().get("name", "Meisterzug")
 		world.add_child(ms)
+		return
+	if glut is WirbelCaster:
+		var ws := WirbelSuper.new()
+		ws.room = world
+		ws.player = self
+		ws.caster = glut
+		ws.wfx = glut.wfx
+		ws.variant = style.super_variant
+		ws.title = style.variant().get("name", "Meisterzug")
+		world.add_child(ws)
 		return
 	if glut is FederCaster:
 		var fs := FederSuper.new()

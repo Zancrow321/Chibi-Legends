@@ -311,6 +311,9 @@ func _draw_style_panel(r: Rect2) -> void:
 	if g is FederCaster:
 		_draw_feder_panel(r, g)
 		return
+	if g is WirbelCaster:
+		_draw_wirbel_panel(r, g)
+		return
 	_panel(r, PANEL, 13, Color("ff9a2a", 0.6))
 	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, Color("ffb347"))
 	var names := ["Rot", "Orange", "Weiß"]
@@ -402,6 +405,42 @@ func _draw_mond_panel(r: Rect2, g: MondCaster) -> void:
 		_text(Vector2(bx, r.position.y + 19), "Mondphase: " + info, 15, MUTED)
 
 
+## Wirbelwille: three Teamwork-Marken (small kites), the clones out and
+## the Orkanmantel timer.
+func _draw_wirbel_panel(r: Rect2, g: WirbelCaster) -> void:
+	var turq := Color("5fe3e0")
+	var gold := Color("ffd36a")
+	var ice := Color("bff6ff")
+	_panel(r, PANEL, 13, Color(turq, 0.55))
+	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, TEXT)
+	var full := g.marks >= WirbelCaster.MAX_MARKS
+	for i in WirbelCaster.MAX_MARKS:
+		var c := Vector2(r.position.x + 118 + i * 18, r.get_center().y)
+		var kite := PackedVector2Array([c + Vector2(0, -8), c + Vector2(5, -1), c + Vector2(0, 8), c + Vector2(-5, -1)])
+		var col := gold if full else turq
+		if g.marks > i:
+			if full:
+				draw_circle(c, 9.0 + 1.5 * sin(_t * 12.0), Color(gold, 0.25))
+			draw_colored_polygon(kite, col)
+			draw_line(c + Vector2(0, -8), c + Vector2(0, 8), Color(1, 1, 1, 0.5), 1.0)
+			draw_line(c + Vector2(0, 8), c + Vector2(-3, 12), Color(col, 0.8), 1.0)
+		else:
+			kite.append(kite[0])
+			draw_polyline(kite, Color(turq, 0.35), 1.5)
+	var x := r.position.x + 178
+	for i in WirbelCaster.MAX_CLONES:
+		var cc := Vector2(x + i * 14, r.get_center().y)
+		var out := i < g.clone_count()
+		draw_circle(cc + Vector2(0, -4), 3.0, Color(ice, 0.9 if out else 0.2))
+		draw_rect(Rect2(cc + Vector2(-3, -1), Vector2(6, 7)), Color(ice, 0.9 if out else 0.2))
+	var info := "Marken %d" % g.marks
+	if g.mantle_time > 0.0:
+		info = "MANTEL %.1f s" % g.mantle_time
+	elif full:
+		info = "Gemeinsam!"
+	_text(Vector2(x + WirbelCaster.MAX_CLONES * 14 + 4, r.position.y + 19), info, 13, gold if g.mantle_time > 0.0 or full else MUTED)
+
+
 ## Spannkraft: Spannung (3 pips while holding), Federringe (Übergänge left)
 ## and the Grenzenlos timer.
 func _draw_feder_panel(r: Rect2, g: FederCaster) -> void:
@@ -483,7 +522,7 @@ func _draw_notice(W: float) -> void:
 	var klang := room.player.glut is KlangCaster
 	var tips := [
 		"%s: L + Richtung, L halten = verstärkt" % room.player.style.style_name() if room.player.style != null else "L + Richtung = Zug",
-		"Treffer im Takt füllen den Einklang" if klang else ("Brandherde legen, mit der Flammenfaust zünden" if room.player.glut is FeuerCaster else "Verschiedene Züge im Combo heizen die Klinge"),
+		"Treffer im Takt füllen den Einklang" if klang else ("Brandherde legen, mit der Flammenfaust zünden" if room.player.glut is FeuerCaster else ("Verschiedene Züge im Combo geben Teamwork-Marken" if room.player.glut is WirbelCaster else "Verschiedene Züge im Combo heizen die Klinge")),
 		"Tab: Kampfstil, Alternativen und Slots",
 		"Der Sparringspfahl rechts schlägt zurück!",
 		"Willkommen im Trainingswald der Akademie!",
@@ -568,8 +607,8 @@ func _draw_training() -> void:
 func _draw_skill_bar(W: float, H: float) -> void:
 	var p := room.player
 	var slots := [
-		{"label": "Leicht", "key": GameInput.key_label("light"), "icon": "faust" if room.player.glut is FeuerCaster else "attack", "cd": 0.0, "max": 1.0},
-		{"label": "Schwer", "key": GameInput.key_label("heavy"), "icon": "tritt" if room.player.glut is FeuerCaster else "heavy", "cd": 0.0, "max": 1.0},
+		{"label": "Leicht", "key": GameInput.key_label("light"), "icon": "faust" if (room.player.glut is FeuerCaster or room.player.glut is WirbelCaster) else "attack", "cd": 0.0, "max": 1.0},
+		{"label": "Schwer", "key": GameInput.key_label("heavy"), "icon": "tritt" if (room.player.glut is FeuerCaster or room.player.glut is WirbelCaster) else "heavy", "cd": 0.0, "max": 1.0},
 		{"label": "Dash", "key": "Shift", "icon": "dash", "cd": p.dash_cd, "max": Player.DASH_COOLDOWN},
 	]
 	var arrows := ["", "→", "↑", "↓"]
