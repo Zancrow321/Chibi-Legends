@@ -14,6 +14,7 @@ const KEYS := {
 	"special": [KEY_L],
 	"super": [KEY_P],
 	"toggle_figure": [KEY_T],
+	"cycle_moveset": [KEY_F],
 	"cycle_fx": [KEY_V],
 	"toggle_infinite_aura": [KEY_U],
 	"reset_cooldowns": [KEY_R],

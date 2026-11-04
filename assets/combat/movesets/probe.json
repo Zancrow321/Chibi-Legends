@@ -1,0 +1,465 @@
+{
+	"_doc": "Importiert aus M.U.G.E.N (probe.def). Werte sind Vorschläge: Schaden, Rückstoß und Reihenfolge der Tasten bitte im Spiel prüfen.",
+	"name": "Probe",
+	"weight": "mittel",
+	"source": {
+		"format": "mugen",
+		"def": "probe.def",
+		"author": "Chibi Legends Team",
+		"rights_confirmed": true,
+		"imported": "2026-11-04"
+	},
+	"sprite": {
+		"cell": [
+			43,
+			66
+		],
+		"foot": [
+			15,
+			61
+		],
+		"body": [
+			1,
+			-27,
+			17,
+			53
+		],
+		"states": {
+			"idle": "a0",
+			"run": "a20",
+			"jump": "a41",
+			"fall": "a44"
+		},
+		"strips": {
+			"a0": {
+				"file": "res://assets/characters/imported/probe/a0.png",
+				"frames": 4,
+				"ticks": [
+					8,
+					8,
+					8,
+					8
+				],
+				"loop": 0
+			},
+			"a20": {
+				"file": "res://assets/characters/imported/probe/a20.png",
+				"frames": 4,
+				"ticks": [
+					6,
+					6,
+					6,
+					6
+				],
+				"loop": 0
+			},
+			"a41": {
+				"file": "res://assets/characters/imported/probe/a41.png",
+				"frames": 1,
+				"ticks": [
+					4
+				],
+				"loop": 0
+			},
+			"a44": {
+				"file": "res://assets/characters/imported/probe/a44.png",
+				"frames": 1,
+				"ticks": [
+					4
+				],
+				"loop": 0
+			},
+			"a200": {
+				"file": "res://assets/characters/imported/probe/a200.png",
+				"frames": 4,
+				"ticks": [
+					3,
+					3,
+					4,
+					8
+				],
+				"loop": 0
+			},
+			"a210": {
+				"file": "res://assets/characters/imported/probe/a210.png",
+				"frames": 5,
+				"ticks": [
+					5,
+					6,
+					6,
+					4,
+					12
+				],
+				"loop": 0
+			},
+			"a220": {
+				"file": "res://assets/characters/imported/probe/a220.png",
+				"frames": 4,
+				"ticks": [
+					6,
+					6,
+					4,
+					14
+				],
+				"loop": 0
+			},
+			"a230": {
+				"file": "res://assets/characters/imported/probe/a230.png",
+				"frames": 3,
+				"ticks": [
+					4,
+					5,
+					10
+				],
+				"loop": 0
+			},
+			"a600": {
+				"file": "res://assets/characters/imported/probe/a600.png",
+				"frames": 3,
+				"ticks": [
+					4,
+					6,
+					10
+				],
+				"loop": 0
+			},
+			"a1000": {
+				"file": "res://assets/characters/imported/probe/a1000.png",
+				"frames": 5,
+				"ticks": [
+					6,
+					3,
+					6,
+					4,
+					14
+				],
+				"loop": 0
+			}
+		}
+	},
+	"moves": {
+		"leicht": {
+			"name": "Leichter Schlag",
+			"button": "light",
+			"dir": "neutral",
+			"startup": 6,
+			"active": 4,
+			"recovery": 8,
+			"damage": 6,
+			"hitbox": [
+				15,
+				-32,
+				15,
+				9
+			],
+			"knockback": 68,
+			"draw": "hit",
+			"strip": "a200",
+			"source_state": 200,
+			"pose": {
+				"startup": [
+					0,
+					0,
+					0,
+					1,
+					1,
+					1
+				],
+				"active": [
+					2,
+					2,
+					2,
+					2
+				],
+				"recovery": [
+					3,
+					3,
+					3,
+					3,
+					3,
+					3,
+					3,
+					3
+				]
+			},
+			"chain": "schwer"
+		},
+		"schwer": {
+			"name": "Schwerer Schlag",
+			"button": "heavy",
+			"dir": "neutral",
+			"startup": 11,
+			"active": 10,
+			"recovery": 12,
+			"damage": 15,
+			"hitbox": [
+				19,
+				-32,
+				18,
+				11
+			],
+			"knockback": 136,
+			"draw": "hit",
+			"strip": "a210",
+			"source_state": 210,
+			"pose": {
+				"startup": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					1,
+					1,
+					1,
+					1,
+					1,
+					1
+				],
+				"active": [
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					3,
+					3,
+					3,
+					3
+				],
+				"recovery": [
+					4,
+					4,
+					4,
+					4,
+					4,
+					4,
+					4,
+					4,
+					4,
+					4,
+					4,
+					4
+				]
+			},
+			"profile": "heavy"
+		},
+		"schwer_vor": {
+			"name": "Hoher Tritt",
+			"button": "heavy",
+			"dir": "forward",
+			"startup": 6,
+			"active": 10,
+			"recovery": 14,
+			"damage": 14,
+			"hitbox": [
+				16,
+				-41,
+				16,
+				16
+			],
+			"knockback": 102,
+			"draw": "hit",
+			"strip": "a220",
+			"source_state": 220,
+			"pose": {
+				"startup": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"active": [
+					1,
+					1,
+					1,
+					1,
+					1,
+					1,
+					2,
+					2,
+					2,
+					2
+				],
+				"recovery": [
+					3,
+					3,
+					3,
+					3,
+					3,
+					3,
+					3,
+					3,
+					3,
+					3,
+					3,
+					3,
+					3,
+					3
+				]
+			},
+			"launch": 81,
+			"profile": "heavy"
+		},
+		"leicht_unten": {
+			"name": "Feger",
+			"button": "light",
+			"dir": "down",
+			"startup": 4,
+			"active": 5,
+			"recovery": 10,
+			"damage": 10,
+			"hitbox": [
+				17,
+				-4,
+				18,
+				8
+			],
+			"knockback": 51,
+			"draw": "hit",
+			"strip": "a230",
+			"source_state": 230,
+			"pose": {
+				"startup": [
+					0,
+					0,
+					0,
+					0
+				],
+				"active": [
+					1,
+					1,
+					1,
+					1,
+					1
+				],
+				"recovery": [
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2
+				]
+			},
+			"launch": 136
+		},
+		"leicht_luft": {
+			"name": "Lufttritt",
+			"button": "light",
+			"dir": "air",
+			"startup": 4,
+			"active": 6,
+			"recovery": 10,
+			"damage": 11,
+			"hitbox": [
+				10,
+				-15,
+				14,
+				16
+			],
+			"knockback": 51,
+			"draw": "hit",
+			"strip": "a600",
+			"source_state": 600,
+			"pose": {
+				"startup": [
+					0,
+					0,
+					0,
+					0
+				],
+				"active": [
+					1,
+					1,
+					1,
+					1,
+					1,
+					1
+				],
+				"recovery": [
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2
+				]
+			},
+			"launch": -163
+		},
+		"spezial_vor": {
+			"name": "Funkenstoss",
+			"button": "special",
+			"dir": "forward",
+			"startup": 9,
+			"active": 10,
+			"recovery": 14,
+			"damage": 23,
+			"hitbox": [
+				7,
+				-42,
+				19,
+				40
+			],
+			"knockback": 51,
+			"draw": "hit",
+			"strip": "a1000",
+			"source_state": 1000,
+			"pose": {
+				"startup": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					1,
+					1,
+					1
+				],
+				"active": [
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					3,
+					3,
+					3,
+					3
+				],
+				"recovery": [
+					4,
+					4,
+					4,
+					4,
+					4,
+					4,
+					4,
+					4,
+					4,
+					4,
+					4,
+					4,
+					4,
+					4
+				]
+			},
+			"launch": 244,
+			"profile": "heavy"
+		}
+	}
+}

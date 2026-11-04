@@ -1,0 +1,13 @@
+Figur: Probe (von Chibi Legends Team)
+Sprites: probe.sff (SFF v2, 34 Bilder)
+Animationen: probe.air (10 Aktionen)
+Zustände: 7, Befehle: 6
+Größe: Stehbild 99 px hoch -> 56 px (Faktor 0.57)
+
+Belegung:
+  leicht           light    neutral  Zustand 200, 6/4/8 Bilder, Schaden 6
+  schwer           heavy    neutral  Zustand 210, 11/10/12 Bilder, Schaden 15
+  schwer_vor       heavy    forward  Zustand 220, 6/10/14 Bilder, Schaden 14
+  leicht_unten     light    down     Zustand 230, 4/5/10 Bilder, Schaden 10
+  leicht_luft      light    air      Zustand 600, 4/6/10 Bilder, Schaden 11
+  spezial_vor      special  forward  Zustand 1000, 9/10/14 Bilder, Schaden 23

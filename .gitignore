@@ -1,5 +1,8 @@
 # Godot
 .godot/
+# Import-Daten erzeugt Godot beim Öffnen selbst
+*.import
+!assets/fonts/*.import
 *.translation
 export_credentials.cfg
 # Builds
