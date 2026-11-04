@@ -1,0 +1,17 @@
+{
+  "id": "gesicht_entschlossen",
+  "name": "Entschlossen",
+  "slot": "face",
+  "channels": [
+    {
+      "key": "eyes",
+      "label": "Augen",
+      "group": "augen",
+      "appearance": true
+    }
+  ],
+  "layers": {
+    "face": "face.png"
+  },
+  "source": "platzhalter"
+}

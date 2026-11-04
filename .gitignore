@@ -7,4 +7,6 @@ build/
 
 # PixelLab Pip: lokale Einstellungen und Python-Caches
 .claude/skills/pixellab-pip/pixellab-pip.json
+# PixelLab-/Import-Zwischenstände
+assets/characters/items/*/_*.png
 __pycache__/

@@ -13,6 +13,8 @@ const KEYS := {
 	"skill_2": [KEY_L, KEY_2],
 	"skill_3": [KEY_I, KEY_3],
 	"skill_4": [KEY_O, KEY_4],
+	"super": [KEY_P, KEY_5],
+	"cycle_fx": [KEY_V],
 	"toggle_infinite_aura": [KEY_U],
 	"reset_cooldowns": [KEY_R],
 	"cycle_look": [KEY_C],
@@ -36,6 +38,7 @@ const PAD_BUTTONS := {
 ## Triggers (axis) for skill 4, sticks for movement.
 const PAD_AXES := {
 	"skill_4": [[JOY_AXIS_TRIGGER_RIGHT, 1.0]],
+	"super": [[JOY_AXIS_TRIGGER_LEFT, 1.0]],
 	"move_left": [[JOY_AXIS_LEFT_X, -1.0]],
 	"move_right": [[JOY_AXIS_LEFT_X, 1.0]],
 	"move_down": [[JOY_AXIS_LEFT_Y, 1.0]],

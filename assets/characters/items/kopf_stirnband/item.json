@@ -1,0 +1,17 @@
+{
+  "id": "kopf_stirnband",
+  "name": "Stirnband",
+  "slot": "headgear",
+  "channels": [
+    {
+      "key": "c0",
+      "label": "Band",
+      "group": "stoff",
+      "default": "marine"
+    }
+  ],
+  "layers": {
+    "headgear": "headgear.png"
+  },
+  "source": "platzhalter"
+}

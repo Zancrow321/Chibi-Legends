@@ -1,0 +1,18 @@
+{
+  "id": "accessoire_schal",
+  "name": "Kampfschal",
+  "slot": "accessory",
+  "channels": [
+    {
+      "key": "c0",
+      "label": "Schal",
+      "group": "stoff",
+      "default": "rot"
+    }
+  ],
+  "layers": {
+    "acc_back": "acc_back.png",
+    "acc_front": "acc_front.png"
+  },
+  "source": "platzhalter"
+}
