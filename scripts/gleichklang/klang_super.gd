@@ -14,10 +14,10 @@ extends Node2D
 ## for a moment. The intro freezes the world; afterwards hit-stop applies.
 
 const INTRO := 0.9
-const BLUE := Color("8fd3ff")
-const PALE := Color("cfeaff")
-const WHITE := Color("f4fbff")
-const VIOLET := Color("a884f3")
+var BLUE := Color("8fd3ff")
+var PALE := Color("cfeaff")
+var WHITE := Color("f4fbff")
+var VIOLET := Color("a884f3")
 
 var room: TrainingRoom
 var player: Player
@@ -38,6 +38,11 @@ var _pose := 5
 
 
 func _ready() -> void:
+	# the chosen Klangfarbe
+	BLUE = caster.style.color("blue")
+	PALE = caster.style.color("pale")
+	WHITE = caster.style.color("white")
+	VIOLET = caster.style.color("violet")
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	z_index = CombatFx.FOCUS_Z + 2
 	var m := CanvasItemMaterial.new()
