@@ -46,6 +46,9 @@ func hit(pos: Vector2, element: String, profile: String, dir: float) -> void:
 	var heavy := profile != "light" and profile != "super"
 	sparks.hit(pos, element, p.spark * FxSettings.factor("spark"), dir, heavy)
 	_apply(p, dir)
+	_screen_fx(pos, profile)
+	if element == "feuer" and heavy:
+		PostFx.heat_burst(pos, 50.0, 1.0, 0.7)
 
 
 ## Reaction / finisher blast (big rings and star) with the given profile.
@@ -53,6 +56,22 @@ func blast(pos: Vector2, col: Color, radius: float, profile: String) -> void:
 	var p: Dictionary = FxSettings.HIT[profile]
 	sparks.blast(pos, col, radius, p.spark * FxSettings.factor("spark"))
 	_apply(p, 0.0)
+	_screen_fx(pos, profile, true)
+
+
+## Screen shader on top (PostFx): a ring for heavy blows, a colour split
+## for reactions and finishers. Heat haze for fire hits.
+func _screen_fx(pos: Vector2, profile: String, is_blast := false) -> void:
+	match profile:
+		"heavy":
+			if is_blast:
+				PostFx.shockwave(pos, 0.5, 0.6, 0.4)
+		"reaction":
+			PostFx.shockwave(pos, 1.0, 0.9, 0.5)
+			PostFx.aberrate(2.5)
+		"super_final":
+			PostFx.shockwave(pos, 2.0, 1.4, 0.7)
+			PostFx.aberrate(5.0)
 
 
 func _apply(p: Dictionary, dir: float) -> void:
@@ -105,6 +124,7 @@ func shake(amount: float, dir := 0.0) -> void:
 func flash(strength: float, col := Color.WHITE) -> void:
 	_flash = maxf(_flash, clampf(strength, 0.0, 1.0))
 	_flash_color = col
+	PostFx.aberrate(strength * 4.0)
 
 
 func punch(amount: float) -> void:
@@ -113,6 +133,7 @@ func punch(amount: float) -> void:
 
 func dim(target: float) -> void:
 	_dim_target = target
+	PostFx.hold_aberration(1.5 if target > 0.6 else 0.0)  # supers hold the screen
 
 
 func is_frozen() -> bool:

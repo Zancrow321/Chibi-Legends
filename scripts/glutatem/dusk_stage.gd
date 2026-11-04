@@ -23,6 +23,9 @@ const MAX_HAZARD_LIGHTS := 3
 ## [texture, scroll factor, canvas layer]
 const LAYERS := [["sky", 0.0, -5], ["mountains", 0.06, -4], ["forest_far", 0.16, -3], ["forest_mid", 0.32, -2], ["trees_near", 0.58, -1], ["foreground", 1.3, 3]]
 
+## Wind in the tree layers (shaders/fx/wind_sway.gdshader): [amount, top, root].
+const SWAY := {"trees_near": [2.0, 0.0, 0.55], "forest_mid": [1.0, 0.55, 0.87]}
+
 static var enabled := true
 
 var room: TrainingRoom
@@ -105,6 +108,8 @@ func _ready() -> void:
 	_player_light = _light(Color(0.85, 0.9, 1.0), 0.45, 0.42)
 	room.player.add_child(_player_light)
 	_player_light.position = Vector2(0, -24)
+	var pl := room.player
+	PostFx.add_heat_source(pl, Vector2(0, -30), 30.0, func(): return clampf((pl.glut.blade_heat() - 0.25) * 1.3, 0.0, 1.0) if pl.glut != null else 0.0)
 
 	for x in LANTERNS:
 		_lantern(x)
@@ -228,6 +233,7 @@ func _forge() -> void:
 	_forge_light = _light(Color(1.0, 0.5, 0.22), 1.6, 1.0)
 	_forge_light.position = Vector2(FORGE_X, y - 18)
 	room.add_child(_forge_light)
+	PostFx.add_heat_source(_forge_light, Vector2(0, -16), 34.0, 0.9)
 	var h := _halo_sprite(Color(1.0, 0.45, 0.2, 0.55), 0.9)
 	h.position = Vector2(FORGE_X, y - 14)
 	room.add_child(h)
@@ -245,8 +251,24 @@ func _build_parallax() -> void:
 		s.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 		s.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		s.scale = Vector2(2, 2)
+		if SWAY.has(spec[0]):
+			s.material = sway_material(SWAY[spec[0]])
 		cl.add_child(s)
 		_layers.append([s, spec[1]])
+		if spec[0] == "trees_near":
+			var atmo := Atmosphere.new()  # god rays + mist over the near trees, under the fighters
+			atmo.preset = "dusk"
+			cl.add_child(atmo)
+
+
+## Wind material for a parallax layer: [amount in texture pixels, top uv, root uv].
+static func sway_material(p: Array) -> ShaderMaterial:
+	var m := ShaderMaterial.new()
+	m.shader = load("res://shaders/fx/wind_sway.gdshader")
+	m.set_shader_parameter("amount", p[0])
+	m.set_shader_parameter("top", p[1])
+	m.set_shader_parameter("root", p[2])
+	return m
 
 
 # --- lights for the fighting style ---------------------------------------------

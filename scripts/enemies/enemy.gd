@@ -104,6 +104,8 @@ var debug_rect_t := 0.0
 var sprite: Sprite2D
 var _textures: Dictionary = {}
 var _overlay: Node2D  # HP bar and "!" (not lit by the dusk light)
+var _dissolve: ShaderMaterial  # pixel dissolve when dying (dissolve.gdshader)
+var _seam: Sprite2D  # glowing seam of the dissolve, unshaded copy on top
 
 
 static func frame_data() -> Dictionary:
@@ -604,10 +606,42 @@ func _dying() -> void:
 			world.effects.burst(c, Color("2a1a1a"), 10, 60.0, -40.0)  # dark wisps rise
 			_spawn_orbs()
 	var gone := 0.5 if data.kind == "slime" else float(look.anims.death[0]) / float(look.anims.death[1]) + 0.5
-	if _st > gone - 0.4:
+	if _st > gone - 0.8 and Hd2dSettings.quality > 0:
+		_burn_away(clampf((_st - (gone - 0.8)) / 0.75, 0.0, 1.0))
+	elif _st > gone - 0.4:
 		sprite.visible = fmod(_st, 0.08) < 0.05
 	if _st > gone:
 		queue_free()
+
+
+## The figure burns away in pixel blocks with a glowing seam in its own colour.
+func _burn_away(k: float) -> void:
+	if _dissolve == null:
+		_dissolve = ShaderMaterial.new()
+		_dissolve.shader = load("res://shaders/fx/dissolve.gdshader")
+		material = _dissolve  # the sprite uses the parent material
+		var sm := ShaderMaterial.new()
+		sm.shader = load("res://shaders/fx/dissolve_seam.gdshader")
+		var c: Color = data.color
+		sm.set_shader_parameter("edge_color", c.lerp(Color(1.0, 0.95, 0.8), 0.15))
+		sm.set_shader_parameter("edge_glow", 1.5)
+		_seam = Sprite2D.new()
+		_seam.centered = false
+		_seam.material = sm
+		_seam.z_index = 1
+		add_child(_seam)
+		var sd := randf() * 10.0
+		_dissolve.set_shader_parameter("seed", sd)
+		sm.set_shader_parameter("seed", sd)
+	_dissolve.set_shader_parameter("progress", k)
+	(_seam.material as ShaderMaterial).set_shader_parameter("progress", k)
+	_seam.texture = sprite.texture
+	_seam.hframes = sprite.hframes
+	_seam.frame = sprite.frame
+	_seam.flip_h = sprite.flip_h
+	_seam.scale = sprite.scale
+	_seam.position = sprite.position
+	_seam.visible = k < 1.0
 
 
 ## Little glowing orbs that fly up to the player (EXP).

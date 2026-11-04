@@ -387,6 +387,7 @@ func _build_light() -> void:
 	_halo_sprite(Color(0.6, 1.2, 1.6, 0.5), 0.55, _star_light.position)
 	_forge_light = _light(Color(1.0, 0.55, 0.25), 1.2, 0.8)
 	_forge_light.position = Vector2(930, GROUND_Y - 30)
+	PostFx.add_heat_source(_forge_light, Vector2(0, -8), 26.0, 0.7)
 	_halo_sprite(Color(1.6, 0.8, 0.3, 0.45), 0.5, Vector2(926, GROUND_Y - 32))
 	var wl := _light(Color(0.85, 0.9, 1.0), 0.35, 0.42, walker)
 	wl.position = Vector2(0, -24)
@@ -406,8 +407,14 @@ func _build_parallax() -> void:
 		s.scale = Vector2(2, 2)
 		if spec[0] == "foreground":
 			s.modulate = Color(0.75, 0.7, 0.8, 0.9)
+		if spec[0] == "near":
+			s.material = DuskStage.sway_material([1.0, 0.35, 0.64])  # wind in the courtyard trees
 		cl.add_child(s)
 		_layers.append([s, spec[1]])
+		if spec[0] == "near":
+			var atmo := Atmosphere.new()  # light morning mist over the near trees
+			atmo.preset = "day"
+			cl.add_child(atmo)
 
 
 func _build_atmosphere() -> void:

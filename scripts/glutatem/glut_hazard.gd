@@ -63,6 +63,8 @@ func _ready() -> void:
 	max_life = life
 	if kind != "spur":
 		x0 = global_position.x
+	if kind in ["lache", "krater", "spur", "welle"]:
+		PostFx.add_heat_source(self, Vector2(0, -10), 40.0, func(): return clampf(life / 0.4, 0.0, 1.0))
 	if world.stage != null and kind != "brocken":
 		_light = world.stage.make_light(Color(1.0, 0.55, 0.25), 0.0, 0.55)
 		if _light != null:
