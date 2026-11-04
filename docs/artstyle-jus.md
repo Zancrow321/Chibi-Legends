@@ -74,10 +74,10 @@ Gemessen am 2026-11-04 an einer Kämpferfigur aus einem privaten Export (nur Zah
 
 | Punkt | Testfigur (Stand PR #10) | Ziel nach Referenz |
 |---|---|---|
-| Höhe | ca. 92 px | ca. 56–60 px in der 96er Zelle |
-| Breite stehend | ca. 74 px inkl. Schwert | ca. 28–32 px Körper |
+| Höhe | Test 1: ca. 92 px · Test 2: 55 px | ca. 56–60 px in der 96er Zelle |
+| Breite stehend | Test 1: ca. 74 px · Test 2: 34 px inkl. Schwert | ca. 28–32 px Körper |
 | Proportion | ca. 2,2 Köpfe | ca. 2,7 Köpfe inkl. Frisur |
-| Farben | 46 | 13–16 |
+| Farben | Test 1: 46 · Test 2: 15 | 13–16 |
 | Umriss | überall schwarz | ca. 70 % fast schwarz, Rest Flächenfarbe |
 
 ## PixelLab
