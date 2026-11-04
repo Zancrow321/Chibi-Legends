@@ -1,0 +1,66 @@
+name: Web-Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  GODOT_VERSION: "4.3"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Godot und Web-Vorlagen installieren
+        run: |
+          base=https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable
+          curl -sSL -o godot.zip "$base/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip -q godot.zip && mv Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/local/bin/godot
+          curl -sSL -o templates.tpz "$base/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+          dir=~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mkdir -p "$dir"
+          unzip -q -j templates.tpz 'templates/web_nothreads_release.zip' 'templates/web_nothreads_debug.zip' 'templates/version.txt' -d "$dir"
+          rm godot.zip templates.tpz
+
+      - name: Projekt importieren und Skripte prüfen
+        run: |
+          godot --headless --import
+          godot --headless --quit-after 60 2>&1 | tee run.log
+          ! grep -E "SCRIPT ERROR|Parse Error" run.log
+
+      - name: Web-Export
+        run: |
+          mkdir -p build/web
+          godot --headless --export-release "Web" build/web/index.html
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: chibi-legends-web
+          path: build/web
+
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request' && vars.DEPLOY_PAGES == 'true'
+        with:
+          path: build/web
+
+  deploy:
+    # Nur aktiv, wenn GitHub Pages eingerichtet ist und die Repo-Variable DEPLOY_PAGES=true gesetzt ist.
+    if: github.event_name != 'pull_request' && vars.DEPLOY_PAGES == 'true'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

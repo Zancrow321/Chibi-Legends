@@ -1,3 +1,10 @@
+# Godot
+.godot/
+*.translation
+export_credentials.cfg
+# Builds
+build/
+
 # PixelLab Pip: lokale Einstellungen und Python-Caches
 .claude/skills/pixellab-pip/pixellab-pip.json
 __pycache__/
