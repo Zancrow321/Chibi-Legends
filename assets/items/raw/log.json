@@ -1,0 +1,146 @@
+{
+ "waffe_0": {
+  "prompt": "a slim katana with a red wrapped grip, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 79,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "waffe_1": {
+  "prompt": "a broad two-handed greatsword, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 79,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "waffe_2": {
+  "prompt": "a curved sabre with a golden guard, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 79,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "oberteil_0": {
+  "prompt": "a sleeveless martial arts vest, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 79,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "oberteil_1": {
+  "prompt": "a padded leather jacket, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 79,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "oberteil_2": {
+  "prompt": "a light armored chest plate, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 79,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "hose_0": {
+  "prompt": "loose martial arts trousers, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 79,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "hose_1": {
+  "prompt": "leather leg guards, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 79,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "hose_2": {
+  "prompt": "armored greaves with knee plates, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 79,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "schuhe_0": {
+  "prompt": "simple cloth sandals, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 79,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "schuhe_1": {
+  "prompt": "sturdy leather boots, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 79,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "schuhe_2": {
+  "prompt": "light running shoes with wing ornaments, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 79,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "accessoire_0": {
+  "prompt": "a red headband, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 79,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "accessoire_1": {
+  "prompt": "a scarf with a golden clasp, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 79,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "accessoire_2": {
+  "prompt": "a belt with a round buckle, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 79,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "talisman_0": {
+  "prompt": "a wooden amulet on a string, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 79,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "talisman_1": {
+  "prompt": "a glowing round pearl pendant, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 79,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "talisman_2": {
+  "prompt": "a fang necklace, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 79,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ }
+}
