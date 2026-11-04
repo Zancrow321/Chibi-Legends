@@ -1,0 +1,3 @@
+# PixelLab Pip: lokale Einstellungen und Python-Caches
+.claude/skills/pixellab-pip/pixellab-pip.json
+__pycache__/
