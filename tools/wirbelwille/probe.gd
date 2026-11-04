@@ -44,7 +44,7 @@ func _initialize() -> void:
 		[t + 840, "alt:wirbelsturz:kunai"], [t + 842, "cast:down"], [t + 860, "shot:14_kunai_regen"],
 		[t + 900, "super:sturmrad"], [t + 960, "shot:15_sturmrad_form"], [t + 1000, "shot:16_sturmrad_flug"], [t + 1080, "shot:17_sturmrad_abschluss"],
 		[t + 1200, "super:hundert_schatten"], [t + 1300, "shot:18_hundert_schatten"], [t + 1370, "shot:19_hundert_ende"],
-		[t + 1480, "super:orkanmantel"], [t + 1540, "shot:20_orkanmantel"], [t + 1560, "alt:kreiselfaust:"], [t + 1562, "cast:forward"], [t + 1584, "shot:21_mantel_kreiselfaust"],
+		[t + 1480, "super:orkanmantel"], [t + 1540, "shot:20_orkanmantel"], [t + 1600, "alt:kreiselfaust:"], [t + 1602, "cast:forward"], [t + 1626, "shot:21_mantel_kreiselfaust"],
 		[t + 1600, "shot:22_hud"],
 		[t + 2040, "shot:23_mantel_ende"],
 		[t + 2080, "quit"],
