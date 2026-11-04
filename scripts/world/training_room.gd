@@ -7,6 +7,9 @@ const WIDTH := 1400.0
 const GROUND_Y := 300.0
 const DPS_WINDOW := 4.0
 
+## Emitted on every hit (for lights, sounds, ...): world position and element color.
+signal hit_landed(pos: Vector2, color: Color, strong: bool)
+
 ## Solid ground pieces [x, y, w] (extend down past the screen) and
 ## one-way floating platforms [x, y, w].
 const GROUND := [[0.0, 300.0, 1000.0], [1000.0, 262.0, 400.0]]
@@ -227,6 +230,7 @@ func deal_hit(target: Node2D, base: float, element: String, from_x: float, knock
 	_record(dmg)
 	numbers.spawn_number(target.head_position(), dmg, col, target.get_instance_id(), res.reaction != "")
 	effects.burst(target.get_hurt_rect().get_center(), col, 6)
+	hit_landed.emit(target.get_hurt_rect().get_center(), col, false)
 	_shake = maxf(_shake, 1.5)
 	if res.reaction != "":
 		_trigger_reaction(target, res)
@@ -239,6 +243,7 @@ func _trigger_reaction(target: Node2D, res: Dictionary) -> void:
 	var center: Vector2 = target.get_hurt_rect().get_center()
 	numbers.spawn_text(target.head_position() + Vector2(0, -10), info.name + "!", info.color)
 	effects.burst(center, info.color, 22, 160.0, 60.0)
+	hit_landed.emit(center, info.color, true)
 	_shake = 5.0
 	if res.aoe_radius > 0.0:
 		effects.ring(center, res.aoe_radius, info.color)

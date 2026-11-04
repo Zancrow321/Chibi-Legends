@@ -2,10 +2,11 @@ extends Node2D
 ## Entry point: assembles background, training room and HUD.
 ## Phase 1 starts straight in the training room; menus and modes follow later.
 ## HD-2D look test: [B] switches the view (flat original / HD-2D A with a 3D
-## backdrop / HD-2D B fully 3D), [G] the graphics preset (Hoch/Mittel/Niedrig).
-## On the web, ?view=flat|a|b and ?q=0|1|2 in the URL pick them directly.
+## backdrop / HD-2D B fully 3D / Licht: 2D lights at dusk + parallax),
+## [G] the graphics preset (Hoch/Mittel/Niedrig).
+## On the web, ?view=flat|a|b|licht and ?q=0|1|2 in the URL pick them directly.
 
-const VIEWS := ["Original (flach)", "HD-2D A: 3D-Kulisse", "HD-2D B: alles 3D"]
+const VIEWS := ["Original (flach)", "HD-2D A: 3D-Kulisse", "HD-2D B: alles 3D", "Licht: Pixel + Dämmerung"]
 
 static var view_mode := 1
 static var _url_read := false
@@ -28,6 +29,11 @@ func _ready() -> void:
 			var backdrop := Hd2dBackdrop.new()
 			backdrop.room = room
 			add_child(backdrop)
+		3:
+			add_child(room)
+			var look := LightLook.new()
+			look.room = room
+			add_child(look)
 		2:
 			var stage := Hd2dStage.new()
 			stage.room = room
@@ -74,6 +80,6 @@ static func _read_url() -> void:
 		if kv.size() != 2:
 			continue
 		if kv[0] == "view":
-			view_mode = {"flat": 0, "a": 1, "b": 2}.get(kv[1], view_mode)
+			view_mode = {"flat": 0, "a": 1, "b": 2, "licht": 3}.get(kv[1], view_mode)
 		elif kv[0] == "q" and kv[1].is_valid_int():
 			Hd2dSettings.quality = clampi(kv[1].to_int(), 0, 2)
