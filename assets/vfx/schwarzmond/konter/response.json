@@ -1,0 +1,52 @@
+{
+ "usage": {
+  "type": "generations",
+  "generations": 1.0
+ },
+ "id": "157bcbdf-3133-40fa-a67b-75958e97db39",
+ "status": "completed",
+ "created_at": "2026-11-04T18:50:16.738960+00:00",
+ "last_response": {
+  "fps": 24,
+  "kind": "new",
+  "loop": false,
+  "name": "Sharp parry flash:",
+  "files": {
+   "sharp-parry-flash.gif": "https://api.pixellab.ai/mcp/pixel-tools/ea642db2-25b1-4806-ba68-6d75a6a91777/sharp-parry-flash.gif",
+   "sharp-parry-flash.png": "https://api.pixellab.ai/mcp/pixel-tools/ea642db2-25b1-4806-ba68-6d75a6a91777/sharp-parry-flash.png",
+   "sharp-parry-flash.json": "https://api.pixellab.ai/mcp/pixel-tools/ea642db2-25b1-4806-ba68-6d75a6a91777/sharp-parry-flash.json"
+  },
+  "parts": [
+   "star",
+   "arc",
+   "sparks"
+  ],
+  "anchor": {
+   "x": 47,
+   "y": 41,
+   "kind": "origin"
+  },
+  "artist": "lite",
+  "canvas": {
+   "h": 94,
+   "w": 94
+  },
+  "frames": 8,
+  "message": "A one-shot parry flash of about 0.33 s (8 frames at 24 fps): a white-cyan star bursts from the centre, a thick crescent arc sweeps past with a dark ink edge, and cyan sparks fly out and fade. Try the Star colour, Arc colour and Sparks colour sliders, and the Arc thickness slider for a bolder crescent. Two things fall short of your brief: the star's ring and streaks still come out orange (from the part's own colours), and the black crescent reads as a thin dark edge rather than a solid black ink shape. Ask me to strip the orange or make the arc solid black and I'll do it.",
+  "edit_url": "https://pixellab.ai/create-vfx?effect=43ca1300-e3e8-4452-813e-c030c44f4763",
+  "effect_id": "43ca1300-e3e8-4452-813e-c030c44f4763",
+  "gif_exact": true,
+  "result_id": "ea642db2-25b1-4806-ba68-6d75a6a91777",
+  "conversation": "KkQFyUR1meh7DufVxD-AAw.a7bc80acea974149971b95f3645d8761320c605312fc0643001b377df71de5d7",
+  "billing_usage": {
+   "usd": 0.0,
+   "type": "generations",
+   "generations": 1.0
+  },
+  "generation_id": "2a4cabf1-b3ec-4147-b8af-8b7df86b48bc",
+  "billing_charged": true,
+  "generation_mode": "vfx",
+  "pixel_tools_image": true,
+  "quoted_generations": 1
+ }
+}

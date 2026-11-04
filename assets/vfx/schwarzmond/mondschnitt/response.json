@@ -1,0 +1,48 @@
+{
+ "usage": {
+  "type": "generations",
+  "generations": 1.0
+ },
+ "id": "a3d9c652-861b-47b8-8809-e56fa47057cc",
+ "status": "completed",
+ "created_at": "2026-11-04T18:47:34.840948+00:00",
+ "last_response": {
+  "fps": 32,
+  "kind": "new",
+  "loop": false,
+  "name": "Black crescent slash",
+  "files": {
+   "black-crescent-slash.gif": "https://api.pixellab.ai/mcp/pixel-tools/75f0d569-3dbb-4604-9903-54338c8428f3/black-crescent-slash.gif",
+   "black-crescent-slash.png": "https://api.pixellab.ai/mcp/pixel-tools/75f0d569-3dbb-4604-9903-54338c8428f3/black-crescent-slash.png",
+   "black-crescent-slash.json": "https://api.pixellab.ai/mcp/pixel-tools/75f0d569-3dbb-4604-9903-54338c8428f3/black-crescent-slash.json"
+  },
+  "parts": [],
+  "anchor": {
+   "x": 64,
+   "y": 40,
+   "kind": "origin"
+  },
+  "artist": "lite",
+  "canvas": {
+   "h": 80,
+   "w": 128
+  },
+  "frames": 10,
+  "message": "A one-shot black crescent slash, about 0.3 seconds at 32 fps: it whips in from the lower left, sweeps across the frame in a wide arc, and fades out at the lower right, with a bright cyan-white rim and a glowing head with sparks. Side view, transparent background, no characters or text. The flame-like flicker on the edges is only light, so it reads mostly as a sharp black blade with a cold rim; I did not add much flickering to the black body. The sliders are not yet exposed, so adjust the slash by asking for a larger arc or a different colour.",
+  "edit_url": "https://pixellab.ai/create-vfx?effect=10dd4ebc-1f40-4282-a61c-26b98d4d3be9",
+  "effect_id": "10dd4ebc-1f40-4282-a61c-26b98d4d3be9",
+  "gif_exact": true,
+  "result_id": "75f0d569-3dbb-4604-9903-54338c8428f3",
+  "conversation": "7nO0jP-5FdI9SDaeKF6rLg.ec7662ea269c8bc62414fce1a8b44bb42f35e1adeac50d1ef229d73ba1e4f162",
+  "billing_usage": {
+   "usd": 0.0,
+   "type": "generations",
+   "generations": 1.0
+  },
+  "generation_id": "d1bd3e45-72a5-4128-b7a8-a87f99abba9d",
+  "billing_charged": true,
+  "generation_mode": "vfx",
+  "pixel_tools_image": true,
+  "quoted_generations": 1
+ }
+}

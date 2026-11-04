@@ -46,6 +46,12 @@ func setup(p: Player, st: FightingStyle) -> void:
 	mfx.room = world
 	mfx.caster = self
 	world.add_child(mfx)
+	MondClip.room = world
+
+
+## A PixelLab effect clip (assets/vfx/schwarzmond), facing like the player.
+func _clip(clip_id: String, pos: Vector2, scl := 1.0, rot := 0.0) -> MondClip:
+	return MondClip.play(world, clip_id, pos, player.facing < 0, scl, rot * player.facing)
 
 
 func reset_fight() -> void:
@@ -356,6 +362,9 @@ func _tick_mondschnitt() -> void:
 				a0 = PI - a0
 				a1 = PI - a1
 			mfx.slash(c, w * 0.6, a0, a1, 0.2 if not last else 0.3, rim_color(), 6.0 if not last else 10.0)
+			var mc := _clip("mondschnitt", player.global_position + Vector2(player.facing * (w * 0.5 + 4.0), -24.0), 0.6 if not last else 0.85)
+			if mc != null and not down:
+				mc.scale.y = -mc.scale.y  # the upswing mirrors the arc
 			if last:
 				fx.word(player.global_position + Vector2(player.facing * 40.0, -48), "ZASH!", MondFx.WHITE, 22 if charge <= 0.0 else 22 + int(_charge_k * 10.0))
 				world.fx.shake((3.0 + _charge_k * 4.0) * FxSettings.factor("shake"), player.facing)
@@ -418,6 +427,7 @@ func _tick_aufsteigend() -> void:
 			var a1 := -1.9 if player.facing > 0 else PI + 1.9
 			mfx.slash(c, maxf(20.0, w * 0.5), a0, a1, 0.25, rim_color(), 9.0)
 			mfx.streaks(c + Vector2(0, -20), -PI / 2.0, 0.3, 8, 260.0, 0.3, rim_color())
+			_clip("aufsteigender_mond", c + Vector2(player.facing * 12.0, -26.0), maxf(0.6, w / 60.0))
 			fx.word(c + Vector2(player.facing * 20.0, -48), "ZASH!", MondFx.WHITE, 20)
 			if params.get("wave", false):
 				_wave(Vector2(player.facing * 0.72, -0.7), float(params.get("damage", 8)) * 0.8, 16.0, 200.0, 420.0)
@@ -483,6 +493,7 @@ func try_counter(from_x: float, projectile: Node = null) -> bool:
 	mfx.shock(c, 36.0, 0.35, MondFx.WHITE)
 	mfx.streaks(c, PI if player.facing > 0 else 0.0, 1.0, 16, 260.0, 0.35, MondFx.CYAN)
 	fx.word(c + Vector2(0, -44), "KONTER!", MondFx.WHITE, 28)
+	_clip("konter", c, 0.8)
 	world.fx.flash(0.2 * FxSettings.factor("flash"), Color(0.75, 0.85, 1.0))
 	world.fx.freeze(0.12 * FxSettings.factor("stop"))
 	world.fx.shake(5.0 * FxSettings.factor("shake"))
@@ -532,6 +543,7 @@ func _tick_spur() -> void:
 			invuln = float(params.get("invuln", 0.0))
 			mfx.ink(player.global_position + Vector2(0, -20), 10, 80.0, 0.5)
 			fx.word(player.global_position + Vector2(0, -52), "SHH", MondFx.CYAN, 18)
+			_clip("schwarze_spur", player.global_position + _dash_dir * float(params.get("dist", 120)) + Vector2(0, -22.0), clampf(float(params.get("dist", 120)) / 110.0, 0.6, 1.8), (_dash_dir * Vector2(player.facing, 1)).angle())
 	elif phase == "active":
 		_ghost_t -= get_physics_process_delta_time()
 		if _ghost_t <= 0.0:
@@ -630,6 +642,7 @@ func _impact() -> void:
 	mfx.ink(p + Vector2(0, -4), 12, 140.0, 0.6)
 	mfx.sichel(p + Vector2(player.facing * 12.0, -14), Vector2(0, 1), 18.0, 0.25, MondFx.WHITE, 1.5)
 	fx.word(p + Vector2(0, -56), "DOOM!", MondFx.WHITE, 30)
+	_clip("fallender_mond", p + Vector2(0, -4), clampf(wv / 50.0, 0.8, 2.0))
 	world.fx.shake(6.0 * FxSettings.factor("shake"))
 	world.fx.punch(0.04)
 	world.fx.freeze(0.05 * FxSettings.factor("stop"))
@@ -643,6 +656,13 @@ func _impact() -> void:
 
 func start_larve() -> void:
 	larve_time = LARVE_TIME
+	var c := MondClip.play(world, "schattenlarve", player.global_position, player.facing < 0, 0.7, 0.0, true, LARVE_TIME)
+	if c != null:
+		c.follow = player
+		c.follow_offset = Vector2(0, 2)  # the aura's anchor is at the feet
+		c.fade = 0.4
+		c.z_index = -1  # behind the figure
+		c.modulate.a = 0.85
 
 
 func start_neumond(seconds: float) -> void:

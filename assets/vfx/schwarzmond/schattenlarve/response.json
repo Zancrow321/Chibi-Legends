@@ -1,0 +1,50 @@
+{
+ "usage": {
+  "type": "generations",
+  "generations": 1.0
+ },
+ "id": "eaaa8659-f543-4762-b491-d394a62161d8",
+ "status": "completed",
+ "created_at": "2026-11-04T18:50:47.310943+00:00",
+ "last_response": {
+  "fps": 10,
+  "kind": "new",
+  "loop": true,
+  "name": "Menacing aura of",
+  "files": {
+   "menacing-aura-of.gif": "https://api.pixellab.ai/mcp/pixel-tools/dd8d071b-bdb4-4d2e-91ff-751945c47aa7/menacing-aura-of.gif",
+   "menacing-aura-of.png": "https://api.pixellab.ai/mcp/pixel-tools/dd8d071b-bdb4-4d2e-91ff-751945c47aa7/menacing-aura-of.png",
+   "menacing-aura-of.json": "https://api.pixellab.ai/mcp/pixel-tools/dd8d071b-bdb4-4d2e-91ff-751945c47aa7/menacing-aura-of.json"
+  },
+  "parts": [
+   "shadow_flames"
+  ],
+  "anchor": {
+   "x": 32,
+   "y": 105,
+   "kind": "origin"
+  },
+  "artist": "lite",
+  "canvas": {
+   "h": 119,
+   "w": 63
+  },
+  "frames": 8,
+  "message": "A black ink-smoke flame aura with a sharp cold white and cyan rim, looping every 0.8 seconds on a transparent background, side view. The crimson embers are small and sparse, so try the Shadow flames sliders (height, width, colour) to adjust the body and glow. I could not make the embers denser or larger in this pass.",
+  "edit_url": "https://pixellab.ai/create-vfx?effect=e19dc58b-72d6-43c1-aabe-86999417d890",
+  "effect_id": "e19dc58b-72d6-43c1-aabe-86999417d890",
+  "gif_exact": true,
+  "result_id": "dd8d071b-bdb4-4d2e-91ff-751945c47aa7",
+  "conversation": "3BRHjditXQtKHPbTV6F5xQ.15ada8ba283ed0a8b040e9623cbe7a518b69ffabffd54e187b70e2d52a99f6ac",
+  "billing_usage": {
+   "usd": 0.0,
+   "type": "generations",
+   "generations": 1.0
+  },
+  "generation_id": "4e2b2d30-3266-4293-9ee2-e4f689838349",
+  "billing_charged": true,
+  "generation_mode": "vfx",
+  "pixel_tools_image": true,
+  "quoted_generations": 1
+ }
+}
