@@ -72,6 +72,9 @@ Neue Pakete nur über `PACKS` im Skript ergänzen, damit die Lizenzliste stimmt.
 Sounds spielt `Sfx.play("jump")` (`scripts/audio/sfx.gd`) ab; welches Ereignis welche Datei nutzt, steht in
 `assets/audio/sfx_map.json`. Final-Sounds ersetzen dort einfach den Pfad.
 
+Schwung- und Dash-Geräusche (`swing_light`, `swing_heavy`, `dash`) sind eigene Platzhalter aus gefiltertem
+Rauschen: `python3 tools/audio/synth_whoosh.py` schreibt sie nach `assets/audio/sfx/*.wav`.
+
 ## 3. Eigene Sounds (Stable Audio 3)
 
 1. In Stable Audio kurze Effekte erzeugen (Prompt-Tipp: „short punchy anime sword slash, dry, no music, 0.5 seconds“).

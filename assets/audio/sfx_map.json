@@ -16,5 +16,8 @@
   "block":      {"files": ["assets/third_party/kenney/sfx/impact/impact_plate_medium_000.ogg", "assets/third_party/kenney/sfx/impact/impact_plate_medium_001.ogg"]},
   "break":      {"files": ["assets/third_party/kenney/sfx/movement/break.ogg"]},
   "pickup":     {"files": ["assets/third_party/kenney/sfx/movement/coin.ogg"]},
+  "swing_light": {"files": ["assets/audio/sfx/swing_light_1.wav", "assets/audio/sfx/swing_light_2.wav", "assets/audio/sfx/swing_light_3.wav"], "volume_db": -6, "pitch_jitter": 0.08},
+  "swing_heavy": {"files": ["assets/audio/sfx/swing_heavy_1.wav", "assets/audio/sfx/swing_heavy_2.wav"], "volume_db": -3, "pitch_jitter": 0.05},
+  "dash":       {"files": ["assets/audio/sfx/dash_1.wav", "assets/audio/sfx/dash_2.wav"], "volume_db": -6, "pitch_jitter": 0.06},
   "super_flash": {"files": ["assets/third_party/kenney/sfx/interface/maximize_006.ogg"], "volume_db": 2}
 }

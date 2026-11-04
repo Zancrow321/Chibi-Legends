@@ -26,6 +26,7 @@ var hud: Node  # set by Main (cut-in banner for supers)
 var numbers: DamageNumbers  # set by Main (lives on the HUD layer)
 var attacks: Node2D
 var afterimages: Afterimages  # glowing sprite copies behind the player
+var dust: Dust  # footstep / landing puffs
 ## Off when another view draws the ground (HD-2D variant B builds it in 3D).
 var draw_terrain := true
 var glut_fx: GlutFx  # fire effects of the fighting style
@@ -62,8 +63,10 @@ func _ready() -> void:
 	player.position = Vector2(110, GROUND_Y - 1)
 	afterimages = Afterimages.new()
 	add_child(afterimages)
+	dust = Dust.new()
 	add_child(player)
 	add_child(attacks)
+	add_child(dust)
 	add_child(effects)
 
 	camera = Camera2D.new()
@@ -293,6 +296,12 @@ func deal_hit(target: Node2D, base: float, element: String, from_x: float, knock
 	if profile == "":
 		profile = "heavy" if knockback >= 120.0 else "light"
 	var dir := signf(center.x - from_x)
+	var strong: bool = res.reaction != "" or profile == "heavy" or profile == "super_final"
+	if not profile.begins_with("super") or profile == "super_final":
+		Sfx.play("hit_heavy" if strong else "hit_light")
+		if element == "" and not strong:
+			Sfx.play("hit_blade", -6.0)
+	fx.jitter(target, 2.5 if strong else 1.5)
 	if res.reaction == "":
 		fx.hit(center, element, profile, dir)
 	else:
