@@ -26,8 +26,9 @@ const LAYER_PLATFORM := 2
 
 var world: Node  # TrainingRoom (spawns attacks, numbers, fx)
 var visual: ChibiVisual  # roster look (shown with T)
-var sprite: FighterSprite  # test figure 2 (default)
+var sprite: FighterSprite  # test figure 2 (default) or an imported fighter
 var moveset: MoveSet = MoveSet.load_file("res://assets/combat/movesets/testfigur2.json")
+var moveset_index := 0  # into MoveSet.list_files(), switched with M
 
 var facing := 1
 var jumps_used := 0
@@ -58,7 +59,7 @@ var infinite_aura := false
 ## Presses are buffered briefly, so a tap is never lost between physics
 ## ticks (low frame rates) and a jump pressed just before landing still counts.
 const BUFFER_TIME := 0.12
-const BUFFERED := ["jump", "dash", "light", "heavy", "special", "super", "cycle_look", "toggle_figure"]
+const BUFFERED := ["jump", "dash", "light", "heavy", "special", "super", "cycle_look", "toggle_figure", "cycle_moveset"]
 var _buffer: Dictionary = {}
 var _jump_held := false
 
@@ -157,7 +158,9 @@ func _physics_process(delta: float) -> void:
 	if _take("toggle_figure"):
 		visual.visible = not visual.visible
 		sprite.visible = not visual.visible
-		world.toast("Figur: " + ("Sammlung" if visual.visible else "Testfigur 2"))
+		world.toast("Figur: " + ("Sammlung" if visual.visible else moveset.display_name))
+	if _take("cycle_moveset"):
+		cycle_moveset()
 
 	if infinite_aura:
 		aura = max_aura
@@ -278,9 +281,29 @@ func _try_queued(on_floor: bool) -> void:
 		_start(q, _queued_dir, on_floor)
 
 
+## Next fighter (moveset + drawings): test figure 2, then imported ones.
+func cycle_moveset() -> void:
+	var files := MoveSet.list_files()
+	if files.is_empty():
+		return
+	moveset_index = (moveset_index + 1) % files.size()
+	moveset = MoveSet.load_file(files[moveset_index])
+	sprite.use_sprite_data(moveset.sprite_data)
+	move = {}
+	visual.visible = false
+	sprite.visible = true
+	if world:
+		world.toast("Kämpfer: " + moveset.display_name)
+
+
 func _start(button: String, d: String, on_floor: bool) -> void:
 	if button == "special":
-		use_skill(SPECIAL_SLOT[d if on_floor else "air"])
+		# imported fighters bring their own specials; else the skill slots
+		var m := moveset.pick("special", d, not on_floor)
+		if not m.is_empty():
+			_start_move(m)
+		else:
+			use_skill(SPECIAL_SLOT[d if on_floor else "air"])
 	else:
 		_start_move(moveset.pick(button, d, not on_floor))
 
@@ -402,6 +425,7 @@ func _update_visual() -> void:
 	elif not move.is_empty():
 		st = "attack"
 		visual.attack_phase = int(move.get("phase", 0))
+		sprite.attack_strip = move.get("strip", "slash")
 		sprite.attack_frame = _attack_frame()
 	elif cast_timer > 0.0:
 		st = "cast"

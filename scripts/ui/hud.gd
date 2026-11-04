@@ -383,7 +383,7 @@ func _draw_bottom_left(H: float) -> void:
 
 
 func _draw_help() -> void:
-	var r := Rect2(16, 286, 400, 360)
+	var r := Rect2(16, 286, 400, 382)
 	_panel(r, PANEL, 10)
 	_text(Vector2(32, 312), "Steuerung", 17, TRIM)
 	var lines := [
@@ -391,7 +391,8 @@ func _draw_help() -> void:
 		["Shift", "Dash (in der Luft 1x)"], ["J", "Leicht (3er-Kette)"], ["K", "Schwer"],
 		["L", "Spezial (Fähigkeit)"], ["W/S/A/D +", "Richtung: oben/unten/vor"],
 		["J + K", "Griff (Wurf)"], ["P", "Super: Legendenstrahl"], ["V", "Effekt-Stärke wechseln"],
-		["T", "Figur: Testfigur / Sammlung"], ["C", "Charaktere"], ["H", "Hilfe ein/aus"],
+		["T", "Figur: Testfigur / Sammlung"], ["M", "Kämpfer wechseln (Importe)"], ["C", "Charaktere"],
+		["H", "Hilfe ein/aus"],
 	]
 	var y := 338.0
 	for l in lines:

@@ -1,0 +1,163 @@
+; Probe - Zustaende (eigene Testfigur)
+[Data]
+life = 1000
+attack = 100
+defence = 100
+
+[Size]
+xscale = 1
+yscale = 1
+
+[Velocity]
+walk.fwd = 2.4
+run.fwd = 4.6, 0
+jump.neu = 0, -8.4
+
+[Movement]
+yaccel = .44
+
+; Leichter Schlag
+[Statedef 200]
+type = S
+movetype = A
+physics = S
+anim = 200
+ctrl = 0
+velset = 0, 0
+
+[State 200, Treffer]
+type = HitDef
+trigger1 = AnimElem = 3
+attr = S, NA
+damage = 24, 0
+animtype = Light
+guardflag = MA
+hitflag = MAF
+pausetime = 8, 8
+sparkxy = -10, -60
+ground.type = High
+ground.slidetime = 6
+ground.hittime = 10
+ground.velocity = -4
+air.velocity = -3, -4
+
+[State 200, Kette]
+type = ChangeState
+trigger1 = command = "x" && movecontact
+trigger1 = AnimElem = 3, >= 0
+value = 210
+
+[State 200, Ende]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+; Schwerer Schlag
+[Statedef 210]
+type = S
+movetype = A
+physics = S
+anim = 210
+ctrl = 0
+velset = 0, 0
+
+[State 210, Treffer]
+type = HitDef
+trigger1 = AnimElem = 3
+attr = S, NA
+damage = 60, 4
+animtype = Hard
+pausetime = 12, 12
+ground.velocity = -8
+air.velocity = -6, -5
+
+[State 210, Ende]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+; Hoher Tritt (vorwaerts + y)
+[Statedef 220]
+type = S
+movetype = A
+physics = S
+anim = 220
+ctrl = 0
+
+[State 220, Treffer]
+type = HitDef
+trigger1 = AnimElem = 2
+attr = S, NA
+damage = 55
+ground.velocity = -6, -3
+air.velocity = -5, -5
+
+[State 220, Ende]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1
+
+; Feger (geduckt + a)
+[Statedef 230]
+type = C
+movetype = A
+physics = C
+anim = 230
+ctrl = 0
+
+[State 230, Treffer]
+type = HitDef
+trigger1 = AnimElem = 2
+attr = C, NA
+damage = 40
+ground.type = Trip
+ground.velocity = -3, -5
+
+[State 230, Ende]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 11
+ctrl = 1
+
+; Lufttritt
+[Statedef 600]
+type = A
+movetype = A
+physics = A
+anim = 600
+ctrl = 0
+
+[State 600, Treffer]
+type = HitDef
+trigger1 = AnimElem = 2
+attr = A, NA
+damage = 45
+ground.velocity = -3, 6
+air.velocity = -3, 6
+
+; Funkenstoss (Spezial)
+[Statedef 1000]
+type = S
+movetype = A
+physics = N
+anim = 1000
+ctrl = 0
+poweradd = 40
+
+[State 1000, Treffer]
+type = HitDef
+trigger1 = AnimElem = 3
+attr = S, SA
+damage = 90, 10
+animtype = Up
+ground.velocity = -3, -9
+air.velocity = -3, -9
+
+[State 1000, Ende]
+type = ChangeState
+trigger1 = AnimTime = 0
+value = 0
+ctrl = 1

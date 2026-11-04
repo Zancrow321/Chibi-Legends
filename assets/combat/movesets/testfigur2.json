@@ -1,5 +1,6 @@
 {
 	"_doc": "Angriffe der Testfigur 2. Zeiten in Bildern bei 60 fps (Anlauf, aktiv, Erholung). hitbox = [x, y, Breite, Hoehe] als Mitte relativ zum Fusspunkt, Blick nach rechts. knockback = Rueckstoss zur Seite, launch = Wurf nach oben (negativ = nach unten). lunge = Vorwaertsschub waehrend Anlauf und aktiv. pose = Bilder aus dem Schwertstreifen je Phase.",
+	"name": "Testfigur 2",
 	"weight": "mittel",
 	"moves": {
 		"leicht_1": {"name": "Schnitt", "button": "light", "dir": "neutral", "startup": 7, "active": 3, "recovery": 13,
