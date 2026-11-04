@@ -80,7 +80,17 @@ func _gui_input(event: InputEvent) -> void:
 	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var i := _menu_index(event.position)
 		if i >= 0:
-			room.toast(MENU[i][1])
+			match str(MENU[i][0]):
+				"Charakter":
+					get_tree().call_group("game_menu", "open", 0)
+				"Inventar":
+					get_tree().call_group("game_menu", "open", 1)
+				"Optionen":
+					get_tree().call_group("game_menu", "open", 2)
+				"Gacha":
+					get_tree().call_group("gacha", "open")
+				_:
+					room.toast(MENU[i][1])
 			accept_event()
 
 

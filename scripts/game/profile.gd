@@ -70,6 +70,8 @@ static func add_exp(amount: float) -> int:
 		level += 1
 		ups += 1
 	save()
+	if ups > 0:
+		Gacha.on_level_up(ups)
 	return ups
 
 

@@ -12,6 +12,7 @@ const MENU := [
 	["Charakter", "Esc", "", 0],
 	["Inventar", "", "", 1],
 	["Kampfstil", "", "Den Kampfstil stellst du im Kampfareal ein (Tab)", -1],
+	["Schrein", "", "", -2],
 	["Optionen", "", "", 2],
 ]
 const TYPE_SPEED := 52.0  # characters per second
@@ -121,6 +122,8 @@ func _gui_input(event: InputEvent) -> void:
 			Sfx.play("ui_click")
 			if i == 0 and select != null:
 				select.open_for(world.walker.visual)
+			elif MENU[i][3] == -2:
+				get_tree().call_group("gacha", "open")
 			elif MENU[i][3] >= 0 and menu != null:
 				menu.open(MENU[i][3])
 			else:

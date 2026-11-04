@@ -1,0 +1,28 @@
+{
+ "_doc": "Sternschrein (Gacha) fuer Kampfstile. Jedes Banner hebt einen Kampfstil hervor. Chancen stehen offen im Spiel (rates). Pity: spaetestens der 60. Zug ist Legendaer, der Zaehler gilt fuer alle Banner. Ein 10er-Zug enthaelt mindestens ein Episch. Episch-Preise des Banners kommen aus catalog.json: jedes Teil, dessen unlock-Hinweis den Banner-Titel nennt. Duplikate sind nur Kosmetik (Sterne 1-6) plus Splitter, nie Werte. Code: scripts/game/gacha.gd, Bildschirm: scripts/ui/gacha_screen.gd.",
+ "cost_one": 100,
+ "cost_ten": 1000,
+ "start_gift": 1000,
+ "daily": 100,
+ "level_up": 50,
+ "pity": 60,
+ "rates": {"legendaer": 0.03, "episch": 0.15, "selten": 0.82},
+ "featured_share": 0.5,
+ "duplicate_splitter": 300,
+ "max_stars": 6,
+ "selten_rewards": [
+  {"kind": "splitter", "amount": 40, "weight": 5},
+  {"kind": "gear", "rarity": 1, "weight": 4},
+  {"kind": "color", "weight": 1}
+ ],
+ "banners": [
+  {"id": "schwarzer_mond", "title": "Der schwarze Mond", "style": "schwarzmond", "tagline": "Eine Klinge so schwer wie die Nacht"},
+  {"id": "ein_takt", "title": "Ein Takt, zwei Seelen", "style": "gleichklang", "tagline": "Wer im Takt schlägt, schlägt nie allein"},
+  {"id": "letzte_linie", "title": "Die letzte Linie", "style": "bollwerk", "tagline": "Schild hoch. Niemand kommt durch."},
+  {"id": "versprechen", "title": "Ein Versprechen wird Stärke", "style": "wirbelwille", "tagline": "Ein Wirbel, tausend Schatten"},
+  {"id": "jedes_limit", "title": "Über jedes Limit", "style": "grenzbrecher", "tagline": "Atme. Sammle. Brich durch."},
+  {"id": "kein_meer", "title": "Kein Meer zu weit", "style": "spannkraft", "tagline": "Je weiter gespannt, desto härter der Rückschlag"},
+  {"id": "am_feuer", "title": "Wer am Feuer sitzt", "style": "lauffeuer", "tagline": "Ein Funke reicht für ein Lauffeuer"}
+ ],
+ "starter_styles": ["glutatem"]
+}

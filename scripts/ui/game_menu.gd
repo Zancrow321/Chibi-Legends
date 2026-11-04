@@ -36,6 +36,7 @@ var _confirm_salvage := ""
 
 
 func _ready() -> void:
+	add_to_group("game_menu")
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
