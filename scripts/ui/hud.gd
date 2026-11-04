@@ -608,12 +608,11 @@ func _draw_menu_icon(c: Vector2, i: int) -> void:
 
 func _draw_bottom_left(H: float) -> void:
 	if not show_help:
-		_text(Vector2(16, H - 30), "H  Hilfe & Steuerung", 14, Color(MUTED, 0.8))
+		_text(Vector2(16, H - 30), "H  Hilfe & Steuerung    Esc  Menü", 14, Color(MUTED, 0.8))
 	# EXP bar
 	_panel(Rect2(0, H - 22, size.x, 22), Color(0.05, 0.04, 0.1, 0.95), 0)
-	# EXP from defeated enemies (training forest), one bar = EXP_PER_LEVEL
-	var xp: float = room.exp_points if room != null else 0.0
-	var frac := fmod(xp, TrainingRoom.EXP_PER_LEVEL) / TrainingRoom.EXP_PER_LEVEL
+	# EXP toward the next level (Profile: lasts beyond the fight)
+	var frac := Profile.exp_fraction()
 	_text(Vector2(10, H - 5), "EXP %.2f %%" % (frac * 100.0), 15, TRIM, HORIZONTAL_ALIGNMENT_LEFT, -1, 0)
 	var x := 110.0
 	var seg := (size.x - x - 10) / 10.0

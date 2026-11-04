@@ -1,0 +1,707 @@
+class_name GameMenu
+extends Control
+## The game menu (Esc, or the buttons in the courtyard): three manga panels
+## behind tabs.
+##   Charakter: the figure, level and EXP, all stats, the three gear slots.
+##   Inventar:  the bag (30 places), item card with comparison, equip and
+##              salvage into Splitter.
+##   Optionen:  volume, effect strength, graphics, damage numbers, shake,
+##              fullscreen (GameSettings, saved at once).
+## Pauses the game while open. Keys: Q/E tab, arrows/WASD choose, Space/Enter
+## use, X salvage, Esc close. Mouse works everywhere.
+
+const TABS := ["Charakter", "Inventar", "Optionen"]
+const COLS := 6
+const ROWS := 5
+const CELL := 66.0
+const INK := UiSkin.INK
+const PAPER := UiSkin.PAPER
+const RED := UiSkin.RED
+const GOOD := Color("1ebc73")
+const BAD := Color("e83b3b")
+
+var font: Font
+var is_open := false
+var tab := 0
+var _sel := 0  # inventory cell
+var _opt := 0  # options row
+var _t := 0.0
+var _paused_recently := 0
+var _figure: FighterSprite
+var _hits: Array = []  # [Rect2, Callable] rebuilt every draw
+var _drag_opt := -1
+var _toast := ""
+var _toast_t := 0.0
+var _confirm_salvage := ""
+
+
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	set_anchors_preset(Control.PRESET_FULL_RECT)
+	mouse_filter = Control.MOUSE_FILTER_STOP
+	font = load("res://assets/fonts/PixelifySans-SemiBold.ttf")
+	visible = false
+	_figure = FighterSprite.new()
+	_figure.scale = Vector2(3, 3)
+	_figure.visible = false
+	add_child(_figure)
+
+
+func open(which := -1) -> void:
+	if is_open:
+		if which >= 0:
+			tab = which
+		return
+	Profile.ensure()
+	GameSettings.ensure()
+	is_open = true
+	visible = true
+	if which >= 0:
+		tab = which
+	_sel = clampi(_sel, 0, COLS * ROWS - 1)
+	_confirm_salvage = ""
+	get_tree().paused = true
+	Sfx.play("ui_click")
+
+
+func close() -> void:
+	is_open = false
+	visible = false
+	_figure.visible = false
+	get_tree().paused = false
+	get_tree().call_group("profile_user", "apply_profile")
+	Sfx.play("ui_click", -4.0)
+
+
+func _process(delta: float) -> void:
+	_t += delta
+	_toast_t = maxf(0.0, _toast_t - delta)
+	position = Vector2.ZERO
+	size = get_viewport_rect().size
+	if get_tree().paused and not is_open:
+		_paused_recently = 2
+	elif _paused_recently > 0:
+		_paused_recently -= 1
+	if is_open:
+		queue_redraw()
+
+
+func _input(event: InputEvent) -> void:
+	if not is_open:
+		if event.is_action_pressed("game_menu") and not get_tree().paused and _paused_recently == 0:
+			open()
+			get_viewport().set_input_as_handled()
+		return
+	if event is InputEventKey and event.pressed and not event.echo:
+		_key(event.physical_keycode)
+		get_viewport().set_input_as_handled()
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			for h in _hits:
+				if (h[0] as Rect2).has_point(event.position):
+					(h[1] as Callable).call(event.position)
+					break
+		else:
+			_drag_opt = -1
+		get_viewport().set_input_as_handled()
+	elif event is InputEventMouseMotion and _drag_opt >= 0:
+		_slider_to(_drag_opt, event.position.x)
+		get_viewport().set_input_as_handled()
+	elif event is InputEventJoypadButton and event.pressed:
+		match event.button_index:
+			JOY_BUTTON_B, JOY_BUTTON_BACK:
+				close()
+			JOY_BUTTON_LEFT_SHOULDER:
+				_tab(-1)
+			JOY_BUTTON_RIGHT_SHOULDER:
+				_tab(1)
+			JOY_BUTTON_DPAD_LEFT:
+				_key(KEY_LEFT)
+			JOY_BUTTON_DPAD_RIGHT:
+				_key(KEY_RIGHT)
+			JOY_BUTTON_DPAD_UP:
+				_key(KEY_UP)
+			JOY_BUTTON_DPAD_DOWN:
+				_key(KEY_DOWN)
+			JOY_BUTTON_A:
+				_key(KEY_ENTER)
+			JOY_BUTTON_X:
+				_key(KEY_X)
+		get_viewport().set_input_as_handled()
+	elif event is InputEventKey or event is InputEventMouseButton:
+		get_viewport().set_input_as_handled()
+
+
+func _key(k: Key) -> void:
+	match k:
+		KEY_ESCAPE:
+			close()
+			return
+		KEY_Q:
+			_tab(-1)
+			return
+		KEY_E, KEY_TAB:
+			_tab(1)
+			return
+		KEY_1, KEY_2, KEY_3:
+			_set_tab(k - KEY_1)
+			return
+	if tab == 1:
+		match k:
+			KEY_LEFT, KEY_A:
+				_move_sel(-1)
+			KEY_RIGHT, KEY_D:
+				_move_sel(1)
+			KEY_UP, KEY_W:
+				_move_sel(-COLS)
+			KEY_DOWN, KEY_S:
+				_move_sel(COLS)
+			KEY_SPACE, KEY_ENTER, KEY_J:
+				_equip_selected()
+			KEY_X, KEY_DELETE:
+				_salvage_selected()
+			KEY_R:
+				_sort()
+	elif tab == 2:
+		match k:
+			KEY_UP, KEY_W:
+				_opt = (_opt - 1 + _options().size()) % _options().size()
+				Sfx.play("ui_click", -8.0)
+			KEY_DOWN, KEY_S:
+				_opt = (_opt + 1) % _options().size()
+				Sfx.play("ui_click", -8.0)
+			KEY_LEFT, KEY_A:
+				_change(_opt, -1)
+			KEY_RIGHT, KEY_D, KEY_SPACE, KEY_ENTER:
+				_change(_opt, 1)
+
+
+func _tab(d: int) -> void:
+	_set_tab((tab + d + TABS.size()) % TABS.size())
+
+
+func _set_tab(i: int) -> void:
+	if i != tab:
+		tab = i
+		_confirm_salvage = ""
+		Sfx.play("ui_click", -4.0)
+
+
+func _say(s: String) -> void:
+	_toast = s
+	_toast_t = 2.2
+
+
+# --- inventory actions -----------------------------------------------------------
+
+func _move_sel(d: int) -> void:
+	_sel = clampi(_sel + d, 0, COLS * ROWS - 1)
+	_confirm_salvage = ""
+	Sfx.play("ui_click", -10.0)
+
+
+func _sel_item() -> Dictionary:
+	return Profile.items[_sel] if _sel < Profile.items.size() else {}
+
+
+func _equip_selected() -> void:
+	var it := _sel_item()
+	if it.is_empty():
+		return
+	var was := Profile.is_equipped(it.uid)
+	Profile.toggle_equip(it.uid)
+	get_tree().call_group("profile_user", "apply_profile")
+	_say("%s abgelegt" % it.name if was else "%s angelegt" % it.name)
+	Sfx.play("hit_blade", -6.0)
+
+
+## Salvaging asks once (press again), worn items can't be salvaged.
+func _salvage_selected() -> void:
+	var it := _sel_item()
+	if it.is_empty():
+		return
+	if Profile.is_equipped(it.uid):
+		_say("Erst ablegen, dann zerlegen")
+		return
+	if _confirm_salvage != it.uid and int(it.rarity) >= 2:
+		_confirm_salvage = it.uid
+		_say("Nochmal drücken: %s wirklich zerlegen?" % it.name)
+		return
+	var gain := Profile.salvage(it.uid)
+	_confirm_salvage = ""
+	_sel = mini(_sel, maxi(0, Profile.items.size() - 1))
+	_say("+%d Splitter" % gain)
+	Sfx.play("hit_light", -4.0)
+
+
+func _sort() -> void:
+	Profile.items.sort_custom(func(a, b):
+		if int(a.rarity) != int(b.rarity):
+			return int(a.rarity) > int(b.rarity)
+		return Loot.score(a) > Loot.score(b))
+	Profile.save()
+	_sel = 0
+	_say("Sortiert nach Seltenheit")
+
+
+# --- options -----------------------------------------------------------------------
+
+## [label, kind, getter-text, value 0..1 for sliders]
+func _options() -> Array:
+	return [
+		["Gesamtlautstärke", "slider", "%d %%" % int(round(GameSettings.master * 100.0)), GameSettings.master],
+		["Effektlautstärke", "slider", "%d %%" % int(round(GameSettings.sfx * 100.0)), GameSettings.sfx],
+		["Effektstärke", "choice", FxSettings.level_name(), 0.0],
+		["Grafik", "choice", Hd2dSettings.NAMES[Hd2dSettings.quality], 0.0],
+		["Schadenszahlen", "toggle", "an" if GameSettings.numbers else "aus", 0.0],
+		["Bildschirmwackeln", "toggle", "an" if GameSettings.shake else "aus", 0.0],
+		["Vollbild", "toggle", "an" if GameSettings.fullscreen else "aus", 0.0],
+	]
+
+
+func _change(i: int, d: int) -> void:
+	match i:
+		0:
+			GameSettings.master = clampf(snappedf(GameSettings.master + d * 0.1, 0.1), 0.0, 1.0)
+		1:
+			GameSettings.sfx = clampf(snappedf(GameSettings.sfx + d * 0.1, 0.1), 0.0, 1.0)
+		2:
+			FxSettings.level = (FxSettings.level + d + FxSettings.LEVELS.size()) % FxSettings.LEVELS.size()
+			get_tree().call_group("bloom", "apply_level")
+		3:
+			Hd2dSettings.quality = (Hd2dSettings.quality + d + 3) % 3
+			get_tree().call_group("hd2d_view", "apply_quality")
+		4:
+			GameSettings.numbers = not GameSettings.numbers
+		5:
+			GameSettings.shake = not GameSettings.shake
+		6:
+			GameSettings.fullscreen = not GameSettings.fullscreen
+	GameSettings.apply()
+	GameSettings.save()
+	Sfx.play("ui_click", -2.0)
+
+
+var _slider_rects := {}
+func _slider_to(i: int, x: float) -> void:
+	var r: Rect2 = _slider_rects.get(i, Rect2())
+	if r.size.x <= 0.0:
+		return
+	var v := clampf((x - r.position.x) / r.size.x, 0.0, 1.0)
+	v = snappedf(v, 0.05)
+	if i == 0:
+		GameSettings.master = v
+	else:
+		GameSettings.sfx = v
+	GameSettings.apply()
+	GameSettings.save()
+
+
+# --- drawing helpers ---------------------------------------------------------------
+
+func _ink(pos: Vector2, s: String, sz: int, col := INK, align := HORIZONTAL_ALIGNMENT_LEFT, width := -1.0) -> void:
+	draw_string_outline(font, pos, s, align, width, sz, 4, Color(PAPER, 0.95))
+	draw_string(font, pos, s, align, width, sz, col)
+
+
+func _paper(r: Rect2, fill := PAPER, border := 2, border_col := INK) -> void:
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = fill
+	sb.border_color = border_col
+	sb.set_border_width_all(border)
+	draw_style_box(sb, r)
+
+
+func _halftone(r: Rect2, col: Color, step := 5) -> void:
+	var row := 0
+	var y := r.position.y + 2
+	while y < r.end.y - 1:
+		var x := r.position.x + 2 + (step * 0.5 if row % 2 == 1 else 0.0)
+		while x < r.end.x - 2:
+			draw_rect(Rect2(x, y, 2, 2), col)
+			x += step
+		y += step
+		row += 1
+
+
+func _keycap(p: Vector2, key: String) -> float:
+	var w := maxf(22.0, font.get_string_size(key, HORIZONTAL_ALIGNMENT_LEFT, -1, 14).x + 12.0)
+	draw_rect(Rect2(p + Vector2(0, 2), Vector2(w, 21)), INK)
+	draw_rect(Rect2(p, Vector2(w, 20)), RED)
+	draw_rect(Rect2(p, Vector2(w, 20)), INK, false, 2.0)
+	draw_string(font, p + Vector2(0, 15), key, HORIZONTAL_ALIGNMENT_CENTER, w, 14, PAPER)
+	return w
+
+
+## Slanted manga button; returns its rect and registers the click.
+func _button(r: Rect2, label: String, key: String, on: Callable, hot := false) -> void:
+	var pts := PackedVector2Array([r.position + Vector2(6, 0), Vector2(r.end.x, r.position.y), r.end - Vector2(6, 0), Vector2(r.position.x, r.end.y)])
+	var shadow := PackedVector2Array()
+	for p in pts:
+		shadow.append(p + Vector2(3, 3))
+	draw_colored_polygon(shadow, INK)
+	draw_colored_polygon(pts, RED if hot else PAPER)
+	pts.append(pts[0])
+	draw_polyline(pts, INK, 2.0)
+	var x := r.position.x + 14.0
+	if key != "":
+		x += _keycap(Vector2(x, r.position.y + r.size.y * 0.5 - 10), key) + 8.0
+	draw_string(font, Vector2(x, r.position.y + r.size.y * 0.5 + 6), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 16, PAPER if hot else INK)
+	_hits.append([r, func(_p): on.call()])
+
+
+func _bar(r: Rect2, frac: float, col: Color) -> void:
+	draw_rect(r.grow(2), INK)
+	draw_rect(r, Color(INK, 0.35))
+	draw_rect(Rect2(r.position, Vector2(r.size.x * clampf(frac, 0.0, 1.0), r.size.y)), col)
+	draw_rect(Rect2(r.position, Vector2(r.size.x * clampf(frac, 0.0, 1.0), 2)), Color(1, 1, 1, 0.5))
+
+
+func _pct(v: float) -> String:
+	return ("%.1f %%" % (v * 100.0)).replace(".", ",")
+
+
+# --- drawing ---------------------------------------------------------------------
+
+func _draw() -> void:
+	if not is_open:
+		return
+	_hits.clear()
+	var W := size.x
+	var H := size.y
+	draw_rect(Rect2(0, 0, W, H), Color(INK, 0.6))
+	_halftone(Rect2(0, 0, W, H), Color(0, 0, 0, 0.18), 6)
+	var pw := minf(1000.0, W - 40.0)
+	var ph := minf(590.0, H - 90.0)
+	var R := Rect2(W * 0.5 - pw * 0.5, H * 0.5 - ph * 0.5 + 18.0, pw, ph)
+	# speed lines behind the panel, a manga "page" feel
+	for i in 18:
+		var a := TAU * i / 18.0 + _t * 0.05
+		var c := R.get_center()
+		draw_line(c + Vector2(cos(a), sin(a)) * (pw * 0.55), c + Vector2(cos(a), sin(a)) * (pw * 0.9), Color(PAPER, 0.05), 6.0)
+	draw_style_box(UiSkin.box("panel"), R)
+	_draw_tabs(R)
+	_figure.visible = tab == 0
+	match tab:
+		0:
+			_draw_character(R)
+		1:
+			_draw_inventory(R)
+		_:
+			_draw_options(R)
+	# footer: keys
+	var fx := R.position.x + 6.0
+	var fy := R.end.y + 14.0
+	var keys := [["Q/E", "Reiter"], ["Esc", "Schließen"]]
+	if tab == 1:
+		keys = [["Q/E", "Reiter"], ["Pfeile", "Wählen"], ["Leer", "Anlegen"], ["X", "Zerlegen"], ["R", "Sortieren"], ["Esc", "Schließen"]]
+	elif tab == 2:
+		keys = [["Q/E", "Reiter"], ["↑↓", "Wählen"], ["←→", "Ändern"], ["Esc", "Schließen"]]
+	for k in keys:
+		var kw := _keycap(Vector2(fx, fy), k[0])
+		draw_string_outline(font, Vector2(fx + kw + 6, fy + 15), k[1], HORIZONTAL_ALIGNMENT_LEFT, -1, 14, 4, INK)
+		draw_string(font, Vector2(fx + kw + 6, fy + 15), k[1], HORIZONTAL_ALIGNMENT_LEFT, -1, 14, PAPER)
+		fx += kw + 18.0 + font.get_string_size(k[1], HORIZONTAL_ALIGNMENT_LEFT, -1, 14).x
+	if _toast_t > 0.0:
+		var tw := font.get_string_size(_toast, HORIZONTAL_ALIGNMENT_LEFT, -1, 17).x + 36.0
+		var tr := Rect2(R.get_center().x - tw * 0.5, R.end.y - 54, tw, 34)
+		_paper(tr, Color(PAPER, minf(1.0, _toast_t * 3.0)))
+		_ink(Vector2(tr.position.x, tr.position.y + 23), _toast, 17, INK, HORIZONTAL_ALIGNMENT_CENTER, tw)
+
+
+func _draw_tabs(R: Rect2) -> void:
+	var x := R.position.x + 22.0
+	for i in TABS.size():
+		var label: String = TABS[i]
+		var w := font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 20).x + 40.0
+		var on := i == tab
+		var h := 38.0 if on else 32.0
+		var p := Vector2(x, R.position.y - h + 6)
+		var pts := PackedVector2Array([p, p + Vector2(w, 0), p + Vector2(w - 8, h), p + Vector2(-8, h)])
+		draw_colored_polygon(pts, RED if on else PAPER)
+		pts.append(pts[0])
+		draw_polyline(pts, INK, 2.5)
+		draw_string(font, p + Vector2(12, h - 12), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 20, PAPER if on else INK)
+		var idx := i
+		_hits.append([Rect2(p.x - 8, p.y, w, h), func(_p): _set_tab(idx)])
+		x += w + 6.0
+	# close cross
+	var cr := Rect2(R.end.x - 44, R.position.y - 30, 34, 30)
+	_paper(cr, PAPER, 2)
+	draw_line(cr.position + Vector2(10, 8), cr.end - Vector2(10, 8), INK, 3.0)
+	draw_line(Vector2(cr.end.x - 10, cr.position.y + 8), Vector2(cr.position.x + 10, cr.end.y - 8), INK, 3.0)
+	_hits.append([cr, func(_p): close()])
+
+
+# Charakter ------------------------------------------------------------------------
+
+func _draw_character(R: Rect2) -> void:
+	var inner := R.grow(-26)
+	# portrait panel
+	var pr := Rect2(inner.position + Vector2(0, 8), Vector2(300, inner.size.y - 8))
+	_paper(pr, Color("4d9be6").lerp(PAPER, 0.55), 3)
+	_halftone(pr, Color("4d9be6", 0.45), 6)
+	for i in 9:  # focus lines toward the figure
+		var a := -PI * 0.5 + (i - 4) * 0.22
+		var c := Vector2(pr.get_center().x, pr.position.y + 300)
+		draw_line(c + Vector2(cos(a), sin(a)) * 150, c + Vector2(cos(a), sin(a)) * 290, Color(PAPER, 0.5), 4.0)
+	draw_rect(Rect2(pr.position.x + 40, pr.position.y + 298, pr.size.x - 80, 6), Color(INK, 0.25))
+	_figure.position = Vector2(pr.get_center().x - 6, pr.position.y + 300)
+	_figure.scale = Vector2(3, 3)
+	_tagged(Vector2(pr.position.x + 14, pr.position.y - 12), "Lv. %d" % Profile.level, RED)
+	_ink(Vector2(pr.position.x + 18, pr.position.y + 344), "Akademie-Schüler", 22)
+	_ink(Vector2(pr.position.x + 18, pr.position.y + 368), "EXP %d / %d" % [int(Profile.xp), int(Profile.exp_needed())], 14, Color(INK, 0.75))
+	_bar(Rect2(pr.position.x + 18, pr.position.y + 378, pr.size.x - 36, 12), Profile.exp_fraction(), Color("7fd8ff"))
+	_button(Rect2(pr.position.x + 18, pr.end.y - 50, pr.size.x - 36, 36), "Aussehen ändern", "O", func():
+		close()
+		get_tree().call_group("creator", "open"))
+
+	# stats
+	var sx := pr.end.x + 26.0
+	var sr := Rect2(sx, inner.position.y + 8, 260, inner.size.y - 8)
+	_paper(sr)
+	_ink(Vector2(sr.position.x + 16, sr.position.y + 32), "Werte", 22, RED)
+	var hp := roundf(1200.0 * (1.0 + Profile.bonus("hp")))
+	var rows := [
+		["Stufe", str(Profile.level)],
+		["Leben", str(int(hp))],
+		["Schaden", "+" + _pct(Profile.bonus("atk"))],
+		["Krit-Chance", _pct(0.05 + Profile.bonus("crit"))],
+		["Krit-Schaden", "150 %"],
+		["Leistenladung", "+" + _pct(Profile.bonus("gauge"))],
+		["Ausrüstungswert", str(Profile.gear_score())],
+		["Splitter", str(Profile.splitter)],
+		["Gegenstände", "%d / %d" % [Profile.items.size(), Profile.BAG_SIZE]],
+	]
+	var y := sr.position.y + 66.0
+	for i in rows.size():
+		if i % 2 == 0:
+			draw_rect(Rect2(sr.position.x + 8, y - 20, sr.size.x - 16, 30), Color(INK, 0.06))
+		_ink(Vector2(sr.position.x + 18, y), rows[i][0], 16, Color(INK, 0.8))
+		_ink(Vector2(sr.position.x + 18, y), rows[i][1], 17, INK, HORIZONTAL_ALIGNMENT_RIGHT, sr.size.x - 36)
+		y += 34.0
+	_ink(Vector2(sr.position.x + 16, sr.end.y - 22), "Pro Stufe: +3 % Leben, +2 % Schaden", 13, Color(INK, 0.6))
+
+	# gear slots
+	var gx := sr.end.x + 26.0
+	var gw := inner.end.x - gx
+	_ink(Vector2(gx, inner.position.y + 32), "Ausrüstung", 22, RED)
+	var gy := inner.position.y + 48.0
+	var gh := (inner.end.y - gy - 2 * 12.0) / 3.0
+	for s in Profile.SLOTS:
+		var r := Rect2(gx, gy, gw, gh)
+		var it := Profile.equipped_item(s)
+		_slot_card(r, s, it)
+		_hits.append([r, func(_p): _set_tab(1)])
+		gy += gh + 12.0
+
+
+func _tagged(p: Vector2, text: String, col: Color, sz := 16) -> void:
+	var w := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, sz).x + 18.0
+	var h := sz + 8.0
+	draw_colored_polygon(PackedVector2Array([p, p + Vector2(w, 0), p + Vector2(w - 5, h), p + Vector2(-5, h)]), col)
+	draw_string(font, p + Vector2(7, h - 6), text, HORIZONTAL_ALIGNMENT_LEFT, -1, sz, PAPER)
+
+
+func _slot_card(r: Rect2, slot: String, it: Dictionary) -> void:
+	var col := Loot.color(it) if not it.is_empty() else Color(INK, 0.3)
+	_paper(r, PAPER, 2)
+	draw_rect(Rect2(r.position + Vector2(3, 3), Vector2(6, r.size.y - 6)), col)
+	var ic := Rect2(r.position.x + 18, r.position.y + r.size.y * 0.5 - 34, 68, 68)
+	_icon_box(ic, it, slot)
+	var tx := ic.end.x + 14.0
+	_ink(Vector2(tx, r.position.y + 24), Profile.SLOT_NAMES[slot], 13, Color(INK, 0.6))
+	if it.is_empty():
+		_ink(Vector2(tx, r.position.y + 50), "leer", 18, Color(INK, 0.45))
+		_ink(Vector2(tx, r.position.y + 72), "Gegner lassen Ausrüstung fallen", 13, Color(INK, 0.55))
+		return
+	_ink(Vector2(tx, r.position.y + 48), it.name, 19, col.darkened(0.25))
+	var y := r.position.y + 70.0
+	for st in it.stats:
+		_ink(Vector2(tx, y), Loot.stat_line(st, float(it.stats[st])), 14)
+		y += 18.0
+		if y > r.end.y - 6:
+			break
+
+
+func _icon_box(r: Rect2, it: Dictionary, slot := "") -> void:
+	var col := Loot.color(it) if not it.is_empty() else Color(INK, 0.25)
+	draw_rect(r.grow(2), INK)
+	draw_rect(r, col.lerp(PAPER, 0.7))
+	_halftone(r, Color(col, 0.5), 5)
+	if not it.is_empty():
+		if int(it.rarity) >= 2:  # epic and legendary glow
+			draw_circle(r.get_center(), r.size.x * (0.36 + 0.03 * sin(_t * 4.0)), Color(col, 0.35))
+		ItemIcon.draw_icon(self, r.get_center(), it, r.size.x / 22.0)
+	elif slot != "":
+		var ghost := {"slot": slot, "rarity": 0, "icon": 0}
+		_ghost(r, ghost)
+
+
+## Faint outline of an empty slot's item kind.
+func _ghost(r: Rect2, ghost: Dictionary) -> void:
+	ItemIcon.draw_icon(self, r.get_center(), ghost, r.size.x / 26.0)
+	draw_rect(r, Color(PAPER, 0.6))
+
+
+# Inventar ------------------------------------------------------------------------
+
+func _draw_inventory(R: Rect2) -> void:
+	var inner := R.grow(-26)
+	var gx := inner.position.x
+	var gy := inner.position.y + 30.0
+	_ink(Vector2(gx, gy - 6), "Tasche", 22, RED)
+	_ink(Vector2(gx + 90, gy - 6), "%d / %d" % [Profile.items.size(), Profile.BAG_SIZE], 16, Color(INK, 0.7))
+	_ink(Vector2(gx, gy - 6), "%d Splitter" % Profile.splitter, 16, INK, HORIZONTAL_ALIGNMENT_RIGHT, COLS * CELL)
+	gy += 12.0
+	for i in COLS * ROWS:
+		var r := Rect2(gx + (i % COLS) * CELL, gy + (i / COLS) * CELL, CELL - 8, CELL - 8)
+		var it: Dictionary = Profile.items[i] if i < Profile.items.size() else {}
+		if it.is_empty():
+			draw_rect(r.grow(1), Color(INK, 0.25))
+			draw_rect(r, Color(INK, 0.06))
+		else:
+			_icon_box(r, it)
+			if Profile.is_equipped(it.uid):
+				var b := Rect2(r.end.x - 20, r.position.y - 6, 22, 18)
+				draw_rect(b.grow(1), INK)
+				draw_rect(b, GOOD)
+				draw_string(font, b.position + Vector2(0, 14), "A", HORIZONTAL_ALIGNMENT_CENTER, 22, 13, PAPER)
+		if i == _sel:
+			var g := 4.0 + sin(_t * 6.0)
+			draw_rect(r.grow(g), RED, false, 3.0)
+		var idx := i
+		_hits.append([r, func(_p):
+			if _sel == idx:
+				_equip_selected()  # click again = equip
+			else:
+				_sel = idx
+				_confirm_salvage = ""
+				Sfx.play("ui_click", -10.0)])
+	var sort_r := Rect2(gx, gy + ROWS * CELL + 4, 170, 34)
+	_button(sort_r, "Sortieren", "R", _sort)
+	# item card
+	var cx := gx + COLS * CELL + 22.0
+	var card := Rect2(cx, inner.position.y + 8, inner.end.x - cx, inner.size.y - 8)
+	var it := _sel_item()
+	if it.is_empty():
+		_paper(card)
+		_halftone(card, Color(INK, 0.06), 6)
+		var msg := "Noch keine Ausrüstung." if Profile.items.is_empty() else "Leerer Platz."
+		_ink(Vector2(card.position.x + 24, card.position.y + 60), msg, 22)
+		_ink(Vector2(card.position.x + 24, card.position.y + 92), "Besiege Gegner im Trainingswald.", 16, Color(INK, 0.75))
+		_ink(Vector2(card.position.x + 24, card.position.y + 116), "Elite-Gegner lassen immer etwas fallen.", 16, Color(INK, 0.75))
+		_ink(Vector2(card.position.x + 24, card.position.y + 150), "Seltenheit:", 15, Color(INK, 0.7))
+		var ry := card.position.y + 176.0
+		for rar in Loot.RARITIES:
+			draw_rect(Rect2(card.position.x + 26, ry - 12, 14, 14), INK)
+			draw_rect(Rect2(card.position.x + 28, ry - 10, 10, 10), rar.color)
+			_ink(Vector2(card.position.x + 50, ry), "%s · %d Werte" % [rar.name, rar.rolls], 15)
+			ry += 24.0
+		return
+	var col := Loot.color(it)
+	var rar := Loot.rarity_info(it)
+	_paper(card)
+	draw_rect(Rect2(card.position + Vector2(3, 3), Vector2(card.size.x - 6, 92)), col.lerp(PAPER, 0.6))
+	_halftone(Rect2(card.position + Vector2(3, 3), Vector2(card.size.x - 6, 92)), Color(col, 0.55), 5)
+	var ic := Rect2(card.position.x + 20, card.position.y + 20, 96, 96)
+	_icon_box(ic, it)
+	var tx := ic.end.x + 18.0
+	_tagged(Vector2(tx, card.position.y + 18), rar.name, col.darkened(0.15), 14)
+	_ink(Vector2(tx, card.position.y + 70), it.name, 24)
+	_ink(Vector2(tx, card.position.y + 94), "%s · Gegenstandsstufe %d" % [Profile.SLOT_NAMES[it.slot], int(it.ilvl)], 14, Color(INK, 0.7))
+	var y := card.position.y + 150.0
+	var worn := Profile.equipped_item(it.slot)
+	var same: bool = not worn.is_empty() and worn.uid == it.uid
+	for st in Loot.STATS:
+		var v := float(it.stats.get(st, 0.0))
+		var w := float(worn.stats.get(st, 0.0)) if not worn.is_empty() and not same else v
+		if v == 0.0 and w == 0.0:
+			continue
+		if v > 0.0:
+			_ink(Vector2(card.position.x + 24, y), Loot.stat_line(st, v), 18)
+		else:
+			_ink(Vector2(card.position.x + 24, y), "– " + str(Loot.STATS[st].name), 18, Color(INK, 0.4))
+		if not same and not worn.is_empty() and absf(v - w) > 0.0005:
+			var d := v - w
+			_ink(Vector2(card.position.x + 24, y), ("%+.1f %%" % (d * 100.0)).replace(".", ","), 16, GOOD if d > 0 else BAD, HORIZONTAL_ALIGNMENT_RIGHT, card.size.x - 48)
+		y += 28.0
+	if it.has("line"):
+		_ink(Vector2(card.position.x + 24, y + 8), "„%s“" % it.line, 15, col.darkened(0.35))
+		y += 30.0
+	if same:
+		_ink(Vector2(card.position.x + 24, y + 10), "Angelegt", 16, GOOD)
+	elif worn.is_empty():
+		_ink(Vector2(card.position.x + 24, y + 10), "Platz %s ist frei" % Profile.SLOT_NAMES[it.slot], 15, Color(INK, 0.7))
+	else:
+		_ink(Vector2(card.position.x + 24, y + 10), "Vergleich mit: %s" % worn.name, 15, Color(INK, 0.7))
+	var by := card.end.y - 54.0
+	_button(Rect2(card.position.x + 20, by, 190, 38), "Ablegen" if same else "Anlegen", "Leer", _equip_selected, not same)
+	var gain := int(Loot.salvage_value(it))
+	_button(Rect2(card.position.x + 226, by, card.size.x - 246, 38), "Zerlegen +%d" % gain if _confirm_salvage != it.uid else "Sicher? Nochmal", "X", _salvage_selected)
+
+
+# Optionen ------------------------------------------------------------------------
+
+func _draw_options(R: Rect2) -> void:
+	var inner := R.grow(-26)
+	var opts := _options()
+	var y := inner.position.y + 20.0
+	var rw := minf(640.0, inner.size.x)
+	var x := inner.get_center().x - rw * 0.5
+	_ink(Vector2(x, y + 14), "Einstellungen", 22, RED)
+	_ink(Vector2(x, y + 14), "werden sofort gespeichert", 14, Color(INK, 0.6), HORIZONTAL_ALIGNMENT_RIGHT, rw)
+	y += 36.0
+	_slider_rects.clear()
+	for i in opts.size():
+		var o: Array = opts[i]
+		var r := Rect2(x, y, rw, 52)
+		var on := i == _opt
+		_paper(r, Color("fff4d0") if on else PAPER, 3 if on else 2, RED if on else INK)
+		_ink(Vector2(r.position.x + 20, r.position.y + 33), o[0], 19)
+		var cx := r.position.x + rw * 0.48
+		var cw := rw * 0.52 - 20.0
+		var idx := i
+		match o[1]:
+			"slider":
+				var sr := Rect2(cx, r.position.y + 20, cw - 70, 12)
+				_bar(sr, float(o[3]), RED)
+				draw_circle(Vector2(sr.position.x + sr.size.x * float(o[3]), sr.get_center().y), 9.0, INK)
+				draw_circle(Vector2(sr.position.x + sr.size.x * float(o[3]), sr.get_center().y), 6.0, PAPER)
+				_ink(Vector2(sr.end.x + 10, r.position.y + 33), o[2], 17, INK, HORIZONTAL_ALIGNMENT_RIGHT, 60)
+				_slider_rects[i] = sr
+				_hits.append([Rect2(sr.position.x - 10, r.position.y, sr.size.x + 20, r.size.y), func(p):
+					_opt = idx
+					_drag_opt = idx
+					_slider_to(idx, p.x)])
+			"choice":
+				_arrow(Vector2(cx + 10, r.get_center().y), -1)
+				_arrow(Vector2(cx + cw - 10, r.get_center().y), 1)
+				_ink(Vector2(cx, r.position.y + 33), o[2], 19, INK, HORIZONTAL_ALIGNMENT_CENTER, cw)
+				_hits.append([Rect2(cx - 10, r.position.y, cw * 0.5 + 10, r.size.y), func(_p):
+					_opt = idx
+					_change(idx, -1)])
+				_hits.append([Rect2(cx + cw * 0.5, r.position.y, cw * 0.5 + 10, r.size.y), func(_p):
+					_opt = idx
+					_change(idx, 1)])
+			"toggle":
+				var on_v: bool = o[2] == "an"
+				var tr := Rect2(cx + cw - 76, r.position.y + 12, 66, 28)
+				draw_rect(tr.grow(2), INK)
+				draw_rect(tr, GOOD if on_v else Color(INK, 0.35))
+				var knob := Rect2(tr.position.x + (36 if on_v else 2), tr.position.y + 2, 28, 24)
+				draw_rect(knob, PAPER)
+				draw_rect(knob, INK, false, 2.0)
+				_ink(Vector2(cx, r.position.y + 33), o[2], 17, INK)
+				_hits.append([Rect2(cx - 10, r.position.y, cw + 10, r.size.y), func(_p):
+					_opt = idx
+					_change(idx, 1)])
+		_hits.append([r, func(_p): _opt = idx])
+		y += 60.0
+
+
+func _arrow(c: Vector2, d: int) -> void:
+	var pts := PackedVector2Array([c + Vector2(-6 * d, -9), c + Vector2(8 * d, 0), c + Vector2(-6 * d, 9)])
+	draw_colored_polygon(pts, RED)
+	pts.append(pts[0])
+	draw_polyline(pts, INK, 2.0)
