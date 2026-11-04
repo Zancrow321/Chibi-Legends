@@ -3,20 +3,20 @@ extends Node2D
 ## Paper-doll chibi (about 32 x 48 px): one Sprite2D per layer, all playing
 ## the same frame of the shared sheet layout (tools/sprites/rig.py).
 ## Origin = between the feet. Faces right; the owner flips it via scale.x.
-## Colors come from a palette-swap shader, so every part works in every color.
+## Colors come from a palette-swap shader, so skins can recolor a character.
 
-## The player's look (see Appearance). Assigning it rebuilds the layers.
+## The character's look (see Appearance / Roster). Assigning it rebuilds the layers.
 var look: Dictionary = {}:
 	set = set_look
-## Equipped items per gear slot; shown unless the look overrides the slot.
-var equipment: Dictionary = GameData.START_EQUIPMENT.duplicate():
-	set = set_equipment
 var state := "idle"  # idle, run, jump, fall, attack, dash, cast, hit, ko
 var anim_time := 0.0
 var attack_phase := 0  # 0..2 combo step, picks attack_1..3
 ## Hit flash 0..1 (white), for later damage feedback.
 var flash := 0.0:
 	set = set_flash
+## Dark silhouette 0..1, e.g. for characters not owned yet.
+var shadow := 0.0:
+	set = set_shadow
 
 var _sprites: Dictionary = {}  # layer -> Sprite2D
 var _anim := ""
@@ -35,7 +35,7 @@ func _init() -> void:
 		s.visible = false
 		add_child(s)
 		_sprites[layer] = s
-	look = GameData.LOOK_PRESETS[0]
+	look = Roster.look(Roster.starter())
 
 
 func _process(delta: float) -> void:
@@ -50,21 +50,25 @@ func set_state(new_state: String) -> void:
 
 
 func set_look(value: Dictionary) -> void:
-	look = Appearance.normalized(value)
-	_rebuild()
-
-
-func set_equipment(value: Dictionary) -> void:
-	equipment = value.duplicate()
+	look = value.duplicate(true)
 	_rebuild()
 
 
 func set_flash(value: float) -> void:
 	flash = value
+	_set_param("flash", flash)
+
+
+func set_shadow(value: float) -> void:
+	shadow = value
+	_set_param("shadow", shadow)
+
+
+func _set_param(param: String, value: float) -> void:
 	for s in _sprites.values():
 		var mat := (s as Sprite2D).material as ShaderMaterial
 		if mat:
-			mat.set_shader_parameter("flash", flash)
+			mat.set_shader_parameter(param, value)
 
 
 func _rebuild() -> void:
@@ -72,7 +76,7 @@ func _rebuild() -> void:
 		return
 	for s in _sprites.values():
 		s.visible = false
-	var slots := Appearance.resolve(look, equipment)
+	var slots := Appearance.parts(look)
 	for slot in slots:
 		var it := Appearance.item(slots[slot])
 		if it.is_empty():
@@ -81,6 +85,7 @@ func _rebuild() -> void:
 		mat.shader = Appearance.SHADER
 		mat.set_shader_parameter("palette", Appearance.palette_texture(it, look))
 		mat.set_shader_parameter("flash", flash)
+		mat.set_shader_parameter("shadow", shadow)
 		var item_layers: Dictionary = it.layers
 		for layer in item_layers:
 			var s: Sprite2D = _sprites.get(layer)

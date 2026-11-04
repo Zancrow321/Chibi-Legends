@@ -28,7 +28,7 @@ Spielwelt: die Multiversum-Akademie. Fähigkeiten und Outfits sind eigene Entwü
 | Super „Legendenstrahl“ | P (oder 5) | LT |
 | Effekt-Stärke (Dezent / Kräftig / Maximal) | V | – |
 | Unendlich Aura / Abklingzeiten zurücksetzen | U / R | – / Back |
-| Character Creator | C | Start |
+| Charaktere (Sammlung) | C | Start |
 | Hilfe ein/aus | H | – |
 
 ## Starten
@@ -55,11 +55,12 @@ scripts/
   fx/hit_sparks.gd         Additive Treffer-Funken (optional mit Pixel-Frames aus assets/vfx/)
   fx/fx_settings.gd        Treffer-Profile und Effekt-Stärke zum Feintunen
   ui/hud.gd                HUD
-  ui/character_creator.gd  Character Creator (C / Start, beim ersten Start automatisch)
-  character/appearance.gd  Looks: Teile-Katalog, Farben, Transmog, Speichern
-assets/characters/         Paper-Doll-Teile und Farben, siehe assets/characters/README.md
+  ui/character_select.gd   Sammlung: Charaktere ansehen, Skins, Charakter wählen (C / Start)
+  character/roster.gd      Feste Charaktere, Seltenheit, Skins, Besitz und Auswahl
+  character/appearance.gd  Sprite-Teile, Farben und Paletten für den Shader
+assets/characters/         Charaktere, Skins, Sprite-Teile und Farben, siehe assets/characters/README.md
 tools/sprites/             Format, Platzhalter backen, Prüfen, Vorschau (Python + Pillow)
-tools/pixellab/            Neue Teile mit PixelLab erzeugen oder eigene PNGs importieren
+tools/pixellab/            Neue Charaktere/Teile mit PixelLab erzeugen oder eigene PNGs importieren
 ```
 
 Daten und Reaktionslogik hängen nicht an Szenen. Dadurch kann der spätere Godot-Headless-Server (Koop, Phase 4) denselben Code nutzen.

@@ -131,7 +131,7 @@ func _physics_process(delta: float) -> void:
 	if _take("super"):
 		use_super()
 	if _take("cycle_look"):
-		get_tree().call_group("character_creator", "open_for", visual)
+		get_tree().call_group("character_select", "open_for", visual)
 
 	if infinite_aura:
 		aura = max_aura

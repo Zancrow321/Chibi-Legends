@@ -1,5 +1,5 @@
 {
-  "_info": "Kuratierte Farben pro Gruppe. unlock leer = für alle frei. Sonst: pass (Saison-Pass), challenge (Herausforderung), shop (Kosmetik-Shop), gacha. Jede Farbe wird im Spiel zu einer 8-Ton-Rampe erweitert.",
+  "_info": "Kuratierte Farben pro Gruppe. Charaktere und Skins wählen daraus (characters.json). Jede Farbe wird im Spiel zu einer 8-Ton-Rampe erweitert.",
   "haut": [
     {"id": "haut_1", "name": "Porzellan", "color": "ffe2c9"},
     {"id": "haut_2", "name": "Pfirsich", "color": "f4c7a1"},
@@ -7,8 +7,8 @@
     {"id": "haut_4", "name": "Bronze", "color": "a8693f"},
     {"id": "haut_5", "name": "Kakao", "color": "6e4127"},
     {"id": "haut_6", "name": "Ebenholz", "color": "4a2c1d"},
-    {"id": "haut_geist", "name": "Geisterblass", "color": "c9d8f2", "unlock": "challenge", "hint": "Geisterwelt-Herausforderung"},
-    {"id": "haut_oni", "name": "Oni-Rot", "color": "c8564a", "unlock": "pass", "hint": "Saison-Pass Stufe 30"}
+    {"id": "haut_geist", "name": "Geisterblass", "color": "c9d8f2"},
+    {"id": "haut_oni", "name": "Oni-Rot", "color": "c8564a"}
   ],
   "haar": [
     {"id": "haar_rot", "name": "Feuerrot", "color": "e8553a"},
@@ -21,9 +21,9 @@
     {"id": "haar_gruen", "name": "Jade", "color": "55d18a"},
     {"id": "haar_violett", "name": "Lavendel", "color": "a47be8"},
     {"id": "haar_orange", "name": "Mandarine", "color": "ff9d3a"},
-    {"id": "haar_gold", "name": "Legendengold", "color": "ffd23f", "unlock": "pass", "hint": "Saison-Pass Stufe 50"},
-    {"id": "haar_silber", "name": "Mondsilber", "color": "b8c4d6", "unlock": "challenge", "hint": "Wellen-Arena: Welle 30"},
-    {"id": "haar_sternenblau", "name": "Sternennacht", "color": "3a3fb8", "unlock": "shop", "hint": "Kosmetik-Shop"}
+    {"id": "haar_gold", "name": "Legendengold", "color": "ffd23f"},
+    {"id": "haar_silber", "name": "Mondsilber", "color": "b8c4d6"},
+    {"id": "haar_sternenblau", "name": "Sternennacht", "color": "3a3fb8"}
   ],
   "augen": [
     {"id": "augen_braun", "name": "Braun", "color": "7a3b2e"},
@@ -33,8 +33,8 @@
     {"id": "augen_violett", "name": "Violett", "color": "8a4fd6"},
     {"id": "augen_grau", "name": "Grau", "color": "6b7280"},
     {"id": "augen_bernstein", "name": "Bernstein", "color": "d98b1f"},
-    {"id": "augen_gold", "name": "Erwachtes Gold", "color": "ffcc33", "unlock": "pass", "hint": "Saison-Pass Stufe 20"},
-    {"id": "augen_seele", "name": "Seelenblau", "color": "5ce0ff", "unlock": "challenge", "hint": "Geisterwelt-Boss"}
+    {"id": "augen_gold", "name": "Erwachtes Gold", "color": "ffcc33"},
+    {"id": "augen_seele", "name": "Seelenblau", "color": "5ce0ff"}
   ],
   "stoff": [
     {"id": "weiss", "name": "Weiß", "color": "f2f0e6"},
@@ -51,8 +51,8 @@
     {"id": "rosa", "name": "Rosa", "color": "f08ab8"},
     {"id": "braun", "name": "Braun", "color": "5b4a3a"},
     {"id": "dunkelbraun", "name": "Dunkelbraun", "color": "3a2a26"},
-    {"id": "gold", "name": "Prunkgold", "color": "e8b23a", "unlock": "pass", "hint": "Saison-Pass Stufe 40"},
-    {"id": "karmesin", "name": "Karmesin", "color": "9e1530", "unlock": "challenge", "hint": "Story-Boss ohne Treffer"},
-    {"id": "nebel", "name": "Geisternebel", "color": "9fb3d9", "unlock": "shop", "hint": "Kosmetik-Shop"}
+    {"id": "gold", "name": "Prunkgold", "color": "e8b23a"},
+    {"id": "karmesin", "name": "Karmesin", "color": "9e1530"},
+    {"id": "nebel", "name": "Geisternebel", "color": "9fb3d9"}
   ]
 }

@@ -11,8 +11,12 @@
          "grow": 3
        }
 
-   mask_from = an existing item of the same slot whose silhouette (grown by
-   `grow` px) is the area PixelLab may paint in. That keeps every frame aligned.
+   mask_from = an existing item (or a list) whose silhouette, grown by `grow` px,
+   is the area PixelLab may paint in. That keeps every frame aligned.
+
+   Whole character in one sprite: slot "body", "mode": "full" and
+   "mask_from": [every part of a similar character]. Then the painted pixels
+   become the character's single layer instead of a part over the base.
 
 2. Try it cheaply first, then run all frames:
 
@@ -46,13 +50,13 @@ ROOT = HERE.parents[1]
 ITEMS_DIR = ROOT / "assets" / "characters" / "items"
 
 
-def slot_mask(catalog: dict, item_id: str, grow: int) -> Image.Image:
-    """White = PixelLab may paint here. Union of the reference item's layers, grown."""
-    ref = catalog["items"][item_id]
+def slot_mask(catalog: dict, item_ids, grow: int) -> Image.Image:
+    """White = PixelLab may paint here. Union of the reference items' layers, grown."""
     mask = Image.new("L", rig.SHEET_SIZE, 0)
-    for path in ref["layers"].values():
-        alpha = Image.open(ROOT / path.replace("res://", "")).convert("RGBA").getchannel("A")
-        mask.paste(255, (0, 0), alpha)
+    for item_id in ([item_ids] if isinstance(item_ids, str) else item_ids):
+        for path in catalog["items"][item_id]["layers"].values():
+            alpha = Image.open(ROOT / path.replace("res://", "")).convert("RGBA").getchannel("A")
+            mask.paste(255, (0, 0), alpha)
     if grow > 0:
         mask = mask.filter(ImageFilter.MaxFilter(grow * 2 + 1))
     return mask
@@ -93,8 +97,10 @@ def main() -> int:
         print(f"Trocken-Lauf: {len(todo)} Frames würden erzeugt. Eingaben: _basis.png, _maske.png")
         return 0
 
+    full = spec.get("mode") == "full"
     raw_path = folder / "_pixellab_roh.png"
-    raw = Image.open(raw_path).convert("RGBA") if raw_path.exists() else base.copy()
+    empty = Image.new("RGBA", rig.SHEET_SIZE, (0, 0, 0, 0))
+    raw = Image.open(raw_path).convert("RGBA") if raw_path.exists() else (empty.copy() if full else base.copy())
     usd = 0.0
     for n, (name, row, col) in enumerate(todo, 1):
         box = (col * rig.CELL, row * rig.CELL, (col + 1) * rig.CELL, (row + 1) * rig.CELL)
@@ -108,14 +114,14 @@ def main() -> int:
         usd += cost
         if img.size != (rig.CELL, rig.CELL):
             img = img.resize((rig.CELL, rig.CELL), Image.NEAREST)
-        # keep only what was painted inside the mask; outside stays the base
-        cell = base.crop(box)
+        # keep only what was painted inside the mask; outside stays the base (or empty)
+        cell = empty.crop(box) if full else base.crop(box)
         cell.paste(img, (0, 0), cell_mask)
         raw.paste(cell, box[:2])
         raw.save(raw_path)  # save progress after every frame
         print(f"[{n}/{len(todo)}] {name}:{col}  (bisher {usd:.3f} USD)")
 
-    sheets = import_sheet.encode_sheet(raw, meta, colors, catalog, on_base=True)
+    sheets = import_sheet.encode_sheet(raw, meta, colors, catalog, on_base=not full)
     meta["layers"] = {}
     for layer, img in sheets.items():
         if img.getbbox() is not None:
