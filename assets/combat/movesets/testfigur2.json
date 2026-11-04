@@ -12,7 +12,7 @@
 		"leicht_3": {"name": "Abschluss", "button": "light", "dir": "neutral", "startup": 8, "active": 4, "recovery": 18,
 			"damage": 10, "hitbox": [22, -26, 36, 30], "knockback": 180, "draw": "slash", "phase": 2, "profile": "heavy", "lunge": 60,
 			"creator": {"startup": ["upper_wind"], "active": ["thrust_hit"], "recovery": ["thrust_hit"]}, "pose": {"startup": [0, 1, 2], "active": [3, 4], "recovery": [6]}},
-		"leicht_vor": {"name": "Stich", "button": "light", "dir": "forward", "startup": 7, "active": 3, "recovery": 14,
+		"leicht_vor": {"name": "Stich", "button": "light", "dir": "forward", "chain": "leicht_2", "startup": 7, "active": 3, "recovery": 14,
 			"damage": 7, "hitbox": [26, -26, 28, 14], "knockback": 70, "lunge": 140, "draw": "thrust",
 			"creator": {"startup": ["slash_wind"], "active": ["thrust_hit"], "recovery": ["thrust_hit"]}, "pose": {"startup": [1, 2], "active": [3], "recovery": [6]}},
 		"leicht_oben": {"name": "Aufwaertsschnitt", "button": "light", "dir": "up", "startup": 6, "active": 4, "recovery": 14,

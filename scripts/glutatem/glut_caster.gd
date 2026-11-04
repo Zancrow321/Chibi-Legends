@@ -83,6 +83,11 @@ func busy() -> bool:
 	return zug_id != ""
 
 
+## The running Zug already hit something (it may be cancelled into the super).
+func zug_connected() -> bool:
+	return busy() and _reported
+
+
 func stage_color() -> Color:
 	match stage:
 		1:

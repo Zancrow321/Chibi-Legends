@@ -91,6 +91,11 @@ var _broken := 0.0
 var _t := 0.0
 var _anim := ""
 var _anim_t := 0.0
+## Hitstun of the current stagger (set by the hit) and juggle hits since the
+## last landing: airborne hits keep the enemy up, less with every hit.
+const JUGGLE_FLOAT := 140.0
+var _stun := 0.28
+var _juggle := 0
 
 var sprite: Sprite2D
 var _textures: Dictionary = {}
@@ -168,10 +173,22 @@ func take_hit(knockback: float, from_x: float) -> void:
 	if armored:
 		return
 	_squash = Vector2(0.8, 1.2)
+	if not on_ground:
+		_juggle += 1
+		var lift := JUGGLE_FLOAT * maxf(0.15, 1.0 - 0.12 * float(_juggle - 1)) * (0.4 if is_elite() else 1.0)
+		vel.y = minf(vel.y, -lift)
+		if knockback < 120.0:
+			vel.x *= 0.5  # light air hits do not carry it away
 	if is_elite() and knockback < 120.0:
 		return  # light hits only flash the golem
 	if data.kind != "brute" or knockback >= 100.0 or state != "windup":
 		_enter("hurt")
+
+
+## Hitstun of the hit that just landed (TrainingRoom.deal_hit).
+func set_hitstun(seconds: float) -> void:
+	if state == "hurt":
+		_stun = maxf(seconds, 0.2)
 
 
 ## Perfekt-Block by the player: the attack bounces off, the enemy reels.
@@ -244,6 +261,7 @@ func _enter(s: String) -> void:
 	_tick = 0.0
 	match s:
 		"hurt":
+			_stun = 0.28
 			_play("hurt", true)
 		"windup":
 			_play("attack", true)
@@ -373,7 +391,7 @@ func _think(delta: float) -> void:
 			if _st > 0.5:
 				_enter("idle")
 		"hurt":
-			if _st > 0.28 and on_ground:
+			if _st > _stun and on_ground:
 				_enter("idle")
 				_cd = maxf(_cd, 0.35)
 
@@ -488,6 +506,7 @@ func _move(delta: float) -> void:
 
 
 func _land(speed: float) -> void:
+	_juggle = 0
 	if speed > 120.0:
 		_squash = Vector2(1.0 + minf(speed, 500.0) / 900.0, 1.0 - minf(speed, 500.0) / 1300.0)
 		world.dust.land(global_position, minf(speed / 300.0, 1.5))

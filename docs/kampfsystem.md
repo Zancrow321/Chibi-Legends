@@ -16,9 +16,17 @@ Griff: Leicht und Schwer zusammen (bis 3 Bilder Abstand).
 
 ## Abbrech-Regeln
 
-- Leicht-Kette: der nächste Leicht-Druck läuft ab der Erholungsphase des vorigen Hiebs.
-- Nach einem Treffer: Leicht kann in Schwer, Leicht und Schwer können in Spezial abgebrochen werden.
-- Sonst wartet der nächste Druck, bis der Angriff fertig ist (kein Eingabeverlust).
+Reihenfolge wie in Platform-Fightern: Normal -> Spezial (Zug) -> Meisterzug.
+
+- Leicht-Kette: nach einem Treffer sofort, bei einem Fehlschlag ab der Erholung. Die Kette läuft weiter, egal ob dabei vorwärts gehalten wird; der Stich (vorwärts + J) geht in den 2. Kettenhieb über.
+- Abzweigen: nach einem Treffer führt J mit oben/unten in den Aufwärtsschnitt bzw. den tiefen Schnitt.
+- Nach einem Treffer: Leicht -> Schwer, Leicht/Schwer -> Spezial, alles -> Meisterzug, dazu Sprung und Dash.
+- Ein Zug, der getroffen hat, lässt sich in den Meisterzug abbrechen.
+- Sprung aus einem Heber, der getroffen hat: höherer Verfolgungssprung zum Gegner.
+- Luft: der Luftschnitt kann nach einem Treffer bis zu 3-mal wiederholt werden; Lufttreffer halten Figur und Gegner kurz oben (Jonglieren, wird mit jedem Treffer schwächer).
+- Nachsetzen: ein Folgeangriff nach einem Treffer macht einen kleinen Schritt zum Gegner, wenn er sonst zu kurz wäre.
+- Trefferstarre: so lang wie der Rest des Angriffs plus 16 Bilder, damit jede erlaubte Folge verbindet; ab dem 9. Kombotreffer wird sie kürzer (höchstens -45 %), Kombos enden also von selbst.
+- Eingaben werden 0,15 s gepuffert; ein Druck während eines Angriffs wartet, bis die Regeln ihn erlauben (kein Eingabeverlust).
 
 ## Datenformat
 
@@ -32,7 +40,7 @@ Jeder Charakter hat eine Datei `assets/combat/movesets/<id>.json`. Pro Angriff:
 | hitbox | [x, y, Breite, Höhe], Mitte relativ zum Fußpunkt, Blick nach rechts |
 | knockback, launch | Rückstoß zur Seite, Wurf nach oben (negativ = nach unten) |
 | lunge | Vorschub während Anlauf und aktiv |
-| chain | nächster Angriff der Kette |
+| chain | nächster Angriff der Kette (auch beim Stich: leicht_2) |
 | profile | Treffergefühl (light / heavy) |
 | draw, angle, phase | Aussehen des Schlag-Bogens |
 | pose | Bilder aus dem Schwertstreifen je Phase |
