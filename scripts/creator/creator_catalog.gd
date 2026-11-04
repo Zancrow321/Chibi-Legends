@@ -70,7 +70,7 @@ static func region(pose: String) -> Rect2:
 ## Standard-Figur, wenn noch nichts gespeichert ist.
 static func default_look() -> Dictionary:
 	return {"hair": "stachel", "top": "kampfweste", "pants": "kampfweste", "shoes": "kampfweste",
-		"weapon": "schwert_kaiser", "skin": 1,
+		"weapon": "schwert_kaiser", "skin": 1, "style": "glutatem",
 		"colors": {"hair": 0, "top": 0, "pants": 0, "shoes": 0}}
 
 

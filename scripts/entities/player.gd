@@ -111,7 +111,7 @@ func _ready() -> void:
 	add_child(visual)
 	sprite = FighterSprite.new()
 	add_child(sprite)
-	style = FightingStyle.load_style("glutatem")
+	style = FightingStyle.load_style(str(CreatorCatalog.load_look().get("style", "glutatem")))
 	if style.moveset_path() != "":
 		moveset = MoveSet.load_file(style.moveset_path())
 
