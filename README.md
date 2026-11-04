@@ -13,6 +13,7 @@ Spielwelt: die Multiversum-Akademie. Fähigkeiten und Outfits sind eigene Entwü
 - Trainingswald mit Trainingspuppen, Schaden pro Sekunde, Gesamtschaden und Reaktions-Quest
 - HUD: Leisten oben links, Minikarte und Quests oben rechts, Fähigkeiten-Leiste und Menüleiste unten
 - Tastatur und Gamepad
+- Kampfeffekte im Stil klassischer 2D-Fighter: Trefferpause (Hit-Stop), Screenshake, leuchtende Treffer-Funken je Element, große Reaktions-Explosionen und der Super „Legendenstrahl“ (Bildschirm-Abdunkeln, Cut-in, Energiestrahl, Finale). Stärke per V umschaltbar.
 
 ## Steuerung
 
@@ -24,8 +25,10 @@ Spielwelt: die Multiversum-Akademie. Fähigkeiten und Outfits sind eigene Entwü
 | Dash | Shift | B |
 | Katana-Combo | J | X |
 | Fähigkeiten 1–4 | K, L, I, O (oder 1–4) | Y, RB, LB, RT |
+| Super „Legendenstrahl“ | P (oder 5) | LT |
+| Effekt-Stärke (Dezent / Kräftig / Maximal) | V | – |
 | Unendlich Aura / Abklingzeiten zurücksetzen | U / R | – / Back |
-| Look wechseln | C | Start |
+| Character Creator | C | Start |
 | Hilfe ein/aus | H | – |
 | Look-Test: Ansicht wechseln (flach / HD-2D A / HD-2D B / Licht) | B | – |
 | Look-Test: Grafik Hoch / Mittel / Niedrig | G | – |
@@ -76,14 +79,23 @@ scripts/
   data/game_data.gd        Elemente, Fähigkeiten, Reaktionen, Looks (reine Daten)
   combat/reactions.gd      Reaktionsregeln (reine Logik, später auch auf dem Server)
   combat/attack.gd         Hitboxen und Geschosse
+  combat/super_beam.gd     Super-Angriff mit Super-Flash, Strahl und Finale
   entities/                Spieler, Chibi-Grafik, Trainingspuppe
   world/                   Trainingswald und Parallax-Hintergrund
   fx/                      Schadenszahlen und Pixel-Effekte
+  fx/combat_fx.gd          Hit-Stop, Screenshake, Zoom, Abdunkeln, Bildschirm-Blitz
+  fx/hit_sparks.gd         Additive Treffer-Funken (optional mit Pixel-Frames aus assets/vfx/)
+  fx/fx_settings.gd        Treffer-Profile und Effekt-Stärke zum Feintunen
   ui/hud.gd                HUD
   hd2d/                    HD-2D-Test: 3D-Wald, Effekt-Kette, Variante A und B
   lightlook/               Licht-Test: 2D-Lichter, Dämmerung, Parallax
 shaders/hd2d/              Shader für Gelände, Wasser, Unschärfe, Bloom
 tools/hd2d/                Generator für die Pixel-Texturen (assets/hd2d/)
+  ui/character_creator.gd  Character Creator (C / Start, beim ersten Start automatisch)
+  character/appearance.gd  Looks: Teile-Katalog, Farben, Transmog, Speichern
+assets/characters/         Paper-Doll-Teile und Farben, siehe assets/characters/README.md
+tools/sprites/             Format, Platzhalter backen, Prüfen, Vorschau (Python + Pillow)
+tools/pixellab/            Neue Teile mit PixelLab erzeugen oder eigene PNGs importieren
 ```
 
 Daten und Reaktionslogik hängen nicht an Szenen. Dadurch kann der spätere Godot-Headless-Server (Koop, Phase 4) denselben Code nutzen.

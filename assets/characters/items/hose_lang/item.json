@@ -1,0 +1,17 @@
+{
+  "id": "hose_lang",
+  "name": "Lange Hose",
+  "slot": "pants",
+  "channels": [
+    {
+      "key": "c0",
+      "label": "Hose",
+      "group": "stoff",
+      "default": "braun"
+    }
+  ],
+  "layers": {
+    "pants": "pants.png"
+  },
+  "source": "platzhalter"
+}

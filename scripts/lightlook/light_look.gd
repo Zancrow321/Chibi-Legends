@@ -23,6 +23,7 @@ var room: TrainingRoom
 
 var _light_tex: GradientTexture2D
 var _lit_shader: Shader
+var _palette_lit: Shader
 var _halo: Texture2D
 var _sun: DirectionalLight2D
 var _layers: Array = []  # [Sprite2D, factor]
@@ -65,7 +66,8 @@ func _ready() -> void:
 	var tm := ShaderMaterial.new()
 	tm.shader = _lit_shader
 	room.material = tm
-	_light_character(room.player.visual, Rect2(-10, -48, 20, 48))
+	_palette_lit = load("res://shaders/lightlook/palette_lit.gdshader")
+	_light_player()
 	for d in room.get_tree().get_nodes_in_group("targets"):
 		var r: Rect2 = d.get_hurt_rect()
 		_light_character(d, Rect2(r.position - d.global_position, r.size))
@@ -125,6 +127,22 @@ func _light_character(node: CanvasItem, r: Rect2) -> void:
 	m.set_shader_parameter("half_h", r.size.y * 0.5)
 	m.set_shader_parameter("center_y", r.position.y + r.size.y * 0.5)
 	node.material = m
+
+
+## The player is a paper doll: each layer sprite has its own palette material,
+## rebuilt whenever the look changes. Switch those to the lit palette shader.
+func _light_player() -> void:
+	var v := room.player.visual
+	for s in v.get_children():
+		var m := (s as CanvasItem).material as ShaderMaterial
+		if m == null:
+			continue
+		if m.shader != _palette_lit:
+			m.shader = _palette_lit
+			m.set_shader_parameter("half_w", 10.0)
+			m.set_shader_parameter("half_h", 24.0)
+			m.set_shader_parameter("center_y", -24.0)
+		m.set_shader_parameter("flip", v.scale.x)
 
 
 func _lantern(x: float) -> void:
@@ -286,5 +304,4 @@ func _process(delta: float) -> void:
 	for fl in _flashes.filter(func(x): return x[1] >= x[2]):
 		fl[0].queue_free()
 	_flashes = _flashes.filter(func(x): return x[1] < x[2])
-	var vm: ShaderMaterial = room.player.visual.material
-	vm.set_shader_parameter("flip", room.player.visual.scale.x)
+	_light_player()

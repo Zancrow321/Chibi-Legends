@@ -1,0 +1,17 @@
+{
+  "id": "waffe_katana",
+  "name": "Übungs-Katana",
+  "slot": "weapon",
+  "channels": [
+    {
+      "key": "c0",
+      "label": "Scheide",
+      "group": "stoff",
+      "default": "violett"
+    }
+  ],
+  "layers": {
+    "weapon": "weapon.png"
+  },
+  "source": "platzhalter"
+}

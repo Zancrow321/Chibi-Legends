@@ -1,0 +1,17 @@
+{
+  "id": "koerper_basis",
+  "name": "Basis-Körper",
+  "slot": "body",
+  "channels": [
+    {
+      "key": "skin",
+      "label": "Haut",
+      "group": "haut",
+      "appearance": true
+    }
+  ],
+  "layers": {
+    "body": "body.png"
+  },
+  "source": "platzhalter"
+}

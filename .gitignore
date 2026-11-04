@@ -4,3 +4,7 @@
 export_credentials.cfg
 # Builds
 build/
+
+# PixelLab-/Import-Zwischenstände
+assets/characters/items/*/_*.png
+__pycache__/

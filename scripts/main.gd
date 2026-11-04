@@ -53,12 +53,26 @@ func _ready() -> void:
 	hud_layer.add_child(numbers)
 	var hud := Hud.new()
 	hud.room = room
+	hud.process_mode = Node.PROCESS_MODE_ALWAYS  # cut-in banner plays during the super pause
+	room.hud = hud
 	hud_layer.add_child(hud)
 	var info := Hd2dInfo.new()
 	info.view_name = VIEWS[view_mode]
 	hud_layer.add_child(info)
 	add_child(hud_layer)
 	room.numbers = numbers
+
+	# Character creator: opens with C / Start, and on the very first start.
+	var creator_layer := CanvasLayer.new()
+	creator_layer.layer = 20
+	var creator := CharacterCreator.new()
+	creator_layer.add_child(creator)
+	add_child(creator_layer)
+	var saved := Appearance.load_look()
+	if saved.is_empty():
+		creator.open_for.call_deferred(room.player.visual, true)
+	else:
+		room.player.visual.look = saved
 
 
 func _process(_delta: float) -> void:

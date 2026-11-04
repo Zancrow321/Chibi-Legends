@@ -30,6 +30,11 @@ var show_help := true
 var _menu_rects: Array = []
 var _hover := -1
 var _t := 0.0
+var _cutin_text := ""
+var _cutin_color := Color.WHITE
+var _cutin_t := -1.0  # seconds since the super cut-in started, <0 = off
+
+const CUTIN_TIME := 1.0
 
 
 func _ready() -> void:
@@ -38,8 +43,18 @@ func _ready() -> void:
 	font = load("res://assets/fonts/PixelifySans-SemiBold.ttf")
 
 
+func show_cutin(text: String, col: Color) -> void:
+	_cutin_text = text
+	_cutin_color = col
+	_cutin_t = 0.0
+
+
 func _process(delta: float) -> void:
 	_t += delta
+	if _cutin_t >= 0.0:
+		_cutin_t += delta
+		if _cutin_t > CUTIN_TIME:
+			_cutin_t = -1.0
 	# parent is a CanvasLayer, so anchors alone don't size us: follow the viewport
 	position = Vector2.ZERO
 	size = get_viewport_rect().size
@@ -119,6 +134,8 @@ func _draw() -> void:
 	_draw_training()
 	if show_help:
 		_draw_help()
+	if _cutin_t >= 0.0:
+		_draw_cutin(W, H)
 	if room.toast_time > 0.0:
 		var a := minf(1.0, room.toast_time * 3.0)
 		var tw := font.get_string_size(room.toast_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 22).x + 48
@@ -233,6 +250,8 @@ func _draw_skill_bar(W: float, H: float) -> void:
 	for i in p.build.size():
 		var s: Dictionary = GameData.SKILLS[p.build[i]]
 		slots.append({"label": s.name, "key": GameInput.key_label("skill_%d" % (i + 1)), "icon": p.build[i], "cd": p.cooldowns[i], "max": s.cooldown, "cost": s.cost})
+	var sup: Dictionary = GameData.SUPER
+	slots.append({"label": sup.name, "key": GameInput.key_label("super"), "icon": sup.id, "cd": p.super_cd, "max": sup.cooldown, "cost": sup.cost})
 	var slot := 62.0
 	var gap := 8.0
 	var total := slots.size() * (slot + gap) - gap + 24
@@ -279,6 +298,15 @@ func _draw_icon(r: Rect2, icon: String) -> void:
 			_panel(r, Color("5a4a14"), 6)
 			draw_polyline(PackedVector2Array([c + Vector2(4, -18), c + Vector2(-8, 2), c + Vector2(4, 0), c + Vector2(-6, 18)]), Color("ffe45c"), 5)
 			draw_polyline(PackedVector2Array([c + Vector2(4, -18), c + Vector2(-8, 2), c + Vector2(4, 0), c + Vector2(-6, 18)]), Color.WHITE, 2)
+		"legendenstrahl":
+			_panel(r, Color("1a2a5a"), 6, Color(TRIM, 0.9))
+			for k in 8:
+				var ang := _t * 1.5 + TAU * k / 8.0
+				draw_line(c, c + Vector2(cos(ang), sin(ang)) * 20.0, Color(1.0, 0.85, 0.35, 0.5), 2)
+			draw_rect(Rect2(c + Vector2(-6, -5), Vector2(24, 10)), Color("5cc8ff"))
+			draw_rect(Rect2(c + Vector2(-6, -2), Vector2(24, 4)), Color.WHITE)
+			draw_circle(c + Vector2(-8, 0), 8, Color("5cc8ff"))
+			draw_circle(c + Vector2(-8, 0), 5, Color.WHITE)
 		"sturmklinge":
 			_panel(r, Color("1f5a3a"), 6)
 			draw_arc(c + Vector2(-8, 0), 16, -1.1, 1.1, 12, Color("4fd18a"), 6)
@@ -347,12 +375,13 @@ func _draw_bottom_left(H: float) -> void:
 
 
 func _draw_help() -> void:
-	var r := Rect2(16, 286, 360, 228)
+	var r := Rect2(16, 286, 360, 272)
 	_panel(r, PANEL, 10)
 	_text(Vector2(32, 312), "Steuerung", 17, TRIM)
 	var lines := [
 		["A / D", "Laufen"], ["Leertaste", "Springen, 2x Doppelsprung"], ["S + Leertaste", "Durch Plattform fallen"],
 		["Shift", "Dash"], ["J", "Katana-Combo (3 Hiebe)"], ["K L I O", "Fähigkeiten 1–4"],
+		["P", "Super: Legendenstrahl"], ["V", "Effekt-Stärke wechseln"],
 		["C", "Look wechseln"], ["H", "Hilfe ein/aus"],
 	]
 	var y := 338.0
@@ -360,3 +389,37 @@ func _draw_help() -> void:
 		_text(Vector2(32, y), l[0], 15, TEXT)
 		_text(Vector2(160, y), l[1], 15, MUTED)
 		y += 22.0
+
+
+## Fighting-game super cut-in: a diagonal band slides in with speed lines
+## and the move name, holds, then slides out.
+func _draw_cutin(W: float, H: float) -> void:
+	var t := _cutin_t / CUTIN_TIME
+	var slide := 0.0
+	if t < 0.15:
+		slide = 1.0 - t / 0.15
+	elif t > 0.8:
+		slide = -(t - 0.8) / 0.2
+	var off := slide * W * 1.2
+	var cy := H * 0.42
+	var bh := 92.0
+	var skew := 60.0
+	var pts := PackedVector2Array([
+		Vector2(-skew + off, cy - bh / 2 + 30), Vector2(W + skew + off, cy - bh / 2 - 30),
+		Vector2(W + skew + off, cy + bh / 2 - 30), Vector2(-skew + off, cy + bh / 2 + 30)])
+	draw_colored_polygon(pts, Color(0.04, 0.03, 0.12, 0.88))
+	# speed lines inside the band
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 7
+	for i in 26:
+		var y := cy + rng.randf_range(-bh / 2 + 6, bh / 2 - 6)
+		var x := fposmod(rng.randf() * W - _t * 2400.0 * rng.randf_range(0.6, 1.2), W + 300) - 150 + off
+		var tilt := -60.0 * (x - W / 2) / W
+		draw_line(Vector2(x, y + tilt), Vector2(x + rng.randf_range(80, 220), y + tilt - 10), Color(_cutin_color, 0.35), 2)
+	draw_polyline(PackedVector2Array([pts[0], pts[1]]), TRIM, 4)
+	draw_polyline(PackedVector2Array([pts[3], pts[2]]), TRIM, 4)
+	var fs := 64
+	var tw := font.get_string_size(_cutin_text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+	var tx := W / 2 - tw / 2 + off
+	draw_string_outline(font, Vector2(tx, cy + 22), _cutin_text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, 10, Color("1a1020"))
+	draw_string(font, Vector2(tx, cy + 22), _cutin_text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Color.WHITE.lerp(_cutin_color, 0.35 + 0.25 * sin(_t * 30.0)))

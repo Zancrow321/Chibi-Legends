@@ -1,0 +1,23 @@
+{
+  "id": "oberteil_akademie",
+  "name": "Akademie-Jacke",
+  "slot": "top",
+  "channels": [
+    {
+      "key": "c0",
+      "label": "Jacke",
+      "group": "stoff",
+      "default": "weiss"
+    },
+    {
+      "key": "c1",
+      "label": "Kragen",
+      "group": "stoff",
+      "default": "rot"
+    }
+  ],
+  "layers": {
+    "top": "top.png"
+  },
+  "source": "platzhalter"
+}
