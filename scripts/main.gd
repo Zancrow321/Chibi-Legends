@@ -20,6 +20,7 @@ static var _url_read := false
 
 
 static var _intro_shown := false
+static var show_title := true  # title screen with the animated logo; ?titel=0 skips it
 
 
 func _ready() -> void:
@@ -35,7 +36,12 @@ func _ready() -> void:
 	GameFlow.read_url()
 	if not _intro_shown:
 		_intro_shown = true
-		AreaTransition.intro.call_deferred(GameFlow.area)
+		if show_title:
+			var title := TitleScreen.new()
+			title.finished.connect(func(): AreaTransition.intro(GameFlow.area))
+			get_tree().root.add_child.call_deferred(title)
+		else:
+			AreaTransition.intro.call_deferred(GameFlow.area)
 	if GameFlow.is_overworld():
 		_build_overworld()
 		return
@@ -193,5 +199,7 @@ static func _read_url() -> void:
 			view_mode = {"flat": 0, "a": 1, "b": 2, "licht": 3}.get(kv[1], view_mode)
 		elif kv[0] == "abend":
 			view_mode = 0 if kv[1] == "0" else 3
+		elif kv[0] == "titel":
+			show_title = kv[1] != "0"
 		elif kv[0] == "q" and kv[1].is_valid_int():
 			Hd2dSettings.quality = clampi(kv[1].to_int(), 0, 2)
