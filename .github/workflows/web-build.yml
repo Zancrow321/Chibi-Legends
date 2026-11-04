@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 env:
-  GODOT_VERSION: "4.3"
+  GODOT_VERSION: "4.7.2"
 
 jobs:
   build:

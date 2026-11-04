@@ -1,6 +1,6 @@
 # Chibi Legends
 
-2D-Action-Plattformer im Pixel-Art-Stil für den Browser, gebaut mit **Godot 4.3** (GDScript, Web-Export).
+2D-Action-Plattformer im Pixel-Art-Stil für den Browser, gebaut mit **Godot 4.7** (GDScript, Web-Export).
 Spielwelt: die Multiversum-Akademie. Fähigkeiten und Outfits sind eigene Entwürfe nach typischen Anime-Archetypen.
 
 ![Trainingswald mit Kristallbruch-Reaktion](docs/screenshots/training-reaktionen.png)
@@ -33,7 +33,7 @@ Spielwelt: die Multiversum-Akademie. Fähigkeiten und Outfits sind eigene Entwü
 
 ## Starten
 
-**Im Godot-Editor:** Godot 4.3 öffnen, `project.godot` importieren, F5 drücken.
+**Im Godot-Editor:** Godot 4.7 öffnen, `project.godot` importieren, F5 drücken.
 
 **Als Web-Build:** Jeder Push baut über GitHub Actions einen Web-Export (Artefakt `chibi-legends-web`).
 Entpacken und über einen lokalen Server öffnen, z. B. `python3 -m http.server` im Ordner, dann `http://localhost:8000`.
