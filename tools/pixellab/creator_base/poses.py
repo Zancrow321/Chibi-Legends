@@ -50,6 +50,19 @@ def _rot(v, deg):
     return v[0] * c - v[1] * s, v[0] * s + v[1] * c
 
 
+def _ik(sh, target, bend):
+    """Zwei-Glieder-IK: Ellbogen und Handgelenk für ein Ziel."""
+    dx, dy = target[0] - sh[0], target[1] - sh[1]
+    dist = max(1e-3, min(math.hypot(dx, dy), UPPER_ARM + FOREARM - 0.2))
+    a = math.atan2(dy, dx)
+    cos_e = (UPPER_ARM ** 2 + dist ** 2 - FOREARM ** 2) / (2 * UPPER_ARM * dist)
+    e = math.acos(max(-1.0, min(1.0, cos_e)))
+    ang = a + bend * e
+    el = (sh[0] + UPPER_ARM * math.cos(ang), sh[1] + UPPER_ARM * math.sin(ang))
+    wr = (sh[0] + dist * math.cos(a), sh[1] + dist * math.sin(a))
+    return el, wr
+
+
 def solve(p: dict) -> dict:
     """Pose-Winkel -> Gelenkpunkte in Pixeln (plus Anker)."""
     q = dict(BASE)
@@ -68,8 +81,14 @@ def solve(p: dict) -> dict:
         for side, a_up, a_lo, t_up, t_lo in (("LEFT", "la", "lf", "lt", "ls"), ("RIGHT", "ra", "rf", "rt", "rs")):
             so = _rot(SHOULDER[side], q["t"])
             sh = (neck[0] + so[0], neck[1] + so[1])
-            d = _dir(q[a_up]); el = (sh[0] + UPPER_ARM * d[0], sh[1] + UPPER_ARM * d[1])
-            d = _dir(q[a_lo]); wr = (el[0] + FOREARM * d[0], el[1] + FOREARM * d[1])
+            if "grip" in q:
+                gd = _dir(q["sw"])
+                back = 0.0 if side == "LEFT" else 2.0  # hintere Hand sitzt tiefer am Griff
+                target = (neck[0] + q["grip"][0] - gd[0] * back, neck[1] + q["grip"][1] - gd[1] * back)
+                el, wr = _ik(sh, target, q.get("bend", 1))
+            else:
+                d = _dir(q[a_up]); el = (sh[0] + UPPER_ARM * d[0], sh[1] + UPPER_ARM * d[1])
+                d = _dir(q[a_lo]); wr = (el[0] + FOREARM * d[0], el[1] + FOREARM * d[1])
             hp = (hc[0] + HIP[side][0], hc[1] + HIP[side][1])
             d = _dir(q[t_up]); kn = (hp[0] + THIGH * d[0], hp[1] + THIGH * d[1])
             d = _dir(q[t_lo]); an = (kn[0] + SHIN * d[0], kn[1] + SHIN * d[1])
@@ -90,6 +109,8 @@ def solve(p: dict) -> dict:
 
 def anchors(p: dict, pts: dict) -> dict:
     q = dict(BASE); q.update(p)
+    if "grip" in q:
+        q["lf"] = q["rf"] = q["sw"]
     return {
         "head": {"pos": pts["NECK"], "angle": q["t"] * 0.6 + q["h"]},
         "hand_front": {"pos": pts["LEFT ARM"], "angle": q["lf"]},
@@ -190,6 +211,17 @@ GROUPS: list[dict] = [
         ("super_0", dict(t=-8, h=-10, la=120, lf=140, ra=-120, rf=-140, lt=35, ls=0, rt=-35, rs=-10)),
         ("thrust_hit", dict(t=26, la=90, lf=90, ra=-80, rf=-60, lt=70, ls=0, rt=-55, rs=-70)),
         ("dashpunch_hit", dict(t=30, la=88, lf=88, ra=-100, rf=-80, lt=60, ls=-10, rt=-70, rs=-90)),
+    ]},
+    # Zweihand-Varianten (Mischform, 2026-11-04): beide Hände am Griff, sw = Klingenrichtung
+    {"group": "twohand", "action": "both empty fists clasped together in front, heavy two-handed swing motion, no weapon", "frames": [
+        ("th_idle_0", dict(t=4, grip=(6, 12), sw=150, lt=40, ls=0, rt=-30, rs=-30)),
+        ("th_idle_1", dict(t=6, grip=(6, 13), sw=148, lt=40, ls=0, rt=-30, rs=-30, y_drop=0.8)),
+        ("th_wind_up", dict(t=-12, grip=(-2, -10), sw=200, lt=35, ls=0, rt=-30, rs=-25)),
+        ("th_overhead_hit", dict(t=26, grip=(9, 12), sw=60, lt=60, ls=0, rt=-45, rs=-60)),
+        ("th_side_wind", dict(t=-6, grip=(-7, 6), sw=-110, lt=45, ls=0, rt=-30, rs=-30)),
+        ("th_side_hit", dict(t=16, grip=(10, 6), sw=95, lt=55, ls=0, rt=-45, rs=-55)),
+        ("th_thrust", dict(t=24, grip=(11, 4), sw=92, lt=65, ls=0, rt=-55, rs=-70)),
+        ("th_rise", dict(t=-4, grip=(5, -8), sw=170, lt=30, ls=0, rt=-20, rs=-30)),
     ]},
     {"group": "extra", "action": "victory and taunt poses", "frames": [
         ("win_0", dict(t=-4, h=-6, la=170, lf=178, ra=-40, rf=-10, lt=15, ls=0, rt=-15, rs=0)),

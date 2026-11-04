@@ -57,11 +57,16 @@ def request(method: str, path: str, payload: dict | None = None, timeout: int = 
     req.add_header("Authorization", "Bearer " + _key())
     if data is not None:
         req.add_header("Content-Type", "application/json")
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            return json.loads(resp.read().decode())
-    except urllib.error.HTTPError as e:
-        raise PixelLabError(f"{path}: HTTP {e.code}: {e.read().decode(errors='replace')[:800]}") from None
+    for attempt in range(8):
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return json.loads(resp.read().decode())
+        except urllib.error.HTTPError as e:
+            if e.code == 429 and attempt < 7:  # zu viele gleichzeitige Jobs: kurz warten
+                time.sleep(10 * (attempt + 1))
+                continue
+            raise PixelLabError(f"{path}: HTTP {e.code}: {e.read().decode(errors='replace')[:800]}") from None
+    raise PixelLabError(f"{path}: zu viele gleichzeitige Jobs")
 
 
 def wait_job(resp: dict, poll: float = 4.0, limit: float = 900.0) -> dict:

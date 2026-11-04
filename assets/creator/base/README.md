@@ -7,8 +7,8 @@ Jedes Kleidungsteil wird später auf genau diese 60 Zeichnungen gelegt.
 | Datei | Inhalt |
 | --- | --- |
 | `base.png` | Ausgangsfigur (aus der Referenz raiga_7 per PixelLab zum neutralen Grundkörper umgewandelt) |
-| `frames/*.png` | die 60 Posen einzeln, 64 × 64, transparent |
-| `sheet.png` | alle 60 Posen als Sheet, 10 Spalten, Reihenfolge wie `tools/pixellab/creator_base/frames.json` |
+| `frames/*.png` | die 68 Posen einzeln (60 + 8 Zweihand-Varianten), 64 × 64, transparent |
+| `sheet.png` | alle 68 Posen als Sheet, 10 Spalten, Reihenfolge wie `tools/pixellab/creator_base/frames.json` |
 | `anchors.json` | gemessene Ankerpunkte pro Frame: Kopf (Hals + Kopfneigung), vordere und hintere Hand (Handgelenk + Unterarm-Winkel), Rücken (Schultermitte + Rumpfneigung), Füße |
 
 Winkel: 0° = zeigt nach unten, positiv = nach vorne (Blickrichtung), 180° = nach oben.

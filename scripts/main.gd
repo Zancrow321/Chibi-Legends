@@ -15,7 +15,7 @@ static var _url_read := false
 
 func _ready() -> void:
 	_read_url()
-	for a in [["cycle_view", KEY_B], ["cycle_quality", KEY_G]]:
+	for a in [["cycle_view", KEY_B], ["cycle_quality", KEY_G], ["open_creator", KEY_O]]:
 		if not InputMap.has_action(a[0]):
 			InputMap.add_action(a[0])
 			var ev := InputEventKey.new()
@@ -74,11 +74,21 @@ func _ready() -> void:
 	select_layer.add_child(select)
 	add_child(select_layer)
 	room.player.visual.look = Roster.look(Roster.selected(), Roster.selected_skin())
-	if Roster.needs_starter():
+	# Character Creator: Taste O. Beim allerersten Start öffnet er sich von selbst.
+	var creator_layer := CanvasLayer.new()
+	creator_layer.layer = 21
+	var creator := CreatorScreen.new()
+	creator_layer.add_child(creator)
+	add_child(creator_layer)
+	if not FileAccess.file_exists(CreatorCatalog.SAVE):
+		creator.open.call_deferred()
+	elif Roster.needs_starter():
 		select.open_for.call_deferred(room.player.visual, true)
 
 
 func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("open_creator"):
+		get_tree().call_group("creator", "open")
 	if Input.is_action_just_pressed("cycle_view"):
 		view_mode = (view_mode + 1) % VIEWS.size()
 		get_tree().reload_current_scene.call_deferred()
