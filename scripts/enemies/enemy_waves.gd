@@ -56,6 +56,11 @@ func _physics_process(delta: float) -> void:
 				world.glut_fx.word(world.player.global_position + Vector2(0, -80), "GESCHAFFT!", Color("ffd25c"), 24)
 
 
+## Enemies of the current wave that have not risen yet.
+func pending() -> int:
+	return _spawn_queue.size()
+
+
 func _next_wave() -> void:
 	wave += 1
 	if wave >= WAVES.size():
