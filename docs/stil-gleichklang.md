@@ -293,6 +293,11 @@ Spielbar im Trainingswald. Auswahl im Character Creator (Taste O), Zeile
 - **HUD:** Einklang als 6 Glocken, daneben ein Punkt, der im Takt blinkt.
   Um die Figur zieht sich ein Ring bis zum nächsten Schlag zusammen, das
   Klangloch der Sense pulsiert, ein leiser Glockenton zählt mit.
+- **Takt-Hilfe (Taste X):** Bild und Ton, nur Bild, nur Ton oder großzügig
+  (Fenster ±0,15 s statt ±0,1 s). Barrierefreiheit, ändert keine Werte.
+- **Klangfarbe (Taste Y):** Blassblau, Mondviolett, Totenrot, Glockengold.
+  Färbt Bögen, Ringe, Welle und Meisterzug um. Beides wird gespeichert
+  (`user://gleichklang.json`). Später an Duplikate gekoppelt, im Training frei.
 - **Seelenbruch:** Statussymbol violett. Gegner nehmen 3 s lang +25 % Schaden
   (es gibt noch keine eigene Haltungsleiste), Brutes verlieren ihre Rüstung.
 - **Code:** `scripts/gleichklang/` (Caster, Effekte, Welle, Meisterzug, Icons),

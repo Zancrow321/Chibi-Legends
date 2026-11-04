@@ -15,6 +15,7 @@
     "akademie": "Akademie-Jacke",
     "steilpfad": "Steilpfad-Gi",
     "bollwerk": "Bollwerk-Panzer",
+    "feuerwacht": "Feuerwacht-Jacke",
     "deckshand": "Deckshand-Hemd"
    },
    "unlock": {
@@ -24,6 +25,7 @@
     "schatten": "Glutschmiede-Tor öffnen",
     "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
     "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "feuerwacht": "Kampfstil Lauffeuer (Banner „Wer am Feuer sitzt“)",
     "deckshand": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)"
    }
   },
@@ -38,6 +40,7 @@
     "akademie": "Uniformhose",
     "steilpfad": "Steilpfad-Wickelhose",
     "bollwerk": "Bollwerk-Beinpanzer",
+    "feuerwacht": "Feuerwacht-Hose",
     "deckshand": "Segeltuchhose"
    },
    "unlock": {
@@ -47,6 +50,7 @@
     "schatten": "Glutschmiede-Tor öffnen",
     "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
     "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "feuerwacht": "Kampfstil Lauffeuer (Banner „Wer am Feuer sitzt“)",
     "deckshand": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)"
    }
   },
@@ -61,6 +65,7 @@
     "akademie": "Turnschuhe",
     "steilpfad": "Stoffschuhe",
     "bollwerk": "Bollwerk-Stiefel",
+    "feuerwacht": "Feuerstein-Stiefel",
     "deckshand": "Messingschnallen-Stiefel"
    },
    "unlock": {
@@ -70,6 +75,7 @@
     "schatten": "Glutschmiede-Tor öffnen",
     "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
     "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "feuerwacht": "Kampfstil Lauffeuer (Banner „Wer am Feuer sitzt“)",
     "deckshand": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)"
    }
   },
@@ -440,6 +446,13 @@
    "text": "Federleib: dehnbare Fäuste, Spannen und Rückschwung (Legendär)",
    "unlock": "",
    "weapon": "none"
+  },
+  "lauffeuer": {
+   "name": "Lauffeuer",
+   "text": "Flammenleib: Brandherde legen und mit der Flammenfaust zünden",
+   "unlock": "",
+   "weapon": "",
+   "unarmed": true
   }
  },
  "start_items_note": "Teile ohne unlock-Eintrag sind von Anfang an frei. CreatorUnlocks.unlock(slot, id) schaltet frei."

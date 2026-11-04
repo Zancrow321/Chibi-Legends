@@ -1,0 +1,235 @@
+{
+ "frames": [
+  {
+   "filename": "black-energy-ground-shockwave 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 60
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 60
+   },
+   "sourceSize": {
+    "w": 200,
+    "h": 60
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6666666666666666
+   },
+   "duration": 63
+  },
+  {
+   "filename": "black-energy-ground-shockwave 1.png",
+   "frame": {
+    "x": 200,
+    "y": 0,
+    "w": 200,
+    "h": 60
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 60
+   },
+   "sourceSize": {
+    "w": 200,
+    "h": 60
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6666666666666666
+   },
+   "duration": 63
+  },
+  {
+   "filename": "black-energy-ground-shockwave 2.png",
+   "frame": {
+    "x": 400,
+    "y": 0,
+    "w": 200,
+    "h": 60
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 60
+   },
+   "sourceSize": {
+    "w": 200,
+    "h": 60
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6666666666666666
+   },
+   "duration": 63
+  },
+  {
+   "filename": "black-energy-ground-shockwave 3.png",
+   "frame": {
+    "x": 0,
+    "y": 60,
+    "w": 200,
+    "h": 60
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 60
+   },
+   "sourceSize": {
+    "w": 200,
+    "h": 60
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6666666666666666
+   },
+   "duration": 63
+  },
+  {
+   "filename": "black-energy-ground-shockwave 4.png",
+   "frame": {
+    "x": 200,
+    "y": 60,
+    "w": 200,
+    "h": 60
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 60
+   },
+   "sourceSize": {
+    "w": 200,
+    "h": 60
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6666666666666666
+   },
+   "duration": 63
+  },
+  {
+   "filename": "black-energy-ground-shockwave 5.png",
+   "frame": {
+    "x": 400,
+    "y": 60,
+    "w": 200,
+    "h": 60
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 60
+   },
+   "sourceSize": {
+    "w": 200,
+    "h": 60
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6666666666666666
+   },
+   "duration": 63
+  },
+  {
+   "filename": "black-energy-ground-shockwave 6.png",
+   "frame": {
+    "x": 0,
+    "y": 120,
+    "w": 200,
+    "h": 60
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 60
+   },
+   "sourceSize": {
+    "w": 200,
+    "h": 60
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6666666666666666
+   },
+   "duration": 63
+  },
+  {
+   "filename": "black-energy-ground-shockwave 7.png",
+   "frame": {
+    "x": 200,
+    "y": 120,
+    "w": 200,
+    "h": 60
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 200,
+    "h": 60
+   },
+   "sourceSize": {
+    "w": 200,
+    "h": 60
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.6666666666666666
+   },
+   "duration": 63
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "black-energy-ground-shockwave.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 600,
+   "h": 180
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "origin",
+   "x": 100,
+   "y": 40
+  },
+  "frameTags": [
+   {
+    "name": "black-energy-ground-shockwave",
+    "from": 0,
+    "to": 7,
+    "direction": "forward"
+   }
+  ]
+ }
+}

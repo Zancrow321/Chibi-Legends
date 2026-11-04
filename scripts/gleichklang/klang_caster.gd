@@ -15,6 +15,9 @@ extends GlutCaster
 ##    ignore it for 6 s.
 ##  - Sweet spot: the outer edge of the scythe hits harder, the shaft weaker.
 ##  - Nachhall talks: short lines in a bubble at the scythe.
+##  - Options (saved): X cycles the Takt-Hilfe (normal, only visual, only
+##    sound, wide window ±0.15 s), Y cycles the Klangfarbe (colour set of
+##    arcs, rings and Klangloch; the gacha duplicates of the style).
 
 const BEAT := 0.6
 const WINDOW := 0.1
@@ -24,6 +27,19 @@ const DECAY_AFTER := 5.0
 const BREAK_TIME := 3.0
 const BREAK_IMMUNE := 6.0
 const LOST_TIME := 0.6
+
+const TAKT_MODES := ["Takt: Bild und Ton", "Takt: nur Bild", "Takt: nur Ton", "Takt: großzügig (±0,15 s)"]
+## Klangfarben: blue (arcs), pale (rings), white (highlights), violet (accent)
+const KLANGFARBEN := [
+	{"name": "Blassblau", "blue": "8fd3ff", "pale": "cfeaff", "white": "f4fbff", "violet": "a884f3"},
+	{"name": "Mondviolett", "blue": "b48cff", "pale": "e2d2ff", "white": "faf4ff", "violet": "ff8fd8"},
+	{"name": "Totenrot", "blue": "ff6a6a", "pale": "ffc7c0", "white": "fff2ee", "violet": "8fd3ff"},
+	{"name": "Glockengold", "blue": "ffd27a", "pale": "fff0c8", "white": "fffbef", "violet": "8fd3ff"},
+]
+const OPTIONS_SAVE := "user://gleichklang.json"
+static var takt_mode := 0
+static var farbe := 0
+static var _options_loaded := false
 
 const LINES := {
 	"ready": ["Jetzt!", "Hörst du's?", "Auf die Eins."],
@@ -57,10 +73,67 @@ var _plant := Vector2.ZERO
 func setup(p: Player, st: FightingStyle) -> void:
 	super.setup(p, st)
 	GlutIcons.style_id = st.id
+	_load_options()
+	_apply_farbe()
 	kfx = KlangFx.new()
 	kfx.room = world
 	world.add_child(kfx)
 	world.klang_fx = kfx
+
+
+# --- options ---------------------------------------------------------------------
+
+static func _load_options() -> void:
+	if _options_loaded:
+		return
+	_options_loaded = true
+	var f := FileAccess.open(OPTIONS_SAVE, FileAccess.READ)
+	if f == null:
+		return
+	var d: Variant = JSON.parse_string(f.get_as_text())
+	if d is Dictionary:
+		takt_mode = clampi(int(d.get("takt", 0)), 0, TAKT_MODES.size() - 1)
+		farbe = clampi(int(d.get("farbe", 0)), 0, KLANGFARBEN.size() - 1)
+
+
+static func _save_options() -> void:
+	var f := FileAccess.open(OPTIONS_SAVE, FileAccess.WRITE)
+	if f:
+		f.store_string(JSON.stringify({"takt": takt_mode, "farbe": farbe}))
+
+
+## Writes the chosen Klangfarbe into the style colours (everything reads them).
+func _apply_farbe() -> void:
+	var set: Dictionary = KLANGFARBEN[farbe]
+	var cols: Dictionary = style.data.get("colors", {})
+	for k in ["blue", "pale", "white", "violet"]:
+		cols[k] = set[k]
+	style.data["colors"] = cols
+	if kfx != null:
+		kfx.beat_col = style.color("blue")
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not (event is InputEventKey) or not event.pressed or event.echo:
+		return
+	if event.physical_keycode == KEY_X:
+		takt_mode = (takt_mode + 1) % TAKT_MODES.size()
+		_save_options()
+		world.toast(TAKT_MODES[takt_mode])
+	elif event.physical_keycode == KEY_Y or event.physical_keycode == KEY_Z:
+		farbe = (farbe + 1) % KLANGFARBEN.size()
+		_apply_farbe()
+		_save_options()
+		world.toast("Klangfarbe: " + str(KLANGFARBEN[farbe].name))
+		kfx.ring(klangloch_pos(), 24.0, style.color("blue"), 0.4, 3.0)
+
+
+func show_visual() -> bool:
+	return takt_mode != 2
+
+
+func play_sound() -> bool:
+	return takt_mode != 1
 
 
 func stage_color() -> Color:
@@ -101,7 +174,7 @@ func beat_progress() -> float:
 func on_beat(targets: Array = []) -> bool:
 	if _lost > 0.0:
 		return false
-	var w := WINDOW
+	var w := WINDOW_WIDE if takt_mode == 3 else WINDOW
 	for tg in targets:
 		if _easy_target(tg):
 			w = WINDOW_WIDE
@@ -272,7 +345,7 @@ func _tick_beat(delta: float) -> void:
 	if int(_beat_t / BEAT) != before:
 		_beat_n += 1
 		_beat_pulse = 1.0
-		if active() and _lost <= 0.0 and not player.in_super:
+		if active() and _lost <= 0.0 and not player.in_super and play_sound():
 			Sfx.play("bell_tick")
 
 
@@ -287,8 +360,10 @@ func _draw_partner() -> void:
 	if full:
 		s = 0.7 + 0.3 * sin(Time.get_ticks_msec() * 0.02)
 	kfx.klangloch(hole, s, style.color("white") if full else style.color("blue"))
-	if active() and not player.in_super:
-		kfx.beat_ring(player.global_position + Vector2(0, -20), beat_progress(), _lost > 0.0, false)
+	if not show_visual():
+		s = float(klang) / MAX_KLANG * 0.5  # Klangloch shows only the Einklang
+	if active() and not player.in_super and show_visual():
+		kfx.beat_ring(player.global_position + Vector2(0, -20), beat_progress(), _lost > 0.0, takt_mode == 3)
 	if full and randf() < 0.15:
 		kfx.motes(hole, 1, 4.0, style.color("white"), 0.5)
 

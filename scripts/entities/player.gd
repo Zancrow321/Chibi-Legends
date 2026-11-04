@@ -143,6 +143,8 @@ func init_style() -> void:
 		return
 	if style.data.get("caster", "") == "schwarzmond":
 		glut = MondCaster.new()
+	elif style.id == "lauffeuer":
+		glut = FeuerCaster.new()
 	elif style.id == "gleichklang":
 		glut = KlangCaster.new()
 	elif style.id == "spannkraft":
@@ -791,6 +793,15 @@ func _use_meisterzug() -> void:
 	move = {}
 	_queued = ""
 	Sfx.play("super_flash")
+	if glut is FeuerCaster:
+		var fs := FeuerSuper.new()
+		fs.room = world
+		fs.player = self
+		fs.caster = glut
+		fs.variant = style.super_variant
+		fs.title = style.variant().get("name", "Meisterzug")
+		world.add_child(fs)
+		return
 	if mond != null:
 		var ms := MondSuper.new()
 		ms.room = world
@@ -852,7 +863,8 @@ func _update_visual() -> void:
 	elif _glut_busy():
 		st = "attack"
 		sprite.attack_frame = glut.pose_frame()
-		sprite.attack_pose = FighterSprite.SLASH_POSE[clampi(sprite.attack_frame, 0, FighterSprite.SLASH_POSE.size() - 1)]
+		var cp := glut.creator_pose()
+		sprite.attack_pose = cp if cp != "" else FighterSprite.SLASH_POSE[clampi(sprite.attack_frame, 0, FighterSprite.SLASH_POSE.size() - 1)]
 	elif dash_timer > 0.0:
 		st = "dash"
 	elif not move.is_empty():
