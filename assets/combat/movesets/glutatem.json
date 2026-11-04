@@ -11,7 +11,7 @@
 		"leicht_3": {"name": "Dreischnitt 3", "button": "light", "dir": "neutral", "startup": 6, "active": 3, "recovery": 16,
 			"damage": 9, "hitbox": [24, -26, 38, 16], "knockback": 150, "draw": "thrust", "profile": "heavy", "lunge": 70,
 			"creator": {"startup": ["upper_wind"], "active": ["thrust_hit"], "recovery": ["thrust_hit"]}, "pose": {"startup": [1, 2], "active": [3], "recovery": [6]}},
-		"leicht_vor": {"name": "Schrittstich", "button": "light", "dir": "forward", "startup": 8, "active": 3, "recovery": 14,
+		"leicht_vor": {"name": "Schrittstich", "button": "light", "dir": "forward", "chain": "leicht_2", "startup": 8, "active": 3, "recovery": 14,
 			"damage": 7, "hitbox": [28, -26, 36, 14], "knockback": 70, "lunge": 150, "draw": "thrust",
 			"creator": {"startup": ["slash_wind"], "active": ["thrust_hit"], "recovery": ["thrust_hit"]}, "pose": {"startup": [1, 2], "active": [3], "recovery": [6]}},
 		"leicht_oben": {"name": "Steigschnitt", "button": "light", "dir": "up", "startup": 7, "active": 4, "recovery": 13,

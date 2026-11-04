@@ -65,5 +65,15 @@
   "rubber_boing": {"files": ["assets/audio/sfx/rubber_boing_1.wav", "assets/audio/sfx/rubber_boing_2.wav"], "volume_db": -8, "pitch_jitter": 0.08},
   "rubber_stretch": {"files": ["assets/audio/sfx/rubber_stretch_1.wav"], "volume_db": -10, "pitch_jitter": 0.1},
   "rubber_snap": {"files": ["assets/audio/sfx/rubber_snap_1.wav", "assets/audio/sfx/rubber_snap_2.wav"], "volume_db": -6, "pitch_jitter": 0.08},
-  "rubber_prall": {"files": ["assets/audio/sfx/rubber_prall_1.wav"], "volume_db": -4, "pitch_jitter": 0.05}
+  "rubber_prall": {"files": ["assets/audio/sfx/rubber_prall_1.wav"], "volume_db": -4, "pitch_jitter": 0.05},
+  "bw_shot": {"files": ["assets/audio/sfx/bw_shot_1.wav", "assets/audio/sfx/bw_shot_2.wav"], "volume_db": -10, "pitch_jitter": 0.06},
+  "bw_shot_heavy": {"files": ["assets/audio/sfx/bw_shot_heavy.wav"], "volume_db": -4},
+  "bw_reload": {"files": ["assets/audio/sfx/bw_reload.wav"], "volume_db": -8},
+  "bw_explosion": {"files": ["assets/audio/sfx/bw_explosion.wav"], "volume_db": -3, "pitch_jitter": 0.05},
+  "bw_shield_hit": {"files": ["assets/audio/sfx/bw_shield_hit.wav"], "volume_db": -8},
+  "bw_shield_break": {"files": ["assets/audio/sfx/bw_shield_break.wav"], "volume_db": -4},
+  "bw_charge": {"files": ["assets/audio/sfx/bw_charge.wav"], "volume_db": -8},
+  "bw_beam": {"files": ["assets/audio/sfx/bw_beam.wav"], "volume_db": -3},
+  "bw_hook": {"files": ["assets/audio/sfx/bw_hook.wav"], "volume_db": -8},
+  "bw_empty": {"files": ["assets/audio/sfx/bw_empty.wav"], "volume_db": -10}
 }

@@ -311,6 +311,15 @@ func _draw_style_panel(r: Rect2) -> void:
 	if g is FederCaster:
 		_draw_feder_panel(r, g)
 		return
+	if g is GrenzCaster:
+		_draw_grenz_panel(r, g)
+		return
+	if g is WirbelCaster:
+		_draw_wirbel_panel(r, g)
+		return
+	if g is BollwerkCaster:
+		_draw_bollwerk_panel(r, g)
+		return
 	_panel(r, PANEL, 13, Color("ff9a2a", 0.6))
 	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, Color("ffb347"))
 	var names := ["Rot", "Orange", "Weiß"]
@@ -402,6 +411,42 @@ func _draw_mond_panel(r: Rect2, g: MondCaster) -> void:
 		_text(Vector2(bx, r.position.y + 19), "Mondphase: " + info, 15, MUTED)
 
 
+## Wirbelwille: three Teamwork-Marken (small kites), the clones out and
+## the Orkanmantel timer.
+func _draw_wirbel_panel(r: Rect2, g: WirbelCaster) -> void:
+	var turq := Color("5fe3e0")
+	var gold := Color("ffd36a")
+	var ice := Color("bff6ff")
+	_panel(r, PANEL, 13, Color(turq, 0.55))
+	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, TEXT)
+	var full := g.marks >= WirbelCaster.MAX_MARKS
+	for i in WirbelCaster.MAX_MARKS:
+		var c := Vector2(r.position.x + 118 + i * 18, r.get_center().y)
+		var kite := PackedVector2Array([c + Vector2(0, -8), c + Vector2(5, -1), c + Vector2(0, 8), c + Vector2(-5, -1)])
+		var col := gold if full else turq
+		if g.marks > i:
+			if full:
+				draw_circle(c, 9.0 + 1.5 * sin(_t * 12.0), Color(gold, 0.25))
+			draw_colored_polygon(kite, col)
+			draw_line(c + Vector2(0, -8), c + Vector2(0, 8), Color(1, 1, 1, 0.5), 1.0)
+			draw_line(c + Vector2(0, 8), c + Vector2(-3, 12), Color(col, 0.8), 1.0)
+		else:
+			kite.append(kite[0])
+			draw_polyline(kite, Color(turq, 0.35), 1.5)
+	var x := r.position.x + 178
+	for i in WirbelCaster.MAX_CLONES:
+		var cc := Vector2(x + i * 14, r.get_center().y)
+		var out := i < g.clone_count()
+		draw_circle(cc + Vector2(0, -4), 3.0, Color(ice, 0.9 if out else 0.2))
+		draw_rect(Rect2(cc + Vector2(-3, -1), Vector2(6, 7)), Color(ice, 0.9 if out else 0.2))
+	var info := "Marken %d" % g.marks
+	if g.mantle_time > 0.0:
+		info = "MANTEL %.1f s" % g.mantle_time
+	elif full:
+		info = "Gemeinsam!"
+	_text(Vector2(x + WirbelCaster.MAX_CLONES * 14 + 4, r.position.y + 19), info, 13, gold if g.mantle_time > 0.0 or full else MUTED)
+
+
 ## Spannkraft: Spannung (3 pips while holding), Federringe (Übergänge left)
 ## and the Grenzenlos timer.
 func _draw_feder_panel(r: Rect2, g: FederCaster) -> void:
@@ -433,6 +478,104 @@ func _draw_feder_panel(r: Rect2, g: FederCaster) -> void:
 	elif g._snap_t > 0.0 and g.chain_left > 0:
 		info = "Schwung!"
 	_text(Vector2(r.position.x + 176 + n * 14 + 4, r.position.y + 19), info, 13, yellow if g.is_free() else MUTED)
+
+
+## Grenzbrecher: the Ki-Leiste in 5 Abschnitte, Überhitzung and state.
+func _draw_grenz_panel(r: Rect2, g: GrenzCaster) -> void:
+	var sky := Color("6fd0ff")
+	var white := Color("f4fbff")
+	var orange := Color("ff9a3c")
+	_panel(r, PANEL, 13, Color(sky, 0.55))
+	_text(Vector2(r.position.x + 12, r.position.y + 19), room.player.style.style_name(), 13, TEXT)
+	var bar := Rect2(r.position.x + 108, r.get_center().y - 7, r.size.x - 118, 14)
+	draw_rect(bar.grow(2), Color(0.02, 0.03, 0.08))
+	var seg := bar.size.x / 5.0
+	for i in 5:
+		var fill := clampf((g.ki - i * 20.0) / 20.0, 0.0, 1.0)
+		var sr := Rect2(bar.position.x + i * seg + 1, bar.position.y, seg - 2, bar.size.y)
+		draw_rect(sr, Color(sky, 0.12))
+		if fill > 0.0:
+			var col := sky if fill >= 1.0 else sky.darkened(0.3)
+			if g.burst_time > 0.0:
+				col = white.lerp(sky, 0.3 + 0.3 * sin(_t * 10.0))
+			elif g.gathering():
+				col = sky.lerp(white, 0.3 + 0.3 * sin(_t * 14.0))
+			draw_rect(Rect2(sr.position, Vector2(sr.size.x * fill, sr.size.y)), col)
+			draw_rect(Rect2(sr.position, Vector2(sr.size.x * fill, 3)), Color(1, 1, 1, 0.35))
+	# the 20 Ki line (below it: no Ki-Züge)
+	draw_line(Vector2(bar.position.x + seg, bar.position.y - 3), Vector2(bar.position.x + seg, bar.end.y + 3), Color(white, 0.6), 1.0)
+	var info := "Ki %d" % int(g.ki)
+	var col2 := MUTED
+	if g.burst_time > 0.0:
+		info = "GRENZBRUCH %.1f s" % g.burst_time
+		col2 = white
+	elif g.gathering():
+		info = "SAMMELN…"
+		col2 = sky
+	elif g.heat > 0:
+		info = "ÜBERHITZT +%d %%" % (g.heat * 50)
+		col2 = orange
+	elif g.exhaust > 0.0:
+		info = "erschöpft"
+	elif g.ki < 20.0:
+		info = "KI-MANGEL"
+		col2 = orange
+	_text(Vector2(bar.position.x, bar.end.y - 2), info, 11, col2 if col2 != MUTED else TEXT, HORIZONTAL_ALIGNMENT_CENTER, bar.size.x, 4)
+
+
+## Bollwerk: shield bar, three Einsatzenergie cells, magazine and grenades.
+func _draw_bollwerk_panel(r: Rect2, g: BollwerkCaster) -> void:
+	var shield_col := Color("5fb8ff")
+	var gold := Color("ffd36a")
+	var amber := Color("ffb02e")
+	_panel(r, PANEL, 13, Color(amber, 0.55))
+	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, TEXT)
+	var cy := r.get_center().y
+	# shield bar with hexagon ticks; red blink while broken
+	var sb := Rect2(r.position.x + 100, cy - 5, 64, 10)
+	draw_rect(sb.grow(1), Color(0.03, 0.04, 0.07))
+	var k := g.shield / maxf(1.0, g.shield_max)
+	var broken := g.shield <= 0.0
+	if broken:
+		draw_rect(sb, Color(1.0, 0.25, 0.2, 0.25 + 0.25 * sin(_t * 12.0)))
+	else:
+		draw_rect(Rect2(sb.position, Vector2(sb.size.x * k, sb.size.y)), shield_col)
+		draw_rect(Rect2(sb.position, Vector2(sb.size.x * k, 3)), Color(1, 1, 1, 0.35))
+		if g._since_hit >= 3.5 and k < 1.0:
+			draw_rect(Rect2(sb.position.x + sb.size.x * k - 2, sb.position.y, 2, sb.size.y), Color(1, 1, 1, 0.5 + 0.5 * sin(_t * 18.0)))
+	for i in range(1, 4):
+		draw_line(Vector2(sb.position.x + sb.size.x * i / 4.0, sb.position.y), Vector2(sb.position.x + sb.size.x * i / 4.0, sb.end.y), Color(0, 0, 0, 0.45), 1)
+	# energy cells
+	var emax := int(g.rules.get("energy_max", 3))
+	for i in emax:
+		var cr := Rect2(r.position.x + 172 + i * 13, cy - 6, 10, 12)
+		if g.energy > i:
+			if g.energy >= emax:
+				draw_rect(cr.grow(2), Color(gold, 0.25 + 0.15 * sin(_t * 12.0)))
+			draw_rect(cr, gold)
+			draw_rect(Rect2(cr.position, Vector2(cr.size.x, 3)), Color(1, 1, 1, 0.4))
+		else:
+			draw_rect(cr, Color(gold, 0.3), false, 1.2)
+	# magazine (or reload bar) and grenade pips
+	var mx := r.position.x + 214
+	if g.reload_t > 0.0:
+		var rk := 1.0 - g.reload_t / maxf(0.01, g.reload_max)
+		draw_rect(Rect2(mx, cy - 3, 40, 6), Color(0.03, 0.04, 0.07))
+		draw_rect(Rect2(mx, cy - 3, 40 * rk, 6), amber)
+		_text(Vector2(mx, r.position.y + 12), "LADEN", 10, amber)
+	else:
+		var low := g.ammo <= int(g.mag * 0.25)
+		_text(Vector2(mx, r.position.y + 19), "%d/%d" % [g.ammo, g.mag], 13, Color("ff6a5a") if low else TEXT)
+	for i in int(g.rules.get("grenades", 2)):
+		var c := Vector2(r.position.x + 266 + i * 12, cy)
+		var part := clampf(g.grenades - i, 0.0, 1.0)
+		if part >= 1.0:
+			draw_circle(c, 4.5, Color("8fd16a"))
+			draw_circle(c + Vector2(-1, -1), 1.5, Color(1, 1, 1, 0.5))
+		else:
+			draw_arc(c, 4.5, 0, TAU, 14, Color("8fd16a", 0.3), 1.2)
+			if part > 0.0:
+				draw_arc(c, 4.5, -PI / 2.0, -PI / 2.0 + TAU * part, 14, Color("8fd16a"), 2.0)
 
 
 ## Gleichklang: Einklang as six small bells, a beat dot and the state.
@@ -483,7 +626,7 @@ func _draw_notice(W: float) -> void:
 	var klang := room.player.glut is KlangCaster
 	var tips := [
 		"%s: L + Richtung, L halten = verstärkt" % room.player.style.style_name() if room.player.style != null else "L + Richtung = Zug",
-		"Treffer im Takt füllen den Einklang" if klang else ("Brandherde legen, mit der Flammenfaust zünden" if room.player.glut is FeuerCaster else "Verschiedene Züge im Combo heizen die Klinge"),
+		"Treffer im Takt füllen den Einklang" if klang else ("Brandherde legen, mit der Flammenfaust zünden" if room.player.glut is FeuerCaster else ("Verschiedene Züge im Combo geben Teamwork-Marken" if room.player.glut is WirbelCaster else "Verschiedene Züge im Combo heizen die Klinge")),
 		"Tab: Kampfstil, Alternativen und Slots",
 		"Der Sparringspfahl rechts schlägt zurück!",
 		"Willkommen im Trainingswald der Akademie!",
@@ -568,8 +711,8 @@ func _draw_training() -> void:
 func _draw_skill_bar(W: float, H: float) -> void:
 	var p := room.player
 	var slots := [
-		{"label": "Leicht", "key": GameInput.key_label("light"), "icon": "faust" if room.player.glut is FeuerCaster else "attack", "cd": 0.0, "max": 1.0},
-		{"label": "Schwer", "key": GameInput.key_label("heavy"), "icon": "tritt" if room.player.glut is FeuerCaster else "heavy", "cd": 0.0, "max": 1.0},
+		{"label": "Leicht", "key": GameInput.key_label("light"), "icon": "faust" if (room.player.glut is FeuerCaster or room.player.glut is WirbelCaster or room.player.glut is GrenzCaster) else "attack", "cd": 0.0, "max": 1.0},
+		{"label": "Schwer", "key": GameInput.key_label("heavy"), "icon": "tritt" if (room.player.glut is FeuerCaster or room.player.glut is WirbelCaster or room.player.glut is GrenzCaster) else "heavy", "cd": 0.0, "max": 1.0},
 		{"label": "Dash", "key": "Shift", "icon": "dash", "cd": p.dash_cd, "max": Player.DASH_COOLDOWN},
 	]
 	var arrows := ["", "→", "↑", "↓"]

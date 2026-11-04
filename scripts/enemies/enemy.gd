@@ -91,6 +91,11 @@ var _broken := 0.0
 var _t := 0.0
 var _anim := ""
 var _anim_t := 0.0
+## Hitstun of the current stagger (set by the hit) and juggle hits since the
+## last landing: airborne hits keep the enemy up, less with every hit.
+const JUGGLE_FLOAT := 140.0
+var _stun := 0.28
+var _juggle := 0
 
 var sprite: Sprite2D
 var _textures: Dictionary = {}
@@ -168,10 +173,22 @@ func take_hit(knockback: float, from_x: float) -> void:
 	if armored:
 		return
 	_squash = Vector2(0.8, 1.2)
+	if not on_ground:
+		_juggle += 1
+		var lift := JUGGLE_FLOAT * maxf(0.15, 1.0 - 0.12 * float(_juggle - 1)) * (0.4 if is_elite() else 1.0)
+		vel.y = minf(vel.y, -lift)
+		if knockback < 120.0:
+			vel.x *= 0.5  # light air hits do not carry it away
 	if is_elite() and knockback < 120.0:
 		return  # light hits only flash the golem
 	if data.kind != "brute" or knockback >= 100.0 or state != "windup":
 		_enter("hurt")
+
+
+## Hitstun of the hit that just landed (TrainingRoom.deal_hit).
+func set_hitstun(seconds: float) -> void:
+	if state == "hurt":
+		_stun = maxf(seconds, 0.2)
 
 
 ## Perfekt-Block by the player: the attack bounces off, the enemy reels.
@@ -244,6 +261,7 @@ func _enter(s: String) -> void:
 	_tick = 0.0
 	match s:
 		"hurt":
+			_stun = 0.28
 			_play("hurt", true)
 		"windup":
 			_play("attack", true)
@@ -307,8 +325,27 @@ func _burn(delta: float) -> void:
 		_burn_timer = 0.0
 
 
+## What the enemy goes for: the player, or a Windschatten bait close by (Klonköder).
+func _focus() -> Node2D:
+	var best: Node2D = world.player
+	var best_d: float = data.aggro
+	for l in get_tree().get_nodes_in_group("lures"):
+		var d: float = absf(l.global_position.x - global_position.x)
+		if d < best_d and absf(l.global_position.y - global_position.y) < 120.0:
+			best = l
+			best_d = d
+	return best
+
+
+## Windschatten (Wirbelwille) in the way of an attack vanish.
+func _hit_decoys(r: Rect2) -> void:
+	for d in get_tree().get_nodes_in_group("decoys"):
+		if is_instance_valid(d) and r.intersects(d.get_hurt_rect()):
+			d.struck()
+
+
 func _think(delta: float) -> void:
-	var p := world.player
+	var p: Node2D = _focus()
 	var dx := p.global_position.x - global_position.x
 	var dist := absf(dx)
 	var near: bool = dist < data.aggro and absf(p.global_position.y - global_position.y) < 120.0
@@ -354,7 +391,7 @@ func _think(delta: float) -> void:
 			if _st > 0.5:
 				_enter("idle")
 		"hurt":
-			if _st > 0.28 and on_ground:
+			if _st > _stun and on_ground:
 				_enter("idle")
 				_cd = maxf(_cd, 0.35)
 
@@ -391,6 +428,7 @@ func _strike_start() -> void:
 
 
 func _body_hit(r: Rect2) -> void:
+	_hit_decoys(r)
 	var p := world.player
 	if not _struck and r.intersects(p.get_hurt_rect()):
 		_struck = true
@@ -433,6 +471,7 @@ func _strike(delta: float) -> void:
 			if _tick <= 0.0:
 				_tick = 0.2
 				var r := Rect2(mouth.x + (0.0 if facing > 0 else -data.range), mouth.y - 16.0, data.range, 32.0)
+				_hit_decoys(r)
 				if r.intersects(p.get_hurt_rect()):
 					p.receive_hit(data.damage, global_position.x, self)
 			if _st > 0.7:
@@ -467,6 +506,7 @@ func _move(delta: float) -> void:
 
 
 func _land(speed: float) -> void:
+	_juggle = 0
 	if speed > 120.0:
 		_squash = Vector2(1.0 + minf(speed, 500.0) / 900.0, 1.0 - minf(speed, 500.0) / 1300.0)
 		world.dust.land(global_position, minf(speed / 300.0, 1.5))

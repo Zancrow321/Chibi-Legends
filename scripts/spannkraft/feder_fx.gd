@@ -27,7 +27,8 @@ var _puffs: Array = []   # steam (normal blend)
 
 static func tex(id: String) -> Texture2D:
 	if not _tex.has(id):
-		var p := FX_DIR % id
+		# "res://..." is a full path; "<style>/<id>" loads from another style's folder (Grenzbrecher)
+		var p: String = id if id.begins_with("res://") else (("res://assets/combat/vfx/%s.png" % id) if id.contains("/") else (FX_DIR % id))
 		_tex[id] = load(p) if ResourceLoader.exists(p) else null
 	return _tex[id]
 

@@ -83,6 +83,11 @@ func busy() -> bool:
 	return zug_id != ""
 
 
+## The running Zug already hit something (it may be cancelled into the super).
+func zug_connected() -> bool:
+	return busy() and _reported
+
+
 func stage_color() -> Color:
 	match stage:
 		1:
@@ -114,6 +119,11 @@ func normal_mul() -> float:
 
 ## Speed factor for J/K (other styles can speed them up).
 func normal_speed() -> float:
+	return 1.0
+
+
+## Run speed factor (Grenzbruch makes the figure faster).
+func move_speed() -> float:
 	return 1.0
 
 

@@ -1,0 +1,99 @@
+{
+	"_doc": "Kampfstil Bollwerk (gepanzerter Supersoldat, Wachprotokoll). Konzept: docs/stil-bollwerk.md. Gleiches Format wie glutatem.json; 'caster' waehlt das Skript (BollwerkCaster/BollwerkSuper). frames = [Anlauf, aktiv, Erholung] bei 60 fps. enhanced = L halten (1 Stufe Legendenleiste): _add addiert, _mul multipliziert, sonst ersetzt. Schaden: 8 = normaler Leichtschlag (100 %). weapon = Creator-Waffe, die der Zug in der Hand zeigt. Schild, Einsatzenergie, Magazin und Granaten-Ladungen stehen unter 'rules'.",
+	"id": "bollwerk",
+	"name": "Bollwerk",
+	"caster": "bollwerk",
+	"element": "",
+	"rarity": "legendaer",
+	"subtitle": "Wachprotokoll · Schild lädt nach 3,5 s ohne Treffer · Treffer füllen Einsatzenergie für Ausrüstungszüge",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"colors": {"ink": "121418", "graphite": "3a3f48", "steel": "8e98a6", "amber": "ffb02e", "gold": "ffd36a", "shield": "5fb8ff", "plasma": "52f2ff", "orange": "ff7a2a", "olive": "8fd16a", "white": "f4f8ff"},
+	"rules": {
+		"shield_frac": 0.4, "shield_delay": 3.5, "shield_fill": 2.0,
+		"energy_max": 3, "energy_decay_after": 6.0, "energy_decay_every": 2.0,
+		"reload": 1.2, "manual_reload_hold": 0.3,
+		"grenades": 2, "grenade_regen": 9.0,
+		"weapon_default": "wachhund"
+	},
+	"loadout": {"neutral": "salve", "forward": "durchbruch", "up": "splitterwurf", "down": "orbitalsturz"},
+	"zuege": {
+		"salve": {
+			"name": "Kontrollierte Salve", "dir": "neutral", "sp": 1, "cd": 0.0, "frames": [3, 12, 6],
+			"desc": "Kurze Salve aus 4 Schuss. Im Rhythmus drücken (0,3 bis 0,5 s Abstand) hält die Streuung eng; Hämmern macht sie ungenau. Hoch/runter kippt den Lauf.",
+			"weapon": "wachhund",
+			"params": {"shots": 4, "damage": 2.4, "every": 0.045, "range": 320, "mag": 32, "per_shot": 1, "reload": 1.2, "close_mul": 1.0, "spread_step": 3.0, "spread_max": 12.0},
+			"enhanced": {"pierce": true, "posture": 4.0},
+			"alts": [
+				{"id": "dreischlag", "name": "Salvengewehr „Dreischlag“", "sp": 2, "desc": "Präzise Dreiersalven, keine Streuung im Rhythmus, 36 Schuss. Aus nächster Nähe 30 % weniger Schaden.", "weapon": "dreischlag", "frames": [3, 10, 8], "params": {"shots": 3, "damage": 3.2, "every": 0.06, "mag": 36, "range": 380, "close_mul": 0.7, "spread_step": 1.0, "spread_max": 4.0}},
+				{"id": "kurzwort", "name": "Dienstpistole „Kurzwort“", "sp": 2, "desc": "Schnelle Einzelschüsse, 12 Schuss, Nachladen nur 0,6 s.", "weapon": "kurzwort", "frames": [2, 4, 6], "params": {"shots": 1, "damage": 3.6, "mag": 12, "reload": 0.6, "range": 260, "spread_step": 2.0, "spread_max": 8.0}}
+			]
+		},
+		"durchbruch": {
+			"name": "Bollwerk-Durchbruch", "dir": "forward", "sp": 1, "cd": 0.9, "frames": [10, 8, 16],
+			"desc": "Schwerer Schritt nach vorn und ein Schlag mit der Waffe. +50 % Schaden gegen Gegner mit halb gebrochener Haltung. Füllt Einsatzenergie.",
+			"params": {"kind": "kolben", "damage": 12.8, "dist": 34, "kb": 190, "w": 40, "posture": 8.0},
+			"enhanced": {"posture_mul": 3.0, "kb_add": 60},
+			"alts": [
+				{"id": "kolben", "name": "Kolbenschlag", "sp": 2, "desc": "Schnell und zuverlässig gegen ein Ziel.", "frames": [6, 6, 12], "params": {"damage": 10.4, "dist": 18}},
+				{"id": "schulter", "name": "Schulterstoß", "sp": 2, "desc": "Doppelte Strecke und starker Rückstoß, aber längere Erholung.", "frames": [10, 12, 34], "params": {"kind": "schulter", "dist": 80, "kb": 300}},
+				{"id": "fremdklinge", "name": "Fremdklinge", "sp": 2, "desc": "Ausfallschritt mit einer erbeuteten Plasmaklinge (Schildstörung). Danach 8 s Abklingzeit, in der hier ein Kolbenschlag kommt.", "frames": [8, 10, 16], "params": {"kind": "klinge", "damage": 17.6, "dist": 60, "w": 52, "blade_cd": 8.0, "stoer": true}}
+			]
+		},
+		"splitterwurf": {
+			"name": "Splitterwurf", "dir": "up", "sp": 1, "cd": 0.5, "frames": [8, 4, 12],
+			"desc": "Wirft eine Granate im Bogen. Prallt von Boden und Wänden ab und explodiert nach 1,2 s. 2 Ladungen, eine kehrt alle 9 s zurück. Einsatzenergie: größerer Radius, bei 3 Zellen zwei Granaten.",
+			"gear": true,
+			"params": {"kind": "splitter", "damage": 16, "radius": 46, "fuse": 1.2},
+			"enhanced": {"damage_add": 6, "radius_mul": 1.3},
+			"alts": [
+				{"id": "splitter", "name": "Splittergranate", "sp": 2, "desc": "Flächenschaden und Abpraller, etwas schnellerer Zünder.", "params": {"fuse": 1.0, "radius": 50}},
+				{"id": "haft", "name": "Haftladung", "sp": 2, "desc": "Bleibt bei direktem Treffer kleben (19 Schaden). Blinkt 1,5 s auffällig vor der Explosion.", "params": {"kind": "haft", "damage": 19.2, "radius": 40, "fuse": 1.5}},
+				{"id": "stoer", "name": "Störladung", "sp": 2, "desc": "1,5 s elektrische Entladungen (Schildstörung), wenig Explosionsschaden.", "params": {"kind": "stoer", "damage": 7.2, "radius": 56, "fuse": 1.0, "zap": 1.5}}
+			]
+		},
+		"schildprotokoll": {
+			"name": "Schildprotokoll", "dir": "neutral", "sp": 1, "cd": 10.0, "frames": [8, 4, 10],
+			"desc": "Setzt eine Schutzwand vor dich (hält 300 Schaden oder 6 s). Fängt Beschuss ab; Gegner können sie im Nahkampf zerschlagen. Einsatzenergie: haltbarer, bei 3 Zellen lädt sie beim Zerfall deinen Schild auf.",
+			"gear": true,
+			"params": {"kind": "wand", "hp": 300, "life": 6.0},
+			"enhanced": {"hp_add": 150, "life_add": 2.0},
+			"alts": [
+				{"id": "faltwand", "name": "Faltwand", "sp": 2, "desc": "Stationäre Deckung; eigene Schüsse gehen hindurch.", "params": {"hp": 340}},
+				{"id": "prallstoss", "name": "Prallstoß", "sp": 2, "desc": "Kurzer Impuls: stößt nahe Gegner zurück, Schildstörung. Genau getimt (die ersten 0,1 s) lenkt er Geschosse zurück.", "cd": 4.0, "frames": [4, 12, 12], "params": {"kind": "prall", "damage": 6.4, "perfect": 0.1}},
+				{"id": "notreserve", "name": "Notreserve", "sp": 2, "desc": "0,8 s Aktivierung, ein Treffer bricht ab. Dann ist die Hälfte des Schilds sofort zurück. 25 s Abklingzeit.", "cd": 25.0, "frames": [48, 4, 10], "params": {"kind": "reserve", "amount": 0.5}}
+			]
+		},
+		"kettenhaken": {
+			"name": "Kettenhaken", "dir": "forward", "sp": 1, "cd": 5.0, "frames": [6, 16, 10],
+			"desc": "Ein Greifhaken zieht dich zu einem Gegner oder einer Kante (halber Bildschirm). Während des Zugs L drücken: Abschluss-Schlag. Einsatzenergie: mehr Schaden, bei 3 Zellen keine Abklingzeit.",
+			"gear": true,
+			"params": {"kind": "haken", "grab": 210, "damage": 11.2, "finisher": true, "posture": 6.0},
+			"enhanced": {"damage_add": 4, "posture_mul": 3.0},
+			"alts": [
+				{"id": "sturmhaken", "name": "Sturmhaken", "sp": 2, "desc": "Abschluss-Schlag stärker mit Druckbruch, aber nur ein Drittel Bildschirm Reichweite.", "params": {"grab": 150, "damage": 16, "posture": 18.0}},
+				{"id": "wechsel", "name": "Positionswechsel", "sp": 2, "desc": "Ganzer Bildschirm Reichweite zu Kanten und Gegnern, kein Abschluss-Schlag.", "params": {"grab": 420, "finisher": false}},
+				{"id": "schubduese", "name": "Schubdüse", "sp": 2, "desc": "Statt Haken ein Schub in 8 Richtungen mit Ausweichfenster (0,12 s unverwundbar). Abklingzeit 3 s.", "cd": 3.0, "frames": [2, 12, 8], "params": {"kind": "schub", "dist": 120}}
+			]
+		},
+		"orbitalsturz": {
+			"name": "Orbitalsturz", "dir": "down", "sp": 1, "cd": 1.1, "frames": [24, 4, 18],
+			"desc": "In der Luft kurz zielen (die Marke zeigt den Aufschlag), dann ein steiler Sturz mit Druckwelle. Am Boden: tiefe Landung mit kleinem Stoß. Verfehlt: 0,4 s offen.",
+			"params": {"kind": "sturz", "damage": 14.4, "radius": 54, "aim": 0.4, "whiff": 0.4},
+			"enhanced": {"radius_mul": 2.0, "posture": 20.0},
+			"alts": [
+				{"id": "rammsturz", "name": "Rammsturz", "sp": 2, "desc": "Längeres Zielen, kräftiger Sturz (21 Schaden), wirft Gegner um.", "frames": [42, 4, 22], "params": {"damage": 20.8, "aim": 0.7, "launch": 220}},
+				{"id": "luftsalve", "name": "Luftsalve", "sp": 2, "desc": "Kein Sturz: feuert beim Fallen Salven schräg nach unten (braucht Magazin).", "frames": [4, 40, 10], "params": {"kind": "luftsalve"}},
+				{"id": "harte_landung", "name": "Harte Landung", "sp": 2, "desc": "Kein Zielen: schneller, schwächerer Aufprall mit kurzer Erholung.", "frames": [2, 4, 9], "params": {"damage": 8.8, "aim": 0.0, "whiff": 0.15}}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug", "sp": 4, "cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die Kamera rückt an das Bernstein-Visier, eine grüne Zielanzeige erfasst das Ziel.",
+		"variants": [
+			{"id": "zwillingsrohr", "name": "Zwillingsrohr: Doppelabschuss", "sp": 0, "weapon": "zwillingsrohr", "desc": "Kniet ab und feuert zwei Raketen, die du mit hoch/runter ausrichtest (je 36 Schaden, große Fläche). Langsames Zielen."},
+			{"id": "lanzenstrahl", "name": "Lanzenstrahl", "sp": 2, "weapon": "lanzenstrahl", "desc": "1 s Zielstrahl, dann durchschlägt ein Energiestrahl alles auf einer Linie (72 Schaden, Schildstörung). +30 % gegen Bosse."},
+			{"id": "letzter_befehl", "name": "Letzter Befehl", "sp": 2, "weapon": "schrotflinte", "desc": "Kettenhaken, schwerer Schlag, Schrotflinte aus nächster Nähe (zusammen 88). Verfehlt der Haken, kostet es nur 1 Stufe."}
+		]
+	}
+}

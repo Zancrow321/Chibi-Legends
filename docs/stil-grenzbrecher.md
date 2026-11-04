@@ -268,6 +268,25 @@ die Steinarena von Siebengipfel. Satz-Vorschläge (eigene): „Noch ein Stück w
 6 Züge à 1 SP + 18 Alternativen à 2 SP + Meisterzug 4 SP + 2 Varianten à 2 SP
 = 6 + 36 + 8 = **50 SP**.
 
+## Im Spiel (gebaut 2026-11-04)
+
+Spielbar über die Stil-Zeile im Creator (Grenzbrecher kämpft ohne Waffe).
+
+- Code: `scripts/grenzbrecher/` (GrenzCaster: Ki-Leiste, Sammeln, Fluss, Überhitzung,
+  Ki-Erschütterung, alle 6 Züge mit Alternativen; GrenzSuper: drei Meisterzüge;
+  GrenzFx: Strahl, Aura, Ki-Kugeln, Zielmarke, schwebende Steine; GrenzIcons),
+  Daten `assets/combat/styles/grenzbrecher.json`, HUD-Panel mit Ki-Leiste in 5 Abschnitten.
+- Steuerung: L + Richtung = Zug, L halten = verstärkt (beim Kernstrahl: voll laden),
+  am Boden 0,4 s runter halten = Ki sammeln, P = Meisterzug.
+- Grundbelegung: neutral Steilpfad-Folge, vor Kernstrahl, hoch Himmelsauftakt,
+  runter Meteor-Abschluss; Ruhiger Gegenschlag und Fernschritt im Stil-Menü tauschbar.
+- Normale J/K-Treffer geben +6 Ki (im Fluss +12).
+- PixelLab: 10 Skill-Icons (`assets/combat/icons/grenzbrecher/`), Steilpfad-Gi (5) und
+  11 Effekt-Sprites (`assets/combat/vfx/grenzbrecher/`), zusammen 26 Generierungen.
+- Testlauf: `tools/grenzbrecher/probe.gd`, Screenshots `docs/screenshots/grenzbrecher-im-spiel.png`.
+- Haltungsschaden der Ki-Erschütterung wirkt auf Gegner mit Haltung (Brecher, Elite);
+  Trainingspuppen zeigen nur den Effekt.
+
 ## Bedarf für den Einbau
 
 - Neue Systeme im Code: Ki-Leiste mit Sammeln, Fluss-Bonus und Überhitzung,

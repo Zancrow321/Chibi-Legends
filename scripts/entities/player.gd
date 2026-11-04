@@ -30,6 +30,19 @@ const TURN_FRAMES := 4
 const CAST_TIME := 0.22
 ## A second button within this time after the first turns the move into a grab.
 const GRAB_WINDOW := 3.0 / 60.0
+## Combos: a light that hit in the air may follow up with the air light
+## again (AIR_CHAIN_MAX times per jump); each air hit lifts the fighter a
+## little (AIR_FLOAT_MAX times), so juggles stay in the air. On the ground a
+## follow-up after a hit steps after the target (at most COMBO_STEP_MAX px/s)
+## so pushback never lets it slip out of reach.
+const AIR_CHAIN_MAX := 3
+const AIR_HIT_FLOAT := 80.0
+const AIR_FLOAT_MAX := 6
+const COMBO_STEP_MAX := 220.0
+const COMBO_STEP_RANGE := 60.0
+## Hitstun of a normal: what is left of the move after the hit plus this
+## many frames, so every follow-up that the cancel rules allow links.
+const STUN_SLACK := 16.0
 ## Special slot per direction (index into build).
 const SPECIAL_SLOT := {"neutral": 0, "forward": 1, "up": 2, "down": 3, "air": 0}
 
@@ -83,6 +96,9 @@ var move_hit := false
 var _move_spawned := false
 var _queued := ""
 var _queued_dir := ""
+var _air_chain := 0
+var _air_floats := 0
+var _step_v := 0.0  # combo step speed during the startup of a follow-up
 var cast_timer := 0.0
 var last_move_name := ""
 var drop_timer := 0.0
@@ -98,7 +114,7 @@ var infinite_aura := false
 
 ## Presses are buffered briefly, so a tap is never lost between physics
 ## ticks (low frame rates) and a jump pressed just before landing still counts.
-const BUFFER_TIME := 0.12
+const BUFFER_TIME := 0.15
 const BUFFERED := ["jump", "dash", "light", "heavy", "special", "super", "cycle_look", "toggle_figure", "cycle_moveset"]
 var _buffer: Dictionary = {}
 var _jump_held := false
@@ -149,6 +165,12 @@ func init_style() -> void:
 		glut = KlangCaster.new()
 	elif style.id == "spannkraft":
 		glut = FederCaster.new()
+	elif style.id == "grenzbrecher":
+		glut = GrenzCaster.new()
+	elif style.id == "wirbelwille":
+		glut = WirbelCaster.new()
+	elif style.data.get("caster", "") == "bollwerk":
+		glut = BollwerkCaster.new()
 	else:
 		glut = GlutCaster.new()
 	add_child(glut)
@@ -310,6 +332,8 @@ func _physics_process(delta: float) -> void:
 	if on_floor:
 		jumps_used = 0
 		air_dash_used = false
+		_air_chain = 0
+		_air_floats = 0
 		_coyote = COYOTE_TIME
 		if not _was_on_floor:
 			var hard := clampf(_fall_speed / MAX_FALL, 0.3, 1.0)
@@ -349,6 +373,9 @@ func _physics_process(delta: float) -> void:
 		# a Zug drives the body; buttons pressed meanwhile are queued
 		velocity = glut.drive_velocity(velocity, delta, on_floor)
 		_handle_attacks(on_floor, dir)
+		# Zug -> Meisterzug: a Zug that hit can be cancelled into the super
+		if glut.zug_connected() and _take("super"):
+			use_super()
 		move_and_slide()
 		_update_visual()
 		return
@@ -376,7 +403,7 @@ func _physics_process(delta: float) -> void:
 			ghost_timer = 0.04
 			world.spawn_ghost(self)
 	else:
-		var target_speed := dir * RUN_SPEED
+		var target_speed := dir * RUN_SPEED * (glut.move_speed() if glut != null else 1.0)
 		if busy and on_floor:
 			target_speed *= ATTACK_DRIFT
 			if not move.is_empty() and MoveSet.phase_at(move, move_t) != "recovery":
@@ -384,6 +411,11 @@ func _physics_process(delta: float) -> void:
 		elif busy:
 			target_speed *= 0.6
 		velocity.x = move_toward(velocity.x, target_speed, ACCEL * delta)
+		if _step_v > 0.0:
+			if on_floor and not move.is_empty() and MoveSet.phase_at(move, move_t) == "startup":
+				velocity.x = facing * maxf(_step_v, float(move.get("lunge", 0.0)))
+			else:
+				_step_v = 0.0
 		if dir != 0.0 and (not busy or _can_turn()):
 			facing = 1 if dir > 0.0 else -1
 		velocity.y = minf(velocity.y + _gravity() * delta, MAX_FALL)
@@ -465,8 +497,15 @@ func _handle_jump(on_floor: bool) -> void:
 					jumps_used = 1
 			if jumps_used >= MAX_JUMPS:
 				return
+			# jump-cancelling a launcher that hit chases the target upwards
+			var chase := not move.is_empty() and move_hit and float(move.get("launch", 0.0)) > 100.0
 			_cancel_move()
 			velocity.y = JUMP_VELOCITY
+			if chase:
+				velocity.y = JUMP_VELOCITY * 1.12
+				velocity.x = facing * RUN_SPEED
+				_air_chain = 0
+				_air_floats = 0
 			_jump_held = true
 			_coyote = 0.0
 			jumps_used += 1
@@ -553,10 +592,15 @@ func _handle_attacks(on_floor: bool, dir_x: float) -> void:
 		_try_queued(on_floor)
 
 
-## Run a button pressed during a move as soon as the rules allow:
-## light chains into the next light once it hit (or in recovery on a whiff);
-## after a hit, light cancels into heavy and anything into special;
-## otherwise it waits for the move to end.
+## Run a button pressed during a move as soon as the rules allow
+## (cancel order normal -> special -> Meisterzug, like platform fighters):
+##  light -> light: the chain goes on whichever way is held (forward no longer
+##    breaks it); after a hit, up/down branch off into their own light
+##    (launcher, low); in the air the air light repeats after a hit.
+##    On a whiff the chain waits for the recovery.
+##  after a hit: light -> heavy, light/heavy -> special (Zug), any -> super
+##    (super, jump and dash are handled elsewhere).
+## Otherwise the press waits for the move to end.
 func _try_queued(on_floor: bool) -> void:
 	if _queued == "" or cast_timer > 0.0 or _glut_busy():
 		return
@@ -572,15 +616,36 @@ func _try_queued(on_floor: bool) -> void:
 	if ph == "startup":
 		return
 	var rank := {"light": 0, "heavy": 1, "grab": 1, "special": 2}
-	var chain: String = move.get("chain", "")
-	if _queued == "light" and chain != "" and _queued_dir == "neutral" and (ph == "recovery" or move_hit):
-		_queued = ""
-		_start_move(moveset.get_move(chain))
-	elif move_hit and rank[_queued] > rank[move.button]:
+	if _queued == "light" and move.button == "light" and (move_hit or ph == "recovery"):
+		var next := _light_follow(on_floor)
+		if not next.is_empty():
+			_queued = ""
+			_start_move(next, move_hit)
+			return
+	if move_hit and rank[_queued] > rank[move.button]:
 		var q := _queued
 		_queued = ""
 		move = {}
-		_start(q, _queued_dir, on_floor)
+		_start(q, _queued_dir, on_floor, true)
+
+
+## The light that follows the current light (see _try_queued), or {}.
+func _light_follow(on_floor: bool) -> Dictionary:
+	if move.dir == "air":
+		if on_floor or not move_hit or _air_chain >= AIR_CHAIN_MAX:
+			return {}
+		_air_chain += 1
+		var again := move.duplicate()
+		again["phase"] = _air_chain % 2  # alternate the swing direction
+		return again
+	if not on_floor:
+		return {}
+	if move_hit and (_queued_dir == "up" or _queued_dir == "down"):
+		var branch := moveset.pick("light", _queued_dir, false)
+		if not branch.is_empty() and branch.id != move.id and branch.dir == _queued_dir:
+			return branch
+	var chain: String = move.get("chain", "")
+	return moveset.get_move(chain) if chain != "" else {}
 
 
 ## Next fighter: the own one (test figure 2 with its fighting style), then
@@ -603,7 +668,7 @@ func cycle_moveset() -> void:
 		world.toast("Kämpfer: " + ("Testfigur 2" if moveset_index == 0 else moveset.display_name))
 
 
-func _start(button: String, d: String, on_floor: bool) -> void:
+func _start(button: String, d: String, on_floor: bool, from_hit := false) -> void:
 	if button == "special":
 		# imported fighters bring their own specials; else the style's Züge
 		# (Glutatem) or the skill slots
@@ -615,10 +680,10 @@ func _start(button: String, d: String, on_floor: bool) -> void:
 		else:
 			use_skill(SPECIAL_SLOT[d if on_floor else "air"])
 	else:
-		_start_move(moveset.pick(button, d, not on_floor))
+		_start_move(moveset.pick(button, d, not on_floor), from_hit)
 
 
-func _start_move(m: Dictionary) -> void:
+func _start_move(m: Dictionary, from_hit := false) -> void:
 	if m.is_empty():
 		return
 	move = m
@@ -626,8 +691,33 @@ func _start_move(m: Dictionary) -> void:
 	move_hit = false
 	_move_spawned = false
 	last_move_name = m.name
+	_step_v = 0.0
+	if from_hit and is_on_floor():
+		_combo_step(m)
 	if not is_on_floor() and velocity.y > 0.0:
 		velocity.y *= 0.4  # air attacks hang a little
+
+
+## A follow-up after a hit steps after the nearest target in front when the
+## move would fall short, so pushback never ends a combo.
+func _combo_step(m: Dictionary) -> void:
+	var hb: Array = m.get("hitbox", [20, -28, 32, 22])
+	var front := float(hb[0]) + float(hb[2]) * (sprite.reach() - 0.5) - 6.0
+	var reach_x := global_position.x + facing * front
+	var best := INF
+	for t in get_tree().get_nodes_in_group("targets"):
+		var r: Rect2 = t.get_hurt_rect()
+		if r.size.x <= 0.0 or absf(r.get_center().y - (global_position.y - 24.0)) > 50.0:
+			continue
+		if (r.get_center().x - global_position.x) * facing <= 0.0:
+			continue
+		var edge := r.position.x if facing > 0 else r.end.x
+		var gap := (edge - reach_x) * facing
+		if gap > 0.0 and gap < best:
+			best = gap
+	if best < COMBO_STEP_RANGE:
+		var dur := maxf(float(m.startup) / MoveSet.FPS, 0.05)
+		_step_v = minf(best / dur, COMBO_STEP_MAX)
 
 
 func _tick_move(delta: float) -> void:
@@ -659,6 +749,8 @@ func _tick_move(delta: float) -> void:
 			"knockback": float(move.get("knockback", 0.0)), "launch": float(move.get("launch", 0.0)),
 			"profile": move.get("profile", "light"), "phase": int(move.get("phase", 0)),
 			"angle": float(move.get("angle", 0.0)),
+			"stun": maxf(0.3, (float(move.active) + float(move.recovery) + STUN_SLACK) / MoveSet.FPS
+				/ (glut.normal_speed() if glut != null else 1.0)),
 		})
 	if move_t >= MoveSet.length(move):
 		move = {}
@@ -666,6 +758,9 @@ func _tick_move(delta: float) -> void:
 
 ## Called by Attack when the current move's hitbox connects.
 func on_attack_hit() -> void:
+	if not move_hit and not is_on_floor() and _air_floats < AIR_FLOAT_MAX:
+		_air_floats += 1
+		velocity.y = minf(velocity.y, -AIR_HIT_FLOAT)  # air hits keep the fighter up
 	move_hit = true
 	add_gauge(4.0)
 	if glut != null:
@@ -776,7 +871,7 @@ func use_super() -> void:
 
 ## Meisterzug of the fighting style: costs 3 Stufen of the Legendenleiste.
 func _use_meisterzug() -> void:
-	if in_super or _glut_busy() or dash_timer > 0.0:
+	if in_super or (_glut_busy() and not glut.zug_connected()) or dash_timer > 0.0:
 		return
 	var cost := style.super_cost()
 	var mond := glut as MondCaster
@@ -788,6 +883,8 @@ func _use_meisterzug() -> void:
 		return
 	if not infinite_aura:
 		gauge -= cost
+	if _glut_busy():
+		glut.interrupt()  # super cancel out of a Zug that hit
 	in_super = true
 	velocity.x = 0.0
 	move = {}
@@ -812,6 +909,36 @@ func _use_meisterzug() -> void:
 		ms.title = style.variant().get("name", "Meisterzug")
 		Sfx.play("mond_super", -2.0)
 		world.add_child(ms)
+		return
+	if glut is GrenzCaster:
+		var gs := GrenzSuper.new()
+		gs.room = world
+		gs.player = self
+		gs.caster = glut
+		gs.gfx = glut.gfx
+		gs.variant = style.super_variant
+		gs.title = style.variant().get("name", "Meisterzug")
+		world.add_child(gs)
+		return
+	if glut is WirbelCaster:
+		var ws := WirbelSuper.new()
+		ws.room = world
+		ws.player = self
+		ws.caster = glut
+		ws.wfx = glut.wfx
+		ws.variant = style.super_variant
+		ws.title = style.variant().get("name", "Meisterzug")
+		world.add_child(ws)
+		return
+	if glut is BollwerkCaster:
+		var bs := BollwerkSuper.new()
+		bs.room = world
+		bs.player = self
+		bs.caster = glut
+		bs.bfx = glut.bfx
+		bs.variant = style.super_variant
+		bs.title = style.variant().get("name", "Meisterzug")
+		world.add_child(bs)
 		return
 	if glut is FederCaster:
 		var fs := FederSuper.new()

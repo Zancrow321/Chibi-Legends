@@ -351,7 +351,7 @@ func cast_super(p: Player, s: Dictionary) -> void:
 ## depending on knockback.
 ## Returns the damage dealt. Super hits ("super", "super_final") show no
 ## number of their own; the beam adds them up and shows one big total.
-func deal_hit(target: Node2D, base: float, element: String, from_x: float, knockback: float, profile := "", launch := 0.0) -> int:
+func deal_hit(target: Node2D, base: float, element: String, from_x: float, knockback: float, profile := "", launch := 0.0, stun := -1.0) -> int:
 	var res := Reactions.resolve(target.status, element, base)
 	var crit := randf() < 0.05 + Profile.bonus("crit")
 	var dmg := int(round(res.damage * randf_range(0.92, 1.08) * _combo_scale(target) * (1.0 + Profile.bonus("atk")) * (1.5 if crit else 1.0)))
@@ -373,6 +373,11 @@ func deal_hit(target: Node2D, base: float, element: String, from_x: float, knock
 		profile = "heavy" if knockback >= 120.0 else "light"
 	var dir := signf(center.x - from_x)
 	var strong: bool = res.reaction != "" or profile == "heavy" or profile == "super_final"
+	# hitstun: long enough to link the next hit, shorter late in long combos
+	if target.has_method("set_hitstun"):
+		if stun < 0.0:
+			stun = 0.45 if strong else 0.36
+		target.set_hitstun(stun * maxf(0.55, 1.0 - 0.03 * maxi(0, combo - 8)))
 	if not profile.begins_with("super") or profile == "super_final":
 		Sfx.play("hit_heavy" if strong else "hit_light")
 		if element == "" and not strong:

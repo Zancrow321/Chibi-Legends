@@ -1,0 +1,87 @@
+{
+	"_doc": "Kampfstil Wirbelwille (Windschatten, Kreiselfaust). Konzept: docs/stil-wirbelwille.md. 6 Zuege fuer die Spezial-Taste + Meisterzug, je 3 Alternativen. frames = [Anlauf, aktiv, Erholung] bei 60 fps. klon = verstaerkte Fassung verbraucht 1 Teamwork-Marke (falls da) fuer einen Windschatten. wind = verstaerkt verursacht Winddruck. Schaden: 8 entspricht einem normalen Leichtschlag (100 %).",
+	"id": "wirbelwille",
+	"name": "Wirbelwille",
+	"element": "wind",
+	"subtitle": "Windschatten · Willensfäden  ·  verschiedene Treffer = Teamwork-Marken (3), L halten + Marke = Klon greift mit an",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"colors": {"ink": "121a26", "turq": "5fe3e0", "ice": "bff6ff", "white": "f4fbff", "gold": "ffd36a", "storm": "6f9aa6", "orange": "ff9a3c"},
+	"loadout": {"neutral": "wirbelansturm", "forward": "kreiselfaust", "up": "klon_aufsteiger", "down": "wirbelsturz"},
+	"zuege": {
+		"wirbelansturm": {
+			"name": "Wirbelansturm", "dir": "neutral", "sp": 1, "cd": 0.7, "frames": [5, 30, 12], "klon": true,
+			"desc": "Gerade, Haken, Drehtritt. Verstärkt springt ein Windschatten über dich und übernimmt den Abschluss.",
+			"params": {"kind": "combo", "damage": [5, 5, 10], "reach": 34},
+			"enhanced": {"clone_finish": true},
+			"alts": [
+				{"id": "doppel", "name": "Doppelter Auftakt", "sp": 2, "desc": "Ein Windschatten greift kurz danach von der Seite an, auch ohne Marke. Mit Marke zweimal.", "params": {"side_clone": true}},
+				{"id": "feger", "name": "Tiefer Feger", "sp": 2, "desc": "Zwei Treffer, der zweite fegt bodennah und wirft Gegner um.", "frames": [5, 22, 14], "params": {"kind": "sweep", "damage": [5, 9]}},
+				{"id": "abschluss", "name": "Entschlossener Abschluss", "sp": 2, "desc": "Langsamer letzter Treffer mit hohem Haltungsschaden.", "frames": [5, 40, 16], "params": {"damage": [5, 5, 16], "posture": 18}}
+			]
+		},
+		"kreiselfaust": {
+			"name": "Kreiselfaust", "dir": "forward", "sp": 1, "cd": 1.2, "frames": [18, 12, 18], "klon": true, "wind": true,
+			"desc": "Drei Windringe bauen sich um die Faust auf, dann ein kurzer Vorstoß. Verfehlt öffnet er ein Fenster für den Gegner.",
+			"params": {"damage": 16, "dist": 60, "size": 1.0, "area": 1.0},
+			"enhanced": {"damage_add": 5, "size_mul": 1.35, "hold_clone": true},
+			"alts": [
+				{"id": "schnell", "name": "Schnelle Kreiselfaust", "sp": 2, "desc": "Halbe Vorbereitung, kleinere Trefferfläche.", "frames": [9, 10, 16], "params": {"damage": 13, "area": 0.6, "size": 0.75}},
+				{"id": "gross", "name": "Große Kreiselfaust", "sp": 2, "desc": "Ringe so groß wie du, lange Vorbereitung, trifft mehrere Gegner.", "frames": [36, 14, 22], "params": {"damage": 26, "area": 1.7, "size": 1.8}},
+				{"id": "uebergabe", "name": "Klon-Übergabe", "sp": 2, "desc": "Ein Windschatten stürmt voraus, du folgst kurz danach. Verfehlt der Klon, brichst du ab.", "params": {"handover": true}}
+			]
+		},
+		"klon_aufsteiger": {
+			"name": "Klon-Aufsteiger", "dir": "up", "sp": 1, "cd": 1.1, "frames": [8, 18, 14], "klon": true,
+			"desc": "Ein Windschatten tritt den Gegner hoch, du springst hinterher. Nochmal L: Lufthieb.",
+			"params": {"damage": 6, "launch": 380, "jump": -470, "air_damage": 9, "kicks": 1},
+			"enhanced": {"launch_add": 80, "second_clone": true},
+			"alts": [
+				{"id": "leiter", "name": "Himmelsleiter", "sp": 2, "desc": "Höherer Aufstieg gegen ein Ziel: du springst vom Rücken des Klons ab.", "params": {"launch": 470, "jump": -580}},
+				{"id": "doppel", "name": "Doppelkick", "sp": 2, "desc": "Zwei Tritte, geringere Flughöhe.", "params": {"kicks": 2, "launch": 260, "jump": -380}},
+				{"id": "kunai", "name": "Kunai-Auftakt", "sp": 2, "desc": "Ein schräger Kunaiwurf trifft zuerst und hält kurz fest.", "frames": [12, 18, 14], "params": {"kunai": true}}
+			]
+		},
+		"wechselhuelle": {
+			"name": "Wechselhülle", "dir": "neutral", "sp": 1, "cd": 1.4, "frames": [3, 24, 14],
+			"desc": "Abwehrhaltung. Wird sie getroffen, bleibt eine Strohpuppe zurück und du stehst hinter dem Gegner.",
+			"params": {"mode": "swap", "counter_damage": 12, "stance": 0.4},
+			"enhanced": {"counter_damage_add": 6, "wind_press": true},
+			"alts": [
+				{"id": "koeder", "name": "Klonköder", "sp": 2, "desc": "Ein Windschatten bleibt zurück und lockt Gegner 1 s lang an. Kein Schaden, +1 Marke.", "params": {"mode": "lure"}},
+				{"id": "seite", "name": "Seitensprung", "sp": 2, "desc": "Kurzer Ausweichsprung zur Seite mit Gegenschlag, ohne Ortswechsel.", "params": {"mode": "side", "counter_damage": 10}},
+				{"id": "faden", "name": "Fadenwehr", "sp": 2, "desc": "Ein Netz aus Willensfäden fängt 0,5 s lang 70 % des Schadens ab.", "frames": [3, 30, 12], "params": {"mode": "net", "stance": 0.5}}
+			]
+		},
+		"klonschleuder": {
+			"name": "Klonschleuder", "dir": "forward", "sp": 1, "cd": 1.1, "frames": [10, 18, 12], "klon": true,
+			"desc": "Ein Windschatten wirft dich nach vorn. Nochmal L im Flug: fliegender Tritt.",
+			"params": {"dist": 120, "vy": -120, "damage": 11},
+			"enhanced": {"dist_mul": 2.0, "catch_clone": true},
+			"alts": [
+				{"id": "flach", "name": "Flacher Wurf", "sp": 2, "desc": "Schnell und bodennah.", "frames": [7, 14, 10], "params": {"vy": 0}},
+				{"id": "hoch", "name": "Hoher Wurf", "sp": 2, "desc": "Schräg nach oben, startet eine Luftkombo.", "params": {"vy": -420, "dist": 90}},
+				{"id": "taeuschung", "name": "Täuschungswurf", "sp": 2, "desc": "Geworfen wird ein Windschatten, du bleibst stehen. Wer auf ihn reagiert, ist kurz offen.", "params": {"decoy": true}}
+			]
+		},
+		"wirbelsturz": {
+			"name": "Wirbelsturz", "dir": "down", "sp": 1, "cd": 1.2, "frames": [14, 6, 18], "klon": true, "wind": true,
+			"desc": "Die Kreiselfaust lädt in der Luft, dann ein schräger Sturz mit Windstoß zu beiden Seiten.",
+			"params": {"damage": 18, "gust": 5, "vx": 220, "fall": 700},
+			"enhanced": {"gust_mul": 2.0, "big_gust": true},
+			"alts": [
+				{"id": "direkt", "name": "Direkter Einschlag", "sp": 2, "desc": "Steiler, schneller Sturz mit hohem Einzelschaden, kein Windstoß.", "params": {"damage": 24, "gust": 0, "vx": 60, "fall": 900}},
+				{"id": "nachschlag", "name": "Klon-Nachschlag", "sp": 2, "desc": "Ein Windschatten folgt mit einem zweiten Treffer. Mit Marke mit voller Kreiselfaust.", "params": {"follow_clone": true}},
+				{"id": "kunai", "name": "Kunai-Regen", "sp": 2, "desc": "Statt des Sturzes ein Fächer aus 5 Kunai schräg nach unten. Du bleibst in der Luft.", "frames": [8, 10, 12], "params": {"kunai_fan": 5, "damage": 4}}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug", "sp": 4, "cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Nahaufnahme, ein Handzeichen, Wind reißt an Schal und Haaren; die Alternativen sind drei verschiedene Supers.",
+		"variants": [
+			{"id": "sturmrad", "name": "Sturmrad", "sp": 0, "desc": "Mit zwei Windschatten formst du ein riesiges Windrad und wirfst es. Es dreht sich am Ziel und reißt zum Schluss alles auseinander."},
+			{"id": "hundert_schatten", "name": "Hundert Schatten", "sp": 2, "desc": "Trifft der Auftakt, greifen sechs Windschatten im Kreis an. Verfehlt kostet er nur 2 Stufen."},
+			{"id": "orkanmantel", "name": "Orkanmantel", "sp": 2, "desc": "8 Sekunden Sturmmantel mit zwei Sturmarmen: mehr Reichweite für Ansturm, Kreiselfaust und Wirbelsturz, zum Schluss ein Windausbruch."}
+		]
+	}
+}
