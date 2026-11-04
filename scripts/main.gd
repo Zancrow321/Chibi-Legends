@@ -78,6 +78,7 @@ func _ready() -> void:
 	var creator_layer := CanvasLayer.new()
 	creator_layer.layer = 21
 	var creator := CreatorScreen.new()
+	creator.finished.connect(room.player.sprite.set_look)  # the fighter wears the new look at once
 	creator_layer.add_child(creator)
 	add_child(creator_layer)
 	if not FileAccess.file_exists(CreatorCatalog.SAVE):

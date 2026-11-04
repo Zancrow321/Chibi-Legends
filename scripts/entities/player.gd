@@ -555,6 +555,16 @@ func _set_attack_feel() -> void:
 			world.spawn_ghost(self)
 
 
+## Creator pose for the current move frame: the move's "creator" lists per
+## phase, else the old strip frame translated.
+func _attack_pose() -> String:
+	var ph := MoveSet.phase_at(move, move_t)
+	var list: Array = move.get("creator", {}).get(ph, [])
+	if list.is_empty():
+		return FighterSprite.SLASH_POSE[clampi(sprite.attack_frame, 0, FighterSprite.SLASH_POSE.size() - 1)]
+	return str(list[mini(int(sprite.attack_k * list.size()), list.size() - 1)])
+
+
 func _attack_frame() -> int:
 	var ph := MoveSet.phase_at(move, move_t)
 	var pose: Array = move.get("pose", {}).get(ph, [3])
@@ -668,6 +678,7 @@ func _update_visual() -> void:
 	elif _glut_busy():
 		st = "attack"
 		sprite.attack_frame = glut.pose_frame()
+		sprite.attack_pose = FighterSprite.SLASH_POSE[clampi(sprite.attack_frame, 0, FighterSprite.SLASH_POSE.size() - 1)]
 	elif dash_timer > 0.0:
 		st = "dash"
 	elif not move.is_empty():
@@ -676,6 +687,7 @@ func _update_visual() -> void:
 		sprite.attack_strip = move.get("strip", "slash")
 		sprite.attack_frame = _attack_frame()
 		_set_attack_feel()
+		sprite.attack_pose = _attack_pose()
 	elif cast_timer > 0.0:
 		st = "cast"
 	elif not is_on_floor():
