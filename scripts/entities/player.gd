@@ -17,7 +17,16 @@ const JUMP_VELOCITY := -345.0
 const MAX_JUMPS := 2
 const DASH_SPEED := 380.0
 const DASH_TIME := 0.16
-const DASH_COOLDOWN := 0.55
+const DASH_COOLDOWN := 0.3
+## Feel: jumping just after leaving a ledge still counts as a ground jump;
+## gravity is lighter near the top of a held jump and heavier when falling.
+const COYOTE_TIME := 0.1
+const APEX_SPEED := 70.0
+const APEX_GRAVITY := 0.55
+const FALL_GRAVITY := 1.3
+## Ground attacks: a little steering in recovery, turning in the first frames.
+const ATTACK_DRIFT := 0.3
+const TURN_FRAMES := 4
 const CAST_TIME := 0.22
 ## A second button within this time after the first turns the move into a grab.
 const GRAB_WINDOW := 3.0 / 60.0
@@ -48,6 +57,10 @@ var jumps_used := 0
 var dash_timer := 0.0
 var dash_cd := 0.0
 var air_dash_used := false
+var _coyote := 0.0
+var _fall_speed := 0.0
+var _step_timer := 0.0
+var _was_on_floor := true
 ## Current normal attack (empty = none), time into it, whether it hit,
 ## whether its hitbox was spawned, and the next button pressed meanwhile.
 var move: Dictionary = {}
@@ -147,6 +160,7 @@ func receive_hit(damage: float, from_x: float, source: Node = null) -> bool:
 	sprite.flash = 0.06
 	world.numbers.spawn_number(global_position + Vector2(0, -50), int(damage), Color("ff4b3e"), get_instance_id(), false)
 	world.fx.hit(global_position + Vector2(0, -22), "", "heavy", dir)
+	Sfx.play("hit_heavy")
 	add_gauge(5.0)
 	if hp <= 0.0:
 		hp = max_hp
@@ -181,6 +195,20 @@ func _physics_process(delta: float) -> void:
 	if on_floor:
 		jumps_used = 0
 		air_dash_used = false
+		_coyote = COYOTE_TIME
+		if not _was_on_floor:
+			var hard := clampf(_fall_speed / MAX_FALL, 0.3, 1.0)
+			sprite.land(hard)
+			world.dust.land(global_position, hard)
+			Sfx.play("land", -8.0 + hard * 6.0)
+		elif absf(velocity.x) > 60.0 and dash_timer <= 0.0 and move.is_empty():
+			_step_timer -= get_physics_process_delta_time()
+			if _step_timer <= 0.0:
+				_step_timer = 0.21
+				world.dust.puff(global_position, -signf(velocity.x), 2, 2.2, 18.0)
+				Sfx.play("footstep")
+	_was_on_floor = on_floor
+	_fall_speed = maxf(velocity.y, 0.0)
 	if infinite_aura:
 		gauge = GAUGE_MAX
 
@@ -217,21 +245,29 @@ func _physics_process(delta: float) -> void:
 	else:
 		var target_speed := dir * RUN_SPEED
 		if busy and on_floor:
-			target_speed = 0.0
+			target_speed *= ATTACK_DRIFT
 			if not move.is_empty() and MoveSet.phase_at(move, move_t) != "recovery":
 				target_speed = float(move.get("lunge", 0.0)) * facing
 		elif busy:
 			target_speed *= 0.6
 		velocity.x = move_toward(velocity.x, target_speed, ACCEL * delta)
-		if dir != 0.0 and not busy:
+		if dir != 0.0 and (not busy or _can_turn()):
 			facing = 1 if dir > 0.0 else -1
-		velocity.y = minf(velocity.y + GRAVITY * delta, MAX_FALL)
+		velocity.y = minf(velocity.y + _gravity() * delta, MAX_FALL)
 
-	if move.is_empty():
+	if move.is_empty() or _can_cancel():
 		_handle_jump(on_floor)
-	if _take("dash") and dash_cd <= 0.0 and move.is_empty() and (on_floor or not air_dash_used):
+	if _buffer.get("dash", 0.0) > 0.0 and dash_cd <= 0.0 and (move.is_empty() or _can_cancel()) \
+			and (on_floor or not air_dash_used):
+		_take("dash")
+		_cancel_move()
+		if dir != 0.0:
+			facing = 1 if dir > 0.0 else -1
 		dash_timer = DASH_TIME
 		dash_cd = DASH_COOLDOWN
+		Sfx.play("dash")
+		if on_floor:
+			world.dust.puff(global_position, -facing, 5, 3.0, 70.0)
 		ghost_timer = 0.0
 		if not on_floor:
 			air_dash_used = true
@@ -262,6 +298,7 @@ func _tick_timers(delta: float) -> void:
 		if _buffer[key] <= 0.0:
 			_buffer.erase(key)
 	dash_timer = maxf(0.0, dash_timer - delta)
+	_coyote = maxf(0.0, _coyote - delta)
 	dash_cd = maxf(0.0, dash_cd - delta)
 	cast_timer = maxf(0.0, cast_timer - delta)
 	for i in cooldowns.size():
@@ -285,13 +322,22 @@ func _handle_jump(on_floor: bool) -> void:
 		elif on_floor or jumps_used < MAX_JUMPS:
 			_buffer.erase("jump")
 			if not on_floor and jumps_used == 0:
-				jumps_used = 1  # walked off a ledge: first jump is spent
+				# walked off a ledge: within the coyote time it is still the
+				# ground jump, later the first jump is spent
+				if _coyote <= 0.0:
+					jumps_used = 1
 			if jumps_used >= MAX_JUMPS:
 				return
+			_cancel_move()
 			velocity.y = JUMP_VELOCITY
 			_jump_held = true
+			_coyote = 0.0
 			jumps_used += 1
 			dash_timer = 0.0
+			sprite.jump()
+			Sfx.play("jump", -4.0)
+			if on_floor or jumps_used == 1:
+				world.dust.puff(global_position, 0.0, 4, 2.5, 0.0)
 			if jumps_used == 2:
 				world.spawn_burst(global_position, Color(1, 1, 1, 0.8), 8)
 	# releasing early cuts the jump short (once per jump)
@@ -299,6 +345,32 @@ func _handle_jump(on_floor: bool) -> void:
 		_jump_held = false
 		if velocity.y < -120.0:
 			velocity.y *= 0.5
+
+
+## Lighter gravity at the top of a held jump (hang time), heavier when falling.
+func _gravity() -> float:
+	if velocity.y > 0.0:
+		return GRAVITY * FALL_GRAVITY
+	if _jump_held and absf(velocity.y) < APEX_SPEED:
+		return GRAVITY * APEX_GRAVITY
+	return GRAVITY
+
+
+## Jump and dash may cancel a normal once it has hit (not specials).
+func _can_cancel() -> bool:
+	return not move.is_empty() and move_hit and move.button != "special" \
+		and MoveSet.phase_at(move, move_t) != "startup"
+
+
+## Facing can still change in the first frames of a move (reverse attacks).
+func _can_turn() -> bool:
+	return not move.is_empty() and move_t * MoveSet.FPS < TURN_FRAMES
+
+
+func _cancel_move() -> void:
+	if not move.is_empty():
+		move = {}
+		_queued = ""
 
 
 ## Direction held right now, relative to facing. Up and down win over sideways.
@@ -345,7 +417,7 @@ func _handle_attacks(on_floor: bool, dir_x: float) -> void:
 
 
 ## Run a button pressed during a move as soon as the rules allow:
-## light chains into the next light from the first active frame on;
+## light chains into the next light once it hit (or in recovery on a whiff);
 ## after a hit, light cancels into heavy and anything into special;
 ## otherwise it waits for the move to end.
 func _try_queued(on_floor: bool) -> void:
@@ -364,7 +436,7 @@ func _try_queued(on_floor: bool) -> void:
 		return
 	var rank := {"light": 0, "heavy": 1, "grab": 1, "special": 2}
 	var chain: String = move.get("chain", "")
-	if _queued == "light" and chain != "" and _queued_dir == "neutral" and ph == "recovery":
+	if _queued == "light" and chain != "" and _queued_dir == "neutral" and (ph == "recovery" or move_hit):
 		_queued = ""
 		_start_move(moveset.get_move(chain))
 	elif move_hit and rank[_queued] > rank[move.button]:
@@ -428,6 +500,8 @@ func _tick_move(delta: float) -> void:
 	var ph := MoveSet.phase_at(move, move_t)
 	if ph != "startup" and not _move_spawned:
 		_move_spawned = true
+		var heavy_swing: bool = move.button == "heavy" or move.get("profile", "") == "heavy"
+		Sfx.play("swing_heavy" if heavy_swing else "swing_light")
 		var hb: Array = move.hitbox
 		var el: String = move.get("element", "")
 		var mul := 1.0
@@ -455,6 +529,30 @@ func on_attack_hit() -> void:
 	add_gauge(4.0)
 	if glut != null:
 		glut.on_normal_hit()
+
+
+## Phase and progress for the sprite's code animation; heavy moves lean
+## further and leave afterimages while they strike.
+func _set_attack_feel() -> void:
+	var ph := MoveSet.phase_at(move, move_t)
+	var f := move_t * MoveSet.FPS
+	var start := 0.0
+	var dur := float(move.startup)
+	if ph == "active":
+		start = move.startup
+		dur = move.active
+	elif ph == "recovery":
+		start = move.startup + move.active
+		dur = move.recovery
+	sprite.attack_phase = ph
+	sprite.attack_k = clampf((f - start) / maxf(1.0, dur), 0.0, 1.0)
+	var heavy: bool = move.button == "heavy" or move.get("profile", "") == "heavy"
+	sprite.attack_power = 1.6 if heavy else 1.0
+	if heavy and ph == "active" and absf(velocity.x) > 60.0:
+		ghost_timer -= get_physics_process_delta_time()
+		if ghost_timer <= 0.0:
+			ghost_timer = 0.03
+			world.spawn_ghost(self)
 
 
 func _attack_frame() -> int:
@@ -521,6 +619,7 @@ func use_super() -> void:
 	in_super = true
 	velocity.x = 0.0
 	visual.set_state("cast")
+	Sfx.play("super_flash")
 	world.cast_super(self, s)
 
 
@@ -538,6 +637,7 @@ func _use_meisterzug() -> void:
 	velocity.x = 0.0
 	move = {}
 	_queued = ""
+	Sfx.play("super_flash")
 	var s := GlutSuper.new()
 	s.room = world
 	s.player = self
@@ -562,6 +662,7 @@ func _update_visual() -> void:
 	visual.scale.x = facing
 	sprite.scale.x = facing
 	var st := "idle"
+	sprite.attack_phase = ""
 	if hitstun > 0.0:
 		st = "hurt"
 	elif _glut_busy():
@@ -574,6 +675,7 @@ func _update_visual() -> void:
 		visual.attack_phase = int(move.get("phase", 0))
 		sprite.attack_strip = move.get("strip", "slash")
 		sprite.attack_frame = _attack_frame()
+		_set_attack_feel()
 	elif cast_timer > 0.0:
 		st = "cast"
 	elif not is_on_floor():

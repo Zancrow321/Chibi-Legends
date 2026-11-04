@@ -1,0 +1,65 @@
+{
+ "runs": [
+  {
+   "part": "panel",
+   "size": [
+    128,
+    128
+   ],
+   "usage": {
+    "type": "generations",
+    "generations": 1.0
+   },
+   "description": "empty rectangular manga speech-panel window frame with slanted cut corners, halftone dots in the lower corner, red accent stripe at the top, manga comic panel style game UI element, thick black ink border, white and cream paper fill, screentone halftone dot shading, slanted dynamic corners, flat colors, crisp pixel art, front view, centered, no text, no letters, plain empty background"
+  },
+  {
+   "part": "button",
+   "size": [
+    128,
+    64
+   ],
+   "usage": {
+    "type": "generations",
+    "generations": 1.0
+   },
+   "description": "wide rectangular game menu button, slanted parallelogram shape, black ink border, red fill with white highlight stripe and halftone dots, manga comic panel style game UI element, thick black ink border, white and cream paper fill, screentone halftone dot shading, slanted dynamic corners, flat colors, crisp pixel art, front view, centered, no text, no letters, plain empty background"
+  },
+  {
+   "part": "hp_bar",
+   "size": [
+    192,
+    48
+   ],
+   "usage": {
+    "type": "generations",
+    "generations": 1.0
+   },
+   "description": "long horizontal health bar frame, slanted ends, black ink border, empty dark inner slot, small heart emblem on the left end, manga comic panel style game UI element, thick black ink border, white and cream paper fill, screentone halftone dot shading, slanted dynamic corners, flat colors, crisp pixel art, front view, centered, no text, no letters, plain empty background"
+  },
+  {
+   "part": "super_bar",
+   "size": [
+    192,
+    48
+   ],
+   "usage": {
+    "type": "generations",
+    "generations": 1.0
+   },
+   "description": "long horizontal energy gauge frame split into three segments, slanted ends, black ink border, empty dark inner slots, small flame emblem on the left end, manga comic panel style game UI element, thick black ink border, white and cream paper fill, screentone halftone dot shading, slanted dynamic corners, flat colors, crisp pixel art, front view, centered, no text, no letters, plain empty background"
+  },
+  {
+   "part": "skill_slot",
+   "size": [
+    64,
+    64
+   ],
+   "usage": {
+    "type": "generations",
+    "generations": 1.0
+   },
+   "description": "square ability slot frame tilted like a manga panel, thick black ink border, empty dark center, halftone dots in one corner, manga comic panel style game UI element, thick black ink border, white and cream paper fill, screentone halftone dot shading, slanted dynamic corners, flat colors, crisp pixel art, front view, centered, no text, no letters, plain empty background"
+  }
+ ],
+ "spent": 5.0
+}

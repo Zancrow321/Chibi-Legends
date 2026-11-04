@@ -15,7 +15,23 @@ const DEFAULT_STRIPS := {
 	"slash": {"tex": preload("res://assets/characters/jus_test/testfigur2_slash.png"), "frames": 7, "fps": 12.0},
 }
 
-var strips: Dictionary = DEFAULT_STRIPS.duplicate()
+## Optional extra drawings of test figure 2 (PixelLab strips, 96er cells):
+## used for their state when the file exists, else code fakes the state.
+const EXTRA_STRIPS := {
+	"run": ["res://assets/characters/jus_test/testfigur2_run.png", 12.0],
+	"jump": ["res://assets/characters/jus_test/testfigur2_jump.png", 12.0],
+	"fall": ["res://assets/characters/jus_test/testfigur2_fall.png", 10.0],
+	"dash": ["res://assets/characters/jus_test/testfigur2_dash.png", 16.0],
+	"hurt": ["res://assets/characters/jus_test/testfigur2_hurt.png", 12.0],
+	"heavy": ["res://assets/characters/jus_test/testfigur2_heavy.png", 12.0],
+	"slash2": ["res://assets/characters/jus_test/testfigur2_slash2.png", 12.0],
+}
+## Feel: how fast scale/lean follow their target, and the squash spring.
+const FOLLOW := 28.0
+const SPRING := 260.0
+const DAMP := 16.0
+
+var strips: Dictionary = _default_strips()
 ## our state -> strip name, only for imported characters
 var state_strips: Dictionary = {}
 
@@ -25,6 +41,18 @@ var anim_time := 0.0
 var attack_strip := "slash"
 var attack_frame := 0
 var flash := 0.0
+## Attack phase ("startup", "active", "recovery") and progress 0..1 in it,
+## and how strong the attack is (1 = light, 1.6 = heavy): drives the
+## anticipation lean, the strike stretch and the settle in code.
+var attack_phase := ""
+var attack_k := 0.0
+var attack_power := 1.0
+
+var _cur_sc := Vector2.ONE
+var _cur_rot := 0.0
+var _cur_off := Vector2.ZERO
+var _squash := Vector2.ZERO  # spring offset on the scale (land, jump)
+var _squash_v := Vector2.ZERO
 
 var _sprite: Sprite2D
 
@@ -39,8 +67,33 @@ func _init() -> void:
 
 
 ## Switches to the drawings of a moveset's "sprite" block; empty = test figure 2.
+static func _default_strips() -> Dictionary:
+	var out := DEFAULT_STRIPS.duplicate()
+	for name in EXTRA_STRIPS:
+		var e: Array = EXTRA_STRIPS[name]
+		if ResourceLoader.exists(e[0]):
+			var tex := load(e[0]) as Texture2D
+			out[name] = {"tex": tex, "frames": maxi(1, tex.get_width() / CELL), "fps": e[1]}
+	return out
+
+
+## Squash on landing (0..1 = how hard), stretch on take-off.
+func land(strength := 1.0) -> void:
+	_squash_v += Vector2(4.5, -4.5) * strength
+
+
+func jump() -> void:
+	_squash_v += Vector2(-3.5, 4.0)
+
+
+## Copy of what is shown right now, for afterimages (Effects.ghost).
+func snapshot() -> Dictionary:
+	return {"tex": _sprite.texture, "hframes": _sprite.hframes, "frame": _sprite.frame,
+		"xform": _sprite.global_transform, "offset": _sprite.offset}
+
+
 func use_sprite_data(sp: Dictionary) -> void:
-	strips = DEFAULT_STRIPS.duplicate()
+	strips = _default_strips()
 	state_strips = {}
 	_sprite.offset = -FOOT
 	if sp.is_empty():
@@ -128,6 +181,23 @@ func _process(delta: float) -> void:
 	var own: String = state_strips.get(state, "")
 	if state == "attack":
 		_show(attack_strip, attack_frame)
+		var p := attack_power
+		match attack_phase:
+			"startup":
+				# anticipation: lean back and crouch a little
+				var k := attack_k
+				rot = -0.07 * p * k
+				sc = Vector2(1.0 - 0.06 * p * k, 1.0 + 0.05 * p * k)
+				off.x = -1.5 * p * k
+			"active":
+				# strike: stretch forward
+				rot = 0.09 * p
+				sc = Vector2(1.0 + 0.1 * p, 1.0 - 0.07 * p)
+				off.x = 2.5 * p
+			"recovery":
+				var k2 := 1.0 - attack_k
+				rot = 0.05 * p * k2
+				sc = Vector2(1.0 + 0.04 * p * k2, 1.0 - 0.03 * p * k2)
 	elif own != "":
 		_show(own, _frame_at(own, anim_time))
 		if state == "dash":
@@ -158,9 +228,24 @@ func _process(delta: float) -> void:
 
 
 func _default_state(_delta: float, sc: Vector2, rot: float, off: Vector2) -> void:
+	if strips.has(state) and state != "idle":
+		# own PixelLab drawing for this state; code only adds a bit of lean
+		var st: Dictionary = strips[state]
+		var f := int(anim_time * st.fps)
+		_show(state, f % st.frames if state in ["run", "dash"] else mini(f, st.frames - 1))
+		match state:
+			"run":
+				rot = 0.05
+			"dash":
+				rot = 0.1
+				sc = Vector2(1.08, 0.95)
+		_apply(sc, rot, off)
+		return
 	match state:
 		"idle":
 			_show("idle", int(anim_time * strips.idle.fps) % strips.idle.frames)
+			var br := sin(anim_time * 3.2)
+			sc = Vector2(1.0 - br * 0.012, 1.0 + br * 0.015)
 		"run":
 			# no run drawings yet: idle pose, leaning forward with a step bob
 			_show("idle", 0)
@@ -190,9 +275,19 @@ func _default_state(_delta: float, sc: Vector2, rot: float, off: Vector2) -> voi
 
 
 func _apply(sc: Vector2, rot: float, off: Vector2) -> void:
-	_sprite.position = off
-	_sprite.rotation = rot
-	_sprite.scale = sc
+	var dt := get_process_delta_time()
+	# ease towards the pose instead of snapping (attack strikes snap faster)
+	var w := 1.0 - exp(-(FOLLOW * (2.0 if attack_phase == "active" and state == "attack" else 1.0)) * dt)
+	_cur_sc = _cur_sc.lerp(sc, w)
+	_cur_rot = lerpf(_cur_rot, rot, w)
+	_cur_off = _cur_off.lerp(off, w)
+	# squash spring (land / jump), keeps the area roughly the same
+	_squash_v += (-_squash * SPRING - _squash_v * DAMP) * dt
+	_squash += _squash_v * dt
+	_squash = _squash.clamp(Vector2(-0.3, -0.3), Vector2(0.3, 0.3))
+	_sprite.position = _cur_off
+	_sprite.rotation = _cur_rot
+	_sprite.scale = _cur_sc + _squash
 	var base := Color(1, 1, 1)
 	if state == "hurt":
 		base = Color(1.6, 0.75, 0.7) if fmod(anim_time, 0.1) < 0.05 else Color(1, 1, 1)

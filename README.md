@@ -40,6 +40,7 @@ Spielwelt: die Multiversum-Akademie. Fähigkeiten und Outfits sind eigene Entwü
 | Abendlicht an/aus (Ansicht Licht / flach) | N | – |
 | Figur wechseln (Testfigur / Sammlung) | T | – |
 | Kämpfer wechseln (Testfigur 2 / M.U.G.E.N-Importe) | F | – |
+| UI-Stil wechseln (Manga-Panel / alt), im Web auch `?ui=alt` | I | – |
 | Effekt-Stärke (Dezent / Kräftig / Maximal) | V | – |
 | Unendlich Legendenleiste / Abklingzeiten zurücksetzen | U / R | – / Back |
 | Charaktere (Sammlung) | C | Start |

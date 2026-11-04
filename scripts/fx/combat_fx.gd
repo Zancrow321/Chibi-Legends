@@ -23,6 +23,9 @@ var _dim_target := 0.0
 var _flash := 0.0
 var _flash_color := Color.WHITE
 var _flash_layer: Node2D
+## Targets shaking in place while the world is frozen: [node, base position].
+var _jitter: Array = []
+var _jitter_amount := 0.0
 
 
 func _ready() -> void:
@@ -58,6 +61,23 @@ func _apply(p: Dictionary, dir: float) -> void:
 	if p.flash > 0.0:
 		flash(p.flash * FxSettings.factor("flash"))
 	_punch = maxf(_punch, p.zoom)
+
+
+## The hit target trembles during the hit-stop (classic fighting game feel).
+func jitter(node: Node2D, amount: float) -> void:
+	for j in _jitter:
+		if j[0] == node:
+			return
+	_jitter.append([node, node.position])
+	_jitter_amount = maxf(_jitter_amount, amount)
+
+
+func _end_jitter() -> void:
+	for j in _jitter:
+		if is_instance_valid(j[0]):
+			j[0].position = j[1]
+	_jitter.clear()
+	_jitter_amount = 0.0
 
 
 func freeze(seconds: float) -> void:
@@ -108,6 +128,14 @@ func _process(delta: float) -> void:
 		if _freeze <= 0.0:
 			_freeze = 0.0
 			get_tree().paused = _hold
+			_end_jitter()
+	if not _jitter.is_empty():
+		if _freeze <= 0.0:
+			_end_jitter()
+		else:
+			for j in _jitter:
+				if is_instance_valid(j[0]):
+					j[0].position = j[1] + Vector2(randf_range(-1, 1) * _jitter_amount, 0.0).round()
 	# camera: shake (random + kick), zoom punch
 	_trauma = maxf(0.0, _trauma - delta * (10.0 + _trauma * 4.0))
 	_kick = _kick.lerp(Vector2.ZERO, 1.0 - exp(-25.0 * delta))

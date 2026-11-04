@@ -5,3 +5,5 @@ Platzhalter von Kenney stehen in `assets/third_party/LICENSES.md`.
 
 | Datei | Werkzeug | Prompt / Notiz | Datum | Lizenz |
 | --- | --- | --- | --- | --- |
+
+- `sfx/swing_light_*.wav`, `sfx/swing_heavy_*.wav`, `sfx/dash_*.wav`: selbst erzeugt mit `tools/audio/synth_whoosh.py` (gefiltertes Rauschen), 2026-11-04, keine fremde Lizenz.
