@@ -246,7 +246,7 @@ func _cycle(slot: String, dir: int) -> void:
 		# each style brings its weapon (Gleichklang: the scythe Nachhall)
 		# (Spannkraft fights bare-handed: "none" puts the weapon away)
 		var w := str(CreatorCatalog.data["styles"][look["style"]].get("weapon", ""))
-		if w == "none":
+		if w == "none" or bool(CreatorCatalog.data["styles"][look["style"]].get("unarmed", false)):
 			look["weapon"] = ""
 			_play("idle")
 		elif w != "":

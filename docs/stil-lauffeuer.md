@@ -298,6 +298,21 @@ Streifen in `assets/vfx/lauffeuer/` (Frames nebeneinander, Maße und Dauer in
 
 Vorschau mit Bloom: `/mnt/project-files/chibi-legends/lauffeuer/effekte-bloom.gif`.
 
+## Spielbar (2026-11-04)
+
+- Im Creator unter **Kampfstil → Lauffeuer** wählbar; der Stil kämpft waffenlos
+  (Fäuste und Tritte auf J/K, eigenes Moveset `assets/combat/movesets/lauffeuer.json`).
+- Daten: `assets/combat/styles/lauffeuer.json`. Code: `scripts/lauffeuer/`
+  (`FeuerCaster`, `Brandherd`, `FeuerGeschoss`, `FeuerSuper`, `FeuerStrip`, `FeuerIcons`).
+- HUD zeigt die Brandherde (höchstens 3) und „Fäuste brennen!“ nach einem Zug-Treffer
+  (J/K dann 2 s mit Feuer-Element).
+- Kleidung **Feuerwacht-Kluft** (Jacke, Hose, Stiefel) als Creator-Teile, 5 Generierungen,
+  freizuschalten über das Banner. Testen: F9 im Creator schaltet alles frei.
+- Testlauf: `tools/lauffeuer/probe.gd` (Screenshots in `/mnt/project-files/chibi-legends/lauffeuer/spiel/`).
+- Kombis: Wind-Angriffe fachen einen Brandherd an (+50 % Breite); Wasser (bis es eigene
+  Wasser-Angriffe gibt, auch Frost) halbiert die Restdauer, unter 1 s erlischt er, mit Dampf.
+- HUD zeigt für J/K Faust und Tritt statt Schwert (glühend, solange die Fäuste brennen).
+
 ## Bedarf für den Einbau (später, noch nicht freigegeben)
 
 - **Keine Waffe**, also keine Waffen-Generierungen.

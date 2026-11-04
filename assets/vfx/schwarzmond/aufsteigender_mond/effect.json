@@ -1,0 +1,261 @@
+{
+ "frames": [
+  {
+   "filename": "upward-rising-crescent 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 67,
+    "h": 158
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 67,
+    "h": 158
+   },
+   "sourceSize": {
+    "w": 67,
+    "h": 158
+   },
+   "pivot": {
+    "x": 0.5223880597014925,
+    "y": 0.4810126582278481
+   },
+   "duration": 43
+  },
+  {
+   "filename": "upward-rising-crescent 1.png",
+   "frame": {
+    "x": 67,
+    "y": 0,
+    "w": 67,
+    "h": 158
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 67,
+    "h": 158
+   },
+   "sourceSize": {
+    "w": 67,
+    "h": 158
+   },
+   "pivot": {
+    "x": 0.5223880597014925,
+    "y": 0.4810126582278481
+   },
+   "duration": 43
+  },
+  {
+   "filename": "upward-rising-crescent 2.png",
+   "frame": {
+    "x": 134,
+    "y": 0,
+    "w": 67,
+    "h": 158
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 67,
+    "h": 158
+   },
+   "sourceSize": {
+    "w": 67,
+    "h": 158
+   },
+   "pivot": {
+    "x": 0.5223880597014925,
+    "y": 0.4810126582278481
+   },
+   "duration": 43
+  },
+  {
+   "filename": "upward-rising-crescent 3.png",
+   "frame": {
+    "x": 0,
+    "y": 158,
+    "w": 67,
+    "h": 158
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 67,
+    "h": 158
+   },
+   "sourceSize": {
+    "w": 67,
+    "h": 158
+   },
+   "pivot": {
+    "x": 0.5223880597014925,
+    "y": 0.4810126582278481
+   },
+   "duration": 43
+  },
+  {
+   "filename": "upward-rising-crescent 4.png",
+   "frame": {
+    "x": 67,
+    "y": 158,
+    "w": 67,
+    "h": 158
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 67,
+    "h": 158
+   },
+   "sourceSize": {
+    "w": 67,
+    "h": 158
+   },
+   "pivot": {
+    "x": 0.5223880597014925,
+    "y": 0.4810126582278481
+   },
+   "duration": 43
+  },
+  {
+   "filename": "upward-rising-crescent 5.png",
+   "frame": {
+    "x": 134,
+    "y": 158,
+    "w": 67,
+    "h": 158
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 67,
+    "h": 158
+   },
+   "sourceSize": {
+    "w": 67,
+    "h": 158
+   },
+   "pivot": {
+    "x": 0.5223880597014925,
+    "y": 0.4810126582278481
+   },
+   "duration": 43
+  },
+  {
+   "filename": "upward-rising-crescent 6.png",
+   "frame": {
+    "x": 0,
+    "y": 316,
+    "w": 67,
+    "h": 158
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 67,
+    "h": 158
+   },
+   "sourceSize": {
+    "w": 67,
+    "h": 158
+   },
+   "pivot": {
+    "x": 0.5223880597014925,
+    "y": 0.4810126582278481
+   },
+   "duration": 43
+  },
+  {
+   "filename": "upward-rising-crescent 7.png",
+   "frame": {
+    "x": 67,
+    "y": 316,
+    "w": 67,
+    "h": 158
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 67,
+    "h": 158
+   },
+   "sourceSize": {
+    "w": 67,
+    "h": 158
+   },
+   "pivot": {
+    "x": 0.5223880597014925,
+    "y": 0.4810126582278481
+   },
+   "duration": 43
+  },
+  {
+   "filename": "upward-rising-crescent 8.png",
+   "frame": {
+    "x": 134,
+    "y": 316,
+    "w": 67,
+    "h": 158
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 67,
+    "h": 158
+   },
+   "sourceSize": {
+    "w": 67,
+    "h": 158
+   },
+   "pivot": {
+    "x": 0.5223880597014925,
+    "y": 0.4810126582278481
+   },
+   "duration": 43
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "upward-rising-crescent.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 201,
+   "h": 474
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "origin",
+   "x": 35,
+   "y": 76
+  },
+  "frameTags": [
+   {
+    "name": "upward-rising-crescent",
+    "from": 0,
+    "to": 8,
+    "direction": "forward"
+   }
+  ]
+ }
+}

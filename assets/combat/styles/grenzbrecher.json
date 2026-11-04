@@ -4,7 +4,7 @@
 	"name": "Grenzbrecher",
 	"element": "",
 	"subtitle": "Ki im Fluss  ·  Treffer laden Ki, Strahlen verbrauchen es  ·  runter halten = Ki sammeln",
-	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"moveset": "res://assets/combat/movesets/lauffeuer.json",
 	"colors": {"ink": "101626", "sky": "6fd0ff", "blue": "3f8fff", "white": "f4fbff", "gold": "ffd25c", "orange": "ff9a3c", "pale": "cfeaff", "deep": "1d3a7a"},
 	"loadout": {"neutral": "steilpfad_folge", "forward": "kernstrahl", "up": "himmelsauftakt", "down": "meteor_abschluss"},
 	"zuege": {
@@ -12,6 +12,7 @@
 			"name": "Steilpfad-Folge", "dir": "neutral", "sp": 1, "cd": 0.6, "frames": [5, 30, 14],
 			"desc": "Gerade, Haken, Ellbogen und ein Drehtritt. Jeder Treffer lädt Ki.",
 			"pose": {"startup": [1], "active": [3, 1, 3, 4], "recovery": [6]},
+			"creator": {"startup": ["jab_wind"], "active": ["jab_hit", "cross_hit", "hook_hit"], "recovery": ["hook_hit"]},
 			"params": {"hits": 3, "damage": 4.8, "finish": 9.6, "reach": 30, "advance": 0},
 			"enhanced": {"heel": true, "finish_add": 4},
 			"alts": [
@@ -24,6 +25,7 @@
 			"name": "Kernstrahl", "dir": "forward", "sp": 1, "cd": 0.9, "frames": [6, 22, 16], "ki": 20, "ranged": true,
 			"desc": "Faust an der Schulter laden (L halten, bis 0,8 s), dann ein Ki-Strahl aus dem Handballen. Hoch/runter kippt ihn leicht.",
 			"pose": {"startup": [1], "active": [3], "recovery": [6]},
+			"creator": {"startup": ["charge_0"], "active": ["cross_hit"], "recovery": ["cross_hit"]},
 			"params": {"charge": 0.8, "min_dmg": 12, "max_dmg": 24, "length": 320, "width": 16, "pierce": false, "recoil": 0},
 			"enhanced": {"shock": true},
 			"alts": [
@@ -36,6 +38,7 @@
 			"name": "Himmelsauftakt", "dir": "up", "sp": 1, "cd": 0.9, "frames": [5, 10, 22],
 			"desc": "Aufsteigender Schlag hebt den Gegner an. Sprung kurz danach: Lufttritt hinterher.",
 			"pose": {"startup": [1], "active": [4], "recovery": [5]},
+			"creator": {"startup": ["upper_wind"], "active": ["upper_hit"], "recovery": ["upper_hit"]},
 			"params": {"damage": 10.4, "launch": 380, "rise": 260, "w": 34, "kick": 7.2, "kind": "upper"},
 			"enhanced": {"launch_mul": 1.6, "shock": true},
 			"alts": [
@@ -48,6 +51,7 @@
 			"name": "Ruhiger Gegenschlag", "dir": "neutral", "sp": 1, "cd": 1.0, "frames": [3, 15, 18],
 			"desc": "Ruhige Deckung (0,25 s). Wirst du darin getroffen, lenkst du ab und konterst sofort (+15 Ki).",
 			"pose": {"startup": [6], "active": [6], "recovery": [6]},
+			"creator": {"startup": ["charge_0"], "active": ["charge_0"], "recovery": ["cross_hit"]},
 			"params": {"stance": 0.25, "counter_damage": 14.4, "mode": "parry"},
 			"enhanced": {"shock": true, "counter_damage_add": 4},
 			"alts": [
@@ -60,6 +64,7 @@
 			"name": "Fernschritt", "dir": "forward", "sp": 1, "cd": 4.0, "frames": [18, 6, 10], "ki": 20,
 			"desc": "Augen zu, Faust in die Handfläche, dann erscheinst du vor dem erfassten Gegner. Höchstens 2 in 10 s.",
 			"pose": {"startup": [6], "active": [0], "recovery": [1]},
+			"creator": {"startup": ["dash_0"], "active": ["dash_1"], "recovery": ["land_0"]},
 			"params": {"range": 320, "mode": "front"},
 			"enhanced": {"strike": true},
 			"alts": [
@@ -72,6 +77,7 @@
 			"name": "Meteor-Abschluss", "dir": "down", "sp": 1, "cd": 0.9, "frames": [8, 8, 18],
 			"desc": "In der Luft ein beidhändiger Hammerschlag nach unten, der Gegner prallt ab. Am Boden ein tiefer Feger.",
 			"pose": {"startup": [5], "active": [4], "recovery": [3]},
+			"creator": {"startup": ["upper_wind"], "active": ["airpunch_hit"], "recovery": ["stomp_hit"]},
 			"params": {"damage": 13.6, "sweep": 7.2, "slam": 620, "kind": "hammer"},
 			"enhanced": {"shock": true, "wave": true},
 			"alts": [

@@ -20,6 +20,10 @@ func _initialize() -> void:
 	var look := CreatorCatalog.load_look()
 	look["style"] = "spannkraft"
 	look["weapon"] = ""
+	if OS.get_environment("PROBE_OUTFIT") != "":
+		for slot in ["top", "pants", "shoes"]:
+			look[slot] = "deckshand"
+		look["hair"] = "deckshand_muetze"
 	CreatorCatalog.save_look(look)
 	DirAccess.remove_absolute(ProjectSettings.globalize_path("user://style_spannkraft.json"))
 	GameFlow.area = "trainingswald"
@@ -38,11 +42,11 @@ func _initialize() -> void:
 		[t + 480, "loadout:forward:spannzug"], [t + 482, "cast:forward"], [t + 494, "shot:08_spannzug"],
 		[t + 540, "loadout:neutral:schnappfaust"], [t + 541, "loadout:forward:fegebein"],
 		[t + 542, "alt:schnappfaust:prassel"], [t + 544, "cast:neutral"], [t + 560, "shot:09_prasselfaust"],
-		[t + 620, "alt:schnappfaust:"], [t + 622, "cast:neutral"], [t + 634, "swing:up"], [t + 646, "shot:10_rueckschwung"],
+		[t + 620, "alt:schnappfaust:"], [t + 622, "cast:neutral"], [t + 632, "swing:up"], [t + 634, "unswing"], [t + 646, "shot:10_rueckschwung"],
 		[t + 720, "super:dampfhagel"], [t + 770, "shot:11_siedepuls"], [t + 840, "shot:12_dampfhagel"], [t + 880, "shot:13_dampfhagel_ende"],
 		[t + 960, "super:federkanone"], [t + 1060, "shot:14_prallform"], [t + 1094, "shot:15_federkanone"],
 		[t + 1200, "super:grenzenlos"], [t + 1250, "shot:16_grenzenlos"], [t + 1280, "cast:neutral"], [t + 1290, "shot:17_frei_schnapp"],
-		[t + 1300, "shot:18_hud"],
+		[t + 1300, "shot:18_hud"], [t + 1400, "bowl"], [t + 1402, "cast:neutral"], [t + 1418, "shot:20_rumms"], [t + 1430, "release"],
 		[t + 1760, "shot:19_finale"],
 		[t + 1800, "quit"],
 	]
@@ -50,6 +54,8 @@ func _initialize() -> void:
 
 func _process(_delta: float) -> bool:
 	f += 1
+	if OS.get_environment("PROBE_DEBUG") != "" and f >= 672 and f <= 690 and g != null:
+		print(f, " ", g.zug_id, " ", g.phase, " t=", snappedf(g.t, 0.01), " snap=", snappedf(g._snap_t, 0.01), " chain=", g.chain_left, " just=", Input.is_action_just_pressed("special"), " pressed=", Input.is_action_pressed("special"))
 	for s in steps:
 		if s[0] == f:
 			_do(s[1])
@@ -82,11 +88,15 @@ func _do(cmd: String) -> void:
 			Input.action_release("special")
 		"swing":
 			Input.action_press("move_up")
-			Input.action_press("special")
-			g.tick(0.0)
-			Input.action_release("special")
+			_send("special", true)
+		"unswing":
+			_send("special", false)
 			Input.action_release("move_up")
-			print("swing -> ", g.zug_id, " chain ", g.chain_left)
+			print("swing -> ", g.zug_id, " chain ", g.chain_left, " transfer ", g._transfer)
+		"bowl":
+			# two dummies close together: a strong hit throws one into the other
+			p.global_position.x = 420
+			Input.action_press("special")
 		"loadout":
 			p.style.loadout[parts[1]] = parts[2]
 		"alt":
@@ -99,6 +109,14 @@ func _do(cmd: String) -> void:
 			root.get_texture().get_image().save_png(out.path_join(parts[1] + ".png"))
 		"quit":
 			quit()
+
+
+## A real input event (sets "just pressed" for the physics frame, unlike action_press).
+func _send(action: String, pressed: bool) -> void:
+	var ev := InputEventAction.new()
+	ev.action = action
+	ev.pressed = pressed
+	Input.parse_input_event(ev)
 
 
 func _hide_select(n: Node) -> void:

@@ -107,6 +107,30 @@ func move_speed() -> float:
 	return 1.0
 
 
+## Unarmed creator pose for the current Zug (lists from the style json).
+func creator_pose() -> String:
+	if not busy():
+		return ""
+	if zug_id == "sammeln":
+		return "charge_0"
+	if phase == "counter" or phase == "kick":
+		return "cross_hit"
+	if phase == "fall":
+		return "stomp_hit"
+	if phase == "charge" or phase == "volley":
+		return "charge_0" if phase == "charge" else "airpunch_hit"
+	var lists: Dictionary = style.zug(zug_id).get("creator", {})
+	var ph := phase if phase in ["startup", "active", "recovery"] else "active"
+	var list: Array = lists.get(ph, [])
+	if list.is_empty():
+		return ""
+	if zug_id == "steilpfad_folge" and ph == "active":
+		return str(list[_step % list.size()])
+	var dur := _f(["startup", "active", "recovery"].find(ph))
+	var k := clampf(t / maxf(0.001, dur), 0.0, 0.999)
+	return str(list[int(k * list.size())])
+
+
 func gathering() -> bool:
 	return zug_id == "sammeln"
 

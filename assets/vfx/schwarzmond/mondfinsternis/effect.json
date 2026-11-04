@@ -1,0 +1,365 @@
+{
+ "frames": [
+  {
+   "filename": "total-eclipse-cut 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 240,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 240,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 240,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 83
+  },
+  {
+   "filename": "total-eclipse-cut 1.png",
+   "frame": {
+    "x": 240,
+    "y": 0,
+    "w": 240,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 240,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 240,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 83
+  },
+  {
+   "filename": "total-eclipse-cut 2.png",
+   "frame": {
+    "x": 480,
+    "y": 0,
+    "w": 240,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 240,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 240,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 83
+  },
+  {
+   "filename": "total-eclipse-cut 3.png",
+   "frame": {
+    "x": 720,
+    "y": 0,
+    "w": 240,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 240,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 240,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 83
+  },
+  {
+   "filename": "total-eclipse-cut 4.png",
+   "frame": {
+    "x": 0,
+    "y": 160,
+    "w": 240,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 240,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 240,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 83
+  },
+  {
+   "filename": "total-eclipse-cut 5.png",
+   "frame": {
+    "x": 240,
+    "y": 160,
+    "w": 240,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 240,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 240,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 83
+  },
+  {
+   "filename": "total-eclipse-cut 6.png",
+   "frame": {
+    "x": 480,
+    "y": 160,
+    "w": 240,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 240,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 240,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 83
+  },
+  {
+   "filename": "total-eclipse-cut 7.png",
+   "frame": {
+    "x": 720,
+    "y": 160,
+    "w": 240,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 240,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 240,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 83
+  },
+  {
+   "filename": "total-eclipse-cut 8.png",
+   "frame": {
+    "x": 0,
+    "y": 320,
+    "w": 240,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 240,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 240,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 83
+  },
+  {
+   "filename": "total-eclipse-cut 9.png",
+   "frame": {
+    "x": 240,
+    "y": 320,
+    "w": 240,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 240,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 240,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 83
+  },
+  {
+   "filename": "total-eclipse-cut 10.png",
+   "frame": {
+    "x": 480,
+    "y": 320,
+    "w": 240,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 240,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 240,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 83
+  },
+  {
+   "filename": "total-eclipse-cut 11.png",
+   "frame": {
+    "x": 720,
+    "y": 320,
+    "w": 240,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 240,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 240,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 83
+  },
+  {
+   "filename": "total-eclipse-cut 12.png",
+   "frame": {
+    "x": 0,
+    "y": 480,
+    "w": 240,
+    "h": 160
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 240,
+    "h": 160
+   },
+   "sourceSize": {
+    "w": 240,
+    "h": 160
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "duration": 83
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "total-eclipse-cut.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 960,
+   "h": 640
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "origin",
+   "x": 120,
+   "y": 80
+  },
+  "frameTags": [
+   {
+    "name": "total-eclipse-cut",
+    "from": 0,
+    "to": 12,
+    "direction": "forward"
+   }
+  ]
+ }
+}
