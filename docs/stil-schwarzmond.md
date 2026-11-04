@@ -228,6 +228,27 @@ Mondfinsternis aktiv.
 6 Züge à 1 SP + 18 Alternativen à 2 SP + Meisterzug 4 SP + 2 Varianten à 2 SP
 = 6 + 36 + 8 = **50 SP**.
 
+## Im Spiel (eingebaut 2026-11-04)
+
+![Schwarzmond im Trainingswald](screenshots/schwarzmond-uebersicht.png)
+
+- **Auswählen:** Character Creator (O), Zeile „Kampfstil“ auf Schwarzmond stellen.
+  Danach im Trainingswald: L + Richtung = Zug, L halten = verstärkt, P = Meisterzug,
+  Tab = Stil-Menü (Alternativen, Slots, Meisterzug-Variante). R setzt Abklingzeiten
+  und die Mondfinsternis zurück.
+- **Start-Slots:** neutral Mondschnitt, vor Mondsichel, oben Aufsteigender Mond,
+  unten Fallender Mond. Entschlossene Abwehr und Schwarze Spur legt man im Stil-Menü
+  auf einen Slot.
+- **Code:** `assets/combat/styles/schwarzmond.json` (Werte), `assets/combat/movesets/schwarzmond.json`
+  (J/K), `scripts/schwarzmond/` (MondCaster = Züge und Regeln, MondWave = Mondsichel,
+  MondSuper = Meisterzüge, MondFx = Effekte, MondIcons = Icons). Haltung der Gegner in
+  `scripts/enemies/enemy.gd` (`posture_hit`).
+- **Abweichungen zum Konzept:** Bei Ladezügen (Verdichteter Hieb, Gehaltene Sichel)
+  lädt L halten den Zug, statt die Legendenleiste zu verbrauchen. Waffe, Larve und
+  Neumond-Klinge sind vorerst im Code gezeichnet (eigene Waffe noch nicht generiert).
+- **Testlauf:** `tools/schwarzmond/probe.gd` spielt alle Züge und Meisterzüge durch und
+  speichert Bilder (`xvfb-run godot --path . --fixed-fps 60 -s res://tools/schwarzmond/probe.gd -- <ordner>`).
+
 ## Bedarf für den Einbau (später, noch nicht freigegeben)
 
 - PixelLab: Mondbrecher und Neumond-Klinge, je 8 Winkel = 16 Generierungen

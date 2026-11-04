@@ -381,6 +381,11 @@
    "name": "Glutatem",
    "text": "Feuer-Atemtechnik aus der Glutschmiede",
    "unlock": ""
+  },
+  "schwarzmond": {
+   "name": "Schwarzmond",
+   "text": "Riesige schwarze Klinge, Mondsicheln (Legendär)",
+   "unlock": ""
   }
  },
  "start_items_note": "Teile ohne unlock-Eintrag sind von Anfang an frei. CreatorUnlocks.unlock(slot, id) schaltet frei."

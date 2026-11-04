@@ -35,7 +35,14 @@ static func texture(id: String) -> Texture2D:
 	return _tex[id]
 
 
+## Set by the player's caster: the generic "meisterzug" icon follows the style.
+static var mond_mode := false
+
+
 static func draw(ci: CanvasItem, r: Rect2, id: String, t := 0.0) -> void:
+	if MondIcons.has(id) and (id != "meisterzug" or mond_mode):
+		MondIcons.draw(ci, r, id, t)
+		return
 	var tex := texture(id)
 	if tex != null:
 		_draw_texture(ci, r, tex, id, t)
