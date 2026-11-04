@@ -691,7 +691,7 @@ func _draw_right_column(W: float) -> void:
 func _draw_training() -> void:
 	var x := 16.0
 	var w := 360.0
-	var s := Rect2(x, 146, w, 132)
+	var s := Rect2(x, 146, w, 152)
 	_panel(s, PANEL, 10)
 	_text(Vector2(x + 16, 170), "Training", 17, TRIM)
 	_text(Vector2(x + 16, 196), "Schaden pro Sek.", 16, MUTED)
@@ -706,6 +706,7 @@ func _draw_training() -> void:
 		lc = GameData.REACTIONS[room.last_reaction].color
 	_text(Vector2(x + 190, 240), lr, 17, lc)
 	_text(Vector2(x + 16, 266), "[U] Unendlich Leiste   [R] Abklingzeiten" if room.player.glut != null else "[U] Unendlich Aura   [R] Abklingzeiten", 15, MUTED)
+	_text(Vector2(x + 16, 286), "[0] Kampf-Debug   [9] Zeitlupe", 15, MUTED)
 
 
 func _draw_skill_bar(W: float, H: float) -> void:

@@ -28,6 +28,24 @@ Reihenfolge wie in Platform-Fightern: Normal -> Spezial (Zug) -> Meisterzug.
 - Trefferstarre: so lang wie der Rest des Angriffs plus 16 Bilder, damit jede erlaubte Folge verbindet; ab dem 9. Kombotreffer wird sie kürzer (höchstens -45 %), Kombos enden also von selbst.
 - Eingaben werden 0,15 s gepuffert; ein Druck während eines Angriffs wartet, bis die Regeln ihn erlauben (kein Eingabeverlust).
 
+## Treffergefühl (HitFeel)
+
+Regeln in `scripts/combat/hit_feel.gd`, eigene Zahlen, Prinzipien aus Platform-Fightern (Trefferstarre aus der Wucht wie in Rivals of Aether/Melee, Schwerkraft-Abbau beim Jonglieren wie in Guilty Gear Strive und Them's Fightin' Herds).
+
+- Trefferstarre = die längere von Verbindungszeit (Rest des Angriffs + 16 Bilder) und Wucht-Starre: 12 Bilder + Rückstoß x 0,07 + Wurf x 0,04, geteilt durch Wurzel aus Gewicht. Starke Treffer geben immer Zeit für eine Folge.
+- Gewicht: Moosling 0,8, normal 1,0, Rindenwicht 1,3, Elite 2,5.
+- Bodenkombos werden ab dem 9. Treffer kürzer (höchstens -45 %).
+- Luftkombos enden über die Schwerkraft: jeder Lufttreffer macht den Gegner 7 % schwerer (höchstens 1,6-fach), bis er landet. Am höchsten Punkt schwebt er kurz (0,6-fache Schwerkraft), damit Lufttreffer gut zu lesen sind.
+- Ein Lufttreffer hebt den Gegner: 110 + Rückstoß x 0,2 (höchstens 190), mit jedem Jongliertreffer 12 % weniger.
+
+## Kampf-Debug (Taste 0) und Zeitlupe (Taste 9)
+
+- Kästen: rot eigene Hitboxen, orange Gegnerangriffe, grün Körper, blau die eigene Figur (weiß = unverwundbar).
+- Über der Figur: Angriff, Phase, Bild x/y und Bilderleiste (gelb Anlauf, rot aktiv, blau Erholung) mit Zeiger; TREFFER, CANCEL (Folge jetzt erlaubt) und gepufferte Taste.
+- Letzter Treffer: Trefferstarre in Bildern, Vorteil (+ = du bist zuerst wieder frei) und ob er eine echte Kombo war (Gegner noch in Starre) oder eine Lücke hatte.
+- Unter Gegnern: Zustand, Rest-Starre als Leiste, Jongliertreffer (J) und Schwerkraft-Faktor (G).
+- Zeitlupe 100 / 50 / 25 / 10 %. Beide Einstellungen bleiben beim Neuladen der Szene erhalten.
+
 ## Datenformat
 
 Jeder Charakter hat eine Datei `assets/combat/movesets/<id>.json`. Pro Angriff:

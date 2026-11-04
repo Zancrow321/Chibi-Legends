@@ -26,6 +26,8 @@ const KEYS := {
 	"interact": [KEY_E, KEY_ENTER],
 	"block": [KEY_Q],
 	"game_menu": [KEY_ESCAPE],
+	"debug_view": [KEY_0],
+	"debug_slow": [KEY_9],
 }
 
 const PAD_BUTTONS := {

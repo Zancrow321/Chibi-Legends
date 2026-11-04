@@ -92,10 +92,14 @@ var _t := 0.0
 var _anim := ""
 var _anim_t := 0.0
 ## Hitstun of the current stagger (set by the hit) and juggle hits since the
-## last landing: airborne hits keep the enemy up, less with every hit.
-const JUGGLE_FLOAT := 140.0
+## last landing: airborne hits keep the enemy up (stronger hits lift more),
+## less with every hit, and each one makes it fall a bit faster (HitFeel).
 var _stun := 0.28
 var _juggle := 0
+
+## Last attack box of this enemy, kept a moment for the debug view.
+var debug_rect := Rect2()
+var debug_rect_t := 0.0
 
 var sprite: Sprite2D
 var _textures: Dictionary = {}
@@ -141,6 +145,13 @@ func _ready() -> void:
 		world.stage.light_figure(self, Rect2(r.position - global_position, r.size))
 
 
+## Weight for hitstun: heavy enemies shrug a little of it off.
+func weight() -> float:
+	if is_elite():
+		return 2.5
+	return {"slime": 0.8, "brute": 1.3}.get(data.kind, 1.0)
+
+
 func is_elite() -> bool:
 	return data.get("elite", false)
 
@@ -175,7 +186,7 @@ func take_hit(knockback: float, from_x: float) -> void:
 	_squash = Vector2(0.8, 1.2)
 	if not on_ground:
 		_juggle += 1
-		var lift := JUGGLE_FLOAT * maxf(0.15, 1.0 - 0.12 * float(_juggle - 1)) * (0.4 if is_elite() else 1.0)
+		var lift := HitFeel.air_lift(knockback, _juggle) * (0.4 if is_elite() else 1.0)
 		vel.y = minf(vel.y, -lift)
 		if knockback < 120.0:
 			vel.x *= 0.5  # light air hits do not carry it away
@@ -287,6 +298,7 @@ func _play(anim: String, restart := false) -> void:
 
 func _physics_process(delta: float) -> void:
 	_t += delta
+	debug_rect_t = maxf(0.0, debug_rect_t - delta)
 	_st += delta
 	_anim_t += delta
 	flash = maxf(0.0, flash - delta)
@@ -428,6 +440,8 @@ func _strike_start() -> void:
 
 
 func _body_hit(r: Rect2) -> void:
+	debug_rect = r
+	debug_rect_t = 0.12
 	_hit_decoys(r)
 	var p := world.player
 	if not _struck and r.intersects(p.get_hurt_rect()):
@@ -471,6 +485,8 @@ func _strike(delta: float) -> void:
 			if _tick <= 0.0:
 				_tick = 0.2
 				var r := Rect2(mouth.x + (0.0 if facing > 0 else -data.range), mouth.y - 16.0, data.range, 32.0)
+				debug_rect = r
+				debug_rect_t = 0.2
 				_hit_decoys(r)
 				if r.intersects(p.get_hurt_rect()):
 					p.receive_hit(data.damage, global_position.x, self)
@@ -482,7 +498,10 @@ func _strike(delta: float) -> void:
 
 func _move(delta: float) -> void:
 	if not on_ground or vel.y < 0.0:
-		vel.y += GRAVITY * delta
+		var g := GRAVITY
+		if state == "hurt" and not on_ground:
+			g *= HitFeel.juggle_gravity(_juggle, vel.y)
+		vel.y += g * delta
 	var nx := clampf(global_position.x + vel.x * delta, 20.0, TrainingRoom.WIDTH - 20.0)
 	var ny := global_position.y + vel.y * delta
 	var gy := GlutHazard.ground_y(nx, global_position.y)
