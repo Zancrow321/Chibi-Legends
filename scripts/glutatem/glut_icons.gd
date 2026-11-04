@@ -23,7 +23,41 @@ static func _anvil(ci: CanvasItem, c: Vector2, s: float) -> void:
 	ci.draw_rect(Rect2(c + Vector2(-11, -4) * s, Vector2(20, 1.5) * s), IRON_L)
 
 
+const ICON_DIR := "res://assets/combat/icons/glutatem/%s.png"
+static var _tex: Dictionary = {}
+
+
+## PixelLab icon for a Zug or Meisterzug (assets/combat/icons/glutatem), or null.
+static func texture(id: String) -> Texture2D:
+	if not _tex.has(id):
+		var path := ICON_DIR % id
+		_tex[id] = load(path) if ResourceLoader.exists(path) else null
+	return _tex[id]
+
+
 static func draw(ci: CanvasItem, r: Rect2, id: String, t := 0.0) -> void:
+	var tex := texture(id)
+	if tex != null:
+		_draw_texture(ci, r, tex, id, t)
+		return
+	_draw_code(ci, r, id, t)
+
+
+## Painted icon: framed, with a soft breathing ember glow over it.
+static func _draw_texture(ci: CanvasItem, r: Rect2, tex: Texture2D, id: String, t: float) -> void:
+	_bg(ci, r.grow(1), DARK)
+	ci.draw_texture_rect(tex, r, false)
+	var pulse := 0.5 + 0.5 * sin(t * (3.0 if id == "meisterzug" else 2.0) + r.position.x * 0.05)
+	ci.draw_texture_rect(tex, r, false, Color(1.0, 0.6, 0.3, 0.12 + 0.12 * pulse))
+	var sb := StyleBoxFlat.new()
+	sb.draw_center = false
+	sb.set_corner_radius_all(6)
+	sb.set_border_width_all(2)
+	sb.border_color = Color(GlutFx.heat(0.55 + 0.35 * pulse), 0.85)
+	ci.draw_style_box(sb, r.grow(1))
+
+
+static func _draw_code(ci: CanvasItem, r: Rect2, id: String, t := 0.0) -> void:
 	var c := r.get_center()
 	var s := r.size.x / 50.0
 	match id:

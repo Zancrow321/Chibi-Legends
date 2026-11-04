@@ -584,11 +584,18 @@ func _draw_bottom_left(H: float) -> void:
 	_text(Vector2(230, H - 43), "0  Splitter", 16, TEXT)
 	# EXP bar
 	_panel(Rect2(0, H - 22, size.x, 22), Color(0.05, 0.04, 0.1, 0.95), 0)
-	_text(Vector2(10, H - 5), "EXP 0,00 %", 15, TRIM, HORIZONTAL_ALIGNMENT_LEFT, -1, 0)
+	# EXP from defeated enemies (training forest), one bar = EXP_PER_LEVEL
+	var xp: float = room.exp_points if room != null else 0.0
+	var frac := fmod(xp, TrainingRoom.EXP_PER_LEVEL) / TrainingRoom.EXP_PER_LEVEL
+	_text(Vector2(10, H - 5), "EXP %.2f %%" % (frac * 100.0), 15, TRIM, HORIZONTAL_ALIGNMENT_LEFT, -1, 0)
 	var x := 110.0
 	var seg := (size.x - x - 10) / 10.0
 	for i in 10:
 		draw_rect(Rect2(x + i * seg + 1, H - 16, seg - 3, 10), Color(1, 1, 1, 0.12))
+		var fill := clampf(frac * 10.0 - i, 0.0, 1.0)
+		if fill > 0.0:
+			draw_rect(Rect2(x + i * seg + 1, H - 16, (seg - 3) * fill, 10), Color("7fd8ff"))
+			draw_rect(Rect2(x + i * seg + 1, H - 16, (seg - 3) * fill, 2), Color("d8f6ff"))
 
 
 func _draw_help() -> void:
