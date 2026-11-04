@@ -14,7 +14,7 @@ var strips := {
 	"slash": {"tex": preload("res://assets/characters/jus_test/testfigur2_slash.png"), "frames": 7, "fps": 12.0},
 }
 
-var state := "idle"  # idle, run, jump, fall, dash, attack, cast
+var state := "idle"  # idle, run, jump, fall, dash, attack, cast, hurt
 var anim_time := 0.0
 ## While attacking: which frame of the sword strip to show (set by the owner).
 var attack_frame := 0
@@ -30,6 +30,11 @@ func _init() -> void:
 	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_child(_sprite)
 	_show("idle", 0)
+
+
+## Material for the body sprite (the dusk look lights it with rounded normals).
+func set_body_material(m: Material) -> void:
+	_sprite.material = m
 
 
 func set_state(new_state: String) -> void:
@@ -76,7 +81,16 @@ func _process(delta: float) -> void:
 			_show("slash", attack_frame)
 		"cast":
 			_show("slash", 5 if anim_time < 0.12 else 6)
+		"hurt":
+			# no hurt drawing yet: guard pose thrown back
+			_show("slash", 6)
+			rot = -0.28 + minf(anim_time * 0.8, 0.2)
+			off.x = -3.0
+			sc = Vector2(0.94, 1.04)
 	_sprite.position = off
 	_sprite.rotation = rot
 	_sprite.scale = sc
-	_sprite.modulate = Color(1, 1, 1).lerp(Color(4, 4, 4), clampf(flash * 10.0, 0.0, 1.0))
+	var base := Color(1, 1, 1)
+	if state == "hurt":
+		base = Color(1.6, 0.75, 0.7) if fmod(anim_time, 0.1) < 0.05 else Color(1, 1, 1)
+	_sprite.modulate = base.lerp(Color(4, 4, 4), clampf(flash * 10.0, 0.0, 1.0))
