@@ -1,0 +1,235 @@
+{
+ "frames": [
+  {
+   "filename": "ground-impact-a 0.png",
+   "frame": {
+    "x": 0,
+    "y": 0,
+    "w": 224,
+    "h": 194
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 224,
+    "h": 194
+   },
+   "sourceSize": {
+    "w": 224,
+    "h": 194
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.28865979381443296
+   },
+   "duration": 71
+  },
+  {
+   "filename": "ground-impact-a 1.png",
+   "frame": {
+    "x": 224,
+    "y": 0,
+    "w": 224,
+    "h": 194
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 224,
+    "h": 194
+   },
+   "sourceSize": {
+    "w": 224,
+    "h": 194
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.28865979381443296
+   },
+   "duration": 71
+  },
+  {
+   "filename": "ground-impact-a 2.png",
+   "frame": {
+    "x": 448,
+    "y": 0,
+    "w": 224,
+    "h": 194
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 224,
+    "h": 194
+   },
+   "sourceSize": {
+    "w": 224,
+    "h": 194
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.28865979381443296
+   },
+   "duration": 71
+  },
+  {
+   "filename": "ground-impact-a 3.png",
+   "frame": {
+    "x": 0,
+    "y": 194,
+    "w": 224,
+    "h": 194
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 224,
+    "h": 194
+   },
+   "sourceSize": {
+    "w": 224,
+    "h": 194
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.28865979381443296
+   },
+   "duration": 71
+  },
+  {
+   "filename": "ground-impact-a 4.png",
+   "frame": {
+    "x": 224,
+    "y": 194,
+    "w": 224,
+    "h": 194
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 224,
+    "h": 194
+   },
+   "sourceSize": {
+    "w": 224,
+    "h": 194
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.28865979381443296
+   },
+   "duration": 71
+  },
+  {
+   "filename": "ground-impact-a 5.png",
+   "frame": {
+    "x": 448,
+    "y": 194,
+    "w": 224,
+    "h": 194
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 224,
+    "h": 194
+   },
+   "sourceSize": {
+    "w": 224,
+    "h": 194
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.28865979381443296
+   },
+   "duration": 71
+  },
+  {
+   "filename": "ground-impact-a 6.png",
+   "frame": {
+    "x": 0,
+    "y": 388,
+    "w": 224,
+    "h": 194
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 224,
+    "h": 194
+   },
+   "sourceSize": {
+    "w": 224,
+    "h": 194
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.28865979381443296
+   },
+   "duration": 71
+  },
+  {
+   "filename": "ground-impact-a 7.png",
+   "frame": {
+    "x": 224,
+    "y": 388,
+    "w": 224,
+    "h": 194
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 224,
+    "h": 194
+   },
+   "sourceSize": {
+    "w": 224,
+    "h": 194
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.28865979381443296
+   },
+   "duration": 71
+  }
+ ],
+ "meta": {
+  "app": "PixelLab VFX Creator",
+  "image": "ground-impact-a.png",
+  "format": "RGBA8888",
+  "size": {
+   "w": 672,
+   "h": 582
+  },
+  "scale": "1",
+  "anchor": {
+   "kind": "origin",
+   "x": 112,
+   "y": 56
+  },
+  "frameTags": [
+   {
+    "name": "ground-impact-a",
+    "from": 0,
+    "to": 7,
+    "direction": "forward"
+   }
+  ]
+ }
+}

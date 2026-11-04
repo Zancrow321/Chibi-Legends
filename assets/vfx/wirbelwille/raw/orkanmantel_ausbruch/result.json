@@ -1,0 +1,39 @@
+{
+ "fps": 15,
+ "kind": "new",
+ "loop": false,
+ "name": "Storm cloak",
+ "files": {
+  "storm-cloak.gif": "https://api.pixellab.ai/mcp/pixel-tools/8b6a0a5e-a22e-4853-a4a8-8a5c6d9c276b/storm-cloak.gif",
+  "storm-cloak.png": "https://api.pixellab.ai/mcp/pixel-tools/8b6a0a5e-a22e-4853-a4a8-8a5c6d9c276b/storm-cloak.png",
+  "storm-cloak.json": "https://api.pixellab.ai/mcp/pixel-tools/8b6a0a5e-a22e-4853-a4a8-8a5c6d9c276b/storm-cloak.json",
+  "storm-cloak-game.zip": "https://api.pixellab.ai/mcp/pixel-tools/8b6a0a5e-a22e-4853-a4a8-8a5c6d9c276b/storm-cloak-game.zip"
+ },
+ "parts": [],
+ "anchor": {
+  "x": 100,
+  "y": 88,
+  "kind": "origin"
+ },
+ "artist": "lite",
+ "canvas": {
+  "h": 191,
+  "w": 191
+ },
+ "frames": 13,
+ "message": "A storm cloak blast: a white flash at the centre, a grey-turquoise shockwave ring and streams bursting outward, with gold lightning bolts snapping out and crackling as they go, about 0.8 seconds, transparent background. Try the Lightning and Stream sliders in the page controls to adjust the bolts and streams; the streams are still fairly thin compared with the bolts, so ask if you want them chunkier.",
+ "edit_url": "https://pixellab.ai/create-vfx?effect=77170770-5789-4563-b057-5641aba52986",
+ "effect_id": "77170770-5789-4563-b057-5641aba52986",
+ "gif_exact": true,
+ "result_id": "8b6a0a5e-a22e-4853-a4a8-8a5c6d9c276b",
+ "billing_usage": {
+  "usd": 0.0,
+  "type": "generations",
+  "generations": 1.0
+ },
+ "generation_id": "8fa78fe3-b324-458f-be1c-0d1c9a864cb1",
+ "billing_charged": true,
+ "generation_mode": "vfx",
+ "pixel_tools_image": true,
+ "quoted_generations": 1
+}

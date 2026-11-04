@@ -1,0 +1,34 @@
+{
+ "fps": 20,
+ "kind": "new",
+ "loop": false,
+ "name": "Gust streaks",
+ "files": {
+  "gust-streaks.gif": "https://api.pixellab.ai/mcp/pixel-tools/144d60fa-0353-44af-929d-90714bb464c8/gust-streaks.gif",
+  "gust-streaks.png": "https://api.pixellab.ai/mcp/pixel-tools/144d60fa-0353-44af-929d-90714bb464c8/gust-streaks.png",
+  "gust-streaks.json": "https://api.pixellab.ai/mcp/pixel-tools/144d60fa-0353-44af-929d-90714bb464c8/gust-streaks.json",
+  "gust-streaks-game.zip": "https://api.pixellab.ai/mcp/pixel-tools/144d60fa-0353-44af-929d-90714bb464c8/gust-streaks-game.zip"
+ },
+ "parts": [],
+ "anchor": {
+  "x": 325,
+  "y": 69,
+  "kind": "origin"
+ },
+ "artist": "lite",
+ "canvas": {
+  "h": 122,
+  "w": 340
+ },
+ "frames": 9,
+ "message": "A 0.4-second gust: four thick, tapered white-and-pale-blue streaks with glowing white cores sweep in from the left, curve over and under each other, and rush right until they fade out at the far edge. The streaks enter from the left edge on purpose, so the gust reads as coming in from off-screen. The first frame shows the streaks just starting to appear. Try the Thickness and Spread sliders if you want them bolder or wider.",
+ "edit_url": "https://pixellab.ai/create-vfx?effect=ca8cde6b-fc5a-4ba6-ab59-808da53bfc06",
+ "effect_id": "ca8cde6b-fc5a-4ba6-ab59-808da53bfc06",
+ "gif_exact": true,
+ "result_id": "144d60fa-0353-44af-929d-90714bb464c8",
+ "generation_id": "e6da5723-ea8f-4fd8-9b67-3c9af55af656",
+ "billing_charged": true,
+ "generation_mode": "vfx",
+ "pixel_tools_image": true,
+ "quoted_generations": 1
+}
