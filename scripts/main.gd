@@ -109,7 +109,8 @@ func _add_creator() -> bool:
 	var creator_layer := CanvasLayer.new()
 	creator_layer.layer = 21
 	var creator := CreatorScreen.new()
-	creator.finished.connect(room.player.sprite.set_look)  # the fighter wears the new look at once
+	# every figure (fighter in the dungeon, walker in the courtyard) wears the new look at once
+	creator.finished.connect(func(look): get_tree().call_group("fighter_sprite", "set_look", look))
 	creator_layer.add_child(creator)
 	add_child(creator_layer)
 	if not FileAccess.file_exists(CreatorCatalog.SAVE):

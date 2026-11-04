@@ -84,6 +84,7 @@ func _init() -> void:
 
 
 func _ready() -> void:
+	add_to_group("fighter_sprite")
 	set_look(CreatorCatalog.load_look())
 
 
