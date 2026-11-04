@@ -47,6 +47,9 @@ func _physics_process(delta: float) -> void:
 
 func _collect() -> void:
 	var col := Loot.color(item)
+	SeasonPass.track("loot")
+	if int(item.get("rarity", 0)) >= 2:
+		SeasonPass.track("loot_epic")
 	if Profile.add_item(item):
 		world.toast("%s: %s" % [Loot.rarity_info(item).name, item.name])
 		if world.glut_fx != null and int(item.rarity) >= 1:

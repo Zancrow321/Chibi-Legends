@@ -157,6 +157,10 @@ func _update_focus() -> void:
 
 
 func _use(s: OverworldSpot) -> void:
+	if s.id == "questbrett":
+		Sfx.play("ui_confirm")
+		get_tree().call_group("season_pass", "open", 0)
+		return
 	if s.id == "sternschrein":
 		Sfx.play("ui_confirm")
 		get_tree().call_group("gacha", "open")
@@ -172,6 +176,18 @@ func _use(s: OverworldSpot) -> void:
 		_:
 			Sfx.play("ui_click")
 			hud.open_dialog(s.display_name, s.lines, s.accent, s.sprite.texture if s.sprite != null and s.kind == OverworldSpot.Kind.NPC else null)
+			_gift(s.id)
+
+
+## First talk with Kiyo / Hino: their outfit ("Bei ... (Akademie-Hof)" in the catalog).
+func _gift(npc: String) -> void:
+	var gifts := {"hueterin": ["ronin", "Ronin-Kleidung"], "schmiedin": ["schmied", "Schmiede-Kleidung"]}
+	if not gifts.has(npc) or CreatorUnlocks.is_unlocked("top", gifts[npc][0]):
+		return
+	for slot in ["top", "pants", "shoes"]:
+		CreatorUnlocks.unlock(slot, gifts[npc][0])
+	hud.toast("Geschenk: %s, im Creator (O) wählbar" % gifts[npc][1])
+	Sfx.play("rare_drop", -4.0)
 
 
 # --- building ---------------------------------------------------------------------
@@ -275,11 +291,12 @@ func _build_spots() -> void:
 	_spot(OverworldSpot.Kind.SIGN, "wohnheim", "Wohnheim", 76.0, [
 		"Dein Zimmer im Wohnheim. Hier ziehst du dich um: Taste O öffnet den Character Creator für Frisur, Kleidung und Waffe.",
 	], "", 24.0, -100.0)
-	_spot(OverworldSpot.Kind.SIGN, "questbrett", "Questbrett", 250.0, [
+	var board := _spot(OverworldSpot.Kind.SIGN, "questbrett", "Questbrett", 250.0, [
 		"AUSHANG: Erste Lektion. Löse im Trainingswald alle vier Element-Reaktionen aus.",
 		"AUSHANG: Freiwillige für den Sparringspfahl gesucht. Achtung, er schlägt zurück und wirft mit Holzscheiten.",
 		"AUSHANG: Die Glutschmiede bleibt versiegelt, bis ein Schüler Glutatem beherrscht.",
 	], "", 26.0, -76.0)
+	board.verb = "Herausforderungen"
 	_npc("rektorin", "Rektorin Yuzuki", 590.0, "npc_rektorin", Color("4d65b4"), [
 		"Willkommen im Akademie-Hof. Hier ist es ruhig: kein Kampf, nur Wege, Freunde und Tore.",
 		"Hinter den Toren auf der rechten Seite liegen die Kampfareale. Das Waldtor führt in den Trainingswald.",
