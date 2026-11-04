@@ -216,6 +216,7 @@ func receive_hit(damage: float, from_x: float, source: Node = null) -> bool:
 			return false
 		_block_hit(damage, dir)
 		return true
+	damage *= 1.0 - minf(Loot.DEF_CAP, Profile.bonus("def"))
 	hp = maxf(0.0, hp - damage)
 	hitstun = 0.32
 	hurt_invuln = 0.7
