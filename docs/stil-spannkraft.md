@@ -265,8 +265,10 @@ Korallenrot), alle Effekte bekommen dicke, schwarze Umrisslinien.
 - Kein Waffen-Sprite nötig. Die Dehnung entsteht im Code: Arm/Bein als
   gestrecktes Segment zwischen Schulter-/Hüft-Anker und Faust-/Fuß-Sprite
   (Line2D oder gestrecktes Sprite mit 9-Slice), Faust und Fuß aus dem Creator-Körper.
-- PixelLab (optional): Faust- und Fußendstücke in 8 Winkeln (8–12 Generierungen),
-  Prallbauch- und Prallform-Pose (2–4). Wird vor dem Start mit Anzahl angefragt.
+- **Erledigt (2026-11-04):** 12 Effekt-Sprites mit PixelLab, 14 Generierungen,
+  in `assets/combat/vfx/spannkraft/` (Liste dort im README).
+- PixelLab (optional, später): Faust- und Fußendstücke in 8 Winkeln (8–12
+  Generierungen), Prallbauch- und Prallform-Pose (2–4). Wird vorher angefragt.
 - Code: Spannungs-Stufen beim Halten, Rückschwung-Fenster und 3 Federringe,
   Trefferarten stumpf/scharf/Energie an allen Angriffen (für Prallbauch),
   Greifpunkte im Level, Gefahrenflächen-Auslöser bei Rückstoß.
