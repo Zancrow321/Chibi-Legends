@@ -43,6 +43,9 @@ static func draw(ci: CanvasItem, r: Rect2, id: String, t := 0.0) -> void:
 	if style_id == "gleichklang":
 		KlangIcons.draw(ci, r, id, t)
 		return
+	if style_id == "lauffeuer":
+		FeuerIcons.draw(ci, r, id, t)
+		return
 	var tex := texture(id)
 	if tex != null:
 		_draw_texture(ci, r, tex, id, t)

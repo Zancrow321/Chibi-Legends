@@ -140,7 +140,13 @@ func _ready() -> void:
 func init_style() -> void:
 	if style == null or style.zuege.is_empty():
 		return
-	glut = KlangCaster.new() if style.id == "gleichklang" else GlutCaster.new()
+	match style.id:
+		"gleichklang":
+			glut = KlangCaster.new()
+		"lauffeuer":
+			glut = FeuerCaster.new()
+		_:
+			glut = GlutCaster.new()
 	add_child(glut)
 	glut.setup(self, style)
 
@@ -776,6 +782,15 @@ func _use_meisterzug() -> void:
 	move = {}
 	_queued = ""
 	Sfx.play("super_flash")
+	if glut is FeuerCaster:
+		var fs := FeuerSuper.new()
+		fs.room = world
+		fs.player = self
+		fs.caster = glut
+		fs.variant = style.super_variant
+		fs.title = style.variant().get("name", "Meisterzug")
+		world.add_child(fs)
+		return
 	if glut is KlangCaster:
 		var ks := KlangSuper.new()
 		ks.room = world
@@ -816,7 +831,8 @@ func _update_visual() -> void:
 	elif _glut_busy():
 		st = "attack"
 		sprite.attack_frame = glut.pose_frame()
-		sprite.attack_pose = FighterSprite.SLASH_POSE[clampi(sprite.attack_frame, 0, FighterSprite.SLASH_POSE.size() - 1)]
+		var cp := glut.creator_pose()
+		sprite.attack_pose = cp if cp != "" else FighterSprite.SLASH_POSE[clampi(sprite.attack_frame, 0, FighterSprite.SLASH_POSE.size() - 1)]
 	elif dash_timer > 0.0:
 		st = "dash"
 	elif not move.is_empty():

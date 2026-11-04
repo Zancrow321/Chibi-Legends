@@ -242,10 +242,14 @@ func _cycle(slot: String, dir: int) -> void:
 		if ids.is_empty():
 			return
 		var j := ids.find(str(look.get("style", ids[0])))
+		var was_unarmed := bool(CreatorCatalog.data["styles"].get(str(look.get("style", "")), {}).get("unarmed", false))
 		look["style"] = ids[(j + dir + ids.size()) % ids.size()]
 		# each style brings its weapon (Gleichklang: the scythe Nachhall)
 		var w := str(CreatorCatalog.data["styles"][look["style"]].get("weapon", ""))
-		if w != "" and look.get("weapon", "") != "":
+		if bool(CreatorCatalog.data["styles"][look["style"]].get("unarmed", false)):
+			look["weapon"] = ""
+			_play("idle")
+		elif w != "" and (look.get("weapon", "") != "" or was_unarmed):
 			look["weapon"] = w
 			_play("twohand_idle")
 	else:

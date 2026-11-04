@@ -12,13 +12,15 @@
     "ronin": "Ronin-Gi",
     "schatten": "Schattenwickel",
     "schmied": "Schmiede-Schürze",
-    "akademie": "Akademie-Jacke"
+    "akademie": "Akademie-Jacke",
+    "feuerwacht": "Feuerwacht-Jacke"
    },
    "unlock": {
     "wanderer": "Trainingswald abschließen",
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
-    "schmied": "Bei Schmiedin Hino (Akademie-Hof)"
+    "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
+    "feuerwacht": "Kampfstil Lauffeuer (Banner „Wer am Feuer sitzt“)"
    }
   },
   "pants": {
@@ -29,13 +31,15 @@
     "ronin": "Weite Hose",
     "schatten": "Wickelhose",
     "schmied": "Arbeitshose",
-    "akademie": "Uniformhose"
+    "akademie": "Uniformhose",
+    "feuerwacht": "Feuerwacht-Hose"
    },
    "unlock": {
     "wanderer": "Trainingswald abschließen",
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
-    "schmied": "Bei Schmiedin Hino (Akademie-Hof)"
+    "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
+    "feuerwacht": "Kampfstil Lauffeuer (Banner „Wer am Feuer sitzt“)"
    }
   },
   "shoes": {
@@ -46,13 +50,15 @@
     "ronin": "Wickel-Sandalen",
     "schatten": "Tabi-Stiefel",
     "schmied": "Eisenkappen-Stiefel",
-    "akademie": "Turnschuhe"
+    "akademie": "Turnschuhe",
+    "feuerwacht": "Feuerstein-Stiefel"
    },
    "unlock": {
     "wanderer": "Trainingswald abschließen",
     "ronin": "Bei Schreinhüterin Kiyo (Akademie-Hof)",
     "schatten": "Glutschmiede-Tor öffnen",
-    "schmied": "Bei Schmiedin Hino (Akademie-Hof)"
+    "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
+    "feuerwacht": "Kampfstil Lauffeuer (Banner „Wer am Feuer sitzt“)"
    }
   },
   "hair": {
@@ -406,6 +412,13 @@
    "text": "Sense Nachhall: Züge im Takt bauen Einklang auf",
    "unlock": "",
    "weapon": "sense_nachhall"
+  },
+  "lauffeuer": {
+   "name": "Lauffeuer",
+   "text": "Flammenleib: Brandherde legen und mit der Flammenfaust zünden",
+   "unlock": "",
+   "weapon": "",
+   "unarmed": true
   }
  },
  "start_items_note": "Teile ohne unlock-Eintrag sind von Anfang an frei. CreatorUnlocks.unlock(slot, id) schaltet frei."

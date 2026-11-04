@@ -302,6 +302,9 @@ func _draw_style_panel(r: Rect2) -> void:
 	if g is KlangCaster:
 		_draw_klang_panel(r, g)
 		return
+	if g is FeuerCaster:
+		_draw_feuer_panel(r, g)
+		return
 	_panel(r, PANEL, 13, Color("ff9a2a", 0.6))
 	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, Color("ffb347"))
 	var names := ["Rot", "Orange", "Weiß"]
@@ -323,6 +326,29 @@ func _draw_style_panel(r: Rect2) -> void:
 		_text(Vector2(br.position.x, r.position.y + r.size.y - 2), "Weißglut +%d %%" % int(round(g.buff_bonus * 100.0)), 11, TEXT, HORIZONTAL_ALIGNMENT_CENTER, br.size.x, 3)
 	else:
 		_text(Vector2(r.position.x + 176, r.position.y + 19), "Klinge: " + info, 15, MUTED)
+
+
+## Lauffeuer: the Brandherde on the field (at most 3) as little flames.
+func _draw_feuer_panel(r: Rect2, g: FeuerCaster) -> void:
+	_panel(r, PANEL, 13, Color("ff8a2a", 0.6))
+	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, Color("ffc94a"))
+	var n := g.herd_count()
+	for i in FeuerCaster.MAX_HERDE:
+		var c := Vector2(r.position.x + 112 + i * 22, r.get_center().y + 2)
+		var on := n > i
+		var col := Color("ff8a2a") if on else Color("ff8a2a", 0.3)
+		var fl := 1.0 + (0.15 * sin(_t * 14.0 + i) if on else 0.0)
+		var pts := PackedVector2Array([c + Vector2(-5, 4), c + Vector2(5, 4), c + Vector2(3, -2) * fl, c + Vector2(0, -9) * fl, c + Vector2(-3, -2) * fl])
+		if on:
+			draw_circle(c + Vector2(0, -1), 9, Color(col, 0.22))
+			draw_colored_polygon(pts, col)
+			draw_circle(c + Vector2(0, 1), 2.5, Color("fff3c8"))
+		else:
+			draw_polyline(pts + PackedVector2Array([pts[0]]), col, 1.5)
+	var info := "Brandherde: %d / %d" % [n, FeuerCaster.MAX_HERDE]
+	if g.normal_element() == "feuer":
+		info = "Fäuste brennen!"
+	_text(Vector2(r.position.x + 182, r.position.y + 19), info, 15, MUTED if g.normal_element() == "" else Color("ffc94a"))
 
 
 ## Gleichklang: Einklang as six small bells, a beat dot and the state.
@@ -373,7 +399,7 @@ func _draw_notice(W: float) -> void:
 	var klang := room.player.glut is KlangCaster
 	var tips := [
 		"%s: L + Richtung, L halten = verstärkt" % room.player.style.style_name() if room.player.style != null else "L + Richtung = Zug",
-		"Treffer im Takt füllen den Einklang" if klang else "Verschiedene Züge im Combo heizen die Klinge",
+		"Treffer im Takt füllen den Einklang" if klang else ("Brandherde legen, mit der Flammenfaust zünden" if room.player.glut is FeuerCaster else "Verschiedene Züge im Combo heizen die Klinge"),
 		"Tab: Kampfstil, Alternativen und Slots",
 		"Der Sparringspfahl rechts schlägt zurück!",
 		"Willkommen im Trainingswald der Akademie!",
