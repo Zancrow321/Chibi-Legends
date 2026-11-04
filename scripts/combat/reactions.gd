@@ -7,6 +7,8 @@ const STATUS_DURATION := 4.0
 const SHOCK_BONUS := 1.2
 ## Seelenbruch (Gleichklang): every hit on the marked target does more.
 const SOUL_BREAK_BONUS := 1.25
+## Aus dem Gleichgewicht (Spannkraft): a reeling target takes more.
+const TAUMEL_BONUS := 1.2
 
 
 static func _has(status: Dictionary, key: String) -> bool:
@@ -46,6 +48,8 @@ static func resolve(status: Dictionary, element: String, base: float) -> Diction
 
 	if _has(status, "seelenbruch"):
 		r.damage *= SOUL_BREAK_BONUS
+	if _has(status, "taumel"):
+		r.damage *= TAUMEL_BONUS
 	if r.reaction == "":
 		if schock:
 			r.damage = r.damage * SHOCK_BONUS

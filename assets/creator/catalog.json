@@ -412,6 +412,12 @@
    "text": "Riesige schwarze Klinge, Mondsicheln (Legendär)",
    "unlock": "",
    "weapon": "schwert_kaiser"
+  },
+  "spannkraft": {
+   "name": "Spannkraft",
+   "text": "Federleib: dehnbare Fäuste, Spannen und Rückschwung (Legendär)",
+   "unlock": "",
+   "weapon": "none"
   }
  },
  "start_items_note": "Teile ohne unlock-Eintrag sind von Anfang an frei. CreatorUnlocks.unlock(slot, id) schaltet frei."
