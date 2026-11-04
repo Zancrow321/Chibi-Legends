@@ -27,7 +27,7 @@ var _puffs: Array = []   # steam (normal blend)
 
 static func tex(id: String) -> Texture2D:
 	if not _tex.has(id):
-		var p := FX_DIR % id
+		var p := id if id.begins_with("res://") else FX_DIR % id
 		_tex[id] = load(p) if ResourceLoader.exists(p) else null
 	return _tex[id]
 

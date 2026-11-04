@@ -39,6 +39,8 @@ var _ribbon: Line2D
 var _ribbon_shade: Line2D
 var _ribbon_line: Line2D
 var _wdata := {}
+## Extra aim of a gun in degrees (positive = muzzle up), set by the style.
+var aim_deg := 0.0
 var _clock := 0.0
 var _rope: PackedVector2Array = []
 var _rope_old: PackedVector2Array = []
@@ -128,7 +130,24 @@ func _apply_look() -> void:
 		var n: Array = CreatorCatalog.hair_meta[hid]["neck"]
 		_hair.offset = -Vector2(n[0], n[1])
 	_apply_tint(_hair, d["colors"][clampi(int(colors.get("hair", 0)), 0, d["colors"].size() - 1)])
-	var wid := str(look.get("weapon", ""))
+	_load_weapon(str(look.get("weapon", "")))
+	set_pose(pose)
+
+
+## Swaps the weapon in the hand (a fighting style can show another weapon
+## per Zug, e.g. Bollwerk's rifles and its rocket launcher).
+func set_weapon(wid: String) -> void:
+	if str(look.get("weapon", "")) == wid and _weapon != null:
+		return
+	look["weapon"] = wid
+	if _body == null:
+		return
+	_load_weapon(wid)
+	set_pose(pose)
+
+
+func _load_weapon(wid: String) -> void:
+	var d: Dictionary = CreatorCatalog.data
 	_wdata = d["weapons"].get(wid, {})
 	_weapon.texture = CreatorCatalog.texture(_wdata["texture"]) if not _wdata.is_empty() else null
 	if not _wdata.is_empty():
@@ -142,7 +161,6 @@ func _apply_look() -> void:
 	for l in [_ribbon, _ribbon_shade, _ribbon_line]:
 		l.visible = not _wdata.is_empty() and _wdata.has("ribbon")
 	_rope = PackedVector2Array()
-	set_pose(pose)
 
 
 ## Eine Animation aus catalog.json abspielen (idle, walk, run, slash, twohand ...).
@@ -183,6 +201,11 @@ func set_pose(name: String) -> void:
 		# Klingenrichtung: pro Pose aus catalog.json, sonst quer zum Unterarm (Faustgriff)
 		var hold: Dictionary = CreatorCatalog.data.get("weapon_hold", {})
 		var ba: float = float(hold.get("blade", {}).get(name, fa + float(hold.get("default_offset", 80))))
+		# guns ("hold": "gun") point forward: per-pose table, else level
+		var kind := str(_wdata.get("hold", ""))
+		if kind != "" and hold.has(kind):
+			var table: Dictionary = hold[kind]
+			ba = float(table.get("poses", {}).get(name, table.get("default", 90))) + aim_deg
 		var br := deg_to_rad(ba)
 		dir = Vector2(sin(br), cos(br))
 		var g: Array = _wdata["grip"]
