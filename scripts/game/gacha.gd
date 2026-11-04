@@ -282,6 +282,10 @@ static func _legendary(banner: Dictionary) -> Dictionary:
 		res["text"] = "Duplikat: Stern %d · +%d Splitter" % [int(owned[sid]), sp]
 	else:
 		owned[sid] = 1
+		# the style brings its own weapon (e.g. Bollwerk: the rifle Wachhund)
+		var w := str(style_info(sid).get("weapon", ""))
+		if w != "" and w != "none":
+			CreatorUnlocks.unlock("weapon", w)
 		res["stars"] = 1
 		res["text"] = "Neuer Kampfstil! Im Creator (O) wählbar"
 	return res
