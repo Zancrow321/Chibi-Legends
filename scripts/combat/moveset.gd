@@ -8,6 +8,10 @@ const FPS := 60.0
 
 var moves: Dictionary = {}
 var weight := "mittel"
+var display_name := ""
+## Optional own drawings (imported characters, see addons/mugen_importer):
+## {cell, foot, states: {idle: strip, ...}, strips: {name: {file, frames, ticks, loop}}}
+var sprite_data: Dictionary = {}
 
 
 static func load_file(path: String) -> MoveSet:
@@ -21,6 +25,8 @@ static func load_file(path: String) -> MoveSet:
 		push_error("MoveSet: %s ist kein gültiges JSON" % path)
 		return ms
 	ms.weight = data.get("weight", "mittel")
+	ms.display_name = data.get("name", path.get_file().get_basename())
+	ms.sprite_data = data.get("sprite", {})
 	for id in data.get("moves", {}):
 		var m: Dictionary = data.moves[id]
 		m["id"] = id
@@ -39,6 +45,28 @@ func pick(button: String, dir: String, in_air: bool) -> Dictionary:
 			if m.button == button and m.dir == d:
 				return m
 	return {}
+
+
+## Every moveset file in the folder (built-in and imported), sorted, with
+## testfigur2 first.
+static func list_files(dir: String = "res://assets/combat/movesets") -> PackedStringArray:
+	var out := PackedStringArray()
+	for f in DirAccess.get_files_at(dir):
+		if f.ends_with(".json"):
+			out.append(dir.path_join(f))
+	out.sort()
+	var main := dir.path_join("testfigur2.json")
+	if out.has(main):
+		out.remove_at(out.find(main))
+		out.insert(0, main)
+	return out
+
+
+func has_special(dir: String) -> bool:
+	for id in moves:
+		if moves[id].button == "special" and moves[id].dir == dir:
+			return true
+	return false
 
 
 func get_move(id: String) -> Dictionary:

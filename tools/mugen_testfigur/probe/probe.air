@@ -1,0 +1,105 @@
+; Probe - eigene Testfigur fuer den M.U.G.E.N-Importer
+
+; Stehen
+[Begin Action 0]
+Clsn2Default: 1
+ Clsn2[0] = -14, -94, 16, 0
+Loopstart
+0,0, 0,0, 8
+0,1, 0,0, 8
+0,2, 0,0, 8
+0,3, 0,0, 8
+
+; Gehen
+[Begin Action 20]
+Clsn2Default: 1
+ Clsn2[0] = -14, -94, 16, 0
+20,0, 0,0, 6
+20,1, 0,0, 6
+20,2, 0,0, 6
+20,3, 0,0, 6
+
+; Sprung
+[Begin Action 41]
+Clsn2Default: 1
+ Clsn2[0] = -14, -94, 16, 0
+41,0, 0,0, 4
+
+; Fallen
+[Begin Action 44]
+Clsn2Default: 1
+ Clsn2[0] = -14, -94, 16, 0
+44,0, 0,0, 4
+
+; Leichter Schlag
+[Begin Action 200]
+Clsn2Default: 1
+ Clsn2[0] = -14, -94, 16, 0
+200,0, 0,0, 3
+200,1, 0,0, 3
+Clsn1: 1
+ Clsn1[0] = 14, -64, 40, -48
+200,2, 0,0, 4
+200,3, 0,0, 8
+
+; Schwerer Schlag
+[Begin Action 210]
+Clsn2Default: 1
+ Clsn2[0] = -14, -94, 16, 0
+210,0, 0,0, 5
+210,1, 0,0, 6
+Clsn1: 1
+ Clsn1[0] = 18, -66, 50, -46
+210,2, 0,0, 6
+Clsn1: 1
+ Clsn1[0] = 18, -66, 48, -48
+210,3, 0,0, 4
+210,4, 0,0, 12
+
+; Hoher Tritt
+[Begin Action 220]
+Clsn2Default: 1
+ Clsn2[0] = -14, -94, 16, 0
+220,0, 0,0, 6
+Clsn1: 1
+ Clsn1[0] = 14, -86, 42, -58
+220,1, 0,0, 6
+Clsn1: 1
+ Clsn1[0] = 12, -80, 38, -56
+220,2, 0,0, 4
+220,3, 0,0, 14
+
+; Feger
+[Begin Action 230]
+Clsn2Default: 1
+ Clsn2[0] = -16, -70, 18, 0
+230,0, 0,0, 4
+Clsn1: 1
+ Clsn1[0] = 14, -14, 46, 0
+230,1, 0,0, 5
+230,2, 0,0, 10
+
+; Lufttritt
+[Begin Action 600]
+Clsn2Default: 1
+ Clsn2[0] = -14, -94, 16, 0
+600,0, 0,0, 4
+Clsn1: 1
+ Clsn1[0] = 6, -40, 30, -12
+600,1, 0,0, 6
+600,2, 0,0, 10
+
+; Funkenstoss
+[Begin Action 1000]
+Clsn2Default: 1
+ Clsn2[0] = -14, -94, 16, 0
+1000,0, 0,0, 6
+1000,1, 0,0, 3
+Clsn1: 2
+ Clsn1[0] = -4, -110, 30, -60
+ Clsn1[1] = 0, -70, 24, -40
+1000,2, 0,0, 6
+Clsn1: 1
+ Clsn1[0] = -2, -104, 28, -62
+1000,3, 0,0, 4
+1000,4, 0,0, 14

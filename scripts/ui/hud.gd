@@ -505,7 +505,7 @@ func _draw_bottom_left(H: float) -> void:
 
 func _draw_help() -> void:
 	var glut := room.player.glut != null
-	var r := Rect2(16, 286, 400, 360)
+	var r := Rect2(16, 286, 400, 382)
 	_panel(r, PANEL, 10)
 	_text(Vector2(32, 312), "Steuerung", 17, TRIM)
 	var lines := [
@@ -515,12 +515,14 @@ func _draw_help() -> void:
 		["P", "Meisterzug (3 Stufen)"], ["Tab / M", "Kampfstil: Alternativen, Slots"],
 		["J + K", "Griff (Wurf)"], ["U", "Unendlich Legendenleiste"], ["R", "Abklingzeiten zurück"],
 		["N", "Abendlicht an/aus"], ["V", "Effekt-Stärke"], ["T / C / H", "Figur / Charaktere / Hilfe"],
+		["F", "Kämpfer wechseln (Importe)"],
 	] if glut else [
 		["A / D", "Laufen"], ["Leertaste", "Springen, 2x Doppelsprung"], ["S + Leertaste", "Durch Plattform fallen"],
 		["Shift", "Dash (in der Luft 1x)"], ["J", "Leicht (3er-Kette)"], ["K", "Schwer"],
 		["L", "Spezial (Fähigkeit)"], ["W/S/A/D +", "Richtung: oben/unten/vor"],
 		["J + K", "Griff (Wurf)"], ["P", "Super: Legendenstrahl"], ["V", "Effekt-Stärke wechseln"],
-		["T", "Figur: Testfigur / Sammlung"], ["C", "Charaktere"], ["H", "Hilfe ein/aus"],
+		["T", "Figur: Testfigur / Sammlung"], ["F", "Kämpfer wechseln (Importe)"], ["C", "Charaktere"],
+		["H", "Hilfe ein/aus"],
 	]
 	var y := 338.0
 	for l in lines:
