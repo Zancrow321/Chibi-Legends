@@ -25,6 +25,7 @@ var fx: CombatFx  # hit-stop, shake, glowing sparks, super flash
 var hud: Node  # set by Main (cut-in banner for supers)
 var numbers: DamageNumbers  # set by Main (lives on the HUD layer)
 var attacks: Node2D
+var afterimages: Afterimages  # glowing sprite copies behind the player
 ## Off when another view draws the ground (HD-2D variant B builds it in 3D).
 var draw_terrain := true
 var glut_fx: GlutFx  # fire effects of the fighting style
@@ -59,6 +60,8 @@ func _ready() -> void:
 	player = Player.new()
 	player.world = self
 	player.position = Vector2(110, GROUND_Y - 1)
+	afterimages = Afterimages.new()
+	add_child(afterimages)
 	add_child(player)
 	add_child(attacks)
 	add_child(effects)
@@ -97,6 +100,7 @@ func _process(delta: float) -> void:
 	camera.global_position = player.global_position + Vector2(player.facing * 30.0, -40.0)
 	if Input.is_action_just_pressed("cycle_fx"):
 		FxSettings.cycle()
+		get_tree().call_group("bloom", "apply_level")
 		toast("Effekte: " + FxSettings.level_name())
 	if Input.is_action_just_pressed("toggle_infinite_aura"):
 		player.infinite_aura = not player.infinite_aura
@@ -207,8 +211,17 @@ func spawn_attack(d: Dictionary) -> void:
 	a.setup(d)
 
 
+## Afterimage of the player: a glowing copy of the shown drawing (dash,
+## heavy strikes); the roster look still uses the simple block ghost.
 func spawn_ghost(p: Player) -> void:
-	effects.ghost(p)
+	if p.sprite.visible:
+		var col := Color(0.45, 0.85, 1.6, 0.5)
+		if p.glut != null:
+			col = Color(p.glut.trail_color(), 0.5) * Color(1.5, 1.5, 1.5, 1.0)
+		var b := FxSettings.boost()
+		afterimages.add(p.sprite.snapshot(), col * Color(b, b, b, 1.0))
+	else:
+		effects.ghost(p)
 
 
 func spawn_burst(pos: Vector2, color: Color, count: int) -> void:
@@ -255,6 +268,8 @@ func cast_super(p: Player, s: Dictionary) -> void:
 	beam.room = self
 	beam.player = p
 	beam.skill = s
+	var b := FxSettings.boost()
+	beam.modulate = Color(b, b, b, 1.0)  # glows with the bloom
 	add_child(beam)
 
 

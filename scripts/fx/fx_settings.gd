@@ -6,9 +6,10 @@ extends RefCounted
 
 ## Intensity levels. Each factor scales the matching value of a hit profile.
 const LEVELS := [
-	{"name": "Dezent", "stop": 0.45, "shake": 0.45, "spark": 0.75, "flash": 0.35},
-	{"name": "Kräftig", "stop": 1.0, "shake": 1.0, "spark": 1.0, "flash": 1.0},
-	{"name": "Maximal", "stop": 1.6, "shake": 1.7, "spark": 1.35, "flash": 1.5},
+## bloom = glow strength, hdr = brightness of effects (above 1 glows, see Bloom).
+	{"name": "Dezent", "stop": 0.45, "shake": 0.45, "spark": 0.75, "flash": 0.35, "bloom": 0.45, "hdr": 1.25},
+	{"name": "Kräftig", "stop": 1.0, "shake": 1.0, "spark": 1.15, "flash": 1.0, "bloom": 1.0, "hdr": 1.7},
+	{"name": "Maximal", "stop": 1.6, "shake": 1.7, "spark": 1.5, "flash": 1.5, "bloom": 1.6, "hdr": 2.3},
 ]
 
 ## Hit profiles: stop = hit-stop seconds (whole world freezes, sparks keep
@@ -27,6 +28,11 @@ static var level := 1
 
 static func factor(key: String) -> float:
 	return LEVELS[level][key]
+
+
+## Brightness factor for effect nodes (values above 1 bloom).
+static func boost() -> float:
+	return LEVELS[level].hdr
 
 
 static func level_name() -> String:
