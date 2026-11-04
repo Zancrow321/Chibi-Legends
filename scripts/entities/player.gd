@@ -59,6 +59,7 @@ var dash_cd := 0.0
 var air_dash_used := false
 var _coyote := 0.0
 var _fall_speed := 0.0
+var _step_timer := 0.0
 var _was_on_floor := true
 ## Current normal attack (empty = none), time into it, whether it hit,
 ## whether its hitbox was spawned, and the next button pressed meanwhile.
@@ -159,6 +160,7 @@ func receive_hit(damage: float, from_x: float, source: Node = null) -> bool:
 	sprite.flash = 0.06
 	world.numbers.spawn_number(global_position + Vector2(0, -50), int(damage), Color("ff4b3e"), get_instance_id(), false)
 	world.fx.hit(global_position + Vector2(0, -22), "", "heavy", dir)
+	Sfx.play("hit_heavy")
 	add_gauge(5.0)
 	if hp <= 0.0:
 		hp = max_hp
@@ -195,7 +197,16 @@ func _physics_process(delta: float) -> void:
 		air_dash_used = false
 		_coyote = COYOTE_TIME
 		if not _was_on_floor:
-			sprite.land(clampf(_fall_speed / MAX_FALL, 0.3, 1.0))
+			var hard := clampf(_fall_speed / MAX_FALL, 0.3, 1.0)
+			sprite.land(hard)
+			world.dust.land(global_position, hard)
+			Sfx.play("land", -8.0 + hard * 6.0)
+		elif absf(velocity.x) > 60.0 and dash_timer <= 0.0 and move.is_empty():
+			_step_timer -= get_physics_process_delta_time()
+			if _step_timer <= 0.0:
+				_step_timer = 0.21
+				world.dust.puff(global_position, -signf(velocity.x), 2, 2.2, 18.0)
+				Sfx.play("footstep")
 	_was_on_floor = on_floor
 	_fall_speed = maxf(velocity.y, 0.0)
 	if infinite_aura:
@@ -254,6 +265,9 @@ func _physics_process(delta: float) -> void:
 			facing = 1 if dir > 0.0 else -1
 		dash_timer = DASH_TIME
 		dash_cd = DASH_COOLDOWN
+		Sfx.play("dash")
+		if on_floor:
+			world.dust.puff(global_position, -facing, 5, 3.0, 70.0)
 		ghost_timer = 0.0
 		if not on_floor:
 			air_dash_used = true
@@ -321,6 +335,9 @@ func _handle_jump(on_floor: bool) -> void:
 			jumps_used += 1
 			dash_timer = 0.0
 			sprite.jump()
+			Sfx.play("jump", -4.0)
+			if on_floor or jumps_used == 1:
+				world.dust.puff(global_position, 0.0, 4, 2.5, 0.0)
 			if jumps_used == 2:
 				world.spawn_burst(global_position, Color(1, 1, 1, 0.8), 8)
 	# releasing early cuts the jump short (once per jump)
@@ -483,6 +500,8 @@ func _tick_move(delta: float) -> void:
 	var ph := MoveSet.phase_at(move, move_t)
 	if ph != "startup" and not _move_spawned:
 		_move_spawned = true
+		var heavy_swing: bool = move.button == "heavy" or move.get("profile", "") == "heavy"
+		Sfx.play("swing_heavy" if heavy_swing else "swing_light")
 		var hb: Array = move.hitbox
 		var el: String = move.get("element", "")
 		var mul := 1.0
@@ -600,6 +619,7 @@ func use_super() -> void:
 	in_super = true
 	velocity.x = 0.0
 	visual.set_state("cast")
+	Sfx.play("super_flash")
 	world.cast_super(self, s)
 
 
@@ -617,6 +637,7 @@ func _use_meisterzug() -> void:
 	velocity.x = 0.0
 	move = {}
 	_queued = ""
+	Sfx.play("super_flash")
 	var s := GlutSuper.new()
 	s.room = world
 	s.player = self
