@@ -45,13 +45,15 @@ var infinite_aura := false
 ## Presses are buffered briefly, so a tap is never lost between physics
 ## ticks (low frame rates) and a jump pressed just before landing still counts.
 const BUFFER_TIME := 0.12
-const BUFFERED := ["jump", "dash", "attack", "skill_1", "skill_2", "skill_3", "skill_4", "cycle_look"]
+const BUFFERED := ["jump", "dash", "attack", "skill_1", "skill_2", "skill_3", "skill_4", "super", "cycle_look"]
 var _buffer: Dictionary = {}
 var _jump_held := false
 
 var build: Array = GameData.START_BUILD.duplicate()
 var cooldowns: Array[float] = [0.0, 0.0, 0.0, 0.0]
 var look_index := 0
+var super_cd := 0.0
+var in_super := false  # locked in place while the super move plays
 
 
 func _ready() -> void:
@@ -69,6 +71,11 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	buffer_input(event)
+
+
+## Also called by CombatFx while the world is frozen (hit-stop, super pause).
+func buffer_input(event: InputEvent) -> void:
 	for action in BUFFERED:
 		if event.is_action_pressed(action, false):
 			_buffer[action] = BUFFER_TIME
@@ -86,6 +93,13 @@ func _physics_process(delta: float) -> void:
 	var on_floor := is_on_floor()
 	if on_floor:
 		jumps_used = 0
+
+	if in_super:
+		velocity.x = 0.0
+		velocity.y = minf(velocity.y + GRAVITY * delta, MAX_FALL)
+		move_and_slide()
+		visual.set_state("cast")
+		return
 
 	var dir := Input.get_axis("move_left", "move_right")
 
@@ -114,6 +128,8 @@ func _physics_process(delta: float) -> void:
 	for i in 4:
 		if _take("skill_%d" % (i + 1)):
 			use_skill(i)
+	if _take("super"):
+		use_super()
 	if _take("cycle_look"):
 		get_tree().call_group("character_creator", "open_for", visual)
 
@@ -141,6 +157,7 @@ func _tick_timers(delta: float) -> void:
 		combo = 0
 	for i in cooldowns.size():
 		cooldowns[i] = maxf(0.0, cooldowns[i] - delta)
+	super_cd = maxf(0.0, super_cd - delta)
 	if drop_timer > 0.0:
 		drop_timer -= delta
 		if drop_timer <= 0.0:
@@ -223,7 +240,24 @@ func use_skill(slot: int) -> void:
 			world.cast_chain(self, s)
 
 
+func use_super() -> void:
+	var s: Dictionary = GameData.SUPER
+	if super_cd > 0.0 or cast_timer > 0.0 or dash_timer > 0.0:
+		return
+	if not infinite_aura and aura < s.cost:
+		world.toast("Zu wenig Aura")
+		return
+	if not infinite_aura:
+		aura -= s.cost
+	super_cd = s.cooldown
+	in_super = true
+	velocity.x = 0.0
+	visual.set_state("cast")
+	world.cast_super(self, s)
+
+
 func reset_cooldowns() -> void:
+	super_cd = 0.0
 	for i in cooldowns.size():
 		cooldowns[i] = 0.0
 	dash_cd = 0.0

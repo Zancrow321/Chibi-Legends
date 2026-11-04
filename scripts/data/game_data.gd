@@ -49,6 +49,13 @@ const SKILLS := {
 
 const START_BUILD := ["flammenschnitt", "frostlanze", "kettenblitz", "sturmklinge"]
 
+## Super move on its own key: long cooldown, full fighting-game super sequence.
+const SUPER := {
+	"id": "legendenstrahl", "name": "Legendenstrahl", "style": "Ultimativ", "element": "",
+	"kind": "super", "damage": 7.0, "final_damage": 45.0, "cost": 30.0, "cooldown": 18.0,
+	"desc": "Super: Bildschirm-Blitz, Aufladen, riesiger Energiestrahl mit Finale.",
+}
+
 const REACTIONS := {
 	"dampfexplosion": {"name": "Dampfexplosion", "color": Color("f0f6ff"), "recipe": "Feuer + Frost"},
 	"ueberladung": {"name": "Überladung", "color": Color("ffb347"), "recipe": "Feuer + Blitz"},
