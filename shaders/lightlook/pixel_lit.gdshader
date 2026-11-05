@@ -11,6 +11,7 @@ uniform float center_y = -24.0;
 uniform float half_h = 26.0;
 uniform float flip = 1.0;
 uniform float wrap = 0.45; // how much light reaches the side facing away
+uniform float rim = 1.2;   // extra light on the silhouette pixels facing a light (rim light)
 
 varying vec2 lp;
 
@@ -22,6 +23,17 @@ void fragment() {
 	if (auto_normal) {
 		vec2 q = clamp(vec2(lp.x * flip / half_w, (lp.y - center_y) / half_h), -1.0, 1.0);
 		NORMAL = normalize(vec3(q.x, q.y * 0.6, 0.75));
+		// rim light: silhouette pixels (a transparent neighbour) get a
+		// grazing normal, light() lights them extra when a lamp is on that side
+		if (rim > 0.0) {
+			vec2 t = TEXTURE_PIXEL_SIZE;
+			float a = texture(TEXTURE, UV).a;
+			float m = min(min(texture(TEXTURE, UV + vec2(t.x, 0.0)).a, texture(TEXTURE, UV - vec2(t.x, 0.0)).a),
+					min(texture(TEXTURE, UV + vec2(0.0, t.y)).a, texture(TEXTURE, UV - vec2(0.0, t.y)).a));
+			if (a > 0.5 && m < 0.5) {
+				NORMAL = normalize(vec3(q.x, q.y * 0.6, 0.12));
+			}
+		}
 	}
 }
 
@@ -29,6 +41,9 @@ void light() {
 	float nd = 1.0;
 	if (auto_normal) {
 		nd = wrap + (1.0 - wrap) * max(dot(NORMAL, LIGHT_DIRECTION), 0.0);
+	}
+	if (auto_normal && NORMAL.z < 0.3) {
+		nd *= 1.0 + rim * max(dot(normalize(NORMAL.xy), normalize(LIGHT_DIRECTION.xy + vec2(0.0001))), 0.0);
 	}
 	vec3 l = LIGHT_COLOR.rgb * LIGHT_ENERGY * nd;
 	l = floor(l * steps + 0.25) / steps;
