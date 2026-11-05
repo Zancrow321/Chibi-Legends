@@ -298,6 +298,7 @@ func _options() -> Array:
 		["Schadenszahlen", "toggle", "an" if GameSettings.numbers else "aus", 0.0],
 		["Bildschirmwackeln", "toggle", "an" if GameSettings.shake else "aus", 0.0],
 		["Vollbild", "toggle", "an" if GameSettings.fullscreen else "aus", 0.0],
+		["Steuerungshilfe (H)", "toggle", "an" if GameSettings.controls_help else "aus", 0.0],
 	]
 
 
@@ -316,6 +317,8 @@ func _change(i: int, d: int) -> void:
 			GameSettings.shake = not GameSettings.shake
 		5:
 			GameSettings.fullscreen = not GameSettings.fullscreen
+		6:
+			GameSettings.controls_help = not GameSettings.controls_help
 	GameSettings.apply()
 	GameSettings.save()
 	Sfx.play("ui_click", -2.0)

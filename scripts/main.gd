@@ -86,8 +86,6 @@ func _ready() -> void:
 	hud.room = room
 	hud.process_mode = Node.PROCESS_MODE_ALWAYS  # cut-in banner plays during the super pause
 	room.hud = hud
-	hud.show_help = not GameFlow.combat_help_seen  # H opens it again
-	GameFlow.combat_help_seen = true
 	hud_layer.add_child(hud)
 	var info := Hd2dInfo.new()
 	info.view_name = VIEWS[view_mode]

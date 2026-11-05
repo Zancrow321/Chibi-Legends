@@ -22,7 +22,14 @@ var world: Overworld
 var select: CharacterSelect  # set by Main
 var menu: GameMenu  # set by Main
 var font: Font
-var show_help := true
+## Steuerungshilfe: standardmaessig aus, H oder Optionen schalten sie ein (gespeichert).
+var show_help: bool:
+	get:
+		GameSettings.ensure()
+		return GameSettings.controls_help
+	set(v):
+		GameSettings.ensure()
+		GameSettings.controls_help = v
 
 var _t := 0.0
 var _menu_rects: Array = []
@@ -84,6 +91,7 @@ func _process(delta: float) -> void:
 	_closed_t = maxf(0.0, _closed_t - delta)
 	if Input.is_action_just_pressed("toggle_help"):
 		show_help = not show_help
+		GameSettings.save()
 	if dialog_open():
 		_dlg_open_t += delta
 		var line: String = _dlg_lines[_dlg_i]

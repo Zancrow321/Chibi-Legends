@@ -1,7 +1,8 @@
 class_name GameSettings
 extends RefCounted
 ## Player options (menu "Optionen"), saved in user://optionen.json:
-## volume (all / effects), effect strength (FxSettings level), damage numbers, screen shake and fullscreen.
+## volume (all / effects), effect strength (FxSettings level), damage numbers, screen shake, fullscreen
+## and the on-screen controls help (off by default, H or the menu switches it on).
 
 const SAVE := "user://optionen.json"
 
@@ -10,6 +11,7 @@ static var sfx := 1.0
 static var numbers := true
 static var shake := true
 static var fullscreen := false
+static var controls_help := false  # Steuerungshilfe in den HUDs
 static var _loaded := false
 
 
@@ -26,6 +28,7 @@ static func ensure() -> void:
 			numbers = bool(d.get("numbers", numbers))
 			shake = bool(d.get("shake", shake))
 			fullscreen = bool(d.get("fullscreen", fullscreen))
+			controls_help = bool(d.get("controls_help", controls_help))
 			FxSettings.level = clampi(int(d.get("fx", FxSettings.level)), 0, FxSettings.LEVELS.size() - 1)
 	apply()
 
@@ -33,7 +36,7 @@ static func ensure() -> void:
 static func save() -> void:
 	var f := FileAccess.open(SAVE, FileAccess.WRITE)
 	if f:
-		f.store_string(JSON.stringify({"master": master, "sfx": sfx, "numbers": numbers, "shake": shake, "fullscreen": fullscreen, "fx": FxSettings.level}))
+		f.store_string(JSON.stringify({"master": master, "sfx": sfx, "numbers": numbers, "shake": shake, "fullscreen": fullscreen, "controls_help": controls_help, "fx": FxSettings.level}))
 
 
 static func apply() -> void:
