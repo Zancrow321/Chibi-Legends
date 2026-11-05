@@ -166,7 +166,7 @@ func _begin(z: String, transfer: bool) -> void:
 	charge = 0.0
 	_transfer = transfer
 	var alt_cd = style.alt(z).get("cd", null)
-	cooldowns[z] = float(alt_cd) if alt_cd != null else float(style.zug(z).get("cd", 1.0))
+	cooldowns[z] = style.cooldown(z, alt_cd)
 	player.move = {}
 	if transfer:
 		frames[0] = maxi(1, int(round(frames[0] * 0.6)))

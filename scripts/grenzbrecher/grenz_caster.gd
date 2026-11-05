@@ -241,7 +241,7 @@ func _begin(z: String) -> void:
 	_y_start = player.global_position.y
 	_flow = _since_last < FLOW_TIME and _last_zug != "" and _last_zug != z
 	var alt_cd = style.alt(z).get("cd", null)
-	cooldowns[z] = float(alt_cd) if alt_cd != null else float(style.zug(z).get("cd", 1.0))
+	cooldowns[z] = style.cooldown(z, alt_cd)
 	if z == "fernschritt" and burst_time > 0.0:
 		cooldowns[z] = 0.4
 	player.move = {}

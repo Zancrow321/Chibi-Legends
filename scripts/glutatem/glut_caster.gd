@@ -162,7 +162,7 @@ func cast(dir: String) -> bool:
 	_bonus = stage >= 3
 	_bonus_used = false
 	_age = 0.0
-	cooldowns[z] = float(style.zug(z).get("cd", 1.0))
+	cooldowns[z] = style.cooldown(z)
 	player.move = {}
 	var mouth := _mouth()
 	fx.breath(mouth, player.facing, 0.3 + stage * 0.2)

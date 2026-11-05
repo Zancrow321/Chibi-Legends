@@ -184,14 +184,56 @@ static func salvage(uid: String) -> int:
 	if it.is_empty() or is_equipped(uid):
 		return 0
 	var gain := int(Loot.salvage_value(it))
+	for g in it.get("sockets", []):  # gems go back into the pouch
+		if str(g) != "":
+			Gems.add(str(g))
 	items.erase(it)
 	splitter += gain
 	save()
 	return gain
 
 
-## Sum of a stat over level and worn gear, as a fraction (0.12 = +12 %).
-## Stats: atk, hp, crit, gauge, critdmg, def.
+## Sets a gem from the pouch into the item's first free socket.
+## Returns false when there is no free socket or no such gem.
+static func socket_gem(uid: String, gem: String) -> bool:
+	var it := item(uid)
+	var i := Loot.free_socket(it)
+	if it.is_empty() or i < 0 or not Gems.take(gem):
+		return false
+	it.sockets[i] = gem
+	save()
+	return true
+
+
+## Takes the gem of a socket back into the pouch for Splitter (Hino).
+static func unsocket_gem(uid: String, i: int) -> bool:
+	var it := item(uid)
+	var sockets: Array = it.get("sockets", [])
+	if i < 0 or i >= sockets.size() or str(sockets[i]) == "":
+		return false
+	var cost := Gems.unsocket_cost(str(sockets[i]))
+	if splitter < cost:
+		return false
+	splitter -= cost
+	Gems.add(str(sockets[i]))
+	sockets[i] = ""
+	save()
+	return true
+
+
+## Fuses 3 gems into one of the next tier for Splitter (Hino).
+static func fuse_gem(gem: String) -> String:
+	var cost := Gems.fuse_cost(gem)
+	if splitter < cost or not Gems.can_fuse(gem):
+		return ""
+	var up := Gems.fuse(gem)
+	splitter -= cost
+	save()
+	return up
+
+
+## Sum of a stat over level, worn gear, socketed gems and set bonuses, as a
+## fraction (0.12 = +12 %). Stats: atk, hp, crit, gauge, critdmg, def, cdr.
 static func bonus(stat: String) -> float:
 	ensure()
 	var total := 0.0
@@ -203,8 +245,8 @@ static func bonus(stat: String) -> float:
 	for s in SLOTS:
 		var it := equipped_item(s)
 		if not it.is_empty():
-			total += float(it.stats.get(stat, 0.0))
-	return total
+			total += float(it.stats.get(stat, 0.0)) + Loot.gem_bonus(it, stat)
+	return total + ItemSets.bonus(stat)
 
 
 ## Gear score: one number for the strength of what you wear.

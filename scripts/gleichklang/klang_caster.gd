@@ -235,7 +235,7 @@ func cast(dir: String) -> bool:
 	_x_start = player.global_position.x
 	_y_start = player.global_position.y
 	_age = 0.0
-	cooldowns[z] = float(style.zug(z).get("cd", 1.0))
+	cooldowns[z] = style.cooldown(z)
 	player.move = {}
 	_bonus = klang >= MAX_KLANG
 	if _bonus:

@@ -129,7 +129,7 @@ func cast(dir: String) -> bool:
 	_lunge = 0.0
 	_hover = 0.0
 	_open = false
-	var cd := float(style.zug(z).get("cd", 1.0))
+	var cd := style.cooldown(z)
 	cooldowns[z] = cd * (0.6 if neumond_time > 0.0 else 1.0)
 	player.move = {}
 	Sfx.play("mond_cast", -8.0 + stage * 2.0)

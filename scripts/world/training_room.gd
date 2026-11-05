@@ -142,15 +142,23 @@ func on_enemy_died(e: Enemy) -> void:
 		_slowmo(0.16, 0.4)
 
 
-## Loot: elites always drop something good, the rest sometimes.
+## Loot: elites always drop something good, the rest sometimes. Edelsteine
+## drop on their own roll.
 func _drop_loot(e: Enemy) -> void:
+	var gem := Gems.roll_drop(e.is_elite())
+	if gem != "":
+		_spawn_drop({"gem": gem, "rarity": Gems.tier_of(gem)}, e.global_position + Vector2(10, -24))
 	var chance := 1.0 if e.is_elite() else 0.35
 	if randf() >= chance:
 		return
+	_spawn_drop(Loot.roll(Profile.level, Loot.roll_rarity(e.is_elite()), "", player.style.id), e.global_position + Vector2(0, -20))
+
+
+func _spawn_drop(item: Dictionary, at: Vector2) -> void:
 	var d := LootDrop.new()
 	d.world = self
-	d.item = Loot.roll(Profile.level, Loot.roll_rarity(e.is_elite()))
-	d.position = e.global_position + Vector2(0, -20)
+	d.item = item
+	d.position = at
 	add_child.call_deferred(d)
 
 

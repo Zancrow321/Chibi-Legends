@@ -35,6 +35,27 @@ jobs:
           godot --headless --quit-after 60 2>&1 | tee run.log
           ! grep -E "SCRIPT ERROR|Parse Error" run.log
 
+      - name: Item-Logiktest (Sockel, Sets, Mods)
+        run: |
+          godot --headless -s res://tools/items/test_extras.gd 2>&1 | tee items.log
+          grep -q "ITEM-TEST OK" items.log
+          ! grep -E "SCRIPT ERROR|Parse Error|ITEM-TEST FEHLER" items.log
+
+      - name: Item-Probe (Bilder vom Menü)
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        run: |
+          mkdir -p item-probe
+          timeout 120 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/items/probe.gd -- "$PWD/item-probe" 2>&1 | tail -20
+
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        with:
+          name: item-probe
+          path: item-probe
+          if-no-files-found: ignore
+
       - name: Web-Export
         run: |
           mkdir -p build/web
