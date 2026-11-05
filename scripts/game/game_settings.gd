@@ -1,8 +1,7 @@
 class_name GameSettings
 extends RefCounted
 ## Player options (menu "Optionen"), saved in user://optionen.json:
-## volume (all / effects), effect strength (FxSettings level), graphics preset
-## (Hd2dSettings), damage numbers, screen shake and fullscreen.
+## volume (all / effects), effect strength (FxSettings level), damage numbers, screen shake and fullscreen.
 
 const SAVE := "user://optionen.json"
 
@@ -28,14 +27,13 @@ static func ensure() -> void:
 			shake = bool(d.get("shake", shake))
 			fullscreen = bool(d.get("fullscreen", fullscreen))
 			FxSettings.level = clampi(int(d.get("fx", FxSettings.level)), 0, FxSettings.LEVELS.size() - 1)
-			Hd2dSettings.quality = clampi(int(d.get("quality", Hd2dSettings.quality)), 0, 2)
 	apply()
 
 
 static func save() -> void:
 	var f := FileAccess.open(SAVE, FileAccess.WRITE)
 	if f:
-		f.store_string(JSON.stringify({"master": master, "sfx": sfx, "numbers": numbers, "shake": shake, "fullscreen": fullscreen, "fx": FxSettings.level, "quality": Hd2dSettings.quality}))
+		f.store_string(JSON.stringify({"master": master, "sfx": sfx, "numbers": numbers, "shake": shake, "fullscreen": fullscreen, "fx": FxSettings.level}))
 
 
 static func apply() -> void:

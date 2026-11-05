@@ -21,8 +21,7 @@ func _process(_delta: float) -> void:
 func _draw() -> void:
 	if hud != null and not hud.show_help:
 		return
-	var q: String = Hd2dSettings.NAMES[Hd2dSettings.quality]
-	var text := "[B] Ansicht: %s    [G] Grafik: %s    %d FPS" % [view_name, q, Engine.get_frames_per_second()]
+	var text := "[B] Ansicht: %s    %d FPS" % [view_name, Engine.get_frames_per_second()]
 	var fs := 14
 	var w := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x + 24
 	# Under the tip line, between the player bars (left) and the minimap (right).
