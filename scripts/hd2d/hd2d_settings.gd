@@ -1,7 +1,8 @@
 class_name Hd2dSettings
 extends RefCounted
-## Graphics presets for the HD-2D look ("Grafik" regler, key G).
-## Hoch = full look, Mittel/Niedrig trade effects for speed on weak devices.
+## Graphics presets for the HD-2D look. The game always runs at Hoch (all
+## effects at maximum); there is no player choice. The lower presets stay only
+## for the shader probe tool (tools/shader/probe.gd).
 
 const NAMES := ["Niedrig", "Mittel", "Hoch"]
 

@@ -10,7 +10,7 @@ extends Node2D
 ##  - light is posterised into hard steps to stay pixel-art
 ##  - parallax layers behind (pre-blurred by distance) and a dark, blurred
 ##    foreground in front of the play layer
-## The "Grafik" preset (G) turns shadows and the number of live lights down.
+## The graphics preset is fixed at Hoch (full shadows and lights).
 
 const DUSK := Color(0.3, 0.26, 0.42)
 const LANTERNS := [300.0, 760.0, 1180.0]
@@ -37,7 +37,7 @@ var _t := 0.0
 
 
 func _ready() -> void:
-	add_to_group("hd2d_view")  # receives apply_quality() from the G key
+	add_to_group("hd2d_view")  # apply_quality(); quality is fixed at Hoch
 	_light_tex = GradientTexture2D.new()
 	_light_tex.width = 256
 	_light_tex.height = 256

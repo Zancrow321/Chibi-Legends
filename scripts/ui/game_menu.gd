@@ -295,7 +295,6 @@ func _options() -> Array:
 		["Gesamtlautstärke", "slider", "%d %%" % int(round(GameSettings.master * 100.0)), GameSettings.master],
 		["Effektlautstärke", "slider", "%d %%" % int(round(GameSettings.sfx * 100.0)), GameSettings.sfx],
 		["Effektstärke", "choice", FxSettings.level_name(), 0.0],
-		["Grafik", "choice", Hd2dSettings.NAMES[Hd2dSettings.quality], 0.0],
 		["Schadenszahlen", "toggle", "an" if GameSettings.numbers else "aus", 0.0],
 		["Bildschirmwackeln", "toggle", "an" if GameSettings.shake else "aus", 0.0],
 		["Vollbild", "toggle", "an" if GameSettings.fullscreen else "aus", 0.0],
@@ -312,13 +311,10 @@ func _change(i: int, d: int) -> void:
 			FxSettings.level = (FxSettings.level + d + FxSettings.LEVELS.size()) % FxSettings.LEVELS.size()
 			get_tree().call_group("bloom", "apply_level")
 		3:
-			Hd2dSettings.quality = (Hd2dSettings.quality + d + 3) % 3
-			get_tree().call_group("hd2d_view", "apply_quality")
-		4:
 			GameSettings.numbers = not GameSettings.numbers
-		5:
+		4:
 			GameSettings.shake = not GameSettings.shake
-		6:
+		5:
 			GameSettings.fullscreen = not GameSettings.fullscreen
 	GameSettings.apply()
 	GameSettings.save()

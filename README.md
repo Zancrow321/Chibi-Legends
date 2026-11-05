@@ -71,7 +71,6 @@ sprechen/betreten, C Sammlung, H Hilfe.
 | Charaktere (Sammlung) | C | Start |
 | Hilfe ein/aus | H | – |
 | Look-Test: Ansicht wechseln (flach / HD-2D A / HD-2D B / Licht) | B | – |
-| Look-Test: Grafik Hoch / Mittel / Niedrig | G | – |
 
 ## HD-2D-Look (Test)
 
@@ -84,7 +83,7 @@ Effekte: Tiefenunschärfe (auf „Hoch“ echte Tiefe, sonst Tilt-Shift), Bloom,
 Der Browser-Renderer (GL Compatibility) hat dafür keine fertigen Effekte, darum ist die Kette selbst gebaut (`shaders/hd2d/`).
 Alle Grafiken sind eigene Pixel-Art aus `tools/hd2d/gen_textures.py`.
 
-Im Web-Build lässt sich die Ansicht per URL wählen: `?view=flat`, `?view=a`, `?view=b`, dazu `&q=0` bis `&q=2` für die Grafikstufe.
+Im Web-Build lässt sich die Ansicht per URL wählen: `?view=flat`, `?view=a`, `?view=b`. Effekte laufen immer auf der höchsten Grafikstufe.
 
 | A: 3D-Kulisse | B: alles 3D |
 | --- | --- |

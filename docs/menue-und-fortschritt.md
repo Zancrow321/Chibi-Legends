@@ -7,7 +7,7 @@ und pausiert das Spiel. Reiter wechseln mit Q/E oder 1-3, die Maus geht überall
 | --- | --- |
 | Charakter | Figur, Stufe und EXP, alle Werte, die drei Ausrüstungsplätze, „Aussehen ändern“ (Creator) |
 | Inventar | Tasche mit 30 Plätzen, Karte mit Vergleich zum angelegten Teil, Anlegen (Leer), Zerlegen in Splitter (X), Sortieren (R) |
-| Optionen | Gesamt- und Effektlautstärke, Effektstärke, Grafik, Schadenszahlen, Bildschirmwackeln, Vollbild |
+| Optionen | Gesamt- und Effektlautstärke, Effektstärke, Schadenszahlen, Bildschirmwackeln, Vollbild |
 
 ## Fortschritt (`scripts/game/profile.gd`)
 
