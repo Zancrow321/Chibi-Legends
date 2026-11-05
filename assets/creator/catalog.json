@@ -104,6 +104,7 @@
   "weapon": {
    "label": "Waffe",
    "items": {
+    "glutklinge": "Glutklinge (Katana)",
     "schwert_kaiser": "Verband-Zweihänder",
     "sense_nachhall": "Glockensense Nachhall",
     "wachhund": "Sturmgewehr „Wachhund“",
@@ -126,6 +127,26 @@
   }
  },
  "weapons": {
+  "glutklinge": {
+   "texture": "res://assets/creator/weapons/glutklinge.png",
+   "scale": 1.5,
+   "grip": [
+    8.5,
+    30.5
+   ],
+   "tip": [
+    34.5,
+    3.5
+   ],
+   "twohand": true,
+   "ribbon": {
+    "length": 6,
+    "segment": 2.0,
+    "color": "e83b3b",
+    "shade": "ae2334",
+    "outline": "2e222f"
+   }
+  },
   "schwert_kaiser": {
    "texture": "res://assets/creator/weapons/schwert_kaiser.png",
    "scale": 2,
@@ -565,9 +586,9 @@
  "styles": {
   "glutatem": {
    "name": "Glutatem",
-   "text": "Feuer-Atemtechnik aus der Glutschmiede",
+   "text": "Feuer-Atemtechnik aus der Glutschmiede, Katana Glutklinge",
    "unlock": "",
-   "weapon": "schwert_kaiser"
+   "weapon": "glutklinge"
   },
   "gleichklang": {
    "name": "Gleichklang",

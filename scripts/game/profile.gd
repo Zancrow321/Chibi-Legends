@@ -28,6 +28,7 @@ static var items: Array = []  # Dictionaries from Loot.roll()
 static var equipped := {}  # place -> item uid, see SLOTS
 static var _next_uid := 1
 static var _loaded := false
+static var gifts: Array = []  # one-time gifts already handed out (ids)
 
 
 static func ensure() -> void:
@@ -55,12 +56,24 @@ static func ensure() -> void:
 	for s in SLOTS:
 		equipped[s] = str(eq.get(s, ""))
 	_next_uid = int(d.get("next_uid", items.size() + 1))
+	gifts = d.get("gifts", [])
+
+
+## Glutatem's own katana as a starter weapon, once per save.
+static func give_glutklinge() -> void:
+	ensure()
+	if gifts.has("glutklinge") or bag_full():
+		return
+	gifts.append("glutklinge")
+	add_item({"name": "Glutklinge", "slot": "waffe", "rarity": 1, "ilvl": 1, "icon": 0,
+		"icon_key": "glutklinge", "stats": {"atk": 0.06, "crit": 0.03},
+		"line": "Gehärtet im Atem der Esse."})
 
 
 static func save() -> void:
 	var f := FileAccess.open(SAVE, FileAccess.WRITE)
 	if f:
-		f.store_string(JSON.stringify({"level": level, "exp": xp, "splitter": splitter, "items": items, "equipped": equipped, "next_uid": _next_uid}))
+		f.store_string(JSON.stringify({"level": level, "exp": xp, "splitter": splitter, "items": items, "equipped": equipped, "next_uid": _next_uid, "gifts": gifts}))
 
 
 ## EXP for the next level: grows a little each level.
@@ -224,6 +237,7 @@ static func reset() -> void:
 	xp = 0.0
 	splitter = 0
 	items = []
+	gifts = []
 	equipped = {}
 	for s in SLOTS:
 		equipped[s] = ""

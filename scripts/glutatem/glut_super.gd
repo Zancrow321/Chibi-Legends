@@ -181,6 +181,7 @@ func _intro(delta: float) -> void:
 		_step = 1
 		var tip: Vector2 = line[1]
 		fx.anvil(tip, 46.0, 12)
+		fx.burst("meisterzug", player.global_position + Vector2(0, -54), 128.0, 0.7, 0.0, false, Color.WHITE, 0.3)
 		fx.ring(tip, 70.0, WHITE, 0.45, 8.0)
 		fx.sparks(tip, -PI / 2.0, PI, 50, 380.0, 0.7)
 		room.fx.flash(0.45 * FxSettings.factor("flash"), Color(1.0, 0.75, 0.4))
@@ -272,6 +273,8 @@ func _start_wave() -> void:
 	fx.anvil(p + Vector2(player.facing * 20.0, -6), 50.0, 14)
 	fx.ring(p + Vector2(0, -6), 90.0, WHITE, 0.5, 9.0)
 	fx.word(p + Vector2(0, -70), "WOOOMM!", WHITE, 40)
+	for d in [-1.0, 1.0]:
+		fx.burst("letzte_esse", p + Vector2(d * 56.0, -44), 112.0, 0.5, 0.0, d < 0.0, Color.WHITE, 0.4, Vector2(d * 500.0, 0))
 	room.fx.flash(0.5 * FxSettings.factor("flash"), Color(1.0, 0.6, 0.25))
 	room.fx.shake(10.0 * FxSettings.factor("shake"))
 	room.fx.punch(0.1)
@@ -299,6 +302,8 @@ func _esse_wave(delta: float) -> void:
 			if randf() < 0.4:
 				fx.smoke(Vector2(front, gy - 20), 14.0, Vector2(d * 20.0, -30), 1.4)
 			fx.light(Vector2(front, gy - 20), Color(1.0, 0.6, 0.25), 2.2, 0.8, 0.12)
+			if randf() < 0.12:
+				fx.burst("letzte_esse", Vector2(front, gy - 30), 72.0, 0.3, 0.0, d < 0.0, Color(1, 1, 1, 0.8), 0.6)
 	for t in _targets():
 		var id: int = t.get_instance_id()
 		if _wave_hit.has(id):
@@ -327,6 +332,7 @@ func _start_dome() -> void:
 	_dome_r = 0.0
 	fx.anvil(player.global_position + Vector2(player.facing * 18.0, -4), 30.0, 10)
 	fx.word(_dome + Vector2(0, -80), "SCHMELZ!", ORANGE, 30)
+	fx.burst("schmelzofen", _dome + Vector2(0, -40), 112.0, 1.3, 0.0, false, Color(1, 1, 1, 0.85), 0.15)
 	# a glowing crack runs from the blade to the dome
 	for i in 10:
 		var p := (player.global_position + Vector2(player.facing * 18.0, 0)).lerp(_dome, float(i) / 9.0)
@@ -372,6 +378,7 @@ func _ofen_burst() -> void:
 		for i in 8:
 			fx.smoke(c + Vector2(randf_range(-30, 30), randf_range(-20, 10)), randf_range(14, 22), Vector2(randf_range(-40, 40), -30), 1.8)
 		fx.word(c + Vector2(0, -60), "BUMM!!", WHITE, 44)
+		fx.burst("funkenschlag", c + Vector2(0, -20), 150.0, 0.45, 0.0, false, Color.WHITE, 0.4)
 		var box := Rect2(_dome.x - 64.0, _dome.y - 80.0, 128.0, 84.0)
 		for t in _targets():
 			if box.intersects(t.get_hurt_rect()):
@@ -402,6 +409,8 @@ func _sturm_rise(delta: float) -> void:
 		_next("rain")
 		room.fx.flash(0.35 * FxSettings.factor("flash"), Color(1.0, 0.65, 0.3))
 		fx.word(player.global_position + Vector2(0, -90), "FUNKENSTURM!", WHITE, 30)
+		var vv := _view()
+		fx.burst("funkensturm", Vector2(vv.get_center().x, vv.position.y + 70.0), 220.0, 1.6, 0.0, player.facing < 0, Color(1, 1, 1, 0.75), 0.6, Vector2(player.facing * 30.0, 40.0))
 
 
 func _sturm_rain(delta: float) -> void:
@@ -451,6 +460,7 @@ func _sturm_fall(delta: float) -> void:
 		fx.ring(c + Vector2(0, -8), 90.0, WHITE, 0.5, 9.0)
 		fx.slag_burst(c, 16, 240.0)
 		fx.word(c + Vector2(0, -70), "ZANG!!", WHITE, 44)
+		fx.burst("essensturz", c + Vector2(0, -56), 128.0, 0.5, 0.0, false, Color.WHITE, 0.4)
 		_show_totals()
 		var v := _view()
 		for t in _targets():

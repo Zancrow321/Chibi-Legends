@@ -70,7 +70,7 @@ static func region(pose: String) -> Rect2:
 ## Standard-Figur, wenn noch nichts gespeichert ist.
 static func default_look() -> Dictionary:
 	return {"hair": "stachel", "top": "kampfweste", "pants": "kampfweste", "shoes": "kampfweste",
-		"weapon": "schwert_kaiser", "skin": 1, "style": "glutatem",
+		"weapon": "glutklinge", "skin": 1, "style": "glutatem",
 		"colors": {"hair": 0, "top": 0, "pants": 0, "shoes": 0}}
 
 
@@ -81,6 +81,12 @@ static func load_look() -> Dictionary:
 		var saved: Variant = JSON.parse_string(f.get_as_text())
 		if saved is Dictionary:
 			look.merge(saved, true)
+			# Glutatem got its own katana: older saves still carry the
+			# Zweihänder; switch once, later choices stay as they are
+			if not saved.has("glutklinge") and str(look.get("style", "")) == "glutatem" \
+					and str(look.get("weapon", "")) == "schwert_kaiser":
+				look["weapon"] = "glutklinge"
+	look["glutklinge"] = true
 	return look
 
 
