@@ -35,6 +35,8 @@ static func _arc(ci: CanvasItem, c: Vector2, r: float, a0: float, a1: float, w: 
 
 
 static func draw(ci: CanvasItem, r: Rect2, id: String, t := 0.0) -> void:
+	if PixelSkillIcon.try_draw(ci, r, "gleichklang", id, t, BG, BLUE, Color(0.8, 0.9, 1.0)):
+		return
 	var c := r.get_center()
 	var s := r.size.x / 50.0
 	match id:

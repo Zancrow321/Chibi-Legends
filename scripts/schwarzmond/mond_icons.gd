@@ -38,6 +38,8 @@ static func _blade(ci: CanvasItem, a: Vector2, b: Vector2, s: float) -> void:
 
 
 static func draw(ci: CanvasItem, r: Rect2, id: String, t := 0.0) -> void:
+	if PixelSkillIcon.try_draw(ci, r, "schwarzmond", id, t, BG, CYAN, Color(0.6, 0.95, 1.0)):
+		return
 	var c := r.get_center()
 	var s := r.size.x / 50.0
 	match id:
