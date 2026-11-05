@@ -14,6 +14,8 @@ const MAP := {
 
 
 static func draw(ci: CanvasItem, r: Rect2, id: String, t := 0.0) -> void:
+	if PixelSkillIcon.try_draw(ci, r, "bollwerk", id, t, BG, EDGE, Color(1.0, 0.85, 0.5)):
+		return
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = BG
 	sb.set_corner_radius_all(6)
