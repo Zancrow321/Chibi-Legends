@@ -17,7 +17,7 @@ const TOWER := {
 }
 
 
-## Frostnorden: Spielerstufen (Stufe -> Teil), frei beim Stufenaufstieg.
+## Frostnorden (und zwei Steampunk-Teile): Spielerstufen (Stufe -> Teil), frei beim Stufenaufstieg.
 const LEVEL := {
 	3: ["outfit", "nordwanderer"],
 	6: ["outfit", "runenschild"],
@@ -26,6 +26,9 @@ const LEVEL := {
 	15: ["outfit", "frostseherin"],
 	18: ["hair", "hoernerhelm"],
 	22: ["outfit", "baerenhaut"],
+	# Steampunk-Werkstatt
+	26: ["outfit", "zahnradtechniker"],
+	30: ["outfit", "dampfdame"],
 }
 
 
@@ -60,5 +63,5 @@ static func on_level(lv: int) -> Array:
 		var p: Array = LEVEL[n]
 		var check_slot := "top" if p[0] == "outfit" else str(p[0])
 		if not CreatorUnlocks.is_unlocked(check_slot, str(p[1])):
-			out.append("Frostnorden: %s, im Creator (O) wählbar" % give(str(p[0]), str(p[1])))
+			out.append("Neue Kleidung: %s, im Creator (O) wählbar" % give(str(p[0]), str(p[1])))
 	return out

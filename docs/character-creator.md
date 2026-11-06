@@ -165,3 +165,26 @@ Fünf Outfits und zwei Kopfteile. PixelLab: 37 Generierungen.
 | Drachenwache (`drachenwache`) | Gacha-Banner „Wer am Feuer sitzt“ |
 
 - Herausforderungen können jetzt `"part": ["outfit", id]` geben (alle drei Teile, `ThemeOutfits.give`).
+
+## Themen-Kollektion Vampirhof (2026-11-06)
+
+Fünf Outfits und zwei Kopfteile. PixelLab: 34 Generierungen.
+
+| Teil | Freischalten |
+| --- | --- |
+| Blutgraf, Mondgräfin, Zylinder | Gacha-Banner „Der schwarze Mond“ |
+| Jägerorden, Kirchhofwächter, Silberlocken | Gacha-Banner „Ein Takt, zwei Seelen“ |
+| Rosendiener (Butler) | Saisonpass Premium, Stufe 27 |
+
+- Schrift-Fix: Pixelify zeigte die Ligaturen „fi“/„fl“ als Müll (z. B. „Schaffe“, „Lauffeuer“). Im Import
+  der Schrift ist `liga` jetzt aus (`opentype_features` in `PixelifySans-SemiBold.ttf.import`).
+
+## Themen-Kollektion Steampunk (2026-11-06)
+
+Fünf Outfits und zwei Kopfteile. PixelLab: 32 Generierungen.
+
+| Teil | Freischalten |
+| --- | --- |
+| Messingfaust, Kesselflicker, Fliegerbrille | Gacha-Banner „Die letzte Linie“ |
+| Luftkapitän, Melone mit Zahnrad | Gacha-Banner „Kein Meer zu weit“ |
+| Zahnrad-Techniker / Dampf-Erfinderin | Spielerstufe 26 / 30 (`ThemeOutfits.LEVEL`) |

@@ -1,6 +1,6 @@
 extends SceneTree
 ## Schaubild der Anime- und japanischen Kleidung im Spiel (LayeredBody mit Bloom).
-##   xvfb-run godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/japan_outfits/probe.gd -- <out_dir> [cyber|frost|wuxia]
+##   xvfb-run godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/japan_outfits/probe.gd -- <out_dir> [cyber|frost|wuxia|vampir|steam]
 
 const LOOKS := [
 	["hanabi", "kitsune", 0], ["mondhakama", "chonmage", 0], ["kranich", "kasa", 0], ["gakuran", "stachel", 0],
@@ -22,6 +22,16 @@ const WUXIA_LOOKS := [
 	["schattenmeister", "zopf", 0], ["lotusfaust", "drachenkrone", 0], ["jadegelehrter", "lang", 0], ["schattenmeister", "gelehrtenknoten", 0],
 ]
 
+const VAMP_LOOKS := [
+	["blutgraf", "zylinder", 0], ["mondgraefin", "gothlocken", 0], ["jaegerorden", "kurz", 0], ["kirchhofwaechter", "wuschel", 0],
+	["rosendiener", "dutt", 0], ["blutgraf", "gothlocken", 0], ["jaegerorden", "zylinder", 0], ["mondgraefin", "zwillinge", 0],
+]
+
+const STEAM_LOOKS := [
+	["zahnradtechniker", "fliegerbrille", 0], ["luftkapitaen", "melone", 0], ["messingkaempfer", "kamm", 0], ["dampfdame", "zopf", 0],
+	["kesselflicker", "fliegerbrille", 0], ["luftkapitaen", "kurz", 0], ["dampfdame", "melone", 0], ["messingkaempfer", "fliegerbrille", 0],
+]
+
 var out := "user://kleidung_shots"
 var f := 0
 var bodies: Array = []
@@ -34,7 +44,7 @@ func _initialize() -> void:
 	DirAccess.make_dir_recursive_absolute(out)
 	CreatorCatalog.ensure()
 	var theme := args[1] if args.size() > 1 else ""
-	var looks: Array = {"cyber": CYBER_LOOKS, "frost": FROST_LOOKS, "wuxia": WUXIA_LOOKS}.get(theme, LOOKS)
+	var looks: Array = {"cyber": CYBER_LOOKS, "frost": FROST_LOOKS, "wuxia": WUXIA_LOOKS, "vampir": VAMP_LOOKS, "steam": STEAM_LOOKS}.get(theme, LOOKS)
 	var stage := Node2D.new()
 	root.add_child(stage)
 	var bg := ColorRect.new()
