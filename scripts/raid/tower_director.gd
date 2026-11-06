@@ -166,6 +166,7 @@ func _floor_cleared() -> void:
 		world._spawn_drop(item, at)
 		run_items += 1
 		SeasonPass.track("boss")
+		RaidLoot.on_kill("turmwache")  # one Raid-Mark per guard
 	if floor_no > best:
 		best = floor_no
 	if floor_no > week_best:

@@ -24,6 +24,8 @@ const LEVEL_ATK := 0.02
 static var level := 1
 static var xp := 0.0
 static var splitter := 0
+## Raid-Marken: from raid bosses and tower guards, traded at Hino for a chosen piece.
+static var marks := 0
 static var items: Array = []  # Dictionaries from Loot.roll()
 static var equipped := {}  # place -> item uid, see SLOTS
 static var _next_uid := 1
@@ -45,6 +47,7 @@ static func ensure() -> void:
 	level = int(d.get("level", 1))
 	xp = float(d.get("exp", 0.0))
 	splitter = int(d.get("splitter", 0))
+	marks = int(d.get("marks", 0))
 	items = d.get("items", [])
 	var eq: Dictionary = d.get("equipped", {})
 	if eq.has("ruestung") and not eq.has("oberteil"):
@@ -60,7 +63,7 @@ static func ensure() -> void:
 static func save() -> void:
 	var f := FileAccess.open(SAVE, FileAccess.WRITE)
 	if f:
-		f.store_string(JSON.stringify({"level": level, "exp": xp, "splitter": splitter, "items": items, "equipped": equipped, "next_uid": _next_uid}))
+		f.store_string(JSON.stringify({"level": level, "exp": xp, "splitter": splitter, "marks": marks, "items": items, "equipped": equipped, "next_uid": _next_uid}))
 
 
 ## EXP for the next level: grows a little each level.
@@ -92,6 +95,12 @@ static func add_exp(amount: float) -> int:
 static func add_splitter(n: int) -> void:
 	ensure()
 	splitter += n
+	save()
+
+
+static func add_marks(n: int) -> void:
+	ensure()
+	marks += n
 	save()
 
 
@@ -265,6 +274,7 @@ static func reset() -> void:
 	level = 1
 	xp = 0.0
 	splitter = 0
+	marks = 0
 	items = []
 	equipped = {}
 	for s in SLOTS:

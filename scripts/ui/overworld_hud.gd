@@ -265,7 +265,7 @@ func _draw_route(W: float) -> void:
 	# currencies, small and quiet under the strip
 	var cy := r.end.y + 22.0
 	var cx := r.end.x - 8.0
-	for c in [[str(Profile.splitter), Color("4d9be6"), "Splitter"], ["0", Color("f04f78"), "Sternkristalle"]]:
+	for c in [[str(Profile.marks), Color("a46bff"), "Raid-Marken"], [str(Profile.splitter), Color("4d9be6"), "Splitter"], [str(Gacha.crystals), Color("f04f78"), "Sternkristalle"]]:
 		var label := "%s %s" % [c[0], c[2]]
 		var tw := font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 14).x
 		cx -= tw

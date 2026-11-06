@@ -47,3 +47,14 @@ Solo-Modus hinter dem violetten Tor ganz rechts im Akademie-Hof (Web-Link `?modu
 | Rekord | `user://turm.json`: beste Etage gesamt und pro Woche (Wochenwechsel Montag). Die Wochen-Bestenliste kommt mit der Online-Basis (Schritt 3). |
 
 Dateien: `scripts/raid/tower_director.gd` (erbt vom RaidDirector, nutzt Boss-Leiste, Kristalle und Gefahrenzonen mit), Tor-Sprites `assets/overworld/gate_turm.png` und die offene `gate_glut.png`, Test `tools/tower/probe.gd` (CI-Schritt „Turm-Logiktest“).
+
+# Raid-Beute: Tageschance und Raid-Marken (Teil von Schritt 3, offline)
+
+`scripts/raid/raid_loot.gd`, Test `tools/raid/test_loot.gd` (CI „Raid-Beute-Test“).
+
+| Regel | Wert |
+| --- | --- |
+| Farmen | Unbegrenzt. Die Bonus-Beute des Essenwächters (2 Teile ab Episch + Edelstein) kommt mit 100 %, 60 %, 36 %, 22 %, dann 20 % je Sieg am selben Tag. Um Mitternacht wieder voll. Die normale Elite-Beute fällt immer. |
+| Raid-Marken | Immer: Essenwächter 4, Turmwache 1. Anzeige oben rechts im Hof. |
+| Tausch | Bei Schmiedin Hino („Raid-Marken tauschen“): Teil-Art frei wählbar, Werte zufällig, Gegenstandsstufe = Spielerstufe. Episch 20 Marken, Legendär 60 (mit Veränderung). |
+| Online | Wenn die Online-Basis steht, zählt der Server dieselben Werte; offline liegen sie in `user://raid_loot.json` und im Profil. |
