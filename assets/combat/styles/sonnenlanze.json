@@ -1,0 +1,402 @@
+{
+	"_doc": "Baukasten-Kampfstil Sonnenlanze (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "sonnenlanze",
+	"name": "Sonnenlanze",
+	"element": "licht",
+	"caster": "form",
+	"subtitle": "Heilige Lanzenkunst · Sonnenglut laden, Licht durchbohren",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"armed": true,
+	"colors": {
+		"main": "ffd25c",
+		"accent": "ff8a2a",
+		"light": "fff4c0",
+		"dark": "3a2410",
+		"white": "ffffff"
+	},
+	"kern": {
+		"type": "ladung",
+		"name": "Sonnenglut",
+		"desc": "Jeder Zug, der trifft, lädt 1 Sonnenglut (bis 5). Bei 5: 6 s Mittagsglut, Schläge mit Licht +25 %."
+	},
+	"loadout": {
+		"neutral": "lanzenstoss",
+		"forward": "sonnenstrahl",
+		"up": "lichtsaeule",
+		"down": "sonnensturz"
+	},
+	"zuege": {
+		"lanzenstoss": {
+			"name": "Lanzenstoß",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Zwei weite Stöße mit der Sonnenlanze.",
+			"params": {
+				"hits": 2,
+				"damage": 7,
+				"len": 64,
+				"h": 22
+			},
+			"enhanced": {
+				"hits_add": 1,
+				"len_add": 20
+			},
+			"alts": [
+				{
+					"id": "lichtwirbel",
+					"name": "Lichtwirbel",
+					"sp": 2,
+					"desc": "Vier schnelle Stöße.",
+					"params": {
+						"hits": 4,
+						"damage": 4.5
+					}
+				},
+				{
+					"id": "weiter_stoss",
+					"name": "Weiter Stoß",
+					"sp": 2,
+					"desc": "Ein sehr weiter Stoß.",
+					"params": {
+						"hits": 1,
+						"len": 100,
+						"damage": 13
+					}
+				},
+				{
+					"id": "aufspiessen",
+					"name": "Aufspießen",
+					"sp": 2,
+					"desc": "Der letzte Stoß schleudert hoch.",
+					"params": {
+						"launch": 280
+					}
+				}
+			]
+		},
+		"sonnenstrahl": {
+			"name": "Sonnenstrahl",
+			"kind": "strahl",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.6,
+			"frames": [
+				12,
+				30,
+				16
+			],
+			"desc": "Ein Lichtstrahl schießt aus der Lanzenspitze nach vorn.",
+			"params": {
+				"len": 240,
+				"width": 14,
+				"damage": 3.5,
+				"tick": 0.08
+			},
+			"enhanced": {
+				"width_add": 10,
+				"damage_add": 1.5
+			},
+			"alts": [
+				{
+					"id": "breiter_strahl",
+					"name": "Breiter Strahl",
+					"sp": 2,
+					"desc": "Dicker, kürzer.",
+					"params": {
+						"width": 26,
+						"len": 170
+					}
+				},
+				{
+					"id": "schraegstrahl",
+					"name": "Schrägstrahl",
+					"sp": 2,
+					"desc": "Schräg nach oben, gegen Luftgegner.",
+					"params": {
+						"up": true
+					}
+				},
+				{
+					"id": "lichtnadel",
+					"name": "Lichtnadel",
+					"sp": 2,
+					"desc": "Kurz und hart.",
+					"params": {
+						"damage": 6,
+						"width": 8
+					},
+					"frames": [
+						8,
+						14,
+						14
+					]
+				}
+			]
+		},
+		"lichtsaeule": {
+			"name": "Lichtsäule",
+			"kind": "saeule",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				9,
+				14,
+				16
+			],
+			"desc": "Eine Säule aus Sonnenlicht fällt vor dir herab.",
+			"params": {
+				"at": 60,
+				"width": 30,
+				"height": 120,
+				"damage": 13,
+				"launch": 340
+			},
+			"enhanced": {
+				"launch_add": 100,
+				"width_add": 10
+			},
+			"alts": [
+				{
+					"id": "drei_saeulen",
+					"name": "Drei Säulen",
+					"sp": 2,
+					"desc": "Drei Lichtsäulen in Reihe.",
+					"params": {
+						"count": 3,
+						"step": 44,
+						"damage": 8
+					}
+				},
+				{
+					"id": "himmelfahrt",
+					"name": "Himmelfahrt",
+					"sp": 2,
+					"desc": "Du steigst im Licht auf.",
+					"params": {
+						"ride": true,
+						"at": 8
+					}
+				},
+				{
+					"id": "lichtkuppel",
+					"name": "Lichtkuppel",
+					"sp": 2,
+					"desc": "Breit, niedrig.",
+					"params": {
+						"width": 64,
+						"launch": 200
+					}
+				}
+			]
+		},
+		"sonnensturz": {
+			"name": "Sonnensturz",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Du stürzt mit der Lanze voran wie ein Sonnenstrahl.",
+			"params": {
+				"damage": 14,
+				"radius": 44,
+				"waves": true,
+				"wave_damage": 8
+			},
+			"enhanced": {
+				"radius_add": 18,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "sonnenkrater",
+					"name": "Sonnenkrater",
+					"sp": 2,
+					"desc": "Großer Aufprall.",
+					"params": {
+						"radius": 72,
+						"waves": false
+					}
+				},
+				{
+					"id": "nachglanz",
+					"name": "Nachglanz",
+					"sp": 2,
+					"desc": "Ein zweiter Lichtstoß.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "lichtlache",
+					"name": "Lichtlache",
+					"sp": 2,
+					"desc": "Leuchtende Fläche für 2 s.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"kometenstoss": {
+			"name": "Kometenstoß",
+			"kind": "sturm",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				5,
+				12,
+				12
+			],
+			"desc": "Du stößt wie ein Komet mit der Lanze voran.",
+			"params": {
+				"dist": 150,
+				"damage": 12
+			},
+			"enhanced": {
+				"dist_mul": 1.5,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "rueckkehr",
+					"name": "Rückkehr",
+					"sp": 2,
+					"desc": "Hin und zurück.",
+					"params": {
+						"back": true
+					}
+				},
+				{
+					"id": "kometenschweif",
+					"name": "Kometenschweif",
+					"sp": 2,
+					"desc": "Eine leuchtende Spur bleibt.",
+					"params": {
+						"trail": true
+					}
+				},
+				{
+					"id": "durchbohren",
+					"name": "Durchbohren",
+					"sp": 2,
+					"desc": "Kürzer, harter Stoß.",
+					"params": {
+						"dist": 100,
+						"damage": 18
+					}
+				}
+			]
+		},
+		"mittagsglanz": {
+			"name": "Mittagsglanz",
+			"kind": "aura",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 6.0,
+			"frames": [
+				12,
+				6,
+				12
+			],
+			"desc": "Du leuchtest wie die Mittagssonne: heilt 50 LP und 5 s +15 % Schaden.",
+			"params": {
+				"buff": 5,
+				"bonus": 0.15,
+				"heal": 50
+			},
+			"enhanced": {
+				"heal_add": 50,
+				"buff_add": 2
+			},
+			"alts": [
+				{
+					"id": "sonnenwende",
+					"name": "Sonnenwende",
+					"sp": 2,
+					"desc": "Mehr Heilung, kein Bonus.",
+					"params": {
+						"heal": 110,
+						"bonus": 0.0,
+						"buff": 0.1
+					}
+				},
+				{
+					"id": "strahlenkranz",
+					"name": "Strahlenkranz",
+					"sp": 2,
+					"desc": "Ein Lichtring trifft um dich.",
+					"params": {
+						"nova": 18
+					}
+				},
+				{
+					"id": "hochmittag",
+					"name": "Hochmittag",
+					"sp": 2,
+					"desc": "Kurz, aber +30 %.",
+					"params": {
+						"bonus": 0.3,
+						"buff": 3.5,
+						"heal": 0
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "zenit",
+				"name": "Zenit",
+				"kind": "strahl",
+				"sp": 0,
+				"desc": "Die Sonne steht im Zenit: ein riesiger Lichtstrahl durchbohrt den Bildschirm.",
+				"params": {
+					"damage": 5,
+					"width": 60
+				}
+			},
+			{
+				"id": "sonnenrad",
+				"name": "Sonnenrad",
+				"kind": "nova",
+				"sp": 2,
+				"desc": "Ein Rad aus Sonnenlanzen dreht sich um dich und explodiert.",
+				"params": {
+					"damage": 74,
+					"radius": 150
+				}
+			},
+			{
+				"id": "lanzenregen",
+				"name": "Lanzenregen",
+				"kind": "regen",
+				"sp": 2,
+				"desc": "Lanzen aus Licht regnen auf alle Gegner.",
+				"params": {
+					"damage": 12,
+					"count": 16
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

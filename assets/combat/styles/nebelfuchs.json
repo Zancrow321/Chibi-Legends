@@ -1,0 +1,391 @@
+{
+	"_doc": "Baukasten-Kampfstil Nebelfuchs (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "nebelfuchs",
+	"name": "Nebelfuchs",
+	"element": "seele",
+	"caster": "form",
+	"subtitle": "Fuchsgeist-Illusionen · Fuchsfeuer, Nebel, Trugbilder",
+	"moveset": "res://assets/combat/movesets/lauffeuer.json",
+	"armed": false,
+	"colors": {
+		"main": "8fd3ff",
+		"accent": "ff9a5a",
+		"light": "e0f4ff",
+		"dark": "141a2e",
+		"white": "ffffff"
+	},
+	"kern": {
+		"type": "echo",
+		"name": "Trugbild",
+		"desc": "Jeder Zug, der trifft, ruft ein Trugbild: 0,4 s später trifft ein Nebelfuchs dieselben Gegner mit 40 % Schaden."
+	},
+	"loadout": {
+		"neutral": "fuchsklaue",
+		"forward": "fuchsfeuer",
+		"up": "nebelschritt",
+		"down": "fuchssturz"
+	},
+	"zuege": {
+		"fuchsklaue": {
+			"name": "Fuchsklaue",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Drei schnelle Klauenhiebe mit Fuchsfeuer.",
+			"params": {
+				"hits": 3,
+				"damage": 5,
+				"len": 40
+			},
+			"enhanced": {
+				"hits_add": 2
+			},
+			"alts": [
+				{
+					"id": "klauenwirbel",
+					"name": "Klauenwirbel",
+					"sp": 2,
+					"desc": "Fünf Hiebe.",
+					"params": {
+						"hits": 5,
+						"damage": 3.5
+					}
+				},
+				{
+					"id": "rueckenklaue",
+					"name": "Rückenklaue",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				},
+				{
+					"id": "fuchssprung",
+					"name": "Fuchssprung",
+					"sp": 2,
+					"desc": "Schleudert hoch.",
+					"params": {
+						"launch": 280
+					}
+				}
+			]
+		},
+		"fuchsfeuer": {
+			"name": "Fuchsfeuer",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Drei Fuchsfeuer schweben auf Gegner zu.",
+			"params": {
+				"count": 3,
+				"spread": 30,
+				"damage": 5,
+				"speed": 300,
+				"dist": 340,
+				"homing": 0.8,
+				"size": 0.8
+			},
+			"enhanced": {
+				"count_add": 2,
+				"damage_add": 2
+			},
+			"alts": [
+				{
+					"id": "grosses_feuer",
+					"name": "Großes Feuer",
+					"sp": 2,
+					"desc": "Ein großes Fuchsfeuer.",
+					"params": {
+						"count": 1,
+						"size": 1.5,
+						"damage": 14
+					}
+				},
+				{
+					"id": "schnelle_flammen",
+					"name": "Schnelle Flammen",
+					"sp": 2,
+					"desc": "Schnell, gerade.",
+					"params": {
+						"homing": 0.1,
+						"speed": 560
+					}
+				},
+				{
+					"id": "platzendes_feuer",
+					"name": "Platzendes Feuer",
+					"sp": 2,
+					"desc": "Platzt beim Ziel.",
+					"params": {
+						"burst": true
+					}
+				}
+			]
+		},
+		"nebelschritt": {
+			"name": "Nebelschritt",
+			"kind": "schritt",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				4,
+				6,
+				12
+			],
+			"desc": "Du zerfließt zu Nebel und erscheinst hinter dem Gegner.",
+			"params": {
+				"dist": 140,
+				"damage": 9
+			},
+			"enhanced": {
+				"damage_add": 6,
+				"dist_add": 40
+			},
+			"alts": [
+				{
+					"id": "nebeltor",
+					"name": "Nebeltor",
+					"sp": 2,
+					"desc": "Nach vorn ohne Ziel.",
+					"params": {
+						"behind": false,
+						"dist": 120
+					}
+				},
+				{
+					"id": "geisterbiss",
+					"name": "Geisterbiss",
+					"sp": 2,
+					"desc": "Härter beim Auftauchen.",
+					"params": {
+						"damage": 15
+					}
+				},
+				{
+					"id": "weiter_nebel",
+					"name": "Weiter Nebel",
+					"sp": 2,
+					"desc": "Weiter.",
+					"params": {
+						"dist": 190
+					}
+				}
+			]
+		},
+		"fuchssturz": {
+			"name": "Fuchssturz",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Wie ein jagender Fuchs stürzt du auf die Beute.",
+			"params": {
+				"damage": 12,
+				"radius": 42,
+				"waves": true,
+				"wave_damage": 7
+			},
+			"enhanced": {
+				"damage_add": 5,
+				"radius_add": 16
+			},
+			"alts": [
+				{
+					"id": "beutesprung",
+					"name": "Beutesprung",
+					"sp": 2,
+					"desc": "Großer Aufprall.",
+					"params": {
+						"radius": 70,
+						"waves": false
+					}
+				},
+				{
+					"id": "doppelsprung",
+					"name": "Doppelsprung",
+					"sp": 2,
+					"desc": "Zweiter Stoß.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "nebelfeld",
+					"name": "Nebelfeld",
+					"sp": 2,
+					"desc": "Nebel bleibt 2 s.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"irrlichtnebel": {
+			"name": "Irrlichtnebel",
+			"kind": "feld",
+			"dir": "down",
+			"sp": 1,
+			"cd": 2.0,
+			"frames": [
+				10,
+				8,
+				16
+			],
+			"desc": "Ein verwirrender Nebel voller Irrlichter vor dir.",
+			"params": {
+				"at": 60,
+				"width": 90,
+				"life": 2.5,
+				"tick": 0.35,
+				"damage": 3
+			},
+			"enhanced": {
+				"life_add": 1.5,
+				"damage_add": 1
+			},
+			"alts": [
+				{
+					"id": "dichter_nebel",
+					"name": "Dichter Nebel",
+					"sp": 2,
+					"desc": "Breiter.",
+					"params": {
+						"width": 140
+					}
+				},
+				{
+					"id": "lockruf",
+					"name": "Lockruf",
+					"sp": 2,
+					"desc": "Zieht Gegner hinein.",
+					"params": {
+						"pull": 70
+					}
+				},
+				{
+					"id": "nebelkreis",
+					"name": "Nebelkreis",
+					"sp": 2,
+					"desc": "Um dich herum.",
+					"params": {
+						"at": 0
+					}
+				}
+			]
+		},
+		"trugbildkonter": {
+			"name": "Trugbildkonter",
+			"kind": "konter",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				4,
+				24,
+				14
+			],
+			"desc": "Der Gegner trifft nur ein Trugbild, du schlägst von der Seite.",
+			"params": {
+				"stance": 0.45,
+				"counter_damage": 20
+			},
+			"enhanced": {
+				"counter_damage_add": 10
+			},
+			"alts": [
+				{
+					"id": "spiegelnebel",
+					"name": "Spiegelnebel",
+					"sp": 2,
+					"desc": "Wirft Geschosse zurück.",
+					"params": {
+						"reflect": true
+					}
+				},
+				{
+					"id": "langes_trugbild",
+					"name": "Langes Trugbild",
+					"sp": 2,
+					"desc": "Längeres Fenster.",
+					"params": {
+						"stance": 0.75,
+						"counter_damage": 13
+					}
+				},
+				{
+					"id": "fuchslist",
+					"name": "Fuchslist",
+					"sp": 2,
+					"desc": "Nach dem Konter 4 s +20 %.",
+					"params": {
+						"buff": 4
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "neunschweif",
+				"name": "Neunschweif",
+				"kind": "ansturm",
+				"sp": 0,
+				"desc": "Neun Fuchsgeister jagen von Ziel zu Ziel.",
+				"params": {
+					"damage": 10,
+					"slashes": 9
+				}
+			},
+			{
+				"id": "fuchsfeuerreigen",
+				"name": "Fuchsfeuerreigen",
+				"kind": "regen",
+				"sp": 2,
+				"desc": "Hunderte Fuchsfeuer fallen auf alle Gegner.",
+				"params": {
+					"damage": 10,
+					"count": 22
+				}
+			},
+			{
+				"id": "nebelreich",
+				"name": "Nebelreich",
+				"kind": "feld",
+				"sp": 2,
+				"desc": "Ein Reich aus Nebel verschluckt den Bildschirm.",
+				"params": {
+					"damage": 4,
+					"pull": 50
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

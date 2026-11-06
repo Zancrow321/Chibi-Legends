@@ -97,6 +97,28 @@ jobs:
           grep -q "KLEIDUNG-TEST OK" kleidung.log
           ! grep -E "SCRIPT ERROR|Parse Error" kleidung.log
 
+      - name: Kampfstil-Test (30 Baukasten-Stile, alle Züge und Meisterzüge)
+        run: |
+          timeout 900 godot --headless --fixed-fps 60 -s res://tools/formen/test_formen.gd > formen.log 2>&1 || true
+          grep -E "FORMEN|SCRIPT ERROR" -A2 formen.log | head -150 || true
+          grep -q "FORMEN-TEST OK" formen.log
+          ! grep -E "SCRIPT ERROR|Parse Error" formen.log
+
+      - name: Kampfstil-Probe (Bilder auf ci-bilder/formen)
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        continue-on-error: true
+        run: |
+          mkdir -p formen-probe
+          timeout 900 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/formen/test_formen.gd -- "$PWD/formen-probe" > formen-probe.log 2>&1 || true
+          grep -A3 -E "FORMEN|SCRIPT ERROR" formen-probe.log | head -40 || true
+          cd formen-probe
+          ls *.png > /dev/null 2>&1 || exit 0
+          git init -q . && git checkout -q -b bilder
+          git add *.png
+          git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -qm "Formen-Probe ${{ github.event.pull_request.head.sha }}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" bilder:refs/heads/ci-bilder/formen
+          rm -rf .git
+
       - name: Raid-Rüstung-Probe (Bilder auf ci-bilder/ruestung)
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
         continue-on-error: true

@@ -1,0 +1,407 @@
+{
+	"_doc": "Baukasten-Kampfstil Geisterlaterne (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "geisterlaterne",
+	"name": "Geisterlaterne",
+	"element": "seele",
+	"caster": "form",
+	"subtitle": "Laternenwächterin · Irrlichter, Seelenflammen, der Laternenruf",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"armed": true,
+	"colors": {
+		"main": "7affd0",
+		"accent": "ffb347",
+		"light": "d8fff0",
+		"dark": "0e1a1a",
+		"white": "ffffff"
+	},
+	"kern": {
+		"type": "marken",
+		"name": "Seelenflamme",
+		"zuender": "laternenruf",
+		"desc": "Treffer entzünden Seelenflammen auf Gegnern (bis 3). Laternenruf ruft alle Flammen zurück: +9 Schaden je Flamme."
+	},
+	"loadout": {
+		"neutral": "laternenschwung",
+		"forward": "irrlicht",
+		"up": "seelenfackel",
+		"down": "laternenruf"
+	},
+	"zuege": {
+		"laternenschwung": {
+			"name": "Laternenschwung",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Zwei Schwünge mit der Laterne an der Stange.",
+			"params": {
+				"hits": 2,
+				"damage": 6,
+				"len": 58
+			},
+			"enhanced": {
+				"hits_add": 2,
+				"len_add": 12
+			},
+			"alts": [
+				{
+					"id": "geisterreigen",
+					"name": "Geisterreigen",
+					"sp": 2,
+					"desc": "Vier Schwünge.",
+					"params": {
+						"hits": 4,
+						"damage": 4
+					}
+				},
+				{
+					"id": "rundschwung",
+					"name": "Rundschwung",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				},
+				{
+					"id": "aufleuchten",
+					"name": "Aufleuchten",
+					"sp": 2,
+					"desc": "Schleudert hoch.",
+					"params": {
+						"launch": 280
+					}
+				}
+			]
+		},
+		"irrlicht": {
+			"name": "Irrlicht",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Zwei Irrlichter schweben auf Gegner zu.",
+			"params": {
+				"count": 2,
+				"spread": 24,
+				"damage": 7,
+				"speed": 300,
+				"dist": 360,
+				"homing": 0.8
+			},
+			"enhanced": {
+				"count_add": 2,
+				"damage_add": 2
+			},
+			"alts": [
+				{
+					"id": "grosses_licht",
+					"name": "Großes Licht",
+					"sp": 2,
+					"desc": "Ein großes Irrlicht.",
+					"params": {
+						"count": 1,
+						"size": 1.5,
+						"damage": 14
+					}
+				},
+				{
+					"id": "lichtschwarm",
+					"name": "Lichtschwarm",
+					"sp": 2,
+					"desc": "Vier kleine.",
+					"params": {
+						"count": 4,
+						"spread": 50,
+						"damage": 4
+					}
+				},
+				{
+					"id": "platzlicht",
+					"name": "Platzlicht",
+					"sp": 2,
+					"desc": "Platzt beim Ziel.",
+					"params": {
+						"burst": true
+					}
+				}
+			]
+		},
+		"seelenfackel": {
+			"name": "Seelenfackel",
+			"kind": "saeule",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				9,
+				14,
+				16
+			],
+			"desc": "Eine Säule aus Seelenfeuer lodert vor dir auf.",
+			"params": {
+				"at": 56,
+				"width": 28,
+				"height": 96,
+				"damage": 12,
+				"launch": 360
+			},
+			"enhanced": {
+				"launch_add": 100,
+				"width_add": 10
+			},
+			"alts": [
+				{
+					"id": "drei_fackeln",
+					"name": "Drei Fackeln",
+					"sp": 2,
+					"desc": "Drei Säulen.",
+					"params": {
+						"count": 3,
+						"step": 40,
+						"damage": 7
+					}
+				},
+				{
+					"id": "geisterflug",
+					"name": "Geisterflug",
+					"sp": 2,
+					"desc": "Du schwebst mit hoch.",
+					"params": {
+						"ride": true,
+						"at": 8
+					}
+				},
+				{
+					"id": "breite_fackel",
+					"name": "Breite Fackel",
+					"sp": 2,
+					"desc": "Breiter.",
+					"params": {
+						"width": 58,
+						"launch": 220
+					}
+				}
+			]
+		},
+		"geisterkreis": {
+			"name": "Geisterkreis",
+			"kind": "feld",
+			"dir": "down",
+			"sp": 1,
+			"cd": 2.0,
+			"frames": [
+				10,
+				8,
+				16
+			],
+			"desc": "Ein Kreis kreisender Geister vor dir.",
+			"params": {
+				"at": 60,
+				"width": 90,
+				"life": 2.5,
+				"tick": 0.35,
+				"damage": 3
+			},
+			"enhanced": {
+				"life_add": 1.5,
+				"damage_add": 1
+			},
+			"alts": [
+				{
+					"id": "grosser_kreis",
+					"name": "Großer Kreis",
+					"sp": 2,
+					"desc": "Breiter.",
+					"params": {
+						"width": 140
+					}
+				},
+				{
+					"id": "seelensog",
+					"name": "Seelensog",
+					"sp": 2,
+					"desc": "Zieht hinein.",
+					"params": {
+						"pull": 70
+					}
+				},
+				{
+					"id": "wachtkreis",
+					"name": "Wachtkreis",
+					"sp": 2,
+					"desc": "Um dich herum.",
+					"params": {
+						"at": 0
+					}
+				}
+			]
+		},
+		"laternenruf": {
+			"name": "Laternenruf",
+			"kind": "aura",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 6.0,
+			"frames": [
+				12,
+				6,
+				12
+			],
+			"desc": "Du hebst die Laterne: alle Seelenflammen kehren zurück, ein Lichtring trifft um dich und heilt 30 LP.",
+			"params": {
+				"buff": 0.1,
+				"bonus": 0.0,
+				"heal": 30,
+				"nova": 16
+			},
+			"enhanced": {
+				"nova_add": 10,
+				"heal_add": 30
+			},
+			"alts": [
+				{
+					"id": "weiter_ruf",
+					"name": "Weiter Ruf",
+					"sp": 2,
+					"desc": "Größerer Ring.",
+					"params": {
+						"nova": 14,
+						"nova_radius": 70
+					}
+				},
+				{
+					"id": "seelenwacht",
+					"name": "Seelenwacht",
+					"sp": 2,
+					"desc": "5 s +20 % Schaden.",
+					"params": {
+						"buff": 5,
+						"bonus": 0.2
+					}
+				},
+				{
+					"id": "heilruf",
+					"name": "Heilruf",
+					"sp": 2,
+					"desc": "Heilt 80 LP.",
+					"params": {
+						"heal": 80,
+						"nova": 8
+					}
+				}
+			]
+		},
+		"seelenregen": {
+			"name": "Seelenregen",
+			"kind": "regen",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.6,
+			"frames": [
+				12,
+				10,
+				16
+			],
+			"desc": "Seelenflammen regnen vor dir herab.",
+			"params": {
+				"count": 6,
+				"width": 110,
+				"at": 90,
+				"damage": 6
+			},
+			"enhanced": {
+				"count_add": 4,
+				"width_add": 40
+			},
+			"alts": [
+				{
+					"id": "dichter_regen",
+					"name": "Dichter Regen",
+					"sp": 2,
+					"desc": "Mehr, schmaler.",
+					"params": {
+						"count": 10,
+						"width": 70,
+						"damage": 4
+					}
+				},
+				{
+					"id": "fernregen",
+					"name": "Fernregen",
+					"sp": 2,
+					"desc": "Weiter vorn.",
+					"params": {
+						"at": 170
+					}
+				},
+				{
+					"id": "grosse_flammen",
+					"name": "Große Flammen",
+					"sp": 2,
+					"desc": "Drei große.",
+					"params": {
+						"count": 3,
+						"damage": 12,
+						"big": true
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "totenzug",
+				"name": "Totenzug",
+				"kind": "ansturm",
+				"sp": 0,
+				"desc": "Ein Zug von Geistern folgt dir von Ziel zu Ziel.",
+				"params": {
+					"damage": 11,
+					"slashes": 8
+				}
+			},
+			{
+				"id": "geisterfest",
+				"name": "Geisterfest",
+				"kind": "regen",
+				"sp": 2,
+				"desc": "Hunderte Laternen steigen auf und stürzen auf die Gegner.",
+				"params": {
+					"damage": 10,
+					"count": 22
+				}
+			},
+			{
+				"id": "laternenmeer",
+				"name": "Laternenmeer",
+				"kind": "feld",
+				"sp": 2,
+				"desc": "Ein Meer aus Geisterlicht flutet den Bildschirm.",
+				"params": {
+					"damage": 4,
+					"pull": 50
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

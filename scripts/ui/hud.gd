@@ -340,6 +340,9 @@ func _draw_style_panel(r: Rect2) -> void:
 	if g is BollwerkCaster:
 		_draw_bollwerk_panel(r, g)
 		return
+	if g is FormCaster:
+		_draw_form_panel(r, g)
+		return
 	_panel(r, PANEL, 13, Color("ff9a2a", 0.6))
 	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, Color("ffb347"))
 	var names := ["Rot", "Orange", "Weiß"]
@@ -361,6 +364,34 @@ func _draw_style_panel(r: Rect2) -> void:
 		_text(Vector2(br.position.x, r.position.y + r.size.y - 2), "Weißglut +%d %%" % int(round(g.buff_bonus * 100.0)), 11, TEXT, HORIZONTAL_ALIGNMENT_CENTER, br.size.x, 3)
 	else:
 		_text(Vector2(r.position.x + 176, r.position.y + 19), "Klinge: " + info, 15, MUTED)
+
+
+## Baukasten styles: the Kern (name, pips, state text) in the style colours.
+func _draw_form_panel(r: Rect2, g: FormCaster) -> void:
+	var main := g.col("main")
+	var light := g.col("light")
+	_panel(r, PANEL, 13, Color(main, 0.6))
+	_text(Vector2(r.position.x + 14, r.position.y + 19), room.player.style.style_name(), 16, light)
+	var n := int(g.kern_max) if g.kern_type != "fokus" else 1
+	var v := g.kern_pips()
+	var x0 := r.position.x + 132.0
+	if g.kern_type == "fokus":
+		var br := Rect2(x0, r.get_center().y - 4, 60, 8)
+		draw_rect(br, Color(main, 0.25))
+		draw_rect(Rect2(br.position, Vector2(br.size.x * clampf(v, 0.0, 1.0), br.size.y)), light if v >= 0.99 else main)
+		x0 += 66.0
+	else:
+		for i in n:
+			var c := Vector2(x0 + i * 15, r.get_center().y)
+			if v > float(i) + 0.01:
+				draw_circle(c, 7.0, Color(main, 0.3))
+				draw_circle(c, 4.6, light if v >= float(n) else main)
+			else:
+				draw_arc(c, 4.6, 0, TAU, 12, Color(main, 0.35), 1.5)
+		x0 += n * 15 + 4
+	var info := g.kern_info()
+	var label := str(g.kern.get("name", ""))
+	_text(Vector2(x0, r.position.y + 19), info if info != "" else label, 13, light if info != "" else MUTED)
 
 
 ## Lauffeuer: the Brandherde on the field (at most 3) as little flames.

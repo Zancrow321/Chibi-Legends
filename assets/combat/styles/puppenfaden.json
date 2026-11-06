@@ -1,0 +1,406 @@
+{
+	"_doc": "Baukasten-Kampfstil Puppenfaden (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "puppenfaden",
+	"name": "Puppenfaden",
+	"element": "schatten",
+	"caster": "form",
+	"subtitle": "Puppenspielerin · Fäden ziehen, die Marionette schlägt nach",
+	"moveset": "res://assets/combat/movesets/lauffeuer.json",
+	"armed": false,
+	"colors": {
+		"main": "c08aff",
+		"accent": "ffd25c",
+		"light": "f0e0ff",
+		"dark": "180e24",
+		"white": "ffffff"
+	},
+	"kern": {
+		"type": "echo",
+		"name": "Marionette",
+		"desc": "Jeder Zug, der trifft, lässt deine Marionette nachschlagen: 0,4 s später trifft sie dieselben Gegner mit 40 % Schaden."
+	},
+	"loadout": {
+		"neutral": "fadenschnitt",
+		"forward": "puppenwurf",
+		"up": "fadenzug_hoch",
+		"down": "fadennetz"
+	},
+	"zuege": {
+		"fadenschnitt": {
+			"name": "Fadenschnitt",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Zwei weite Schnitte mit gespannten Fäden.",
+			"params": {
+				"hits": 2,
+				"damage": 6,
+				"len": 80,
+				"h": 24
+			},
+			"enhanced": {
+				"hits_add": 2,
+				"len_add": 20
+			},
+			"alts": [
+				{
+					"id": "fadengewirr",
+					"name": "Fadengewirr",
+					"sp": 2,
+					"desc": "Vier kürzere Schnitte.",
+					"params": {
+						"hits": 4,
+						"damage": 4,
+						"len": 56
+					}
+				},
+				{
+					"id": "fadenzug",
+					"name": "Fadenzug",
+					"sp": 2,
+					"desc": "Zieht Gegner heran.",
+					"params": {
+						"pull": 110
+					}
+				},
+				{
+					"id": "fadenkreuz",
+					"name": "Fadenkreuz",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				}
+			]
+		},
+		"puppenwurf": {
+			"name": "Puppenwurf",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Eine kleine Holzpuppe fliegt im Bogen und platzt.",
+			"params": {
+				"damage": 12,
+				"speed": 320,
+				"dist": 280,
+				"grav": 520,
+				"angle": -30,
+				"burst": true
+			},
+			"enhanced": {
+				"count_add": 2,
+				"damage_add": 3
+			},
+			"alts": [
+				{
+					"id": "puppenparade",
+					"name": "Puppenparade",
+					"sp": 2,
+					"desc": "Drei Puppen.",
+					"params": {
+						"count": 3,
+						"spread": 30,
+						"damage": 6
+					}
+				},
+				{
+					"id": "gerader_wurf",
+					"name": "Gerader Wurf",
+					"sp": 2,
+					"desc": "Gerade und schnell.",
+					"params": {
+						"grav": 0,
+						"angle": 0,
+						"speed": 520,
+						"burst": false,
+						"pierce": true
+					}
+				},
+				{
+					"id": "bumerangpuppe",
+					"name": "Bumerangpuppe",
+					"sp": 2,
+					"desc": "Kehrt am Faden zurück.",
+					"params": {
+						"grav": 0,
+						"angle": 0,
+						"burst": false,
+						"boomerang": true
+					}
+				}
+			]
+		},
+		"fadenzug_hoch": {
+			"name": "Fadenzug",
+			"kind": "saeule",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				9,
+				14,
+				16
+			],
+			"desc": "Fäden reißen den Gegner vor dir hoch.",
+			"params": {
+				"at": 60,
+				"width": 26,
+				"height": 100,
+				"damage": 12,
+				"launch": 400
+			},
+			"enhanced": {
+				"launch_add": 100
+			},
+			"alts": [
+				{
+					"id": "drei_faeden",
+					"name": "Drei Fäden",
+					"sp": 2,
+					"desc": "Drei Züge.",
+					"params": {
+						"count": 3,
+						"step": 40,
+						"damage": 7
+					}
+				},
+				{
+					"id": "selbstzug",
+					"name": "Selbstzug",
+					"sp": 2,
+					"desc": "Du ziehst dich selbst hoch.",
+					"params": {
+						"ride": true,
+						"at": 8
+					}
+				},
+				{
+					"id": "breiter_zug",
+					"name": "Breiter Zug",
+					"sp": 2,
+					"desc": "Breiter.",
+					"params": {
+						"width": 56,
+						"launch": 240
+					}
+				}
+			]
+		},
+		"fadennetz": {
+			"name": "Fadennetz",
+			"kind": "feld",
+			"dir": "down",
+			"sp": 1,
+			"cd": 2.0,
+			"frames": [
+				10,
+				8,
+				16
+			],
+			"desc": "Ein Fadennetz vor dir hält Gegner fest.",
+			"params": {
+				"at": 60,
+				"width": 90,
+				"life": 2.4,
+				"tick": 0.3,
+				"damage": 2.5,
+				"pull": 50
+			},
+			"enhanced": {
+				"life_add": 1.5,
+				"damage_add": 1
+			},
+			"alts": [
+				{
+					"id": "buehnennetz",
+					"name": "Bühnennetz",
+					"sp": 2,
+					"desc": "Breiter, mehr Sog.",
+					"params": {
+						"width": 140,
+						"pull": 90
+					}
+				},
+				{
+					"id": "schlinge",
+					"name": "Schlinge",
+					"sp": 2,
+					"desc": "Kurz, schleudert hoch.",
+					"params": {
+						"life": 1.0,
+						"damage": 8,
+						"launch": 220
+					}
+				},
+				{
+					"id": "fadenkokon",
+					"name": "Fadenkokon",
+					"sp": 2,
+					"desc": "Um dich herum.",
+					"params": {
+						"at": 0
+					}
+				}
+			]
+		},
+		"fadenwechsel": {
+			"name": "Fadenwechsel",
+			"kind": "schritt",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				4,
+				6,
+				12
+			],
+			"desc": "Du ziehst dich am Faden hinter den Gegner.",
+			"params": {
+				"dist": 140,
+				"damage": 9
+			},
+			"enhanced": {
+				"damage_add": 6,
+				"dist_add": 40
+			},
+			"alts": [
+				{
+					"id": "fadentor",
+					"name": "Fadentor",
+					"sp": 2,
+					"desc": "Nach vorn ohne Ziel.",
+					"params": {
+						"behind": false,
+						"dist": 120
+					}
+				},
+				{
+					"id": "fadenstoss",
+					"name": "Fadenstoß",
+					"sp": 2,
+					"desc": "Härter.",
+					"params": {
+						"damage": 15
+					}
+				},
+				{
+					"id": "weiter_faden",
+					"name": "Weiter Faden",
+					"sp": 2,
+					"desc": "Weiter.",
+					"params": {
+						"dist": 190
+					}
+				}
+			]
+		},
+		"gliederpuppe": {
+			"name": "Gliederpuppe",
+			"kind": "konter",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				4,
+				24,
+				14
+			],
+			"desc": "Eine Ersatzpuppe nimmt den Treffer, du schlägst zurück.",
+			"params": {
+				"stance": 0.45,
+				"counter_damage": 20
+			},
+			"enhanced": {
+				"counter_damage_add": 10
+			},
+			"alts": [
+				{
+					"id": "spiegelpuppe",
+					"name": "Spiegelpuppe",
+					"sp": 2,
+					"desc": "Wirft Geschosse zurück.",
+					"params": {
+						"reflect": true
+					}
+				},
+				{
+					"id": "lange_puppe",
+					"name": "Lange Puppe",
+					"sp": 2,
+					"desc": "Längeres Fenster.",
+					"params": {
+						"stance": 0.75,
+						"counter_damage": 13
+					}
+				},
+				{
+					"id": "flickpuppe",
+					"name": "Flickpuppe",
+					"sp": 2,
+					"desc": "Heilt 60 LP.",
+					"params": {
+						"heal": 60
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "grosse_buehne",
+				"name": "Große Bühne",
+				"kind": "feld",
+				"sp": 0,
+				"desc": "Der Vorhang fällt: Fäden fesseln alle Gegner auf der Bühne.",
+				"params": {
+					"damage": 4,
+					"pull": 70
+				}
+			},
+			{
+				"id": "puppenparade",
+				"name": "Puppenparade",
+				"kind": "ansturm",
+				"sp": 2,
+				"desc": "Deine Marionetten tanzen von Ziel zu Ziel.",
+				"params": {
+					"damage": 11,
+					"slashes": 8
+				}
+			},
+			{
+				"id": "fadenregen",
+				"name": "Fadenregen",
+				"kind": "regen",
+				"sp": 2,
+				"desc": "Goldene Fäden stechen von oben in alle Gegner.",
+				"params": {
+					"damage": 10,
+					"count": 22
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

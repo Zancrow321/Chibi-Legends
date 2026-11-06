@@ -355,7 +355,7 @@ func _step(delta: float) -> void:
 				_phase = "reveal"
 				_pt = 0.0
 	if _phase == "cutin" and fmod(_pt, 0.12) < delta:
-		var col := _col(str(_cutin.get("id", "")), ["gold", "yellow", "orange", "cyan"], GOLD)
+		var col := _col(str(_cutin.get("id", "")), ["gold", "yellow", "orange", "cyan", "main"], GOLD)
 		_burst(Vector2(randf() * size.x, size.y * 0.5 + randf_range(-90, 90)), col, 6)
 
 
@@ -444,8 +444,8 @@ func _draw() -> void:
 	draw_set_transform(off)
 	var b := _banner()
 	var sid := str(b.get("style", "glutatem"))
-	var accent := _col(sid, ["gold", "yellow", "orange", "cyan", "blue"], GOLD)
-	var deep := _col(sid, ["night", "deep", "ink", "ash"], NIGHT)
+	var accent := _col(sid, ["gold", "yellow", "orange", "cyan", "blue", "main"], GOLD)
+	var deep := _col(sid, ["night", "deep", "ink", "ash", "dark"], NIGHT)
 	# night sky behind everything
 	var bg := _tex("background")
 	if bg != null:
@@ -485,11 +485,19 @@ func _draw_shrine(W: float, H: float, b: Dictionary, sid: String, accent: Color)
 	var lx := 24.0
 	var ly := 92.0
 	var bl: Array = Gacha.banners()
-	for i in bl.size():
+	# many banners (37 styles): show a window around the chosen one
+	var rows := maxi(3, int((H - ly - 120.0) / 62.0))
+	var first := clampi(banner_i - rows / 2, 0, maxi(0, bl.size() - rows))
+	if first > 0:
+		_ink(Vector2(lx, ly - 6), "%d weitere oben (hoch/runter)" % first, 13, PAPER, HORIZONTAL_ALIGNMENT_LEFT, -1.0, INK)
+	if first + rows < bl.size():
+		_ink(Vector2(lx, ly + rows * 62.0 + 10), "%d weitere unten" % (bl.size() - first - rows), 13, PAPER, HORIZONTAL_ALIGNMENT_LEFT, -1.0, INK)
+	for j in mini(rows, bl.size() - first):
+		var i := first + j
 		var bi: Dictionary = bl[i]
 		var on := i == banner_i
-		var r := Rect2(lx + (14.0 if on else 0.0), ly + i * 62.0, 230, 54)
-		var c := _col(str(bi.style), ["gold", "yellow", "orange", "cyan"], GOLD)
+		var r := Rect2(lx + (14.0 if on else 0.0), ly + j * 62.0, 230, 54)
+		var c := _col(str(bi.style), ["gold", "yellow", "orange", "cyan", "main"], GOLD)
 		_slant(r, c if on else Color(PAPER, 0.92))
 		var em := _emblem(str(bi.style))
 		if em != null:
@@ -509,7 +517,7 @@ func _draw_shrine(W: float, H: float, b: Dictionary, sid: String, accent: Color)
 	if art != null:
 		draw_texture_rect(art, ar, false)
 	else:
-		var a1 := _col(sid, ["ink", "night", "deep", "ash"], NIGHT)
+		var a1 := _col(sid, ["ink", "night", "deep", "ash", "dark"], NIGHT)
 		for i in 16:
 			draw_rect(Rect2(ar.position.x, ar.position.y + ar.size.y * i / 16.0, ar.size.x, ar.size.y / 16.0 + 1), a1.lerp(accent.darkened(0.35), float(i) / 16.0))
 	# speed rays from the emblem
@@ -756,8 +764,8 @@ func _draw_card(i: int) -> void:
 func _draw_cutin(W: float, H: float) -> void:
 	var sid := str(_cutin.get("id", ""))
 	var a := clampf(_pt / 0.25, 0.0, 1.0)
-	var c1 := _col(sid, ["gold", "yellow", "orange", "cyan"], GOLD)
-	var c2 := _col(sid, ["ink", "night", "deep"], NIGHT)
+	var c1 := _col(sid, ["gold", "yellow", "orange", "cyan", "main"], GOLD)
+	var c2 := _col(sid, ["ink", "night", "deep", "dark"], NIGHT)
 	draw_rect(Rect2(0, 0, W, H), Color(0, 0, 0, 0.55 * a))
 	var bh := 230.0 * a
 	var y := H * 0.5
@@ -797,7 +805,7 @@ func _draw_glow() -> void:
 	var amt := 0.5 if FxSettings.level == 0 else 1.0
 	if _phase == "idle" or _phase == "done":
 		var sid := str(_banner().get("style", "glutatem"))
-		var accent := _col(sid, ["gold", "yellow", "orange", "cyan"], GOLD)
+		var accent := _col(sid, ["gold", "yellow", "orange", "cyan", "main"], GOLD)
 		var ar_c := Vector2(290.0 + (size.x - 620.0) * 0.5, 92 + (size.y - 202.0) * 0.45)
 		if _phase == "idle":
 			_soft(ar_c, 230.0 + sin(_t * 2.0) * 10.0, Color(accent, 0.45 * amt))
@@ -835,6 +843,6 @@ func _draw_glow() -> void:
 			g.draw_arc(c, 30.0 + age * 620.0, 0, TAU, 64, Color(r[1], 0.6 * (1.0 - age / 1.2) * amt), 10.0 * (1.0 - age / 1.2) + 2.0)
 	if _phase == "cutin":
 		var sid2 := str(_cutin.get("id", ""))
-		var c1 := _col(sid2, ["gold", "yellow", "orange", "cyan"], GOLD)
+		var c1 := _col(sid2, ["gold", "yellow", "orange", "cyan", "main"], GOLD)
 		_soft(Vector2(size.x * 0.24, size.y * 0.5), 260.0, Color(c1, 0.75 * amt))
 		_soft(Vector2(size.x * 0.6, size.y * 0.5), 420.0, Color(c1, 0.25 * amt))

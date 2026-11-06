@@ -1,0 +1,410 @@
+{
+	"_doc": "Baukasten-Kampfstil Vulkanherz (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "vulkanherz",
+	"name": "Vulkanherz",
+	"element": "feuer",
+	"caster": "form",
+	"subtitle": "Lavahammer · schwer, langsam, vulkanisch · Glutkern sammeln",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"armed": true,
+	"colors": {
+		"main": "ff6a1a",
+		"accent": "ffd23c",
+		"light": "ffc080",
+		"dark": "1e0a06",
+		"white": "fff0d0"
+	},
+	"kern": {
+		"type": "fokus",
+		"name": "Glutkern",
+		"desc": "Wer 1,5 s keinen Zug nutzt und nicht getroffen wird, sammelt Glutkern. Der nächste Zug verbraucht ihn: bis zu +60 % Schaden."
+	},
+	"loadout": {
+		"neutral": "hammerschlag",
+		"forward": "lavabrocken",
+		"up": "lavafontaene",
+		"down": "vulkanfall"
+	},
+	"zuege": {
+		"hammerschlag": {
+			"name": "Hammerschlag",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				14,
+				8,
+				20
+			],
+			"desc": "Ein schwerer Hammerschlag, Lava spritzt.",
+			"params": {
+				"hits": 1,
+				"damage": 18,
+				"len": 52,
+				"h": 44
+			},
+			"enhanced": {
+				"damage_add": 8,
+				"len_add": 14
+			},
+			"alts": [
+				{
+					"id": "doppelhammer",
+					"name": "Doppelhammer",
+					"sp": 2,
+					"desc": "Zwei Schläge.",
+					"params": {
+						"hits": 2,
+						"damage": 11
+					}
+				},
+				{
+					"id": "aufschlag",
+					"name": "Aufschlag",
+					"sp": 2,
+					"desc": "Schleudert hoch.",
+					"params": {
+						"launch": 320
+					}
+				},
+				{
+					"id": "rundschlag",
+					"name": "Rundschlag",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						],
+						"damage": 14
+					}
+				}
+			]
+		},
+		"lavabrocken": {
+			"name": "Lavabrocken",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Ein glühender Lavabrocken fliegt im Bogen.",
+			"params": {
+				"damage": 15,
+				"speed": 300,
+				"dist": 300,
+				"grav": 520,
+				"angle": -28,
+				"size": 1.3,
+				"burst": true
+			},
+			"enhanced": {
+				"count_add": 2,
+				"damage_add": 4
+			},
+			"alts": [
+				{
+					"id": "lavahagel",
+					"name": "Lavahagel",
+					"sp": 2,
+					"desc": "Drei Brocken.",
+					"params": {
+						"count": 3,
+						"spread": 30,
+						"damage": 7
+					}
+				},
+				{
+					"id": "lavastrom",
+					"name": "Lavastrom",
+					"sp": 2,
+					"desc": "Flacher Strom am Boden, durchschlägt.",
+					"params": {
+						"grav": 0,
+						"angle": 0,
+						"pierce": true,
+						"burst": false
+					}
+				},
+				{
+					"id": "riesenbrocken",
+					"name": "Riesenbrocken",
+					"sp": 2,
+					"desc": "Riesig.",
+					"params": {
+						"size": 2.0,
+						"damage": 22,
+						"speed": 220
+					}
+				}
+			]
+		},
+		"lavafontaene": {
+			"name": "Lavafontäne",
+			"kind": "saeule",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				9,
+				14,
+				16
+			],
+			"desc": "Drei Lavafontänen brechen vor dir aus.",
+			"params": {
+				"at": 50,
+				"width": 30,
+				"height": 90,
+				"damage": 9,
+				"launch": 340,
+				"count": 3,
+				"step": 40
+			},
+			"enhanced": {
+				"count_add": 2,
+				"damage_add": 3
+			},
+			"alts": [
+				{
+					"id": "einzelfontaene",
+					"name": "Einzelfontäne",
+					"sp": 2,
+					"desc": "Eine große Fontäne.",
+					"params": {
+						"count": 1,
+						"damage": 16,
+						"width": 40
+					}
+				},
+				{
+					"id": "magmaritt",
+					"name": "Magmaritt",
+					"sp": 2,
+					"desc": "Du fährst hoch.",
+					"params": {
+						"count": 1,
+						"ride": true,
+						"at": 8
+					}
+				},
+				{
+					"id": "lavawand",
+					"name": "Lavawand",
+					"sp": 2,
+					"desc": "Breite Wand.",
+					"params": {
+						"count": 1,
+						"width": 70,
+						"launch": 220
+					}
+				}
+			]
+		},
+		"vulkanfall": {
+			"name": "Vulkanfall",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Du schlägst den Hammer von oben in den Boden: der Boden bricht auf.",
+			"params": {
+				"damage": 16,
+				"radius": 50,
+				"waves": true,
+				"wave_damage": 9
+			},
+			"enhanced": {
+				"radius_add": 20,
+				"damage_add": 6
+			},
+			"alts": [
+				{
+					"id": "krater",
+					"name": "Vulkankrater",
+					"sp": 2,
+					"desc": "Großer Radius.",
+					"params": {
+						"radius": 80,
+						"waves": false
+					}
+				},
+				{
+					"id": "nachbeben",
+					"name": "Nachbeben",
+					"sp": 2,
+					"desc": "Zweiter Stoß.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "lavasee",
+					"name": "Lavasee",
+					"sp": 2,
+					"desc": "Lava bleibt 2 s.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"magmafeld": {
+			"name": "Magmafeld",
+			"kind": "feld",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 2.0,
+			"frames": [
+				10,
+				8,
+				16
+			],
+			"desc": "Der Boden vor dir wird zu brodelndem Magma.",
+			"params": {
+				"at": 60,
+				"width": 90,
+				"life": 2.4,
+				"tick": 0.35,
+				"damage": 4
+			},
+			"enhanced": {
+				"life_add": 1.5,
+				"damage_add": 1
+			},
+			"alts": [
+				{
+					"id": "lavaebene",
+					"name": "Lavaebene",
+					"sp": 2,
+					"desc": "Breiter.",
+					"params": {
+						"width": 140
+					}
+				},
+				{
+					"id": "magmasog",
+					"name": "Magmasog",
+					"sp": 2,
+					"desc": "Zieht hinein.",
+					"params": {
+						"pull": 60
+					}
+				},
+				{
+					"id": "geysir",
+					"name": "Magmageysir",
+					"sp": 2,
+					"desc": "Kurz, schleudert hoch.",
+					"params": {
+						"life": 1.0,
+						"damage": 9,
+						"launch": 240
+					}
+				}
+			]
+		},
+		"obsidianhaut": {
+			"name": "Obsidianhaut",
+			"kind": "konter",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				4,
+				24,
+				14
+			],
+			"desc": "Deine Haut erstarrt zu Obsidian, Angreifer prallen ab.",
+			"params": {
+				"stance": 0.5,
+				"counter_damage": 24
+			},
+			"enhanced": {
+				"counter_damage_add": 12
+			},
+			"alts": [
+				{
+					"id": "glutspiegel",
+					"name": "Glutspiegel",
+					"sp": 2,
+					"desc": "Wirft Geschosse zurück.",
+					"params": {
+						"reflect": true
+					}
+				},
+				{
+					"id": "erstarren",
+					"name": "Erstarren",
+					"sp": 2,
+					"desc": "Längeres Fenster.",
+					"params": {
+						"stance": 0.8,
+						"counter_damage": 16
+					}
+				},
+				{
+					"id": "glutantwort",
+					"name": "Glutantwort",
+					"sp": 2,
+					"desc": "Nach dem Konter 4 s +20 %.",
+					"params": {
+						"buff": 4
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "ausbruch",
+				"name": "Ausbruch",
+				"kind": "saeulen",
+				"sp": 0,
+				"desc": "Acht Lavasäulen brechen in einer Reihe vor dir aus.",
+				"params": {
+					"damage": 14,
+					"count": 8
+				}
+			},
+			{
+				"id": "aschenregen",
+				"name": "Aschenregen",
+				"kind": "regen",
+				"sp": 2,
+				"desc": "Glühende Lavabrocken regnen aus einer Aschewolke.",
+				"params": {
+					"damage": 12,
+					"count": 18
+				}
+			},
+			{
+				"id": "kernschmelze",
+				"name": "Kernschmelze",
+				"kind": "nova",
+				"sp": 2,
+				"desc": "Der Hammer trifft den Boden, und der Vulkan explodiert um dich.",
+				"params": {
+					"damage": 82,
+					"radius": 150
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

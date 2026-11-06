@@ -1,0 +1,410 @@
+{
+	"_doc": "Baukasten-Kampfstil Schattennaht (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "schattennaht",
+	"name": "Schattennaht",
+	"element": "schatten",
+	"caster": "form",
+	"subtitle": "Schatten-Nadelkunst · Nähte setzen, mit dem Fadenriss aufreißen",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"armed": true,
+	"colors": {
+		"main": "9a6cff",
+		"accent": "ff4a8a",
+		"light": "d8c8ff",
+		"dark": "120c1e",
+		"white": "f4eeff"
+	},
+	"kern": {
+		"type": "marken",
+		"name": "Naht",
+		"zuender": "fadenriss",
+		"desc": "Treffer nähen Schattenfäden in Gegner (bis 3 Nähte). Fadenriss reißt alle Nähte auf: +9 Schaden je Naht."
+	},
+	"loadout": {
+		"neutral": "nadelstich",
+		"forward": "schattennadeln",
+		"up": "schattensprung",
+		"down": "fadenriss"
+	},
+	"zuege": {
+		"nadelstich": {
+			"name": "Nadelstich",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Vier schnelle Stiche mit dem Dolch.",
+			"params": {
+				"hits": 4,
+				"damage": 3.5,
+				"len": 40,
+				"h": 24
+			},
+			"enhanced": {
+				"hits_add": 3
+			},
+			"alts": [
+				{
+					"id": "tausendstich",
+					"name": "Tausendstich",
+					"sp": 2,
+					"desc": "Sieben winzige Stiche.",
+					"params": {
+						"hits": 7,
+						"damage": 2.2
+					}
+				},
+				{
+					"id": "kreuzstich",
+					"name": "Kreuzstich",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				},
+				{
+					"id": "tiefstich",
+					"name": "Tiefstich",
+					"sp": 2,
+					"desc": "Zwei tiefe Stiche.",
+					"params": {
+						"hits": 2,
+						"damage": 8
+					}
+				}
+			]
+		},
+		"schattennadeln": {
+			"name": "Schattennadeln",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Drei Schattennadeln fliegen schnell nach vorn.",
+			"params": {
+				"count": 3,
+				"spread": 10,
+				"damage": 5,
+				"speed": 620,
+				"dist": 320,
+				"size": 0.7
+			},
+			"enhanced": {
+				"count_add": 2,
+				"damage_add": 1
+			},
+			"alts": [
+				{
+					"id": "nadelfaecher",
+					"name": "Nadelfächer",
+					"sp": 2,
+					"desc": "Fünf Nadeln in breitem Fächer.",
+					"params": {
+						"count": 5,
+						"spread": 40,
+						"damage": 4
+					}
+				},
+				{
+					"id": "fadennadel",
+					"name": "Fadennadel",
+					"sp": 2,
+					"desc": "Eine Nadel, durchschlägt alles.",
+					"params": {
+						"count": 1,
+						"pierce": true,
+						"damage": 12
+					}
+				},
+				{
+					"id": "suchnadel",
+					"name": "Suchnadel",
+					"sp": 2,
+					"desc": "Zwei Nadeln suchen ihr Ziel.",
+					"params": {
+						"count": 2,
+						"homing": 0.7,
+						"speed": 420
+					}
+				}
+			]
+		},
+		"schattensprung": {
+			"name": "Schattensprung",
+			"kind": "schritt",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				4,
+				6,
+				12
+			],
+			"desc": "Du tauchst in deinen Schatten und erscheinst hinter dem Gegner.",
+			"params": {
+				"dist": 130,
+				"damage": 10
+			},
+			"enhanced": {
+				"damage_add": 6,
+				"dist_add": 40
+			},
+			"alts": [
+				{
+					"id": "schattentor",
+					"name": "Schattentor",
+					"sp": 2,
+					"desc": "Nach vorn ohne Ziel.",
+					"params": {
+						"behind": false,
+						"dist": 110
+					}
+				},
+				{
+					"id": "naht_sprung",
+					"name": "Nahtsprung",
+					"sp": 2,
+					"desc": "Stärkerer Stich beim Auftauchen.",
+					"params": {
+						"damage": 15
+					}
+				},
+				{
+					"id": "weiter_sprung",
+					"name": "Weiter Sprung",
+					"sp": 2,
+					"desc": "Mehr Reichweite.",
+					"params": {
+						"dist": 180
+					}
+				}
+			]
+		},
+		"fallnaht": {
+			"name": "Fallnaht",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Von oben herab nähst du den Gegner an den Boden.",
+			"params": {
+				"damage": 12,
+				"radius": 40,
+				"waves": false
+			},
+			"enhanced": {
+				"damage_add": 6,
+				"radius_add": 14
+			},
+			"alts": [
+				{
+					"id": "schattenwellen",
+					"name": "Schattenwellen",
+					"sp": 2,
+					"desc": "Zwei Schattenwellen laufen los.",
+					"params": {
+						"waves": true,
+						"wave_damage": 7
+					}
+				},
+				{
+					"id": "schattenpfuhl",
+					"name": "Schattenpfuhl",
+					"sp": 2,
+					"desc": "Ein Schattenpfuhl bleibt 2 s.",
+					"params": {
+						"crater": 2.0
+					}
+				},
+				{
+					"id": "doppelnaht",
+					"name": "Doppelnaht",
+					"sp": 2,
+					"desc": "Zweiter Stoß kurz danach.",
+					"params": {
+						"aftershock": true,
+						"waves": true
+					}
+				}
+			]
+		},
+		"fadenriss": {
+			"name": "Fadenriss",
+			"kind": "hieb",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Ein langer Faden schnellt nach vorn, zieht Gegner heran und reißt alle Nähte auf.",
+			"params": {
+				"hits": 1,
+				"damage": 12,
+				"len": 120,
+				"h": 20,
+				"pull": 120
+			},
+			"enhanced": {
+				"damage_add": 8,
+				"len_add": 30
+			},
+			"alts": [
+				{
+					"id": "fadenpeitsche",
+					"name": "Fadenpeitsche",
+					"sp": 2,
+					"desc": "Zwei Peitschenhiebe ohne Sog.",
+					"params": {
+						"hits": 2,
+						"pull": 0,
+						"damage": 8
+					}
+				},
+				{
+					"id": "kurzer_riss",
+					"name": "Kurzer Riss",
+					"sp": 2,
+					"desc": "Kürzer, härter.",
+					"params": {
+						"len": 70,
+						"damage": 18
+					}
+				},
+				{
+					"id": "fadenwand",
+					"name": "Fadenwand",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				}
+			]
+		},
+		"schattennetz": {
+			"name": "Schattennetz",
+			"kind": "feld",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 2.0,
+			"frames": [
+				10,
+				8,
+				16
+			],
+			"desc": "Ein Netz aus Schattenfäden spannt sich vor dir auf.",
+			"params": {
+				"at": 60,
+				"width": 80,
+				"life": 2.2,
+				"tick": 0.3,
+				"damage": 2.5,
+				"pull": 40
+			},
+			"enhanced": {
+				"life_add": 1.5,
+				"damage_add": 1
+			},
+			"alts": [
+				{
+					"id": "spinnennetz",
+					"name": "Spinnennetz",
+					"sp": 2,
+					"desc": "Breiter, mehr Sog.",
+					"params": {
+						"width": 120,
+						"pull": 80
+					}
+				},
+				{
+					"id": "nahtfalle",
+					"name": "Nahtfalle",
+					"sp": 2,
+					"desc": "Kurz, harter Treffer.",
+					"params": {
+						"life": 1.0,
+						"damage": 8,
+						"launch": 200
+					}
+				},
+				{
+					"id": "schattenkokon",
+					"name": "Schattenkokon",
+					"sp": 2,
+					"desc": "Um dich herum.",
+					"params": {
+						"at": 0,
+						"width": 70
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "tausend_naehte",
+				"name": "Tausend Nähte",
+				"kind": "ansturm",
+				"sp": 0,
+				"desc": "Du nähst dich in acht Stichen durch alle Gegner.",
+				"params": {
+					"damage": 11,
+					"slashes": 8
+				}
+			},
+			{
+				"id": "schattenvorhang",
+				"name": "Schattenvorhang",
+				"kind": "feld",
+				"sp": 2,
+				"desc": "Ein Vorhang aus Schatten fällt über den Bildschirm und zieht alle zu dir.",
+				"params": {
+					"damage": 4,
+					"pull": 70
+				}
+			},
+			{
+				"id": "nadelsturm",
+				"name": "Nadelsturm",
+				"kind": "regen",
+				"sp": 2,
+				"desc": "Hunderte Nadeln regnen auf alle Gegner.",
+				"params": {
+					"damage": 9,
+					"count": 22
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}
