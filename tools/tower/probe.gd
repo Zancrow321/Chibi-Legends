@@ -37,7 +37,7 @@ func _initialize() -> void:
 		[t + 930, "goto:15"], [t + 936, "clear"], [t + 1080, "check_guard15"],
 		[t + 1090, "ko"], [t + 1096, "check_over"], [t + 1110, "shot:turm_06_lauf_vorbei"],
 		[t + 1300, "check_reset"],
-		[t + 1310, "overworld"], [t + 1420, "shot:turm_07_tore_im_hof"],
+		[t + 1310, "overworld"], [t + 1400, "hide"], [t + 1420, "shot:turm_07_tore_im_hof"],
 		[t + 1430, "quit"],
 	]
 
@@ -156,6 +156,8 @@ func _do(cmd: String) -> void:
 			p = null
 			tw = null
 			change_scene_to_file("res://scenes/main.tscn")
+		"hide":
+			_hide_select(root)
 		"near_guard":
 			if tw.boss != null:
 				p.global_position = Vector2(tw.boss.global_position.x - 150.0, 299)
