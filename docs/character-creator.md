@@ -85,3 +85,18 @@ in einem `edit-image-pixen`-Aufruf (1 Generierung), statt 10 Generierungen pro E
   `tools/bollwerk/fix_outfit_grids.py` misst je Raster, wie viel vom Grundkörper bedeckt ist,
   und erzeugt schlechte Raster neu (1 Generierung pro Raster). Eine Referenzfigur in Zelle 16
   hat nicht funktioniert (Modell zog die Figuren kaum an).
+
+## Glutklinge: Katana für Glutatem (2026-11-05)
+
+- `assets/creator/weapons/glutklinge.png` (40x40, Maßstab 1.5, Zweihandhaltung, kurzes rotes Band).
+  Glutatem trägt jetzt die Glutklinge statt des Verband-Zweihänders; alte Spielstände werden einmal
+  umgestellt (`CreatorCatalog.load_look`), danach bleibt die eigene Wahl.
+- Erzeugt mit PixelLab: Skizze `tools/glutatem/gen_katana_skizze.py` als Startbild, dann
+  `tools/glutatem/gen_katana.py katana 11,23,37,52` (gewählt: Seed 37), Palette Resurrect 64.
+- Item-Icon `assets/items/glutklinge.png` (`icon_key` im Item). Wer Glutatem spielt, bekommt die
+  Glutklinge einmal als seltene Waffe in die Tasche (`Profile.give_glutklinge`).
+- Skill-FX `assets/combat/vfx/glutatem/` (13 Bilder, `gen_katana.py fx`): 3 Katana-Schnittbögen
+  für J/K (quer, hoch, Stich, in der Glutfarbe der Klinge) und je ein Effekt für die 6 Züge,
+  den Meisterzug und Letzte Esse / Schmelzofen / Funkensturm. `GlutFx.burst()` zeichnet sie
+  additiv, damit der Bloom sie aufgreift.
+- Test: `xvfb-run godot --path . --fixed-fps 60 -s res://tools/glutatem/probe.gd -- <ordner>`.

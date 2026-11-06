@@ -154,6 +154,7 @@ func _intro() -> void:
 		_step = 1
 		kfx.ring(_center(), 60.0, WHITE, 0.45, 5.0)
 		kfx.motes(_center(), 16, 18.0, PALE, 0.7)
+		kfx.klang_burst("meisterzug", player.global_position + Vector2(0, -62), 110.0, 0.8, 0.0, false, Color.WHITE, 0.3)
 		room.fx.flash(0.35 * FxSettings.factor("flash"), Color(0.75, 0.88, 1.0))
 		Sfx.play("bell_tick", 10.0)
 	if _t >= INTRO:
@@ -168,6 +169,7 @@ func _intro() -> void:
 				Sfx.play("bell_clear")
 				room.fx.flash(0.4 * FxSettings.factor("flash"), WHITE)
 				kfx.word(player.global_position + Vector2(0, -80), "DONG!", WHITE, 32)
+				kfx.klang_burst("reiner_klang", _center(), 230.0, 0.6, 0.0, false, Color(1, 1, 1, 0.55), 0.2)
 				_clear_player()
 			_:
 				_next("grow")
@@ -207,6 +209,7 @@ func _ernte_cut() -> void:
 		kfx.arc(c, 136.0, _fa(-2.6), _fa(1.0), 14.0, WHITE, 0.45)
 		kfx.contour(c, 140.0, minf(_fa(-2.6), _fa(1.0)), maxf(_fa(-2.6), _fa(1.0)), 0.9)
 		kfx.word(c + Vector2(player.facing * 90.0, -100), "SHIIING!", WHITE, 36)
+		kfx.klang_burst("erntebogen", c + Vector2(player.facing * 40.0, -20.0), 280.0, 0.55, 0.0, player.facing < 0, Color.WHITE, 0.6)
 		room.fx.shake(10.0 * FxSettings.factor("shake"), player.facing)
 		room.fx.punch(0.1)
 		room.fx.flash(0.45 * FxSettings.factor("flash"), Color(0.8, 0.9, 1.0))
@@ -233,6 +236,7 @@ func _toll() -> void:
 		var c := caster.klangloch_pos()
 		kfx.ring(c, 40.0 + _step * 20.0, VIOLET if _step < 3 else WHITE, 0.5, 5.0)
 		kfx.word(c + Vector2(0, -40 - _step * 10), "DONG!", PALE if _step < 3 else WHITE, 24 + _step * 4)
+		kfx.klang_burst("seelenlauschen", c, 60.0 + _step * 24.0, 0.45, 0.0, false, Color(0.85, 0.75, 1.0), 0.3)
 		room.fx.shake((3.0 + _step * 2.0) * FxSettings.factor("shake"))
 		room.fx.punch(0.04)
 	_blade_len = lerpf(20.0, 130.0, clampf(_t / 1.0, 0.0, 1.0))
@@ -260,6 +264,7 @@ func _vertical() -> void:
 		kfx.arc(Vector2(x - player.facing * 60.0, player.global_position.y - 70.0), 90.0, _fa(-1.4), _fa(0.9), 30.0, WHITE, 0.5)
 		kfx.contour(Vector2(x - player.facing * 60.0, player.global_position.y - 70.0), 94.0, minf(_fa(-1.4), _fa(0.9)), maxf(_fa(-1.4), _fa(0.9)), 0.9)
 		kfx.word(top + Vector2(0, 20), "TOTENGELÄUT", WHITE, 30)
+		kfx.klang_burst("totengelaeut", Vector2(x, player.global_position.y - 76.0), 170.0, 0.55, 0.0, false, Color.WHITE, 0.5)
 		room.fx.shake(12.0 * FxSettings.factor("shake"))
 		room.fx.punch(0.12)
 		room.fx.flash(0.5 * FxSettings.factor("flash"), Color(0.85, 0.9, 1.0))

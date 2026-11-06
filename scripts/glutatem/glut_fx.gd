@@ -14,8 +14,12 @@ extends Node2D
 ## Heat ramp from cold ember to white-hot (index 0..5).
 const RAMP := [Color("5a1410"), Color("c2331f"), Color("ff3b1f"), Color("ff9a2a"), Color("ffd25c"), Color("fff4d0")]
 const SMOKE := Color(0.16, 0.12, 0.13, 0.5)
+## PixelLab effect sprites (tools/glutatem/gen_katana.py): katana slash arcs
+## and one burst per Zug / Meisterzug, drawn additive so the bloom picks them up.
+const PIC_DIR := "res://assets/combat/vfx/glutatem/%s.png"
 
 static var _glow_tex: Texture2D
+static var _pic_tex := {}
 
 var room: Node  # TrainingRoom
 var stage: Node  # DuskStage (lights), may be null
@@ -28,6 +32,8 @@ var _fx: Array = []        # additive particles
 var _smokes: Array = []
 var _words: Array = []
 var _lines: Array = []     # one-frame glow lines (blade heat), cleared each frame
+var _spr: Node2D           # PixelLab sprites (additive, crisp pixels)
+var _pics: Array = []
 
 
 static func heat(t: float) -> Color:
@@ -69,6 +75,14 @@ func _ready() -> void:
 	_add.material = m
 	_add.draw.connect(_draw_add)
 	add_child(_add)
+	_spr = Node2D.new()
+	_spr.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	var sm := CanvasItemMaterial.new()
+	sm.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	sm.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	_spr.material = sm
+	_spr.draw.connect(_draw_pics)
+	add_child(_spr)
 	_text = Node2D.new()
 	_text.z_index = 2
 	var tm := CanvasItemMaterial.new()
@@ -87,6 +101,24 @@ func light(pos: Vector2, col: Color, energy: float, size: float, life: float) ->
 
 
 # --- building blocks ----------------------------------------------------------
+
+static func pic(id: String) -> Texture2D:
+	if not _pic_tex.has(id):
+		var p := PIC_DIR % id
+		_pic_tex[id] = load(p) if ResourceLoader.exists(p) else null
+	return _pic_tex[id]
+
+
+## A PixelLab effect sprite that pops in, grows a little and fades.
+## `size` is the drawn width in px; `grow0` the start scale; `drift` moves it.
+func burst(id: String, pos: Vector2, size: float, life := 0.35, rot := 0.0, flip := false,
+		col := Color.WHITE, grow0 := 0.5, drift := Vector2.ZERO) -> void:
+	if pic(id) == null:
+		return
+	_pics.append({"id": id, "pos": pos, "size": size, "life": life, "max": life, "rot": rot,
+		"flip": flip, "col": col, "g0": grow0, "vel": drift})
+	glow(pos, Color(col.lerp(heat(0.7), 0.5), 0.55), size * 0.42, life * 0.7)
+
 
 func _push(d: Dictionary) -> void:
 	d.merge({"vel": Vector2.ZERO, "grav": 0.0, "drag": 1.0, "size": 4.0, "rot": 0.0, "spin": 0.0}, false)
@@ -236,6 +268,11 @@ func _process(delta: float) -> void:
 	for w in _words:
 		w.life -= delta
 	_words = _words.filter(func(w): return w.life > 0.0)
+	for q in _pics:
+		q.life -= delta
+		q.pos += q.vel * delta
+	_pics = _pics.filter(func(q): return q.life > 0.0)
+	_spr.queue_redraw()
 	_add.queue_redraw()
 	_smoke.queue_redraw()
 	_text.queue_redraw()
@@ -310,6 +347,18 @@ func _draw_add() -> void:
 				_add.draw_rect(Rect2(pos - Vector2(f.size, f.size) * 0.5, Vector2(f.size, f.size)), Color(c4.lerp(Color.WHITE, 0.3), 1.0 - p))
 			"ghost":
 				_draw_ghost(f, p)
+
+
+func _draw_pics() -> void:
+	for q in _pics:
+		var p: float = 1.0 - q.life / q.max
+		var k := minf(1.0, p * 5.0)
+		var sc: float = lerpf(q.g0, 1.0, 1.0 - pow(1.0 - k, 3.0)) * (1.0 + 0.12 * p)
+		var a: float = 1.0 if p < 0.4 else 1.0 - (p - 0.4) / 0.6
+		var s: float = q.size * sc
+		_spr.draw_set_transform(q.pos, q.rot, Vector2(-1.0 if q.flip else 1.0, 1.0))
+		_spr.draw_texture_rect(pic(q.id), Rect2(Vector2(-s, -s) * 0.5, Vector2(s, s)), false, Color(q.col, q.col.a * a))
+	_spr.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 
 func _draw_cone(f: Dictionary, p: float) -> void:

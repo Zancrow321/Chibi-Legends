@@ -349,6 +349,28 @@ func _cool_down() -> void:
 	_combo_t = 0.0
 
 
+## J/K swing of Glutatem: a PixelLab katana arc along the hitbox, tinted by
+## the blade's heat (white while Weißglut). Other styles keep their trails.
+func on_swing(move: Dictionary, center: Vector2, width: float) -> void:
+	if style == null or style.id != "glutatem" or fx == null or not fx.has_method("burst"):
+		return
+	var draw := str(move.get("draw", "slash"))
+	var ang := float(move.get("angle", 0.0))
+	var id := "schnitt_quer"
+	var rot := 0.0
+	if draw == "thrust":
+		id = "schnitt_stich"
+		rot = PI / 4.0 * player.facing  # the sprite points to the upper right
+	elif ang < -30.0 or float(move.get("launch", 0.0)) > 150.0:
+		id = "schnitt_hoch"
+	elif ang > 30.0:
+		rot = 0.5 * player.facing
+	var heavy: bool = move.get("button", "") == "heavy"
+	var col := trail_color().lerp(Color.WHITE, 0.45)
+	var size := clampf(width * (1.7 if heavy else 1.35), 40.0, 110.0)
+	fx.burst(id, center, size, 0.2 if not heavy else 0.26, rot, player.facing < 0, col, 0.7)
+
+
 ## Ordinary J/K hits keep the combo (and the glow) alive.
 func on_normal_hit() -> void:
 	if stage > 0:
@@ -468,6 +490,7 @@ func _tick_funkenschlag() -> void:
 				var side: float = float(s) * player.facing
 				var o := player.global_position + Vector2(side * 16.0, -16.0)
 				fx.anvil(o, 14.0, 8)
+				fx.burst("funkenschlag", o + Vector2(side * 14.0, -6.0), 60.0, 0.35, 0.0, side < 0.0)
 				fx.cone(o, side, float(params.len) + 10.0, 0.4, 0.26)
 				for i in 3:
 					fx.smoke(o + Vector2(side * 10.0, 0), 8.0, Vector2(side * 30.0, -20), 0.9)
@@ -507,6 +530,7 @@ func _schlacke_throw() -> void:
 	fx.anvil(tip, 10.0, 6)
 	fx.sparks(tip, -PI / 2.0, 0.8, 16, 260.0, 0.5)
 	fx.word(tip + Vector2(0, -24), "ZISCH!", style.color("orange"), 22)
+	fx.burst("schlackeregen", tip + Vector2(player.facing * 16.0, -18.0), 54.0, 0.45, 0.0, player.facing < 0, Color.WHITE, 0.5, Vector2(player.facing * 40.0, 30.0))
 	for i in n:
 		var k := 0.5 if n == 1 else float(i) / (n - 1)
 		var h := _hazard("brocken", tip)
@@ -536,6 +560,7 @@ func _tick_weissglut() -> void:
 			_strike(r, float(params.get("damage", 14)), 160.0, "heavy")
 			var c := player.global_position + Vector2(player.facing * 24.0, -24.0)
 			fx.anvil(c, 20.0, 9)
+			fx.burst("weissglut", c, 76.0, 0.3, PI / 4.0 * player.facing, player.facing < 0, Color.WHITE, 0.6)
 			fx.ring(c, 26.0, style.color("white"), 0.3, 4.0)
 			fx.sparks(c, 0.0 if player.facing > 0 else PI, 0.9, 20, 300.0, 0.5)
 			fx.word(c + Vector2(0, -30), "GLUT!", style.color("white"), 26)
@@ -596,6 +621,7 @@ func try_counter(from_x: float, projectile: Node = null) -> bool:
 	player.facing = 1 if from_x >= player.global_position.x else -1
 	var c := player.global_position + Vector2(player.facing * 8.0, -24.0)
 	fx.anvil(c, 24.0, 12)
+	fx.burst("ambosshaltung", c, 64.0, 0.45, 0.0, false, Color.WHITE, 0.4)
 	fx.ring(c, 30.0, style.color("yellow"), 0.4, 5.0)
 	fx.sparks(c, -PI / 2.0, PI, 30, 320.0, 0.7)
 	fx.word(c + Vector2(0, -44), "KONTER!", style.color("white"), 28)
@@ -624,6 +650,7 @@ func _tick_funkenflug() -> void:
 			_x_start = player.global_position.x
 			fx.anvil(player.global_position + Vector2(-player.facing * 4.0, -20.0), 14.0, 6)
 			fx.word(player.global_position + Vector2(0, -50), "FWUMM!", style.color("orange"), 24)
+			fx.burst("funkenflug", player.global_position + Vector2(player.facing * 24.0, -22.0), 84.0, 0.3, PI / 4.0 * player.facing, player.facing < 0, Color.WHITE, 0.5, Vector2(player.facing * 260.0, 0))
 	elif phase == "active" or phase == "back":
 		_ghost_t -= get_physics_process_delta_time()
 		if _ghost_t <= 0.0:
@@ -696,6 +723,7 @@ func _impact() -> void:
 	for i in 6:
 		fx.smoke(p + Vector2(randf_range(-20, 20), -6), randf_range(9, 15), Vector2(randf_range(-30, 30), -20), 1.3)
 	fx.word(p + Vector2(0, -56), "DONG!", style.color("yellow"), 30)
+	fx.burst("essensturz", p + Vector2(player.facing * 8.0, -40.0), 92.0, 0.45, 0.0, false, Color.WHITE, 0.4)
 	Sfx.play("glut_impact")
 	world.fx.shake(7.0 * FxSettings.factor("shake"))
 	world.fx.punch(0.04)

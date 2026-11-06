@@ -175,6 +175,8 @@ func init_style() -> void:
 		glut = GlutCaster.new()
 	add_child(glut)
 	glut.setup(self, style)
+	if style.id == "glutatem":
+		Profile.give_glutklinge()  # the style's own katana also as gear
 
 
 func _glut_busy() -> bool:
@@ -753,6 +755,8 @@ func _tick_move(delta: float) -> void:
 			"stun": maxf(0.3, (float(move.active) + float(move.recovery) + STUN_SLACK) / MoveSet.FPS
 				/ (glut.normal_speed() if glut != null else 1.0)),
 		})
+		if glut != null and move.button != "grab":
+			glut.on_swing(move, global_position + Vector2(facing * (ox + w * 0.5), float(hb[1]) + float(hb[3]) * 0.5), w)
 	if move_t >= MoveSet.length(move):
 		move = {}
 
