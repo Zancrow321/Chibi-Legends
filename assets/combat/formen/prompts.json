@@ -1,0 +1,832 @@
+{
+ "styles": {
+  "gezeitenklinge": {
+   "look": "deep ocean blue background, water swordsman theme, flowing water arcs, foam and spray, bright cyan and white highlights",
+   "fx": {
+    "gischtschnitt": "a wide curved horizontal sword slash arc made of rushing water and white foam spray, droplets flying",
+    "wellenschlag": "a rolling ocean wave curling forward to the right, crest of white foam, translucent blue water body",
+    "geysirstoss": "a tall vertical water geyser erupting upward from the ground, white foam column, splashing droplets at the top",
+    "wasserfall": "a powerful waterfall crashing down onto the ground, big splash crown and side waves, white foam",
+    "ebbehaltung": "a calm circular water barrier ripple ring around a point, swirling current, a bright counter splash",
+    "stroemungsschritt": "a horizontal fast water current streak dash trail with foam and speed lines"
+   },
+   "super": {
+    "grosse_flut": "a huge tsunami wave filling the whole frame, massive curling crest of white foam, deep blue",
+    "mahlstrom": "a giant spiral whirlpool vortex seen from the front, swirling water rings, bright center",
+    "gezeitenschnitt": "an x shaped crossing double water sword slash, sharp blue arcs with foam"
+   },
+   "names": {
+    "gischtschnitt": "Gischtschnitt",
+    "wellenschlag": "Wellenschlag",
+    "geysirstoss": "Geysirstoß",
+    "wasserfall": "Wasserfall",
+    "ebbehaltung": "Ebbehaltung",
+    "stroemungsschritt": "Strömungsschritt",
+    "grosse_flut": "Große Flut",
+    "mahlstrom": "Mahlstrom",
+    "gezeitenschnitt": "Gezeitenschnitt"
+   }
+  },
+  "donnerschritt": {
+   "look": "dark night purple background, lightning martial artist theme, crackling electric yellow bolts with cyan glow, white hot sparks",
+   "fx": {
+    "funkenhaken": "a cluster of electric punch impact bursts, jagged yellow lightning sparks and cyan glow",
+    "blitzschritt": "a horizontal lightning bolt dash streak, zigzag electric trail with bright yellow core and cyan edges",
+    "gewittersaeule": "a vertical lightning bolt striking down from the sky into the ground, bright yellow white column, electric splash",
+    "donnerkeil": "a lightning ground slam impact, electric dome shockwave with yellow bolts spreading along the floor",
+    "kugelblitz": "a glowing ball lightning orb, sphere of crackling yellow electricity with cyan arcs",
+    "hochspannung": "an electric aura of yellow lightning crackling around a body silhouette shape, energy sparks, glowing outline"
+   },
+   "super": {
+    "himmelszorn": "many lightning bolts striking down from storm clouds, yellow white electric columns",
+    "tausend_volt": "a zigzag lightning dash streak connecting points, blinding yellow trail",
+    "gewitterkern": "a massive electric sphere explosion, ring of lightning bolts radiating outward"
+   },
+   "names": {
+    "funkenhaken": "Funkenhaken",
+    "blitzschritt": "Blitzschritt",
+    "gewittersaeule": "Gewittersäule",
+    "donnerkeil": "Donnerkeil",
+    "kugelblitz": "Kugelblitz",
+    "hochspannung": "Hochspannung",
+    "himmelszorn": "Himmelszorn",
+    "tausend_volt": "Tausend Volt",
+    "gewitterkern": "Gewitterkern"
+   }
+  },
+  "frostlotus": {
+   "look": "icy pale navy background, ice fan dancer theme, frost lotus flowers, crystal ice petals, pale blue and soft pink with white sparkle",
+   "fx": {
+    "faecherschnitt": "a graceful curved fan sweep arc of frost and ice petals, pale blue shimmering crescent with pink glints",
+    "eisbluetenwurf": "a spinning ice lotus flower shuriken made of crystal petals, frosty trail",
+    "eisdorn": "a sharp crystal ice spike erupting upward from the ground, jagged pale blue shards, frost mist",
+    "lotusteich": "a frozen pond ice circle on the ground seen from the side, lotus flowers of ice, cold mist rising",
+    "lotusbruch": "an ice flower shattering explosion, crystal shards bursting outward in a star, pale blue and pink",
+    "schneeflockenschritt": "a burst of snowflakes and ice glitter, a teleport swirl of white snow"
+   },
+   "super": {
+    "ewiger_winter": "a blizzard of snow and ice crystals filling the frame, swirling white wind",
+    "lotusbluete": "a gigantic blooming lotus flower made of ice crystal, pale blue and pink, radiant",
+    "faechertanz": "crossing elegant fan slash arcs of frost, ice petals scattering"
+   },
+   "names": {
+    "faecherschnitt": "Fächerschnitt",
+    "eisbluetenwurf": "Eisblütenwurf",
+    "eisdorn": "Eisdorn",
+    "lotusteich": "Lotusteich",
+    "lotusbruch": "Lotusbruch",
+    "schneeflockenschritt": "Schneeflockenschritt",
+    "ewiger_winter": "Ewiger Winter",
+    "lotusbluete": "Lotusblüte",
+    "faechertanz": "Fächertanz"
+   }
+  },
+  "erdenfaust": {
+   "look": "warm dark brown background, earth monk martial artist theme, cracked rock, boulders, sand dust, ochre and orange glow",
+   "fx": {
+    "steinknoechel": "a heavy rock fist punch impact, cracking stone fragments and dust burst, orange glow",
+    "felswurf": "a big round boulder with cracks flying, rock debris and dust trail",
+    "felssaeule": "a stone pillar bursting up from the ground, cracked rock column with flying gravel",
+    "bergfall": "a massive ground pound impact, cracked earth crater with rocks flying up and dust waves",
+    "granithaut": "a granite stone shield shell of hexagon rock plates, cracking impact with orange sparks",
+    "treibsand": "a swirling quicksand pit vortex on the ground seen from the side, sand grains spiraling, dust"
+   },
+   "super": {
+    "bergsturz": "a rockslide of many boulders falling from above, dust clouds, orange glow",
+    "erdkern": "a giant ring explosion of molten earth and rock shards bursting outward",
+    "zehn_saeulen": "a row of tall stone pillars erupting from the ground, cracked rock"
+   },
+   "names": {
+    "steinknoechel": "Steinknöchel",
+    "felswurf": "Felswurf",
+    "felssaeule": "Felssäule",
+    "bergfall": "Bergfall",
+    "granithaut": "Granithaut",
+    "treibsand": "Treibsand",
+    "bergsturz": "Bergsturz",
+    "erdkern": "Erdkern",
+    "zehn_saeulen": "Zehn Säulen"
+   }
+  },
+  "schattennaht": {
+   "look": "pitch black violet background, shadow ninja seamstress theme, glowing violet threads and needles, magenta stitches, dark smoke",
+   "fx": {
+    "nadelstich": "rapid dagger stab streaks with violet shadow thread trails, magenta glint sparks",
+    "schattennadeln": "thin glowing violet shadow needles flying with long thread trails, motion streaks",
+    "schattensprung": "a dark shadow portal swirl of black smoke and violet threads, teleport burst",
+    "fallnaht": "a dagger plunging down with a violet thread spiral, shadow splash on the ground",
+    "fadenriss": "a long taut violet shadow thread whip lashing forward, magenta stitches tearing open with sparks",
+    "schattennetz": "a glowing violet spider web of shadow threads stretched wide, dark smoke"
+   },
+   "super": {
+    "tausend_naehte": "a web of crisscrossing violet thread slashes, needle streaks everywhere",
+    "schattenvorhang": "a falling curtain of dark shadow threads covering the frame, violet glow",
+    "nadelsturm": "a rain of glowing violet needles falling diagonally, thread trails"
+   },
+   "names": {
+    "nadelstich": "Nadelstich",
+    "schattennadeln": "Schattennadeln",
+    "schattensprung": "Schattensprung",
+    "fallnaht": "Fallnaht",
+    "fadenriss": "Fadenriss",
+    "schattennetz": "Schattennetz",
+    "tausend_naehte": "Tausend Nähte",
+    "schattenvorhang": "Schattenvorhang",
+    "nadelsturm": "Nadelsturm"
+   }
+  },
+  "sonnenlanze": {
+   "look": "warm golden sunrise background, holy sun lancer theme, radiant golden light rays, white hot sun, orange glow",
+   "fx": {
+    "lanzenstoss": "a straight golden spear thrust streak of light with a bright sun star at the tip",
+    "sonnenstrahl": "a long horizontal beam of golden sunlight with white hot core and glowing rays",
+    "lichtsaeule": "a vertical column of holy golden light shining down from the sky, rays and sparkles",
+    "sonnensturz": "a spear plunging down creating a golden sunburst impact on the ground, light rays radiating",
+    "kometenstoss": "a golden comet streak dashing horizontally with a long bright tail of light",
+    "mittagsglanz": "a radiant sun halo aura of golden rays around a center, warm holy glow, sparkles"
+   },
+   "super": {
+    "zenit": "a gigantic horizontal beam of sunlight, blinding white gold core, rays",
+    "sonnenrad": "a radiant sun wheel of golden spears pointing outward in a circle, explosion of light",
+    "lanzenregen": "many golden light spears raining down from the sky, glowing streaks"
+   },
+   "names": {
+    "lanzenstoss": "Lanzenstoß",
+    "sonnenstrahl": "Sonnenstrahl",
+    "lichtsaeule": "Lichtsäule",
+    "sonnensturz": "Sonnensturz",
+    "kometenstoss": "Kometenstoß",
+    "mittagsglanz": "Mittagsglanz",
+    "zenit": "Zenit",
+    "sonnenrad": "Sonnenrad",
+    "lanzenregen": "Lanzenregen"
+   }
+  },
+  "giftranke": {
+   "look": "dark jungle green background, poison vine druid theme, thorny vines, toxic green spores, purple flower petals, glowing",
+   "fx": {
+    "rankenpeitsche": "a long thorny green vine whip lash arc, flying leaves and toxic spores",
+    "sporenkapsel": "a round green spore pod bursting into a toxic cloud, purple specks and glowing spores",
+    "dornenspross": "a thorny green plant stalk shooting up from the ground with sharp spikes and leaves",
+    "giftmoor": "a bubbling toxic green swamp puddle on the ground with rising poison fumes",
+    "bluetenknall": "a big purple and green poison flower blooming open in an explosion of petals and spores",
+    "rankengriff": "a vine swinging dash trail, green motion streak with leaves and thorns"
+   },
+   "super": {
+    "urwald": "an overgrown jungle of thorny vines filling the frame, toxic glow, purple flowers",
+    "sporensturm": "a storm of falling glowing poison spore pods bursting in green clouds",
+    "riesenbluete": "a gigantic poison flower blooming, huge purple petals and green toxic aura"
+   },
+   "names": {
+    "rankenpeitsche": "Rankenpeitsche",
+    "sporenkapsel": "Sporenkapsel",
+    "dornenspross": "Dornenspross",
+    "giftmoor": "Giftmoor",
+    "bluetenknall": "Blütenknall",
+    "rankengriff": "Rankengriff",
+    "urwald": "Urwald",
+    "sporensturm": "Sporensturm",
+    "riesenbluete": "Riesenblüte"
+   }
+  },
+  "sturmfeder": {
+   "look": "teal sky background, mountain wind tengu fan theme, swirling green wind gusts, white feathers, cyan air currents",
+   "fx": {
+    "windschnitt": "a wide crescent wind slash arc, swirling pale green air with white feathers",
+    "federklingen": "sharp white feathers flying like blades with green wind trails",
+    "windhose": "a spinning tornado whirlwind column of green wind with leaves and feathers",
+    "fallwind": "a downward wind blast hitting the ground, swirling air rings and dust pushed sideways",
+    "federschritt": "a swirl of white feathers and green wind gust, teleport puff",
+    "orkanstoss": "a horizontal cone blast of compressed green wind with swirling air rings and feathers"
+   },
+   "super": {
+    "taifun": "a huge typhoon spiral of green wind filling the frame, feathers and debris",
+    "federsturm": "a storm of sharp white feathers raining down diagonally with green wind",
+    "himmelsschnitt": "crisscrossing green wind slashes in the air, feather trails"
+   },
+   "names": {
+    "windschnitt": "Windschnitt",
+    "federklingen": "Federklingen",
+    "windhose": "Windhose",
+    "fallwind": "Fallwind",
+    "federschritt": "Federschritt",
+    "orkanstoss": "Orkanstoß",
+    "taifun": "Taifun",
+    "federsturm": "Federsturm",
+    "himmelsschnitt": "Himmelsschnitt"
+   }
+  },
+  "rotschwur": {
+   "look": "black crimson background, blood oath swordsman theme, deep red crescent slashes, scarlet mist, dark red glow with pale pink highlights",
+   "fx": {
+    "schwurschnitt": "a heavy curved crimson sword slash arc with scarlet blood mist, dark red glow",
+    "blutsichel": "a flying crimson crescent energy blade, sharp red arc with dark smoke trail",
+    "blutfontaene": "a crimson energy geyser bursting up from the ground, red mist spray",
+    "urteil": "a sword plunging down into the ground with a crimson shockwave and red cracks",
+    "blutpakt": "a dark crimson blood aura with swirling red mist and a glowing red sigil",
+    "roter_faden": "a fast horizontal crimson dash streak, red line with scarlet mist"
+   },
+   "super": {
+    "letzter_schwur": "many crossing crimson sword slashes, red arcs and blood mist",
+    "blutmeer": "a sea of glowing crimson energy covering the ground, red mist rising",
+    "scharlachstrahl": "a giant horizontal crimson energy beam, dark red with bright core"
+   },
+   "names": {
+    "schwurschnitt": "Schwurschnitt",
+    "blutsichel": "Blutsichel",
+    "blutfontaene": "Blutfontäne",
+    "urteil": "Urteil",
+    "blutpakt": "Blutpakt",
+    "roter_faden": "Roter Faden",
+    "letzter_schwur": "Letzter Schwur",
+    "blutmeer": "Blutmeer",
+    "scharlachstrahl": "Scharlachstrahl"
+   }
+  },
+  "sternensang": {
+   "look": "deep starry night background, astral star mage theme, glowing constellations, shooting stars, lavender and gold sparkles",
+   "fx": {
+    "sternfunke": "a burst of glowing star sparkles, small five pointed stars exploding with lavender glow",
+    "sternschnuppe": "a glowing shooting star with a long sparkling tail, gold and lavender",
+    "sternregen": "small stars falling from the sky like rain, glowing streaks",
+    "meteorfall": "a meteor impact on the ground, glowing star dust explosion with rays",
+    "sternbild": "a glowing constellation pattern of stars connected by lines of light, magic circle",
+    "lichtjahr": "a sparkling teleport burst of stars and a ring of light"
+   },
+   "super": {
+    "supernova": "a supernova explosion, blinding white star burst with lavender and gold rings",
+    "milchstrasse": "a galaxy milky way stream beam of stars flowing horizontally, glowing",
+    "sternenhagel": "many shooting stars falling diagonally from the night sky, sparkling trails"
+   },
+   "names": {
+    "sternfunke": "Sternfunke",
+    "sternschnuppe": "Sternschnuppe",
+    "sternregen": "Sternregen",
+    "meteorfall": "Meteorfall",
+    "sternbild": "Sternbild",
+    "lichtjahr": "Lichtjahr",
+    "supernova": "Supernova",
+    "milchstrasse": "Milchstraße",
+    "sternenhagel": "Sternenhagel"
+   }
+  },
+  "eisenkette": {
+   "look": "dark steel grey background, chain sickle warrior theme, heavy iron chains, steel sickle blade, orange sparks on metal",
+   "fx": {
+    "sichelschwung": "a sickle on a chain swinging in a wide arc, steel chain links and orange sparks",
+    "kettenwurf": "a spinning steel sickle blade flying on a chain, motion blur and sparks",
+    "kettenkreisel": "a circular spinning chain ring around a center, steel links blur with sparks",
+    "ankerfall": "a heavy iron anchor slamming into the ground, chains flying, cracked earth and sparks",
+    "kettenschild": "a spinning chain shield disc blocking a strike, steel sparks bursting",
+    "kettenzug": "a chain pulling a dash streak forward, steel links stretched, sparks"
+   },
+   "super": {
+    "kettenkaefig": "a cage of crisscrossing iron chains filling the frame, sparks at the links",
+    "tausend_glieder": "crossing sickle slash trails with chain lines between them",
+    "ankersturz": "a row of heavy iron anchors crashing down into the ground with chains"
+   },
+   "names": {
+    "sichelschwung": "Sichelschwung",
+    "kettenwurf": "Kettenwurf",
+    "kettenkreisel": "Kettenkreisel",
+    "ankerfall": "Ankerfall",
+    "kettenschild": "Kettenschild",
+    "kettenzug": "Kettenzug",
+    "kettenkaefig": "Kettenkäfig",
+    "tausend_glieder": "Tausend Glieder",
+    "ankersturz": "Ankersturz"
+   }
+  },
+  "trommelherz": {
+   "look": "dark festival red background, taiko drum brawler theme, round sound shockwaves, festival orange and yellow, comic impact lines",
+   "fx": {
+    "paukenschlag": "a round drum impact sound shockwave ring burst, orange comic impact lines",
+    "schallwelle": "concentric arc sound waves flying to the right, orange and yellow rings",
+    "bodentrommel": "a vertical column of sound shockwave rings shooting up from the ground, orange",
+    "grosser_schlag": "a giant ground drum slam shockwave, big round rings spreading along the floor",
+    "festrhythmus": "a festive energy aura of orange and yellow sound rings and confetti sparks",
+    "trommelwirbel": "a rapid drum roll flurry of many small orange shockwave rings in a circle"
+   },
+   "super": {
+    "donnerfest": "a massive sound explosion of huge orange and yellow rings, festival fireworks",
+    "schallkanone": "a huge horizontal sound beam made of stacked shockwave rings, orange",
+    "festumzug": "a marching row of sound wave pillars, orange rings and confetti"
+   },
+   "names": {
+    "paukenschlag": "Paukenschlag",
+    "schallwelle": "Schallwelle",
+    "bodentrommel": "Bodentrommel",
+    "grosser_schlag": "Großer Schlag",
+    "festrhythmus": "Festrhythmus",
+    "trommelwirbel": "Trommelwirbel",
+    "donnerfest": "Donnerfest",
+    "schallkanone": "Schallkanone",
+    "festumzug": "Festumzug"
+   }
+  },
+  "nebelfuchs": {
+   "look": "misty midnight blue background, fox spirit illusion theme, pale blue foxfire flames, fox silhouettes of mist, soft orange accents",
+   "fx": {
+    "fuchsklaue": "three glowing claw slash marks of pale blue foxfire, misty sparks",
+    "fuchsfeuer": "floating pale blue foxfire will-o-wisp flames with soft glowing tails",
+    "nebelschritt": "a puff of pale blue mist shaped like a fox, teleport swirl",
+    "fuchssturz": "a fox shaped pale blue spirit diving onto the ground, mist splash",
+    "irrlichtnebel": "a drifting mist cloud with floating pale blue foxfire lights",
+    "trugbildkonter": "a mist fox illusion shattering into blue wisps, a counter flash"
+   },
+   "super": {
+    "neunschweif": "nine glowing pale blue fox tails fanning out, spirit flames",
+    "fuchsfeuerreigen": "a rain of pale blue foxfire flames falling from the night sky",
+    "nebelreich": "a dreamy realm of thick pale blue mist with fox silhouettes and lights"
+   },
+   "names": {
+    "fuchsklaue": "Fuchsklaue",
+    "fuchsfeuer": "Fuchsfeuer",
+    "nebelschritt": "Nebelschritt",
+    "fuchssturz": "Fuchssturz",
+    "irrlichtnebel": "Irrlichtnebel",
+    "trugbildkonter": "Trugbildkonter",
+    "neunschweif": "Neunschweif",
+    "fuchsfeuerreigen": "Fuchsfeuerreigen",
+    "nebelreich": "Nebelreich"
+   }
+  },
+  "drachenzorn": {
+   "look": "dark crimson background, dragon fist martial artist theme, flaming dragon shapes of fire, scales, orange and gold flames",
+   "fx": {
+    "drachenkralle": "flaming dragon claw slash marks, three fiery streaks with orange sparks",
+    "drachenodem": "a horizontal cone of dragon fire breath, roaring orange flames with yellow core",
+    "aufsteigender_drache": "a fire dragon spiraling upward in a column of flames, scales of fire",
+    "drachenfall": "a fiery dragon dive impact, flaming explosion on the ground with fire waves",
+    "drachenansturm": "a dragon shaped fire dash streak charging forward, flaming trail",
+    "schuppenpanzer": "a glowing aura of orange dragon scales and flames surrounding a center"
+   },
+   "super": {
+    "drachenkoenig": "a giant fire dragon head breathing a huge horizontal stream of flames",
+    "flammenhimmel": "many small fire dragons diving down from the sky like meteors",
+    "drachenwirbel": "a fire dragon coiling in a circle and exploding outward in flames"
+   },
+   "names": {
+    "drachenkralle": "Drachenkralle",
+    "drachenodem": "Drachenodem",
+    "aufsteigender_drache": "Aufsteigender Drache",
+    "drachenfall": "Drachenfall",
+    "drachenansturm": "Drachenansturm",
+    "schuppenpanzer": "Schuppenpanzer",
+    "drachenkoenig": "Drachenkönig",
+    "flammenhimmel": "Flammenhimmel",
+    "drachenwirbel": "Drachenwirbel"
+   }
+  },
+  "kristallherz": {
+   "look": "dark teal background, crystal body fighter theme, faceted cyan crystals, prism rainbow glints, violet accents, sparkles",
+   "fx": {
+    "splitterhieb": "a crystal fist punch impact, sharp cyan crystal shards flying, prism glints",
+    "kristallsplitter": "sharp faceted cyan crystal shards flying forward, sparkling trails",
+    "kristalldruse": "a cluster of tall cyan crystals erupting from the ground, prism sparkles",
+    "kristallsturz": "a crystal ground impact, ring of cyan crystal spikes bursting from the floor",
+    "prismenhaut": "a faceted crystal prism shield refracting rainbow light, cyan shards",
+    "kristallgarten": "a field of small cyan crystal spikes growing on the ground, sparkling"
+   },
+   "super": {
+    "prismastrahl": "a huge horizontal rainbow prism light beam bursting from a crystal",
+    "kristallregen": "sharp cyan crystal spears raining down from above, sparkles",
+    "diamantkern": "a diamond core explosion, faceted crystal shards bursting outward in all directions"
+   },
+   "names": {
+    "splitterhieb": "Splitterhieb",
+    "kristallsplitter": "Kristallsplitter",
+    "kristalldruse": "Kristalldruse",
+    "kristallsturz": "Kristallsturz",
+    "prismenhaut": "Prismenhaut",
+    "kristallgarten": "Kristallgarten",
+    "prismastrahl": "Prismastrahl",
+    "kristallregen": "Kristallregen",
+    "diamantkern": "Diamantkern"
+   }
+  },
+  "papierkranich": {
+   "look": "dark parchment brown background, paper talisman mage theme, origami paper cranes, white paper seals with red ink glyphs, glowing",
+   "fx": {
+    "papierklinge": "sharp folded paper blade slashes, white paper strips with red ink lines flying",
+    "kranichflug": "white origami paper cranes flying with glowing trails",
+    "siegelsaeule": "a vertical pillar of light rising from a paper seal talisman with red glyphs",
+    "bannkreis": "a magic circle of white paper talismans with red ink glyphs on the ground, glowing",
+    "siegelbruch": "an explosion of paper seals bursting into white light and red ink sparks",
+    "faltschritt": "a swirl of white paper sheets folding in a teleport burst"
+   },
+   "super": {
+    "tausend_kraniche": "a flock of thousands of white origami cranes diving down, glowing",
+    "grosses_siegel": "a giant glowing paper seal talisman magic circle with red glyphs covering the frame",
+    "papiersturm": "a whirlwind storm of white paper strips and seals, red ink sparks"
+   },
+   "names": {
+    "papierklinge": "Papierklinge",
+    "kranichflug": "Kranichflug",
+    "siegelsaeule": "Siegelsäule",
+    "bannkreis": "Bannkreis",
+    "siegelbruch": "Siegelbruch",
+    "faltschritt": "Faltschritt",
+    "tausend_kraniche": "Tausend Kraniche",
+    "grosses_siegel": "Großes Siegel",
+    "papiersturm": "Papiersturm"
+   }
+  },
+  "puppenfaden": {
+   "look": "dark theater purple background, puppeteer theme, glowing golden strings, wooden marionette joints, violet stage light",
+   "fx": {
+    "fadenschnitt": "glowing golden puppet strings slicing in sharp straight lines, sparks",
+    "puppenwurf": "a small wooden marionette doll flying with golden strings, bursting",
+    "fadenzug_hoch": "golden strings pulling upward from above, vertical glowing lines with sparks",
+    "fadennetz": "a web of glowing golden strings stretched in a grid, violet glow",
+    "fadenwechsel": "a golden string snapping with a teleport burst of violet sparks",
+    "gliederpuppe": "a wooden marionette decoy breaking apart into pieces with golden strings, counter flash"
+   },
+   "super": {
+    "grosse_buehne": "a theater stage with violet curtains and golden puppet strings everywhere",
+    "puppenparade": "dancing wooden marionettes on golden strings crossing paths, sparks",
+    "fadenregen": "many glowing golden strings shooting down from above like rain"
+   },
+   "names": {
+    "fadenschnitt": "Fadenschnitt",
+    "puppenwurf": "Puppenwurf",
+    "fadenzug_hoch": "Fadenzug",
+    "fadennetz": "Fadennetz",
+    "fadenwechsel": "Fadenwechsel",
+    "gliederpuppe": "Gliederpuppe",
+    "grosse_buehne": "Große Bühne",
+    "puppenparade": "Puppenparade",
+    "fadenregen": "Fadenregen"
+   }
+  },
+  "klingenwirbel": {
+   "look": "dark teal background, double bladed spinning weapon theme, circular cyan wind slashes, silver steel glints",
+   "fx": {
+    "doppelschnitt": "two crossing cyan blade slash arcs, silver steel glint and wind",
+    "wurfklinge": "a spinning double bladed weapon flying like a disc, cyan circular blur",
+    "wirbelaufwind": "a spinning cyan blade tornado rising upward, silver arcs",
+    "kreiselfall": "a spinning blade wheel slamming into the ground, circular cyan wind slashes",
+    "schnittwind": "a horizontal spinning blade dash with circular cyan slash trails",
+    "klingenkreisel": "a circular ring of spinning blades around a center, cyan wind and silver steel"
+   },
+   "super": {
+    "klingensturm": "a storm of spinning blades and cyan wind filling the frame",
+    "hundert_schnitte": "dozens of crossing cyan blade slashes in the air",
+    "orkanklinge": "a horizontal hurricane beam of cyan wind blades"
+   },
+   "names": {
+    "doppelschnitt": "Doppelschnitt",
+    "wurfklinge": "Wurfklinge",
+    "wirbelaufwind": "Wirbelaufwind",
+    "kreiselfall": "Kreiselfall",
+    "schnittwind": "Schnittwind",
+    "klingenkreisel": "Klingenkreisel",
+    "klingensturm": "Klingensturm",
+    "hundert_schnitte": "Hundert Schnitte",
+    "orkanklinge": "Orkanklinge"
+   }
+  },
+  "vulkanherz": {
+   "look": "black volcanic rock background, lava hammer warrior theme, molten lava cracks, magma eruptions, orange and yellow glow, black obsidian",
+   "fx": {
+    "hammerschlag": "a heavy hammer smash impact with molten lava splash and orange sparks",
+    "lavabrocken": "a glowing molten lava rock with cracks flying, dripping magma",
+    "lavafontaene": "a molten lava eruption fountain shooting up from cracked ground, magma drops",
+    "vulkanfall": "a hammer ground slam cracking the earth open with lava bursting out, shockwave",
+    "magmafeld": "a bubbling pool of molten magma on the ground, glowing cracks and rising heat",
+    "obsidianhaut": "a black obsidian rock shell with glowing lava cracks blocking a strike, sparks"
+   },
+   "super": {
+    "ausbruch": "a row of huge lava eruptions bursting from the ground, magma and smoke",
+    "aschenregen": "molten lava rocks raining down from a dark ash cloud, glowing trails",
+    "kernschmelze": "a volcanic explosion of lava and fire bursting outward in a ring, black smoke"
+   },
+   "names": {
+    "hammerschlag": "Hammerschlag",
+    "lavabrocken": "Lavabrocken",
+    "lavafontaene": "Lavafontäne",
+    "vulkanfall": "Vulkanfall",
+    "magmafeld": "Magmafeld",
+    "obsidianhaut": "Obsidianhaut",
+    "ausbruch": "Ausbruch",
+    "aschenregen": "Aschenregen",
+    "kernschmelze": "Kernschmelze"
+   }
+  },
+  "polarlicht": {
+   "look": "dark arctic night background, aurora borealis staff mage theme, flowing green and violet aurora ribbons, ice crystals, stars",
+   "fx": {
+    "stabwirbel": "a staff swing arc trailing flowing green and violet aurora ribbons",
+    "nordlichtband": "a horizontal flowing ribbon beam of green and violet aurora light",
+    "polarstern": "a bright icy star shard glowing green and white with sparkling trail",
+    "eisregen": "ice crystal shards falling from the sky in green aurora light",
+    "gletschersturz": "a glacier ice impact with jagged ice spikes bursting from the ground, aurora glow",
+    "lichtschleier": "a shimmering curtain of aurora light, green and violet teleport veil"
+   },
+   "super": {
+    "aurora": "a gigantic horizontal aurora borealis beam, green and violet waves of light",
+    "ewiges_eis": "a frozen landscape of ice crystals under aurora sky, frost filling the frame",
+    "sternenfrost": "a starburst explosion of ice crystals and aurora light"
+   },
+   "names": {
+    "stabwirbel": "Stabwirbel",
+    "nordlichtband": "Nordlichtband",
+    "polarstern": "Polarstern",
+    "eisregen": "Eisregen",
+    "gletschersturz": "Gletschersturz",
+    "lichtschleier": "Lichtschleier",
+    "aurora": "Aurora",
+    "ewiges_eis": "Ewiges Eis",
+    "sternenfrost": "Sternenfrost"
+   }
+  },
+  "sandsturm": {
+   "look": "warm desert dusk background, scimitar sand dancer theme, swirling golden sand, dunes, orange sunset glow",
+   "fx": {
+    "saebeltanz": "a curved scimitar slash arc trailing golden sand grains",
+    "sandsichel": "a flying crescent of swirling golden sand, dust trail",
+    "sandhose": "a swirling sand tornado column, golden dust spiraling upward",
+    "sandfall": "a sand explosion impact on the ground with sand waves spreading",
+    "treibsandfeld": "a quicksand whirlpool on the ground seen from the side, golden sand spiral",
+    "duenenlauf": "a fast sand dash streak with a golden dust cloud trail"
+   },
+   "super": {
+    "wuestensturm": "a massive desert sandstorm filling the frame, golden swirling dust",
+    "fata_morgana": "shimmering mirage silhouettes made of sand slashing, heat haze",
+    "sandsaeulen": "a row of sand pillars bursting from the dunes, golden dust"
+   },
+   "names": {
+    "saebeltanz": "Säbeltanz",
+    "sandsichel": "Sandsichel",
+    "sandhose": "Sandhose",
+    "sandfall": "Sandfall",
+    "treibsandfeld": "Treibsand",
+    "duenenlauf": "Dünenlauf",
+    "wuestensturm": "Wüstensturm",
+    "fata_morgana": "Fata Morgana",
+    "sandsaeulen": "Sandsäulen"
+   }
+  },
+  "geisterlaterne": {
+   "look": "dark misty graveyard teal background, ghost lantern keeper theme, glowing green soul flames, paper lantern, warm orange light, wisps",
+   "fx": {
+    "laternenschwung": "a lantern on a pole swinging in an arc trailing green soul flames",
+    "irrlicht": "floating glowing green will-o-wisp soul flames with trails",
+    "seelenfackel": "a pillar of green ghost fire rising from the ground, wisps",
+    "geisterkreis": "a circle of floating green ghost wisps on the ground, glowing",
+    "laternenruf": "a glowing paper lantern raised high, ring of green soul light expanding with orange glow",
+    "seelenregen": "green soul flames falling from above like rain, ghostly trails"
+   },
+   "super": {
+    "totenzug": "a procession of ghosts and lanterns crossing in streaks, green wisps",
+    "geisterfest": "many glowing paper lanterns and green spirit flames falling from the sky",
+    "laternenmeer": "a sea of floating glowing lanterns and green ghost fire filling the frame"
+   },
+   "names": {
+    "laternenschwung": "Laternenschwung",
+    "irrlicht": "Irrlicht",
+    "seelenfackel": "Seelenfackel",
+    "geisterkreis": "Geisterkreis",
+    "laternenruf": "Laternenruf",
+    "seelenregen": "Seelenregen",
+    "totenzug": "Totenzug",
+    "geisterfest": "Geisterfest",
+    "laternenmeer": "Laternenmeer"
+   }
+  },
+  "gewitterhammer": {
+   "look": "dark stormy blue background, thunder hammer warrior theme, heavy war hammer crackling with blue and yellow lightning, storm clouds",
+   "fx": {
+    "donnerschlag": "a heavy hammer impact with blue and yellow lightning discharge, sparks",
+    "hammerwurf": "a spinning war hammer flying crackling with lightning",
+    "blitzableiter": "a lightning bolt striking down from storm clouds into the ground, blue and yellow",
+    "donnerfall": "a hammer slamming into the ground with a lightning dome shockwave",
+    "gewitterkreisel": "a spinning hammer creating a circular storm of lightning arcs",
+    "ableiter": "a hammer blocking with a lightning burst grounding into the floor"
+   },
+   "super": {
+    "weltgewitter": "a huge thunderstorm with many lightning bolts striking down",
+    "hammer_der_himmel": "a row of lightning bolts striking the ground in sequence, blue and yellow",
+    "sturmkern": "a massive lightning explosion dome around a hammer impact"
+   },
+   "names": {
+    "donnerschlag": "Donnerschlag",
+    "hammerwurf": "Hammerwurf",
+    "blitzableiter": "Blitzableiter",
+    "donnerfall": "Donnerfall",
+    "gewitterkreisel": "Gewitterkreisel",
+    "ableiter": "Ableiter",
+    "weltgewitter": "Weltgewitter",
+    "hammer_der_himmel": "Hammer der Himmel",
+    "sturmkern": "Sturmkern"
+   }
+  },
+  "kirschsturm": {
+   "look": "dark plum night background, cherry blossom sword dancer theme, pink petals swirling in the wind, soft white glow",
+   "fx": {
+    "bluetenschnitt": "an elegant katana slash arc trailing pink cherry blossom petals",
+    "bluetenblaetter": "sharp pink cherry blossom petals flying like blades with wind trails",
+    "bluetenschritt": "a burst of swirling pink cherry petals, teleport flurry",
+    "fallende_bluete": "a sword plunging down creating a burst of pink petals on the ground",
+    "bluetenregen": "pink cherry petals falling like sharp rain, wind streaks",
+    "fruehlingswirbel": "a spinning whirlwind of pink cherry petals around a blade"
+   },
+   "super": {
+    "hanami": "many crossing katana slashes with clouds of pink cherry petals",
+    "kirschgewitter": "a storm of sharp pink petals falling everywhere, wind",
+    "letzte_bluete": "a giant cherry blossom tree bursting into an explosion of pink petals"
+   },
+   "names": {
+    "bluetenschnitt": "Blütenschnitt",
+    "bluetenblaetter": "Blütenblätter",
+    "bluetenschritt": "Blütenschritt",
+    "fallende_bluete": "Fallende Blüte",
+    "bluetenregen": "Blütenregen",
+    "fruehlingswirbel": "Frühlingswirbel",
+    "hanami": "Blütenfest",
+    "kirschgewitter": "Kirschgewitter",
+    "letzte_bluete": "Letzte Blüte"
+   }
+  },
+  "abgrundtiefe": {
+   "look": "pitch black deep sea background, abyssal sea creature fighter theme, glowing bioluminescent tentacles, deep blue water, cyan glow",
+   "fx": {
+    "tentakelhieb": "a glowing blue water tentacle lashing in an arc, bioluminescent spots",
+    "tintenstoss": "a dark ink and water blast orb with glowing cyan edges splashing",
+    "tiefenfontaene": "a high pressure water column erupting from the ground, deep blue with cyan glow",
+    "druckwelle": "a deep water pressure shockwave hitting the ground, dark blue rings and bubbles",
+    "mahlstrom_feld": "a dark swirling whirlpool vortex of deep sea water, glowing cyan bubbles",
+    "tiefseepanzer": "a bubble shell of deep sea water pressure blocking a strike, cyan ripples"
+   },
+   "super": {
+    "leviathan": "a giant sea serpent made of water surging horizontally, glowing cyan eyes",
+    "abgrund": "the deep abyss of dark blue ocean filling the frame, bioluminescent glow",
+    "tiefenbeben": "a row of high pressure water geysers bursting from the ground, deep blue"
+   },
+   "names": {
+    "tentakelhieb": "Tentakelhieb",
+    "tintenstoss": "Tintenstoß",
+    "tiefenfontaene": "Tiefenfontäne",
+    "druckwelle": "Druckwelle",
+    "mahlstrom_feld": "Mahlstrom",
+    "tiefseepanzer": "Tiefseepanzer",
+    "leviathan": "Leviathan",
+    "abgrund": "Abgrund",
+    "tiefenbeben": "Tiefenbeben"
+   }
+  },
+  "zeitriss": {
+   "look": "dark indigo background, time mage theme, golden clock faces and gears, glowing clock hands, cyan time ripples",
+   "fx": {
+    "sekundenschlag": "golden clock hand shaped slash streaks with ticking clock ring",
+    "zeiger": "a flying golden clock hand arrow with glowing time trail",
+    "zeitsprung": "a golden clock face portal with cyan ripples, teleport flash",
+    "zeitblase": "a translucent golden time bubble dome with clock numerals and gears inside",
+    "rueckspulen": "a rewinding clock face with backwards spinning hands, cyan time ripple ring",
+    "zeitlinie": "a straight golden time beam line with clock tick marks and cyan glow"
+   },
+   "super": {
+    "stillstand": "a frozen time scene with a giant golden clock face and stopped gears filling the frame",
+    "tausend_sekunden": "many golden afterimage strikes frozen in time, clock hands",
+    "uhrwerk": "a giant golden clockwork of gears bursting outward in light"
+   },
+   "names": {
+    "sekundenschlag": "Sekundenschlag",
+    "zeiger": "Zeiger",
+    "zeitsprung": "Zeitsprung",
+    "zeitblase": "Zeitblase",
+    "rueckspulen": "Rückspulen",
+    "zeitlinie": "Zeitlinie",
+    "stillstand": "Stillstand",
+    "tausend_sekunden": "Tausend Sekunden",
+    "uhrwerk": "Uhrwerk"
+   }
+  },
+  "runenschmied": {
+   "look": "dark stone forge background, rune smith theme, glowing cyan runes carved in stone, rune hammer, orange forge sparks",
+   "fx": {
+    "runenhieb": "a rune hammer strike with glowing cyan rune symbols bursting and orange sparks",
+    "runenwurf": "a flying stone tablet with a glowing cyan rune, shattering",
+    "runenstein": "a stone monolith with glowing cyan runes erupting from the ground",
+    "ambossrune": "a hammer slam creating a glowing cyan rune circle on the ground with sparks",
+    "runenfalle": "a glowing cyan rune trap circle on the ground with carved symbols",
+    "runenbruch": "an explosion of glowing cyan runes shattering in a burst of light and sparks"
+   },
+   "super": {
+    "runenkreis_mz": "a giant glowing cyan rune circle with carved symbols covering the frame",
+    "urrune": "a single giant ancient rune symbol exploding in cyan light and orange sparks",
+    "runensaeulen": "a row of stone monoliths with glowing runes rising from the ground"
+   },
+   "names": {
+    "runenhieb": "Runenhieb",
+    "runenwurf": "Runenwurf",
+    "runenstein": "Runenstein",
+    "ambossrune": "Ambossrune",
+    "runenfalle": "Runenfalle",
+    "runenbruch": "Runenbruch",
+    "runenkreis_mz": "Runenkreis",
+    "urrune": "Urrune",
+    "runensaeulen": "Runensäulen"
+   }
+  },
+  "bestienklaue": {
+   "look": "dark savage red brown background, feral beast claw fighter theme, glowing orange claw slashes, wild fur tufts, red rage aura",
+   "fx": {
+    "krallenhieb": "wild glowing orange claw slash marks, three parallel streaks with fur and sparks",
+    "raubsprung": "a pouncing beast dash streak with claw marks trail",
+    "pirsch": "a dark blur of a beast with glowing eyes and claw flash",
+    "beutesprung": "a beast pounce impact from above, claw slash cross on the ground with dust",
+    "krallenwirbel": "a spinning whirl of orange claw slashes in a circle, fur and sparks",
+    "blutrausch": "a red rage aura with wild orange flame-like fur and glowing beast eyes"
+   },
+   "super": {
+    "jagdrudel": "a pack of shadow beasts pouncing with claw slashes everywhere",
+    "urschrei": "a beast roar shockwave ring explosion with red and orange rage energy",
+    "krallensturm": "a rain of glowing orange claw slash marks falling from above"
+   },
+   "names": {
+    "krallenhieb": "Krallenhieb",
+    "raubsprung": "Raubsprung",
+    "pirsch": "Pirsch",
+    "beutesprung": "Beutesprung",
+    "krallenwirbel": "Krallenwirbel",
+    "blutrausch": "Blutrausch",
+    "jagdrudel": "Jagdrudel",
+    "urschrei": "Urschrei",
+    "krallensturm": "Krallensturm"
+   }
+  },
+  "spiegelseele": {
+   "look": "dark midnight blue background, mirror soul fighter theme, shattered glass mirror shards, refracted white and cyan light beams, sparkles",
+   "fx": {
+    "spiegelwand": "a shining flat mirror wall reflecting a strike, shards of light and cyan glints",
+    "lichtsplitter": "sharp glowing mirror glass shards flying with light streaks",
+    "spiegelstrahl": "a refracted beam of white and cyan light bouncing off a mirror shard",
+    "spiegelsturz": "a mirror shattering impact on the ground, glass shards and light rays",
+    "spiegelschritt": "a standing oval mirror portal glowing with light, teleport sparkles",
+    "spiegelkabinett": "several floating mirror panels reflecting beams of light between them"
+   },
+   "super": {
+    "tausend_spiegel": "a rain of shattered mirror glass shards falling with light",
+    "spiegelbruch": "a giant mirror shattering outward in all directions, glass shards and white light",
+    "lichtbrechung": "a huge horizontal beam of refracted white and cyan light split by prisms"
+   },
+   "names": {
+    "spiegelwand": "Spiegelwand",
+    "lichtsplitter": "Lichtsplitter",
+    "spiegelstrahl": "Spiegelstrahl",
+    "spiegelsturz": "Spiegelsturz",
+    "spiegelschritt": "Spiegelschritt",
+    "spiegelkabinett": "Spiegelkabinett",
+    "tausend_spiegel": "Tausend Spiegel",
+    "spiegelbruch": "Spiegelbruch",
+    "lichtbrechung": "Lichtbrechung"
+   }
+  },
+  "leerenschnitt": {
+   "look": "pitch black void space background, void blade theme, deep purple black holes, magenta event horizon glow, space distortion cracks",
+   "fx": {
+    "leerenhieb": "a dark purple void sword slash tearing a crack in space, magenta glowing edges",
+    "leerensichel": "a flying crescent shaped tear in space, black void inside, magenta glowing rim",
+    "riss": "a vertical crack in space opening like a portal, purple black void with magenta light",
+    "schwerkraftsturz": "a gravity crush impact on the ground, purple void distortion ring and cracks",
+    "schwarzes_loch": "a small black hole with a glowing magenta accretion ring, space warping around it",
+    "ereignishorizont": "a horizontal beam of black void with a glowing magenta purple edge, distortion"
+   },
+   "super": {
+    "singularitaet": "a singularity collapse explosion, black sphere with blazing magenta ring",
+    "weltenriss": "a giant horizontal tear across space revealing purple void and stars",
+    "leere": "an endless purple black void swallowing the frame, swirling distortion and magenta sparks"
+   },
+   "names": {
+    "leerenhieb": "Leerenhieb",
+    "leerensichel": "Leerensichel",
+    "riss": "Riss",
+    "schwerkraftsturz": "Schwerkraftsturz",
+    "schwarzes_loch": "Schwarzes Loch",
+    "ereignishorizont": "Ereignishorizont",
+    "singularitaet": "Singularität",
+    "weltenriss": "Weltenriss",
+    "leere": "Die Leere"
+   }
+  }
+ },
+ "weapons": {
+  "wellenschneide": "a slim katana with a wave patterned blue steel blade and a white wrapped handle",
+  "eisfaecher": "a large open folding war fan made of pale blue ice crystal ribs with pink tassel",
+  "nahtdolch": "a thin black needle like dagger with a violet glowing edge and thread wrapped grip",
+  "sonnenspeer": "a long golden spear with a sun shaped spearhead and white shaft",
+  "sturmfaecher": "a big green feather fan on a short wooden handle with white feathers",
+  "schwurklinge": "a dark crimson longsword with a black hilt and red glowing runes on the blade",
+  "kettensichel": "a curved steel sickle on a short wooden handle with an iron chain wrapped around it",
+  "wirbelklinge": "a double bladed staff weapon with two curved cyan steel blades at both ends",
+  "lavahammer": "a heavy black obsidian war hammer with glowing orange lava cracks on the head",
+  "nordlichtstab": "a long slender mage staff with a glowing green aurora crystal at the tip",
+  "sandsaebel": "a curved golden scimitar with a sand colored hilt and red gem",
+  "geisterlaterne": "a long wooden pole with a hanging paper lantern glowing green at the end",
+  "donnerhammer": "a large steel war hammer with a blue lightning bolt engraving and yellow glow",
+  "bluetenklinge": "a katana with a pale pink blade and cherry blossom engravings, pink handle",
+  "runenhammer": "a stone headed hammer with glowing cyan runes carved into it, wooden handle",
+  "leerenklinge": "a black sword with a purple void blade full of tiny stars and a magenta edge"
+ }
+}

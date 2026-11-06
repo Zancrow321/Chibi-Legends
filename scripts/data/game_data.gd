@@ -9,6 +9,12 @@ const ELEMENTS := {
 	"blitz": {"name": "Blitz", "color": Color("ffe45c")},
 	"wind": {"name": "Wind", "color": Color("9cf2b4")},
 	"seele": {"name": "Seele", "color": Color("8fd3ff")},
+	# Baukasten-Kampfstile (scripts/formen): eigene Farben, keine Reaktionen
+	"wasser": {"name": "Wasser", "color": Color("4fa8ff")},
+	"erde": {"name": "Erde", "color": Color("d0a060")},
+	"schatten": {"name": "Schatten", "color": Color("a884f3")},
+	"licht": {"name": "Licht", "color": Color("fff1a8")},
+	"gift": {"name": "Gift", "color": Color("9ee35a")},
 	"": {"name": "Physisch", "color": Color("ffffff")},
 }
 

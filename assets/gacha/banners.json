@@ -6,23 +6,255 @@
  "daily": 100,
  "level_up": 50,
  "pity": 60,
- "rates": {"legendaer": 0.03, "episch": 0.15, "selten": 0.82},
+ "rates": {
+  "legendaer": 0.03,
+  "episch": 0.15,
+  "selten": 0.82
+ },
  "featured_share": 0.5,
  "duplicate_splitter": 300,
  "max_stars": 6,
  "selten_rewards": [
-  {"kind": "splitter", "amount": 40, "weight": 5},
-  {"kind": "gear", "rarity": 2, "weight": 4},
-  {"kind": "color", "weight": 1}
+  {
+   "kind": "splitter",
+   "amount": 40,
+   "weight": 5
+  },
+  {
+   "kind": "gear",
+   "rarity": 2,
+   "weight": 4
+  },
+  {
+   "kind": "color",
+   "weight": 1
+  }
  ],
  "banners": [
-  {"id": "schwarzer_mond", "title": "Der schwarze Mond", "style": "schwarzmond", "tagline": "Eine Klinge so schwer wie die Nacht"},
-  {"id": "ein_takt", "title": "Ein Takt, zwei Seelen", "style": "gleichklang", "tagline": "Wer im Takt schlägt, schlägt nie allein"},
-  {"id": "letzte_linie", "title": "Die letzte Linie", "style": "bollwerk", "tagline": "Schild hoch. Niemand kommt durch."},
-  {"id": "versprechen", "title": "Ein Versprechen wird Stärke", "style": "wirbelwille", "tagline": "Ein Wirbel, tausend Schatten"},
-  {"id": "jedes_limit", "title": "Über jedes Limit", "style": "grenzbrecher", "tagline": "Atme. Sammle. Brich durch."},
-  {"id": "kein_meer", "title": "Kein Meer zu weit", "style": "spannkraft", "tagline": "Je weiter gespannt, desto härter der Rückschlag"},
-  {"id": "am_feuer", "title": "Wer am Feuer sitzt", "style": "lauffeuer", "tagline": "Ein Funke reicht für ein Lauffeuer"}
+  {
+   "id": "schwarzer_mond",
+   "title": "Der schwarze Mond",
+   "style": "schwarzmond",
+   "tagline": "Eine Klinge so schwer wie die Nacht"
+  },
+  {
+   "id": "ein_takt",
+   "title": "Ein Takt, zwei Seelen",
+   "style": "gleichklang",
+   "tagline": "Wer im Takt schlägt, schlägt nie allein"
+  },
+  {
+   "id": "letzte_linie",
+   "title": "Die letzte Linie",
+   "style": "bollwerk",
+   "tagline": "Schild hoch. Niemand kommt durch."
+  },
+  {
+   "id": "versprechen",
+   "title": "Ein Versprechen wird Stärke",
+   "style": "wirbelwille",
+   "tagline": "Ein Wirbel, tausend Schatten"
+  },
+  {
+   "id": "jedes_limit",
+   "title": "Über jedes Limit",
+   "style": "grenzbrecher",
+   "tagline": "Atme. Sammle. Brich durch."
+  },
+  {
+   "id": "kein_meer",
+   "title": "Kein Meer zu weit",
+   "style": "spannkraft",
+   "tagline": "Je weiter gespannt, desto härter der Rückschlag"
+  },
+  {
+   "id": "am_feuer",
+   "title": "Wer am Feuer sitzt",
+   "style": "lauffeuer",
+   "tagline": "Ein Funke reicht für ein Lauffeuer"
+  },
+  {
+   "id": "form_gezeitenklinge",
+   "title": "Wenn die Flut steigt",
+   "style": "gezeitenklinge",
+   "tagline": "Jede Welle trägt die nächste"
+  },
+  {
+   "id": "form_donnerschritt",
+   "title": "Schneller als der Donner",
+   "style": "donnerschritt",
+   "tagline": "Erst der Blitz, dann der Knall"
+  },
+  {
+   "id": "form_frostlotus",
+   "title": "Blüte im Eis",
+   "style": "frostlotus",
+   "tagline": "Was gefriert, zerbricht schöner"
+  },
+  {
+   "id": "form_erdenfaust",
+   "title": "Der Berg bewegt sich",
+   "style": "erdenfaust",
+   "tagline": "Ruhe ist die härteste Faust"
+  },
+  {
+   "id": "form_schattennaht",
+   "title": "Ein Faden im Dunkel",
+   "style": "schattennaht",
+   "tagline": "Jede Naht hält, bis ich sie reiße"
+  },
+  {
+   "id": "form_sonnenlanze",
+   "title": "Die Sonne im Speer",
+   "style": "sonnenlanze",
+   "tagline": "Wo sie trifft, wird es Mittag"
+  },
+  {
+   "id": "form_giftranke",
+   "title": "Was im Schatten wächst",
+   "style": "giftranke",
+   "tagline": "Eine Spore, dann ein Garten"
+  },
+  {
+   "id": "form_sturmfeder",
+   "title": "Feder im Sturm",
+   "style": "sturmfeder",
+   "tagline": "Der Wind antwortet zweimal"
+  },
+  {
+   "id": "form_rotschwur",
+   "title": "Der rote Schwur",
+   "style": "rotschwur",
+   "tagline": "Was ich gebe, nehme ich zurück"
+  },
+  {
+   "id": "form_sternensang",
+   "title": "Lied der Sterne",
+   "style": "sternensang",
+   "tagline": "Jeder Stern singt zweimal"
+  },
+  {
+   "id": "form_eisenkette",
+   "title": "Glied um Glied",
+   "style": "eisenkette",
+   "tagline": "Keine Kette reißt zweimal"
+  },
+  {
+   "id": "form_trommelherz",
+   "title": "Der Herzschlag des Festes",
+   "style": "trommelherz",
+   "tagline": "Wer den Takt hält, gewinnt"
+  },
+  {
+   "id": "form_nebelfuchs",
+   "title": "Neun Schweife im Nebel",
+   "style": "nebelfuchs",
+   "tagline": "Was du siehst, bin ich nicht"
+  },
+  {
+   "id": "form_drachenzorn",
+   "title": "Der Zorn des Drachen",
+   "style": "drachenzorn",
+   "tagline": "Atme Feuer, schlage wie ein Drache"
+  },
+  {
+   "id": "form_kristallherz",
+   "title": "Ein Herz aus Kristall",
+   "style": "kristallherz",
+   "tagline": "Was hart ist, bricht das Licht"
+  },
+  {
+   "id": "form_papierkranich",
+   "title": "Tausend gefaltete Wünsche",
+   "style": "papierkranich",
+   "tagline": "Jedes Siegel hält ein Versprechen"
+  },
+  {
+   "id": "form_puppenfaden",
+   "title": "Vorhang auf",
+   "style": "puppenfaden",
+   "tagline": "Jede Bewegung hängt an einem Faden"
+  },
+  {
+   "id": "form_klingenwirbel",
+   "title": "Der Wirbel kennt kein Ende",
+   "style": "klingenwirbel",
+   "tagline": "Dreh dich, bis der Wind schneidet"
+  },
+  {
+   "id": "form_vulkanherz",
+   "title": "Das Herz des Vulkans",
+   "style": "vulkanherz",
+   "tagline": "Erst brodelt es, dann bricht es aus"
+  },
+  {
+   "id": "form_polarlicht",
+   "title": "Licht über dem Eis",
+   "style": "polarlicht",
+   "tagline": "Die Nacht leuchtet für mich"
+  },
+  {
+   "id": "form_sandsturm",
+   "title": "Wind über den Dünen",
+   "style": "sandsturm",
+   "tagline": "Der Sand vergisst nichts"
+  },
+  {
+   "id": "form_geisterlaterne",
+   "title": "Ein Licht für die Verirrten",
+   "style": "geisterlaterne",
+   "tagline": "Folge der Laterne, nie dem Nebel"
+  },
+  {
+   "id": "form_gewitterhammer",
+   "title": "Der Hammer der Wolken",
+   "style": "gewitterhammer",
+   "tagline": "Wenn es donnert, schlage ich"
+  },
+  {
+   "id": "form_kirschsturm",
+   "title": "Wenn die Kirschen blühen",
+   "style": "kirschsturm",
+   "tagline": "Eine Blüte fällt, ein Schnitt folgt"
+  },
+  {
+   "id": "form_abgrundtiefe",
+   "title": "Was in der Tiefe wartet",
+   "style": "abgrundtiefe",
+   "tagline": "Je tiefer, desto härter der Druck"
+  },
+  {
+   "id": "form_zeitriss",
+   "title": "Eine Sekunde zu viel",
+   "style": "zeitriss",
+   "tagline": "Was einmal trifft, trifft wieder"
+  },
+  {
+   "id": "form_runenschmied",
+   "title": "Geschrieben in Stein",
+   "style": "runenschmied",
+   "tagline": "Jede Rune ist ein Versprechen aus Feuer"
+  },
+  {
+   "id": "form_bestienklaue",
+   "title": "Der Ruf der Wildnis",
+   "style": "bestienklaue",
+   "tagline": "Hungriger, schneller, stärker"
+  },
+  {
+   "id": "form_spiegelseele",
+   "title": "Hinter dem Spiegel",
+   "style": "spiegelseele",
+   "tagline": "Was du wirfst, kehrt zurück"
+  },
+  {
+   "id": "form_leerenschnitt",
+   "title": "Der Schnitt ins Nichts",
+   "style": "leerenschnitt",
+   "tagline": "Die Leere hat Hunger"
+  }
  ],
- "starter_styles": ["glutatem"]
+ "starter_styles": [
+  "glutatem"
+ ]
 }

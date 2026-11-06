@@ -1,0 +1,401 @@
+{
+	"_doc": "Baukasten-Kampfstil Rotschwur (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "rotschwur",
+	"name": "Rotschwur",
+	"element": "schatten",
+	"caster": "form",
+	"subtitle": "Blutschwur-Schwertkunst · zahle mit Leben, schlage härter",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"armed": true,
+	"colors": {
+		"main": "e83b3b",
+		"accent": "ffb0b0",
+		"light": "ffd8d8",
+		"dark": "1e0808",
+		"white": "fff0f0"
+	},
+	"kern": {
+		"type": "blutzoll",
+		"name": "Schwurpreis",
+		"desc": "Jeder Zug kostet 3 % LP (nie unter 1). Dafür bis zu +60 % Schaden, je weniger LP du hast, und jeder Treffer heilt 2 % zurück."
+	},
+	"loadout": {
+		"neutral": "schwurschnitt",
+		"forward": "blutsichel",
+		"up": "blutfontaene",
+		"down": "urteil"
+	},
+	"zuege": {
+		"schwurschnitt": {
+			"name": "Schwurschnitt",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Drei schwere rote Schnitte.",
+			"params": {
+				"hits": 3,
+				"damage": 6,
+				"len": 54
+			},
+			"enhanced": {
+				"hits_add": 1,
+				"damage_add": 3
+			},
+			"alts": [
+				{
+					"id": "blutreigen",
+					"name": "Blutreigen",
+					"sp": 2,
+					"desc": "Fünf schnelle Schnitte.",
+					"params": {
+						"hits": 5,
+						"damage": 4
+					}
+				},
+				{
+					"id": "richtschnitt",
+					"name": "Richtschnitt",
+					"sp": 2,
+					"desc": "Ein gewaltiger Schnitt.",
+					"params": {
+						"hits": 1,
+						"damage": 20,
+						"len": 64
+					}
+				},
+				{
+					"id": "kreisurteil",
+					"name": "Kreisurteil",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				}
+			]
+		},
+		"blutsichel": {
+			"name": "Blutsichel",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Eine rote Sichel aus Energie fliegt durch alle Gegner.",
+			"params": {
+				"damage": 13,
+				"speed": 480,
+				"dist": 320,
+				"pierce": true,
+				"size": 1.2
+			},
+			"enhanced": {
+				"size_mul": 1.5,
+				"damage_add": 6
+			},
+			"alts": [
+				{
+					"id": "zwillingssichel",
+					"name": "Zwillingssichel",
+					"sp": 2,
+					"desc": "Zwei Sicheln.",
+					"params": {
+						"count": 2,
+						"spread": 16,
+						"damage": 8
+					}
+				},
+				{
+					"id": "rueckkehrsichel",
+					"name": "Rückkehrsichel",
+					"sp": 2,
+					"desc": "Kehrt zurück.",
+					"params": {
+						"boomerang": true
+					}
+				},
+				{
+					"id": "riesensichel",
+					"name": "Riesensichel",
+					"sp": 2,
+					"desc": "Groß, langsam.",
+					"params": {
+						"size": 2.0,
+						"speed": 300,
+						"damage": 18
+					}
+				}
+			]
+		},
+		"blutfontaene": {
+			"name": "Blutfontäne",
+			"kind": "saeule",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				9,
+				14,
+				16
+			],
+			"desc": "Eine rote Fontäne bricht vor dir hoch.",
+			"params": {
+				"at": 56,
+				"width": 28,
+				"height": 90,
+				"damage": 13,
+				"launch": 360
+			},
+			"enhanced": {
+				"launch_add": 100,
+				"damage_add": 4
+			},
+			"alts": [
+				{
+					"id": "drei_fontaenen",
+					"name": "Drei Fontänen",
+					"sp": 2,
+					"desc": "Drei kleinere.",
+					"params": {
+						"count": 3,
+						"step": 40,
+						"damage": 8
+					}
+				},
+				{
+					"id": "blutaufstieg",
+					"name": "Blutaufstieg",
+					"sp": 2,
+					"desc": "Du steigst mit auf.",
+					"params": {
+						"ride": true,
+						"at": 8
+					}
+				},
+				{
+					"id": "blutsee",
+					"name": "Blutsee",
+					"sp": 2,
+					"desc": "Breiter, niedriger.",
+					"params": {
+						"width": 60,
+						"launch": 200
+					}
+				}
+			]
+		},
+		"urteil": {
+			"name": "Urteil",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Von oben fällt dein Urteil herab.",
+			"params": {
+				"damage": 15,
+				"radius": 44,
+				"waves": true,
+				"wave_damage": 8
+			},
+			"enhanced": {
+				"damage_add": 6,
+				"radius_add": 16
+			},
+			"alts": [
+				{
+					"id": "richtplatz",
+					"name": "Richtplatz",
+					"sp": 2,
+					"desc": "Großer Aufprall.",
+					"params": {
+						"radius": 72,
+						"waves": false
+					}
+				},
+				{
+					"id": "zweites_urteil",
+					"name": "Zweites Urteil",
+					"sp": 2,
+					"desc": "Zweiter Stoß.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "blutlache",
+					"name": "Blutlache",
+					"sp": 2,
+					"desc": "Rote Lache für 2 s.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"blutpakt": {
+			"name": "Blutpakt",
+			"kind": "aura",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 6.0,
+			"frames": [
+				12,
+				6,
+				12
+			],
+			"desc": "Du opferst 8 % LP: 6 s lang +30 % Schaden.",
+			"params": {
+				"buff": 6,
+				"bonus": 0.3,
+				"hp_cost": 0.08
+			},
+			"enhanced": {
+				"bonus_add": 0.1,
+				"buff_add": 2
+			},
+			"alts": [
+				{
+					"id": "tiefer_pakt",
+					"name": "Tiefer Pakt",
+					"sp": 2,
+					"desc": "12 % LP, +50 %, 4 s.",
+					"params": {
+						"hp_cost": 0.12,
+						"bonus": 0.5,
+						"buff": 4
+					}
+				},
+				{
+					"id": "milder_pakt",
+					"name": "Milder Pakt",
+					"sp": 2,
+					"desc": "Kein LP-Preis, +12 %.",
+					"params": {
+						"hp_cost": 0.0,
+						"bonus": 0.12
+					}
+				},
+				{
+					"id": "blutring",
+					"name": "Blutring",
+					"sp": 2,
+					"desc": "Ein roter Ring trifft um dich.",
+					"params": {
+						"nova": 20
+					}
+				}
+			]
+		},
+		"roter_faden": {
+			"name": "Roter Faden",
+			"kind": "sturm",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				5,
+				12,
+				12
+			],
+			"desc": "Du jagst als roter Strich durch die Gegner.",
+			"params": {
+				"dist": 150,
+				"damage": 11
+			},
+			"enhanced": {
+				"dist_mul": 1.5,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "hin_und_her",
+					"name": "Hin und her",
+					"sp": 2,
+					"desc": "Hin und zurück.",
+					"params": {
+						"back": true
+					}
+				},
+				{
+					"id": "blutspur",
+					"name": "Blutspur",
+					"sp": 2,
+					"desc": "Rote Spur bleibt.",
+					"params": {
+						"trail": true
+					}
+				},
+				{
+					"id": "todesstoss",
+					"name": "Todesstoß",
+					"sp": 2,
+					"desc": "Kurz, sehr hart.",
+					"params": {
+						"dist": 90,
+						"damage": 18
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "letzter_schwur",
+				"name": "Letzter Schwur",
+				"kind": "ansturm",
+				"sp": 0,
+				"desc": "Acht blutrote Schnitte von Ziel zu Ziel.",
+				"params": {
+					"damage": 13,
+					"slashes": 8
+				}
+			},
+			{
+				"id": "blutmeer",
+				"name": "Blutmeer",
+				"kind": "feld",
+				"sp": 2,
+				"desc": "Der Boden wird zu einem roten Meer, das alle Gegner auszehrt.",
+				"params": {
+					"damage": 5,
+					"pull": 40
+				}
+			},
+			{
+				"id": "scharlachstrahl",
+				"name": "Scharlachstrahl",
+				"kind": "strahl",
+				"sp": 2,
+				"desc": "Ein scharlachroter Strahl schneidet über den Bildschirm.",
+				"params": {
+					"damage": 5,
+					"width": 50
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

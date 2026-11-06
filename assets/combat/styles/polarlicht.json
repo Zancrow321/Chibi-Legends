@@ -1,0 +1,403 @@
+{
+	"_doc": "Baukasten-Kampfstil Polarlicht (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "polarlicht",
+	"name": "Polarlicht",
+	"element": "frost",
+	"caster": "form",
+	"subtitle": "Nordlicht-Stabkunst · Lichtbänder, Eis, Polarnacht",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"armed": true,
+	"colors": {
+		"main": "5affc0",
+		"accent": "c08aff",
+		"light": "d8fff0",
+		"dark": "0a1424",
+		"white": "ffffff"
+	},
+	"kern": {
+		"type": "ladung",
+		"name": "Lichtband",
+		"desc": "Jeder Zug, der trifft, webt 1 Lichtband (bis 5). Bei 5: 6 s Polarnacht, Schläge mit Frost +25 %."
+	},
+	"loadout": {
+		"neutral": "stabwirbel",
+		"forward": "nordlichtband",
+		"up": "polarstern",
+		"down": "eisregen"
+	},
+	"zuege": {
+		"stabwirbel": {
+			"name": "Stabwirbel",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Drei Schläge mit dem Nordlichtstab, Lichtbänder wehen.",
+			"params": {
+				"hits": 3,
+				"damage": 5,
+				"len": 56
+			},
+			"enhanced": {
+				"hits_add": 2,
+				"len_add": 12
+			},
+			"alts": [
+				{
+					"id": "lichtreigen",
+					"name": "Lichtreigen",
+					"sp": 2,
+					"desc": "Fünf schnelle Schläge.",
+					"params": {
+						"hits": 5,
+						"damage": 3.5
+					}
+				},
+				{
+					"id": "rundstab",
+					"name": "Rundstab",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				},
+				{
+					"id": "aufschwung",
+					"name": "Aufschwung",
+					"sp": 2,
+					"desc": "Schleudert hoch.",
+					"params": {
+						"launch": 280
+					}
+				}
+			]
+		},
+		"nordlichtband": {
+			"name": "Nordlichtband",
+			"kind": "strahl",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.6,
+			"frames": [
+				12,
+				30,
+				16
+			],
+			"desc": "Ein Band aus Nordlicht strömt nach vorn.",
+			"params": {
+				"len": 220,
+				"width": 16,
+				"damage": 3.2,
+				"tick": 0.08
+			},
+			"enhanced": {
+				"width_add": 10,
+				"damage_add": 1.2
+			},
+			"alts": [
+				{
+					"id": "breites_band",
+					"name": "Breites Band",
+					"sp": 2,
+					"desc": "Dick, kürzer.",
+					"params": {
+						"width": 28,
+						"len": 160
+					}
+				},
+				{
+					"id": "himmelsband",
+					"name": "Himmelsband",
+					"sp": 2,
+					"desc": "Schräg nach oben.",
+					"params": {
+						"up": true
+					}
+				},
+				{
+					"id": "lichtnadel",
+					"name": "Lichtnadel",
+					"sp": 2,
+					"desc": "Kurz und hart.",
+					"params": {
+						"damage": 6,
+						"width": 9
+					},
+					"frames": [
+						8,
+						14,
+						14
+					]
+				}
+			]
+		},
+		"polarstern": {
+			"name": "Polarstern",
+			"kind": "geschoss",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Ein Polarstern fliegt nach vorn und platzt in Eis.",
+			"params": {
+				"damage": 13,
+				"speed": 380,
+				"dist": 320,
+				"burst": true
+			},
+			"enhanced": {
+				"count_add": 2,
+				"damage_add": 4
+			},
+			"alts": [
+				{
+					"id": "sternbild",
+					"name": "Sternbild",
+					"sp": 2,
+					"desc": "Drei Sterne.",
+					"params": {
+						"count": 3,
+						"spread": 30,
+						"damage": 6
+					}
+				},
+				{
+					"id": "leitstern",
+					"name": "Leitstern",
+					"sp": 2,
+					"desc": "Sucht das Ziel.",
+					"params": {
+						"homing": 0.7,
+						"burst": false
+					}
+				},
+				{
+					"id": "eiskomet",
+					"name": "Eiskomet",
+					"sp": 2,
+					"desc": "Durchschlägt.",
+					"params": {
+						"pierce": true,
+						"burst": false,
+						"speed": 520
+					}
+				}
+			]
+		},
+		"eisregen": {
+			"name": "Eisregen",
+			"kind": "regen",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.6,
+			"frames": [
+				12,
+				10,
+				16
+			],
+			"desc": "Eiskristalle fallen vor dir aus dem Polarhimmel.",
+			"params": {
+				"count": 7,
+				"width": 110,
+				"at": 90,
+				"damage": 5.5
+			},
+			"enhanced": {
+				"count_add": 4,
+				"width_add": 40
+			},
+			"alts": [
+				{
+					"id": "dichter_regen",
+					"name": "Dichter Regen",
+					"sp": 2,
+					"desc": "Mehr, schmaler.",
+					"params": {
+						"count": 11,
+						"width": 70,
+						"damage": 4
+					}
+				},
+				{
+					"id": "fernregen",
+					"name": "Fernregen",
+					"sp": 2,
+					"desc": "Weiter vorn.",
+					"params": {
+						"at": 170
+					}
+				},
+				{
+					"id": "hagel",
+					"name": "Hagel",
+					"sp": 2,
+					"desc": "Drei große Brocken.",
+					"params": {
+						"count": 3,
+						"damage": 12,
+						"big": true
+					}
+				}
+			]
+		},
+		"gletschersturz": {
+			"name": "Gletschersturz",
+			"kind": "sturz",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Du stürzt herab, Eis bricht aus dem Boden.",
+			"params": {
+				"damage": 13,
+				"radius": 46,
+				"waves": true,
+				"wave_damage": 8
+			},
+			"enhanced": {
+				"radius_add": 18,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "gletscherbruch",
+					"name": "Gletscherbruch",
+					"sp": 2,
+					"desc": "Großer Radius.",
+					"params": {
+						"radius": 74,
+						"waves": false
+					}
+				},
+				{
+					"id": "nachfrost",
+					"name": "Nachfrost",
+					"sp": 2,
+					"desc": "Zweiter Stoß.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "eisflaeche",
+					"name": "Eisfläche",
+					"sp": 2,
+					"desc": "Eis bleibt 2 s.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"lichtschleier": {
+			"name": "Lichtschleier",
+			"kind": "schritt",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				4,
+				6,
+				12
+			],
+			"desc": "Du gleitest im Nordlicht hinter den Gegner.",
+			"params": {
+				"dist": 140,
+				"damage": 9
+			},
+			"enhanced": {
+				"damage_add": 6,
+				"dist_add": 40
+			},
+			"alts": [
+				{
+					"id": "lichttor",
+					"name": "Lichttor",
+					"sp": 2,
+					"desc": "Nach vorn ohne Ziel.",
+					"params": {
+						"behind": false,
+						"dist": 120
+					}
+				},
+				{
+					"id": "frostschlag",
+					"name": "Frostschlag",
+					"sp": 2,
+					"desc": "Härter.",
+					"params": {
+						"damage": 15
+					}
+				},
+				{
+					"id": "weiter_schleier",
+					"name": "Weiter Schleier",
+					"sp": 2,
+					"desc": "Weiter.",
+					"params": {
+						"dist": 190
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "aurora",
+				"name": "Aurora",
+				"kind": "strahl",
+				"sp": 0,
+				"desc": "Ein gewaltiges Nordlicht flutet als Strahl über den Bildschirm.",
+				"params": {
+					"damage": 5,
+					"width": 60
+				}
+			},
+			{
+				"id": "ewiges_eis",
+				"name": "Ewiges Eis",
+				"kind": "feld",
+				"sp": 2,
+				"desc": "Ewiges Eis überzieht den Bildschirm.",
+				"params": {
+					"damage": 4,
+					"pull": 30
+				}
+			},
+			{
+				"id": "sternenfrost",
+				"name": "Sternenfrost",
+				"kind": "nova",
+				"sp": 2,
+				"desc": "Ein Stern aus Eis explodiert um dich.",
+				"params": {
+					"damage": 74,
+					"radius": 150
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

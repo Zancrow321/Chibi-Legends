@@ -1,0 +1,404 @@
+{
+	"_doc": "Baukasten-Kampfstil Abgrundtiefe (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "abgrundtiefe",
+	"name": "Abgrundtiefe",
+	"element": "wasser",
+	"caster": "form",
+	"subtitle": "Tiefseekraft · Tentakel, Tinte, Mahlstrom · Tiefendruck",
+	"moveset": "res://assets/combat/movesets/lauffeuer.json",
+	"armed": false,
+	"colors": {
+		"main": "3a6aff",
+		"accent": "5affd0",
+		"light": "a8c8ff",
+		"dark": "04081a",
+		"white": "e0f0ff"
+	},
+	"kern": {
+		"type": "fokus",
+		"name": "Tiefendruck",
+		"desc": "Wer 1,5 s keinen Zug nutzt und nicht getroffen wird, baut Tiefendruck auf. Der nächste Zug verbraucht ihn: bis zu +60 % Schaden."
+	},
+	"loadout": {
+		"neutral": "tentakelhieb",
+		"forward": "tintenstoss",
+		"up": "tiefenfontaene",
+		"down": "druckwelle"
+	},
+	"zuege": {
+		"tentakelhieb": {
+			"name": "Tentakelhieb",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Zwei weite Hiebe mit Wassertentakeln.",
+			"params": {
+				"hits": 2,
+				"damage": 6,
+				"len": 74,
+				"h": 30
+			},
+			"enhanced": {
+				"hits_add": 2,
+				"len_add": 16
+			},
+			"alts": [
+				{
+					"id": "tentakelwirbel",
+					"name": "Tentakelwirbel",
+					"sp": 2,
+					"desc": "Vier Hiebe.",
+					"params": {
+						"hits": 4,
+						"damage": 4,
+						"len": 56
+					}
+				},
+				{
+					"id": "tiefengriff",
+					"name": "Tiefengriff",
+					"sp": 2,
+					"desc": "Zieht heran.",
+					"params": {
+						"pull": 110
+					}
+				},
+				{
+					"id": "rundtentakel",
+					"name": "Rundtentakel",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				}
+			]
+		},
+		"tintenstoss": {
+			"name": "Tintenstoß",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Ein Tintenstrahl schießt nach vorn und platzt.",
+			"params": {
+				"damage": 12,
+				"speed": 460,
+				"dist": 300,
+				"burst": true
+			},
+			"enhanced": {
+				"count_add": 2,
+				"damage_add": 4
+			},
+			"alts": [
+				{
+					"id": "tintenschauer",
+					"name": "Tintenschauer",
+					"sp": 2,
+					"desc": "Drei Spritzer.",
+					"params": {
+						"count": 3,
+						"spread": 24,
+						"damage": 6,
+						"burst": false
+					}
+				},
+				{
+					"id": "druckkugel",
+					"name": "Druckkugel",
+					"sp": 2,
+					"desc": "Durchschlägt.",
+					"params": {
+						"pierce": true,
+						"burst": false,
+						"size": 1.3
+					}
+				},
+				{
+					"id": "tiefenkugel",
+					"name": "Tiefenkugel",
+					"sp": 2,
+					"desc": "Sucht das Ziel.",
+					"params": {
+						"homing": 0.6,
+						"speed": 320
+					}
+				}
+			]
+		},
+		"tiefenfontaene": {
+			"name": "Tiefenfontäne",
+			"kind": "saeule",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				9,
+				14,
+				16
+			],
+			"desc": "Eine Druckfontäne bricht vor dir aus dem Boden.",
+			"params": {
+				"at": 56,
+				"width": 30,
+				"height": 96,
+				"damage": 13,
+				"launch": 380
+			},
+			"enhanced": {
+				"launch_add": 100,
+				"width_add": 12
+			},
+			"alts": [
+				{
+					"id": "drei_fontaenen",
+					"name": "Drei Fontänen",
+					"sp": 2,
+					"desc": "Drei Säulen.",
+					"params": {
+						"count": 3,
+						"step": 40,
+						"damage": 8
+					}
+				},
+				{
+					"id": "auftrieb",
+					"name": "Auftrieb",
+					"sp": 2,
+					"desc": "Du steigst mit auf.",
+					"params": {
+						"ride": true,
+						"at": 8
+					}
+				},
+				{
+					"id": "druckwand",
+					"name": "Druckwand",
+					"sp": 2,
+					"desc": "Breiter.",
+					"params": {
+						"width": 62,
+						"launch": 220
+					}
+				}
+			]
+		},
+		"druckwelle": {
+			"name": "Druckwelle",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Du fällst wie ein Anker, eine Druckwelle rollt los.",
+			"params": {
+				"damage": 14,
+				"radius": 48,
+				"waves": true,
+				"wave_damage": 9
+			},
+			"enhanced": {
+				"radius_add": 18,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "tiefenbruch",
+					"name": "Tiefenbruch",
+					"sp": 2,
+					"desc": "Großer Radius.",
+					"params": {
+						"radius": 76,
+						"waves": false
+					}
+				},
+				{
+					"id": "nachdruck",
+					"name": "Nachdruck",
+					"sp": 2,
+					"desc": "Zweiter Stoß.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "strudel",
+					"name": "Strudel",
+					"sp": 2,
+					"desc": "Ein Strudel bleibt 2 s.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"mahlstrom_feld": {
+			"name": "Mahlstrom",
+			"kind": "feld",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 2.0,
+			"frames": [
+				10,
+				8,
+				16
+			],
+			"desc": "Ein Mahlstrom vor dir zieht Gegner hinein.",
+			"params": {
+				"at": 70,
+				"width": 90,
+				"life": 2.4,
+				"tick": 0.35,
+				"damage": 3,
+				"pull": 90
+			},
+			"enhanced": {
+				"life_add": 1.5,
+				"pull_add": 40
+			},
+			"alts": [
+				{
+					"id": "weiter_strom",
+					"name": "Weiter Strom",
+					"sp": 2,
+					"desc": "Breiter, weniger Sog.",
+					"params": {
+						"width": 140,
+						"pull": 40
+					}
+				},
+				{
+					"id": "sogfalle",
+					"name": "Sogfalle",
+					"sp": 2,
+					"desc": "Kurz, schleudert hoch.",
+					"params": {
+						"life": 1.0,
+						"damage": 8,
+						"launch": 230
+					}
+				},
+				{
+					"id": "tiefenring",
+					"name": "Tiefenring",
+					"sp": 2,
+					"desc": "Um dich herum.",
+					"params": {
+						"at": 0
+					}
+				}
+			]
+		},
+		"tiefseepanzer": {
+			"name": "Tiefseepanzer",
+			"kind": "konter",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				4,
+				24,
+				14
+			],
+			"desc": "Ein Panzer aus Wasserdruck fängt den Treffer und schlägt zurück.",
+			"params": {
+				"stance": 0.5,
+				"counter_damage": 22
+			},
+			"enhanced": {
+				"counter_damage_add": 10
+			},
+			"alts": [
+				{
+					"id": "rueckstrom",
+					"name": "Rückstrom",
+					"sp": 2,
+					"desc": "Wirft Geschosse zurück.",
+					"params": {
+						"reflect": true
+					}
+				},
+				{
+					"id": "tiefe_ruhe",
+					"name": "Tiefe Ruhe",
+					"sp": 2,
+					"desc": "Längeres Fenster.",
+					"params": {
+						"stance": 0.8,
+						"counter_damage": 14
+					}
+				},
+				{
+					"id": "heilwasser",
+					"name": "Heilwasser",
+					"sp": 2,
+					"desc": "Heilt 60 LP.",
+					"params": {
+						"heal": 60
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "leviathan",
+				"name": "Leviathan",
+				"kind": "strahl",
+				"sp": 0,
+				"desc": "Ein Leviathan aus Wasser bricht als Strahl über den Bildschirm.",
+				"params": {
+					"damage": 5,
+					"width": 60
+				}
+			},
+			{
+				"id": "abgrund",
+				"name": "Abgrund",
+				"kind": "feld",
+				"sp": 2,
+				"desc": "Der Bildschirm versinkt im Abgrund, alles wird nach unten gezogen.",
+				"params": {
+					"damage": 4,
+					"pull": 80
+				}
+			},
+			{
+				"id": "tiefenbeben",
+				"name": "Tiefenbeben",
+				"kind": "saeulen",
+				"sp": 2,
+				"desc": "Acht Druckfontänen brechen nacheinander aus.",
+				"params": {
+					"damage": 12,
+					"count": 8
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

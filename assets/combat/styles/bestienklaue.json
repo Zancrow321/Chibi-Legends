@@ -1,0 +1,390 @@
+{
+	"_doc": "Baukasten-Kampfstil Bestienklaue (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "bestienklaue",
+	"name": "Bestienklaue",
+	"element": "",
+	"caster": "form",
+	"subtitle": "Bestienkampf · Klauen, Sprünge, Raserei mit Blutpreis",
+	"moveset": "res://assets/combat/movesets/lauffeuer.json",
+	"armed": false,
+	"colors": {
+		"main": "ff8a2a",
+		"accent": "e83b3b",
+		"light": "ffd0a0",
+		"dark": "1a0e08",
+		"white": "fff0e0"
+	},
+	"kern": {
+		"type": "blutzoll",
+		"name": "Raserei",
+		"desc": "Jeder Zug kostet 3 % LP (nie unter 1). Dafür bis zu +60 % Schaden, je weniger LP du hast, und jeder Treffer heilt 2 % zurück."
+	},
+	"loadout": {
+		"neutral": "krallenhieb",
+		"forward": "raubsprung",
+		"up": "pirsch",
+		"down": "beutesprung"
+	},
+	"zuege": {
+		"krallenhieb": {
+			"name": "Krallenhieb",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Fünf wilde Krallenhiebe.",
+			"params": {
+				"hits": 5,
+				"damage": 3.5,
+				"len": 38
+			},
+			"enhanced": {
+				"hits_add": 3
+			},
+			"alts": [
+				{
+					"id": "raserei",
+					"name": "Raserei",
+					"sp": 2,
+					"desc": "Acht wilde Hiebe.",
+					"params": {
+						"hits": 8,
+						"damage": 2.4
+					}
+				},
+				{
+					"id": "prankenschlag",
+					"name": "Prankenschlag",
+					"sp": 2,
+					"desc": "Zwei schwere Schläge.",
+					"params": {
+						"hits": 2,
+						"damage": 9
+					}
+				},
+				{
+					"id": "reisser",
+					"name": "Reißer",
+					"sp": 2,
+					"desc": "Schleudert hoch.",
+					"params": {
+						"launch": 300
+					}
+				}
+			]
+		},
+		"raubsprung": {
+			"name": "Raubsprung",
+			"kind": "sturm",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				5,
+				12,
+				12
+			],
+			"desc": "Ein weiter Raubsprung durch die Beute.",
+			"params": {
+				"dist": 160,
+				"damage": 11
+			},
+			"enhanced": {
+				"dist_mul": 1.5,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "hakensprung",
+					"name": "Hakensprung",
+					"sp": 2,
+					"desc": "Hin und zurück.",
+					"params": {
+						"back": true
+					}
+				},
+				{
+					"id": "blutspur",
+					"name": "Fährte",
+					"sp": 2,
+					"desc": "Krallenspur bleibt.",
+					"params": {
+						"trail": true
+					}
+				},
+				{
+					"id": "todesbiss",
+					"name": "Todesbiss",
+					"sp": 2,
+					"desc": "Kurz, sehr hart.",
+					"params": {
+						"dist": 90,
+						"damage": 18
+					}
+				}
+			]
+		},
+		"pirsch": {
+			"name": "Pirsch",
+			"kind": "schritt",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				4,
+				6,
+				12
+			],
+			"desc": "Du schleichst dich hinter die Beute und schlägst zu.",
+			"params": {
+				"dist": 140,
+				"damage": 11
+			},
+			"enhanced": {
+				"damage_add": 6,
+				"dist_add": 40
+			},
+			"alts": [
+				{
+					"id": "lauer",
+					"name": "Lauer",
+					"sp": 2,
+					"desc": "Nach vorn ohne Ziel.",
+					"params": {
+						"behind": false,
+						"dist": 120
+					}
+				},
+				{
+					"id": "nackenbiss",
+					"name": "Nackenbiss",
+					"sp": 2,
+					"desc": "Härter.",
+					"params": {
+						"damage": 17
+					}
+				},
+				{
+					"id": "weite_pirsch",
+					"name": "Weite Pirsch",
+					"sp": 2,
+					"desc": "Weiter.",
+					"params": {
+						"dist": 190
+					}
+				}
+			]
+		},
+		"beutesprung": {
+			"name": "Beutesprung",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Von oben fällst du über die Beute her.",
+			"params": {
+				"damage": 14,
+				"radius": 42,
+				"waves": false
+			},
+			"enhanced": {
+				"damage_add": 6,
+				"radius_add": 14
+			},
+			"alts": [
+				{
+					"id": "erdriss",
+					"name": "Erdriss",
+					"sp": 2,
+					"desc": "Zwei Wellen laufen los.",
+					"params": {
+						"waves": true,
+						"wave_damage": 8
+					}
+				},
+				{
+					"id": "zweiter_biss",
+					"name": "Zweiter Biss",
+					"sp": 2,
+					"desc": "Zweiter Stoß.",
+					"params": {
+						"aftershock": true,
+						"waves": true
+					}
+				},
+				{
+					"id": "revier",
+					"name": "Revier",
+					"sp": 2,
+					"desc": "Krallenmal bleibt 2 s.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"krallenwirbel": {
+			"name": "Krallenwirbel",
+			"kind": "wirbel",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.3,
+			"frames": [
+				6,
+				30,
+				12
+			],
+			"desc": "Du wirbelst mit ausgefahrenen Krallen.",
+			"params": {
+				"radius": 38,
+				"hits": 6,
+				"damage": 3,
+				"pull": 40,
+				"drift": 60
+			},
+			"enhanced": {
+				"hits_add": 3,
+				"radius_add": 10
+			},
+			"alts": [
+				{
+					"id": "standwirbel",
+					"name": "Standwirbel",
+					"sp": 2,
+					"desc": "Am Platz, mehr Sog.",
+					"params": {
+						"drift": 0,
+						"pull": 90
+					}
+				},
+				{
+					"id": "grosser_wirbel",
+					"name": "Großer Wirbel",
+					"sp": 2,
+					"desc": "Größer.",
+					"params": {
+						"radius": 58,
+						"hits": 4,
+						"damage": 4.5
+					}
+				},
+				{
+					"id": "springwirbel",
+					"name": "Springwirbel",
+					"sp": 2,
+					"desc": "Steigt auf.",
+					"params": {
+						"lift": 160
+					}
+				}
+			]
+		},
+		"blutrausch": {
+			"name": "Blutrausch",
+			"kind": "aura",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 6.0,
+			"frames": [
+				12,
+				6,
+				12
+			],
+			"desc": "Du verfällst in Blutrausch: 6 % LP, 6 s +30 % Schaden und schneller.",
+			"params": {
+				"buff": 6,
+				"bonus": 0.3,
+				"hp_cost": 0.06,
+				"speed": 1.2
+			},
+			"enhanced": {
+				"bonus_add": 0.1,
+				"buff_add": 2
+			},
+			"alts": [
+				{
+					"id": "tiefer_rausch",
+					"name": "Tiefer Rausch",
+					"sp": 2,
+					"desc": "12 % LP, +50 %.",
+					"params": {
+						"hp_cost": 0.12,
+						"bonus": 0.5,
+						"buff": 4
+					}
+				},
+				{
+					"id": "kalter_rausch",
+					"name": "Kalter Rausch",
+					"sp": 2,
+					"desc": "Kein LP-Preis, +12 %.",
+					"params": {
+						"hp_cost": 0.0,
+						"bonus": 0.12
+					}
+				},
+				{
+					"id": "urschrei_aura",
+					"name": "Brüllen",
+					"sp": 2,
+					"desc": "Ein Brüllen trifft um dich.",
+					"params": {
+						"nova": 20
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "jagdrudel",
+				"name": "Jagdrudel",
+				"kind": "ansturm",
+				"sp": 0,
+				"desc": "Ein Rudel aus Schattenbestien jagt mit dir von Ziel zu Ziel.",
+				"params": {
+					"damage": 12,
+					"slashes": 8
+				}
+			},
+			{
+				"id": "urschrei",
+				"name": "Urschrei",
+				"kind": "nova",
+				"sp": 2,
+				"desc": "Ein Urschrei, der die Erde aufreißt.",
+				"params": {
+					"damage": 80,
+					"radius": 150
+				}
+			},
+			{
+				"id": "krallensturm",
+				"name": "Krallensturm",
+				"kind": "regen",
+				"sp": 2,
+				"desc": "Krallenhiebe fallen wie Regen auf alle Gegner.",
+				"params": {
+					"damage": 11,
+					"count": 20
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

@@ -1,0 +1,398 @@
+{
+	"_doc": "Baukasten-Kampfstil Drachenzorn (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "drachenzorn",
+	"name": "Drachenzorn",
+	"element": "feuer",
+	"caster": "form",
+	"subtitle": "Drachenfaust · Drachenodem, aufsteigende Drachen, Drachenzorn",
+	"moveset": "res://assets/combat/movesets/lauffeuer.json",
+	"armed": false,
+	"colors": {
+		"main": "ff5a2a",
+		"accent": "ffd23c",
+		"light": "ffd0a0",
+		"dark": "2a0c08",
+		"white": "fff4d8"
+	},
+	"kern": {
+		"type": "ladung",
+		"name": "Drachenatem",
+		"desc": "Jeder Zug, der trifft, lädt 1 Drachenatem (bis 5). Bei 5: 6 s Drachenzorn, Schläge und Tritte mit Feuer +25 %."
+	},
+	"loadout": {
+		"neutral": "drachenkralle",
+		"forward": "drachenodem",
+		"up": "aufsteigender_drache",
+		"down": "drachenfall"
+	},
+	"zuege": {
+		"drachenkralle": {
+			"name": "Drachenkralle",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Drei brennende Krallenschläge.",
+			"params": {
+				"hits": 3,
+				"damage": 5.5,
+				"len": 38
+			},
+			"enhanced": {
+				"hits_add": 2,
+				"damage_add": 1
+			},
+			"alts": [
+				{
+					"id": "krallenhagel",
+					"name": "Krallenhagel",
+					"sp": 2,
+					"desc": "Sechs schnelle Schläge.",
+					"params": {
+						"hits": 6,
+						"damage": 3
+					}
+				},
+				{
+					"id": "drachenfaust",
+					"name": "Drachenfaust",
+					"sp": 2,
+					"desc": "Ein großer Schlag.",
+					"params": {
+						"hits": 1,
+						"damage": 18
+					}
+				},
+				{
+					"id": "schwanzschlag",
+					"name": "Schwanzschlag",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				}
+			]
+		},
+		"drachenodem": {
+			"name": "Drachenodem",
+			"kind": "strahl",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.6,
+			"frames": [
+				12,
+				30,
+				16
+			],
+			"desc": "Du atmest einen Feuerstrahl nach vorn.",
+			"params": {
+				"len": 180,
+				"width": 22,
+				"damage": 3,
+				"tick": 0.08
+			},
+			"enhanced": {
+				"len_add": 60,
+				"width_add": 10
+			},
+			"alts": [
+				{
+					"id": "feuerlanze",
+					"name": "Feuerlanze",
+					"sp": 2,
+					"desc": "Länger, schmaler.",
+					"params": {
+						"len": 260,
+						"width": 12
+					}
+				},
+				{
+					"id": "himmelsodem",
+					"name": "Himmelsodem",
+					"sp": 2,
+					"desc": "Schräg nach oben.",
+					"params": {
+						"up": true
+					}
+				},
+				{
+					"id": "glutstoss",
+					"name": "Glutstoß",
+					"sp": 2,
+					"desc": "Kurz, sehr heiß.",
+					"params": {
+						"len": 110,
+						"damage": 5.5
+					}
+				}
+			]
+		},
+		"aufsteigender_drache": {
+			"name": "Aufsteigender Drache",
+			"kind": "saeule",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				9,
+				14,
+				16
+			],
+			"desc": "Ein Feuerdrache steigt vor dir auf.",
+			"params": {
+				"at": 30,
+				"width": 30,
+				"height": 110,
+				"damage": 14,
+				"launch": 400,
+				"ride": true
+			},
+			"enhanced": {
+				"launch_add": 100,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "drachenwacht",
+					"name": "Drachenwacht",
+					"sp": 2,
+					"desc": "Am Boden bleiben, weiter vorn.",
+					"params": {
+						"ride": false,
+						"at": 60
+					}
+				},
+				{
+					"id": "zwei_drachen",
+					"name": "Zwei Drachen",
+					"sp": 2,
+					"desc": "Zwei Drachen nacheinander.",
+					"params": {
+						"count": 2,
+						"step": 40,
+						"damage": 9,
+						"ride": false
+					}
+				},
+				{
+					"id": "feuersaeule",
+					"name": "Feuersäule",
+					"sp": 2,
+					"desc": "Breiter.",
+					"params": {
+						"width": 56,
+						"launch": 260
+					}
+				}
+			]
+		},
+		"drachenfall": {
+			"name": "Drachenfall",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Du stürzt als Feuerdrache herab.",
+			"params": {
+				"damage": 14,
+				"radius": 46,
+				"waves": true,
+				"wave_damage": 8
+			},
+			"enhanced": {
+				"radius_add": 18,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "drachenkrater",
+					"name": "Drachenkrater",
+					"sp": 2,
+					"desc": "Großer Aufprall.",
+					"params": {
+						"radius": 74,
+						"waves": false
+					}
+				},
+				{
+					"id": "doppelbrand",
+					"name": "Doppelbrand",
+					"sp": 2,
+					"desc": "Zweiter Stoß.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "glutboden",
+					"name": "Glutboden",
+					"sp": 2,
+					"desc": "Glut bleibt 2 s.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"drachenansturm": {
+			"name": "Drachenansturm",
+			"kind": "sturm",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				5,
+				12,
+				12
+			],
+			"desc": "Du stürmst wie ein Drache durch die Gegner.",
+			"params": {
+				"dist": 150,
+				"damage": 11
+			},
+			"enhanced": {
+				"dist_mul": 1.5,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "drachenkehre",
+					"name": "Drachenkehre",
+					"sp": 2,
+					"desc": "Hin und zurück.",
+					"params": {
+						"back": true
+					}
+				},
+				{
+					"id": "flammenspur",
+					"name": "Flammenspur",
+					"sp": 2,
+					"desc": "Feuerspur bleibt.",
+					"params": {
+						"trail": true
+					}
+				},
+				{
+					"id": "drachenbiss",
+					"name": "Drachenbiss",
+					"sp": 2,
+					"desc": "Kurz und hart.",
+					"params": {
+						"dist": 90,
+						"damage": 18
+					}
+				}
+			]
+		},
+		"schuppenpanzer": {
+			"name": "Schuppenpanzer",
+			"kind": "aura",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 6.0,
+			"frames": [
+				12,
+				6,
+				12
+			],
+			"desc": "Drachenschuppen bedecken dich: 5 s +15 % Schaden und 30 % weniger Schaden.",
+			"params": {
+				"buff": 5,
+				"bonus": 0.15,
+				"armor": 0.3
+			},
+			"enhanced": {
+				"buff_add": 2,
+				"armor_add": 0.15
+			},
+			"alts": [
+				{
+					"id": "feuerschuppen",
+					"name": "Feuerschuppen",
+					"sp": 2,
+					"desc": "Kein Schutz, +30 %.",
+					"params": {
+						"armor": 0.0,
+						"bonus": 0.3
+					}
+				},
+				{
+					"id": "drachenhaut",
+					"name": "Drachenhaut",
+					"sp": 2,
+					"desc": "50 % Schutz, kein Bonus.",
+					"params": {
+						"armor": 0.5,
+						"bonus": 0.0
+					}
+				},
+				{
+					"id": "schuppenring",
+					"name": "Schuppenring",
+					"sp": 2,
+					"desc": "Feuerring trifft um dich.",
+					"params": {
+						"nova": 18
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "drachenkoenig",
+				"name": "Drachenkönig",
+				"kind": "strahl",
+				"sp": 0,
+				"desc": "Der Drachenkönig erscheint und speit Feuer über den Bildschirm.",
+				"params": {
+					"damage": 5,
+					"width": 60
+				}
+			},
+			{
+				"id": "flammenhimmel",
+				"name": "Flammenhimmel",
+				"kind": "regen",
+				"sp": 2,
+				"desc": "Feuerdrachen regnen vom Himmel.",
+				"params": {
+					"damage": 12,
+					"count": 16
+				}
+			},
+			{
+				"id": "drachenwirbel",
+				"name": "Drachenwirbel",
+				"kind": "nova",
+				"sp": 2,
+				"desc": "Ein Drache windet sich um dich und explodiert.",
+				"params": {
+					"damage": 76,
+					"radius": 150
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

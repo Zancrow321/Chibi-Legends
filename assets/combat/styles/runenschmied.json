@@ -1,0 +1,414 @@
+{
+	"_doc": "Baukasten-Kampfstil Runenschmied (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "runenschmied",
+	"name": "Runenschmied",
+	"element": "erde",
+	"caster": "form",
+	"subtitle": "Runenschmied · Runen einbrennen, Fallen legen, Runenbruch",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"armed": true,
+	"colors": {
+		"main": "5ad8ff",
+		"accent": "ffb347",
+		"light": "d0f4ff",
+		"dark": "161214",
+		"white": "ffffff"
+	},
+	"kern": {
+		"type": "marken",
+		"name": "Rune",
+		"zuender": "runenbruch",
+		"desc": "Treffer brennen Runen in Gegner (bis 3). Runenbruch zündet alle Runen: +9 Schaden je Rune."
+	},
+	"loadout": {
+		"neutral": "runenhieb",
+		"forward": "runenwurf",
+		"up": "runenstein",
+		"down": "runenbruch"
+	},
+	"zuege": {
+		"runenhieb": {
+			"name": "Runenhieb",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Zwei Hammerschläge, die Runen einbrennen.",
+			"params": {
+				"hits": 2,
+				"damage": 8,
+				"len": 48,
+				"h": 40
+			},
+			"enhanced": {
+				"hits_add": 1,
+				"damage_add": 3
+			},
+			"alts": [
+				{
+					"id": "runenhagel",
+					"name": "Runenhagel",
+					"sp": 2,
+					"desc": "Vier schnelle Schläge.",
+					"params": {
+						"hits": 4,
+						"damage": 4.5
+					}
+				},
+				{
+					"id": "schwerer_hieb",
+					"name": "Schwerer Hieb",
+					"sp": 2,
+					"desc": "Ein gewaltiger Schlag.",
+					"params": {
+						"hits": 1,
+						"damage": 18
+					}
+				},
+				{
+					"id": "rundhieb",
+					"name": "Rundhieb",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				}
+			]
+		},
+		"runenwurf": {
+			"name": "Runenwurf",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Ein Runenstein fliegt im Bogen und zerbricht.",
+			"params": {
+				"damage": 13,
+				"speed": 320,
+				"dist": 300,
+				"grav": 500,
+				"angle": -25,
+				"burst": true
+			},
+			"enhanced": {
+				"count_add": 2,
+				"damage_add": 4
+			},
+			"alts": [
+				{
+					"id": "drei_steine",
+					"name": "Drei Steine",
+					"sp": 2,
+					"desc": "Drei kleine.",
+					"params": {
+						"count": 3,
+						"spread": 30,
+						"damage": 6
+					}
+				},
+				{
+					"id": "runenpfeil",
+					"name": "Runenpfeil",
+					"sp": 2,
+					"desc": "Gerade, durchschlägt.",
+					"params": {
+						"grav": 0,
+						"angle": 0,
+						"pierce": true,
+						"burst": false,
+						"speed": 520
+					}
+				},
+				{
+					"id": "grosser_stein",
+					"name": "Großer Stein",
+					"sp": 2,
+					"desc": "Groß und langsam.",
+					"params": {
+						"size": 1.8,
+						"damage": 19,
+						"speed": 240
+					}
+				}
+			]
+		},
+		"runenstein": {
+			"name": "Runenstein",
+			"kind": "saeule",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				9,
+				14,
+				16
+			],
+			"desc": "Ein Runenstein bricht vor dir aus dem Boden.",
+			"params": {
+				"at": 56,
+				"width": 30,
+				"height": 80,
+				"damage": 13,
+				"launch": 350
+			},
+			"enhanced": {
+				"launch_add": 100,
+				"width_add": 12
+			},
+			"alts": [
+				{
+					"id": "steinkreis",
+					"name": "Steinkreis",
+					"sp": 2,
+					"desc": "Drei Steine.",
+					"params": {
+						"count": 3,
+						"step": 40,
+						"damage": 8
+					}
+				},
+				{
+					"id": "runenstufe",
+					"name": "Runenstufe",
+					"sp": 2,
+					"desc": "Du fährst hoch.",
+					"params": {
+						"ride": true,
+						"at": 8
+					}
+				},
+				{
+					"id": "runenwall",
+					"name": "Runenwall",
+					"sp": 2,
+					"desc": "Breite Wand.",
+					"params": {
+						"width": 64,
+						"launch": 210
+					}
+				}
+			]
+		},
+		"ambossrune": {
+			"name": "Ambossrune",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Du schlägst von oben eine Rune in den Boden.",
+			"params": {
+				"damage": 15,
+				"radius": 48,
+				"waves": true,
+				"wave_damage": 9
+			},
+			"enhanced": {
+				"radius_add": 18,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "grosse_rune",
+					"name": "Große Rune",
+					"sp": 2,
+					"desc": "Großer Radius.",
+					"params": {
+						"radius": 76,
+						"waves": false
+					}
+				},
+				{
+					"id": "nachrune",
+					"name": "Nachrune",
+					"sp": 2,
+					"desc": "Zweiter Stoß.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "runenkreis",
+					"name": "Runenkreis",
+					"sp": 2,
+					"desc": "Runenkreis bleibt 2 s.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"runenfalle": {
+			"name": "Runenfalle",
+			"kind": "feld",
+			"dir": "down",
+			"sp": 1,
+			"cd": 2.0,
+			"frames": [
+				10,
+				8,
+				16
+			],
+			"desc": "Eine Runenfalle glimmt vor dir und trifft immer wieder.",
+			"params": {
+				"at": 60,
+				"width": 80,
+				"life": 3.0,
+				"tick": 0.4,
+				"damage": 4
+			},
+			"enhanced": {
+				"life_add": 1.5,
+				"damage_add": 1
+			},
+			"alts": [
+				{
+					"id": "breite_falle",
+					"name": "Breite Falle",
+					"sp": 2,
+					"desc": "Breiter.",
+					"params": {
+						"width": 130
+					}
+				},
+				{
+					"id": "bannrune",
+					"name": "Bannrune",
+					"sp": 2,
+					"desc": "Zieht hinein.",
+					"params": {
+						"pull": 70
+					}
+				},
+				{
+					"id": "sprengrune",
+					"name": "Sprengrune",
+					"sp": 2,
+					"desc": "Kurz, schleudert hoch.",
+					"params": {
+						"life": 1.0,
+						"damage": 9,
+						"launch": 240
+					}
+				}
+			]
+		},
+		"runenbruch": {
+			"name": "Runenbruch",
+			"kind": "hieb",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Ein Hammerschlag, der alle Runen zündet.",
+			"params": {
+				"hits": 1,
+				"damage": 14,
+				"len": 60,
+				"h": 44
+			},
+			"enhanced": {
+				"damage_add": 8,
+				"len_add": 16
+			},
+			"alts": [
+				{
+					"id": "doppelbruch",
+					"name": "Doppelbruch",
+					"sp": 2,
+					"desc": "Zwei Schläge.",
+					"params": {
+						"hits": 2,
+						"damage": 9
+					}
+				},
+				{
+					"id": "weiter_bruch",
+					"name": "Weiter Bruch",
+					"sp": 2,
+					"desc": "Weiter.",
+					"params": {
+						"len": 90,
+						"damage": 11
+					}
+				},
+				{
+					"id": "rundbruch",
+					"name": "Rundbruch",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "runenkreis_mz",
+				"name": "Runenkreis",
+				"kind": "feld",
+				"sp": 0,
+				"desc": "Ein riesiger Runenkreis bannt den ganzen Bildschirm.",
+				"params": {
+					"damage": 4,
+					"pull": 50
+				}
+			},
+			{
+				"id": "urrune",
+				"name": "Urrune",
+				"kind": "nova",
+				"sp": 2,
+				"desc": "Die erste aller Runen bricht aus dir hervor.",
+				"params": {
+					"damage": 78,
+					"radius": 150
+				}
+			},
+			{
+				"id": "runensaeulen",
+				"name": "Runensäulen",
+				"kind": "saeulen",
+				"sp": 2,
+				"desc": "Acht Runensteine brechen in einer Reihe aus.",
+				"params": {
+					"damage": 12,
+					"count": 8
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

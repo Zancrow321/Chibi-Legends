@@ -1,0 +1,403 @@
+{
+	"_doc": "Baukasten-Kampfstil Kristallherz (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "kristallherz",
+	"name": "Kristallherz",
+	"element": "frost",
+	"caster": "form",
+	"subtitle": "Kristallkörper · Splitter, Prismen, harte Ruhe",
+	"moveset": "res://assets/combat/movesets/lauffeuer.json",
+	"armed": false,
+	"colors": {
+		"main": "8ff0ff",
+		"accent": "d08aff",
+		"light": "e8ffff",
+		"dark": "10202a",
+		"white": "ffffff"
+	},
+	"kern": {
+		"type": "fokus",
+		"name": "Prismaruhe",
+		"desc": "Wer 1,5 s keinen Zug nutzt und nicht getroffen wird, sammelt Prismaruhe. Der nächste Zug verbraucht sie: bis zu +60 % Schaden."
+	},
+	"loadout": {
+		"neutral": "splitterhieb",
+		"forward": "kristallsplitter",
+		"up": "kristalldruse",
+		"down": "kristallsturz"
+	},
+	"zuege": {
+		"splitterhieb": {
+			"name": "Splitterhieb",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Drei Hiebe mit Kristallfäusten, Splitter fliegen.",
+			"params": {
+				"hits": 3,
+				"damage": 5.5,
+				"len": 38
+			},
+			"enhanced": {
+				"hits_add": 2,
+				"damage_add": 1
+			},
+			"alts": [
+				{
+					"id": "splitterhagel",
+					"name": "Splitterhagel",
+					"sp": 2,
+					"desc": "Sechs schnelle Hiebe.",
+					"params": {
+						"hits": 6,
+						"damage": 3
+					}
+				},
+				{
+					"id": "kristallfaust",
+					"name": "Kristallfaust",
+					"sp": 2,
+					"desc": "Ein schwerer Schlag.",
+					"params": {
+						"hits": 1,
+						"damage": 18
+					}
+				},
+				{
+					"id": "prismenstoss",
+					"name": "Prismenstoß",
+					"sp": 2,
+					"desc": "Schleudert hoch.",
+					"params": {
+						"launch": 280
+					}
+				}
+			]
+		},
+		"kristallsplitter": {
+			"name": "Kristallsplitter",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Fünf Kristallsplitter fächern nach vorn.",
+			"params": {
+				"count": 5,
+				"spread": 40,
+				"damage": 4,
+				"speed": 560,
+				"dist": 260,
+				"size": 0.7
+			},
+			"enhanced": {
+				"count_add": 2,
+				"damage_add": 1
+			},
+			"alts": [
+				{
+					"id": "kristallspeer",
+					"name": "Kristallspeer",
+					"sp": 2,
+					"desc": "Ein großer Splitter, durchschlägt.",
+					"params": {
+						"count": 1,
+						"size": 1.4,
+						"pierce": true,
+						"damage": 15
+					}
+				},
+				{
+					"id": "splitterkugel",
+					"name": "Splitterkugel",
+					"sp": 2,
+					"desc": "Eine Kugel, die zerplatzt.",
+					"params": {
+						"count": 1,
+						"burst": true,
+						"damage": 12
+					}
+				},
+				{
+					"id": "enger_faecher",
+					"name": "Enger Fächer",
+					"sp": 2,
+					"desc": "Drei Splitter, eng.",
+					"params": {
+						"count": 3,
+						"spread": 8,
+						"damage": 6
+					}
+				}
+			]
+		},
+		"kristalldruse": {
+			"name": "Kristalldruse",
+			"kind": "saeule",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				9,
+				14,
+				16
+			],
+			"desc": "Eine Kristalldruse wächst vor dir aus dem Boden.",
+			"params": {
+				"at": 54,
+				"width": 30,
+				"height": 86,
+				"damage": 13,
+				"launch": 350
+			},
+			"enhanced": {
+				"launch_add": 100,
+				"width_add": 12
+			},
+			"alts": [
+				{
+					"id": "drusenreihe",
+					"name": "Drusenreihe",
+					"sp": 2,
+					"desc": "Drei Drusen.",
+					"params": {
+						"count": 3,
+						"step": 40,
+						"damage": 8
+					}
+				},
+				{
+					"id": "kristallstufe",
+					"name": "Kristallstufe",
+					"sp": 2,
+					"desc": "Du fährst hoch.",
+					"params": {
+						"ride": true,
+						"at": 8
+					}
+				},
+				{
+					"id": "breite_druse",
+					"name": "Breite Druse",
+					"sp": 2,
+					"desc": "Breiter.",
+					"params": {
+						"width": 62,
+						"launch": 210
+					}
+				}
+			]
+		},
+		"kristallsturz": {
+			"name": "Kristallsturz",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Du schlägst von oben ein, Kristalle brechen aus dem Boden.",
+			"params": {
+				"damage": 13,
+				"radius": 46,
+				"waves": true,
+				"wave_damage": 8
+			},
+			"enhanced": {
+				"radius_add": 18,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "grosser_bruch",
+					"name": "Großer Bruch",
+					"sp": 2,
+					"desc": "Großer Radius.",
+					"params": {
+						"radius": 74,
+						"waves": false
+					}
+				},
+				{
+					"id": "nachsplitter",
+					"name": "Nachsplitter",
+					"sp": 2,
+					"desc": "Zweiter Stoß.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "kristallfeld",
+					"name": "Kristallfeld",
+					"sp": 2,
+					"desc": "Kristalle bleiben 2 s.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"prismenhaut": {
+			"name": "Prismenhaut",
+			"kind": "konter",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				4,
+				24,
+				14
+			],
+			"desc": "Deine Haut wird zum Prisma und bricht den Angriff zurück.",
+			"params": {
+				"stance": 0.45,
+				"counter_damage": 21,
+				"reflect": true
+			},
+			"enhanced": {
+				"counter_damage_add": 10
+			},
+			"alts": [
+				{
+					"id": "harter_kern",
+					"name": "Harter Kern",
+					"sp": 2,
+					"desc": "Kein Zurückwerfen, mehr Schaden.",
+					"params": {
+						"reflect": false,
+						"counter_damage": 28
+					}
+				},
+				{
+					"id": "lange_wehr",
+					"name": "Lange Wehr",
+					"sp": 2,
+					"desc": "Längeres Fenster.",
+					"params": {
+						"stance": 0.75,
+						"counter_damage": 14
+					}
+				},
+				{
+					"id": "heilprisma",
+					"name": "Heilprisma",
+					"sp": 2,
+					"desc": "Heilt 60 LP.",
+					"params": {
+						"heal": 60
+					}
+				}
+			]
+		},
+		"kristallgarten": {
+			"name": "Kristallgarten",
+			"kind": "feld",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 2.0,
+			"frames": [
+				10,
+				8,
+				16
+			],
+			"desc": "Ein Garten aus Kristallspitzen vor dir.",
+			"params": {
+				"at": 60,
+				"width": 90,
+				"life": 2.4,
+				"tick": 0.35,
+				"damage": 3.5
+			},
+			"enhanced": {
+				"life_add": 1.5,
+				"damage_add": 1
+			},
+			"alts": [
+				{
+					"id": "weiter_garten",
+					"name": "Weiter Garten",
+					"sp": 2,
+					"desc": "Breiter.",
+					"params": {
+						"width": 140
+					}
+				},
+				{
+					"id": "kristallsog",
+					"name": "Kristallsog",
+					"sp": 2,
+					"desc": "Zieht Gegner hinein.",
+					"params": {
+						"pull": 60
+					}
+				},
+				{
+					"id": "kristallfalle",
+					"name": "Kristallfalle",
+					"sp": 2,
+					"desc": "Kurz, schleudert hoch.",
+					"params": {
+						"life": 1.0,
+						"damage": 8,
+						"launch": 220
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "prismastrahl",
+				"name": "Prismastrahl",
+				"kind": "strahl",
+				"sp": 0,
+				"desc": "Ein Regenbogenstrahl bricht durch ein Riesenprisma.",
+				"params": {
+					"damage": 5,
+					"width": 56
+				}
+			},
+			{
+				"id": "kristallregen",
+				"name": "Kristallregen",
+				"kind": "regen",
+				"sp": 2,
+				"desc": "Kristallspeere regnen auf alle Gegner.",
+				"params": {
+					"damage": 12,
+					"count": 18
+				}
+			},
+			{
+				"id": "diamantkern",
+				"name": "Diamantkern",
+				"kind": "nova",
+				"sp": 2,
+				"desc": "Dein Herz wird zum Diamanten und explodiert in Splittern.",
+				"params": {
+					"damage": 76,
+					"radius": 150
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

@@ -1,0 +1,402 @@
+{
+	"_doc": "Baukasten-Kampfstil Gewitterhammer (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "gewitterhammer",
+	"name": "Gewitterhammer",
+	"element": "blitz",
+	"caster": "form",
+	"subtitle": "Donnerhammer · schwere Schläge, Blitzableiter, Gewitterladung",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"armed": true,
+	"colors": {
+		"main": "6fb8ff",
+		"accent": "ffe45c",
+		"light": "d0e8ff",
+		"dark": "0e1428",
+		"white": "ffffff"
+	},
+	"kern": {
+		"type": "ladung",
+		"name": "Donnerladung",
+		"desc": "Jeder Zug, der trifft, lädt 1 Donnerladung (bis 5). Bei 5: 6 s Gewitter, Schläge mit Blitz +25 %."
+	},
+	"loadout": {
+		"neutral": "donnerschlag",
+		"forward": "hammerwurf",
+		"up": "blitzableiter",
+		"down": "donnerfall"
+	},
+	"zuege": {
+		"donnerschlag": {
+			"name": "Donnerschlag",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				14,
+				8,
+				20
+			],
+			"desc": "Ein schwerer Hammerschlag mit Blitzentladung.",
+			"params": {
+				"hits": 1,
+				"damage": 17,
+				"len": 52,
+				"h": 44
+			},
+			"enhanced": {
+				"damage_add": 8,
+				"len_add": 14
+			},
+			"alts": [
+				{
+					"id": "doppeldonner",
+					"name": "Doppeldonner",
+					"sp": 2,
+					"desc": "Zwei Schläge.",
+					"params": {
+						"hits": 2,
+						"damage": 10
+					}
+				},
+				{
+					"id": "himmelsschlag",
+					"name": "Himmelsschlag",
+					"sp": 2,
+					"desc": "Schleudert hoch.",
+					"params": {
+						"launch": 320
+					}
+				},
+				{
+					"id": "rundhammer",
+					"name": "Rundhammer",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						],
+						"damage": 13
+					}
+				}
+			]
+		},
+		"hammerwurf": {
+			"name": "Hammerwurf",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Der Hammer fliegt kreiselnd nach vorn und kehrt zurück.",
+			"params": {
+				"damage": 14,
+				"speed": 420,
+				"dist": 240,
+				"boomerang": true,
+				"size": 1.3
+			},
+			"enhanced": {
+				"dist_add": 80,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "blitzwurf",
+					"name": "Blitzwurf",
+					"sp": 2,
+					"desc": "Gerade, durchschlägt.",
+					"params": {
+						"boomerang": false,
+						"pierce": true,
+						"dist": 340
+					}
+				},
+				{
+					"id": "doppelwurf",
+					"name": "Doppelwurf",
+					"sp": 2,
+					"desc": "Zwei Würfe.",
+					"params": {
+						"count": 2,
+						"delay": 0.15,
+						"damage": 9
+					}
+				},
+				{
+					"id": "entladewurf",
+					"name": "Entladewurf",
+					"sp": 2,
+					"desc": "Platzt am Ende.",
+					"params": {
+						"boomerang": false,
+						"burst": true
+					}
+				}
+			]
+		},
+		"blitzableiter": {
+			"name": "Blitzableiter",
+			"kind": "saeule",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				9,
+				14,
+				16
+			],
+			"desc": "Du rufst einen Blitz vor dir herab.",
+			"params": {
+				"at": 60,
+				"width": 26,
+				"height": 120,
+				"damage": 13,
+				"launch": 360
+			},
+			"enhanced": {
+				"launch_add": 100,
+				"damage_add": 4
+			},
+			"alts": [
+				{
+					"id": "drei_blitze",
+					"name": "Drei Blitze",
+					"sp": 2,
+					"desc": "Drei Einschläge.",
+					"params": {
+						"count": 3,
+						"step": 42,
+						"damage": 8
+					}
+				},
+				{
+					"id": "blitzritt",
+					"name": "Blitzritt",
+					"sp": 2,
+					"desc": "Du fährst mit hoch.",
+					"params": {
+						"ride": true,
+						"at": 8
+					}
+				},
+				{
+					"id": "breiter_blitz",
+					"name": "Breiter Blitz",
+					"sp": 2,
+					"desc": "Breiter.",
+					"params": {
+						"width": 56,
+						"launch": 240
+					}
+				}
+			]
+		},
+		"donnerfall": {
+			"name": "Donnerfall",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Du schlägst den Hammer von oben in den Boden.",
+			"params": {
+				"damage": 16,
+				"radius": 50,
+				"waves": true,
+				"wave_damage": 9
+			},
+			"enhanced": {
+				"radius_add": 20,
+				"damage_add": 6
+			},
+			"alts": [
+				{
+					"id": "grosser_donner",
+					"name": "Großer Donner",
+					"sp": 2,
+					"desc": "Großer Radius.",
+					"params": {
+						"radius": 80,
+						"waves": false
+					}
+				},
+				{
+					"id": "nachdonner",
+					"name": "Nachdonner",
+					"sp": 2,
+					"desc": "Zweiter Stoß.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "ladungsfeld",
+					"name": "Ladungsfeld",
+					"sp": 2,
+					"desc": "Strom bleibt 2 s.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"gewitterkreisel": {
+			"name": "Gewitterkreisel",
+			"kind": "wirbel",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.3,
+			"frames": [
+				6,
+				30,
+				12
+			],
+			"desc": "Du drehst dich mit dem Hammer, Blitze zucken.",
+			"params": {
+				"radius": 46,
+				"hits": 5,
+				"damage": 4,
+				"pull": 40,
+				"drift": 40
+			},
+			"enhanced": {
+				"hits_add": 3,
+				"radius_add": 12
+			},
+			"alts": [
+				{
+					"id": "standkreisel",
+					"name": "Standkreisel",
+					"sp": 2,
+					"desc": "Am Platz, mehr Sog.",
+					"params": {
+						"drift": 0,
+						"pull": 100
+					}
+				},
+				{
+					"id": "weiter_kreisel",
+					"name": "Weiter Kreisel",
+					"sp": 2,
+					"desc": "Größer.",
+					"params": {
+						"radius": 66,
+						"hits": 4
+					}
+				},
+				{
+					"id": "hochkreisel",
+					"name": "Hochkreisel",
+					"sp": 2,
+					"desc": "Steigt auf.",
+					"params": {
+						"lift": 160
+					}
+				}
+			]
+		},
+		"ableiter": {
+			"name": "Ableiter",
+			"kind": "konter",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				4,
+				24,
+				14
+			],
+			"desc": "Du leitest den Treffer in den Boden und schlägst zurück.",
+			"params": {
+				"stance": 0.45,
+				"counter_damage": 22
+			},
+			"enhanced": {
+				"counter_damage_add": 10
+			},
+			"alts": [
+				{
+					"id": "rueckblitz",
+					"name": "Rückblitz",
+					"sp": 2,
+					"desc": "Wirft Geschosse zurück.",
+					"params": {
+						"reflect": true
+					}
+				},
+				{
+					"id": "erdung",
+					"name": "Erdung",
+					"sp": 2,
+					"desc": "Längeres Fenster.",
+					"params": {
+						"stance": 0.75,
+						"counter_damage": 14
+					}
+				},
+				{
+					"id": "ladungskonter",
+					"name": "Ladungskonter",
+					"sp": 2,
+					"desc": "Nach dem Konter 4 s +20 %.",
+					"params": {
+						"buff": 4
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "weltgewitter",
+				"name": "Weltgewitter",
+				"kind": "regen",
+				"sp": 0,
+				"desc": "Ein Gewitter über dem ganzen Bildschirm.",
+				"params": {
+					"damage": 12,
+					"count": 18
+				}
+			},
+			{
+				"id": "hammer_der_himmel",
+				"name": "Hammer der Himmel",
+				"kind": "saeulen",
+				"sp": 2,
+				"desc": "Neun Blitze schlagen in einer Reihe ein.",
+				"params": {
+					"damage": 12,
+					"count": 9
+				}
+			},
+			{
+				"id": "sturmkern",
+				"name": "Sturmkern",
+				"kind": "nova",
+				"sp": 2,
+				"desc": "Der Hammer trifft den Boden, das Gewitter explodiert um dich.",
+				"params": {
+					"damage": 78,
+					"radius": 150
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

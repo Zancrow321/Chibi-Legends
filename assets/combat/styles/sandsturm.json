@@ -1,0 +1,401 @@
+{
+	"_doc": "Baukasten-Kampfstil Sandsturm (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "sandsturm",
+	"name": "Sandsturm",
+	"element": "erde",
+	"caster": "form",
+	"subtitle": "Säbeltanz der Wüste · Sandhosen, Treibsand, Wüstenecho",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"armed": true,
+	"colors": {
+		"main": "f0c070",
+		"accent": "ff8a4a",
+		"light": "fff0c8",
+		"dark": "2a1c0c",
+		"white": "fffaf0"
+	},
+	"kern": {
+		"type": "echo",
+		"name": "Wüstenecho",
+		"desc": "Jeder Zug, der trifft, hallt als Sandböe nach: 0,4 s später trifft sie dieselben Gegner mit 40 % Schaden."
+	},
+	"loadout": {
+		"neutral": "saebeltanz",
+		"forward": "sandsichel",
+		"up": "sandhose",
+		"down": "sandfall"
+	},
+	"zuege": {
+		"saebeltanz": {
+			"name": "Säbeltanz",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Drei geschwungene Säbelhiebe im Tanz.",
+			"params": {
+				"hits": 3,
+				"damage": 5,
+				"len": 52
+			},
+			"enhanced": {
+				"hits_add": 2,
+				"len_add": 12
+			},
+			"alts": [
+				{
+					"id": "wirbeltanz",
+					"name": "Wirbeltanz",
+					"sp": 2,
+					"desc": "Fünf schnelle Hiebe.",
+					"params": {
+						"hits": 5,
+						"damage": 3.5
+					}
+				},
+				{
+					"id": "kreistanz",
+					"name": "Kreistanz",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				},
+				{
+					"id": "duenenhieb",
+					"name": "Dünenhieb",
+					"sp": 2,
+					"desc": "Schleudert hoch.",
+					"params": {
+						"launch": 280
+					}
+				}
+			]
+		},
+		"sandsichel": {
+			"name": "Sandsichel",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Eine Sichel aus Sand fliegt durch alle Gegner.",
+			"params": {
+				"damage": 11,
+				"speed": 460,
+				"dist": 300,
+				"pierce": true,
+				"size": 1.1
+			},
+			"enhanced": {
+				"size_mul": 1.5,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "zwei_sicheln",
+					"name": "Zwei Sicheln",
+					"sp": 2,
+					"desc": "Zwei Sicheln.",
+					"params": {
+						"count": 2,
+						"spread": 16,
+						"damage": 7
+					}
+				},
+				{
+					"id": "rueckwind",
+					"name": "Rückwind",
+					"sp": 2,
+					"desc": "Kehrt zurück.",
+					"params": {
+						"boomerang": true
+					}
+				},
+				{
+					"id": "grosse_sichel",
+					"name": "Große Sichel",
+					"sp": 2,
+					"desc": "Groß, langsam.",
+					"params": {
+						"size": 1.8,
+						"speed": 300
+					}
+				}
+			]
+		},
+		"sandhose": {
+			"name": "Sandhose",
+			"kind": "wirbel",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.3,
+			"frames": [
+				6,
+				30,
+				12
+			],
+			"desc": "Eine Sandhose hebt dich und alle um dich herum.",
+			"params": {
+				"radius": 42,
+				"hits": 5,
+				"damage": 3.5,
+				"pull": 60,
+				"lift": 150
+			},
+			"enhanced": {
+				"hits_add": 3,
+				"radius_add": 12
+			},
+			"alts": [
+				{
+					"id": "wandernde_hose",
+					"name": "Wandernde Hose",
+					"sp": 2,
+					"desc": "Zieht vorwärts.",
+					"params": {
+						"drift": 90,
+						"lift": 40
+					}
+				},
+				{
+					"id": "grosse_hose",
+					"name": "Große Hose",
+					"sp": 2,
+					"desc": "Größer.",
+					"params": {
+						"radius": 62,
+						"hits": 4,
+						"damage": 5
+					}
+				},
+				{
+					"id": "staubauge",
+					"name": "Staubauge",
+					"sp": 2,
+					"desc": "Am Boden, starker Sog.",
+					"params": {
+						"lift": 0,
+						"pull": 120
+					}
+				}
+			]
+		},
+		"sandfall": {
+			"name": "Sandfall",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Du stürzt herab, eine Sandwelle läuft los.",
+			"params": {
+				"damage": 12,
+				"radius": 44,
+				"waves": true,
+				"wave_damage": 8
+			},
+			"enhanced": {
+				"radius_add": 16,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "duenenbruch",
+					"name": "Dünenbruch",
+					"sp": 2,
+					"desc": "Großer Radius.",
+					"params": {
+						"radius": 72,
+						"waves": false
+					}
+				},
+				{
+					"id": "nachrieseln",
+					"name": "Nachrieseln",
+					"sp": 2,
+					"desc": "Zweiter Stoß.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "sandgrube",
+					"name": "Sandgrube",
+					"sp": 2,
+					"desc": "Treibsand bleibt 2 s.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"treibsandfeld": {
+			"name": "Treibsand",
+			"kind": "feld",
+			"dir": "down",
+			"sp": 1,
+			"cd": 2.0,
+			"frames": [
+				10,
+				8,
+				16
+			],
+			"desc": "Vor dir saugt Treibsand Gegner hinein.",
+			"params": {
+				"at": 70,
+				"width": 90,
+				"life": 2.4,
+				"tick": 0.35,
+				"damage": 3,
+				"pull": 80
+			},
+			"enhanced": {
+				"life_add": 1.5,
+				"pull_add": 40
+			},
+			"alts": [
+				{
+					"id": "weite_wueste",
+					"name": "Weite Wüste",
+					"sp": 2,
+					"desc": "Breiter, ohne Sog.",
+					"params": {
+						"width": 140,
+						"pull": 0
+					}
+				},
+				{
+					"id": "sandfalle",
+					"name": "Sandfalle",
+					"sp": 2,
+					"desc": "Kurz, schleudert hoch.",
+					"params": {
+						"life": 1.0,
+						"damage": 8,
+						"launch": 230
+					}
+				},
+				{
+					"id": "staubschleier",
+					"name": "Staubschleier",
+					"sp": 2,
+					"desc": "Um dich herum.",
+					"params": {
+						"at": 0
+					}
+				}
+			]
+		},
+		"duenenlauf": {
+			"name": "Dünenlauf",
+			"kind": "sturm",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				5,
+				12,
+				12
+			],
+			"desc": "Du gleitest über den Sand durch die Gegner.",
+			"params": {
+				"dist": 150,
+				"damage": 10
+			},
+			"enhanced": {
+				"dist_mul": 1.5,
+				"damage_add": 4
+			},
+			"alts": [
+				{
+					"id": "wendelauf",
+					"name": "Wendelauf",
+					"sp": 2,
+					"desc": "Hin und zurück.",
+					"params": {
+						"back": true
+					}
+				},
+				{
+					"id": "staubspur",
+					"name": "Staubspur",
+					"sp": 2,
+					"desc": "Sandspur bleibt.",
+					"params": {
+						"trail": true
+					}
+				},
+				{
+					"id": "saebelsprung",
+					"name": "Säbelsprung",
+					"sp": 2,
+					"desc": "Kurz, hart.",
+					"params": {
+						"dist": 90,
+						"damage": 16
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "wuestensturm",
+				"name": "Wüstensturm",
+				"kind": "feld",
+				"sp": 0,
+				"desc": "Ein Wüstensturm verschluckt den Bildschirm.",
+				"params": {
+					"damage": 4,
+					"pull": 70
+				}
+			},
+			{
+				"id": "fata_morgana",
+				"name": "Fata Morgana",
+				"kind": "ansturm",
+				"sp": 2,
+				"desc": "Spiegelbilder aus Sand schlagen von allen Seiten.",
+				"params": {
+					"damage": 12,
+					"slashes": 7
+				}
+			},
+			{
+				"id": "sandsaeulen",
+				"name": "Sandsäulen",
+				"kind": "saeulen",
+				"sp": 2,
+				"desc": "Acht Sandsäulen brechen nacheinander aus dem Boden.",
+				"params": {
+					"damage": 12,
+					"count": 8
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

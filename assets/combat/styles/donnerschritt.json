@@ -1,0 +1,397 @@
+{
+	"_doc": "Baukasten-Kampfstil Donnerschritt (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "donnerschritt",
+	"name": "Donnerschritt",
+	"element": "blitz",
+	"caster": "form",
+	"subtitle": "Blitzschnelle Beinarbeit · Spannung laden, Überladung entfesseln",
+	"moveset": "res://assets/combat/movesets/lauffeuer.json",
+	"armed": false,
+	"colors": {
+		"main": "ffd23c",
+		"accent": "7fe8ff",
+		"light": "fff6b0",
+		"dark": "1a1838",
+		"white": "ffffff"
+	},
+	"kern": {
+		"type": "ladung",
+		"name": "Spannung",
+		"desc": "Jeder Zug, der trifft, lädt 1 Spannung (bis 5). Bei 5 entlädt sie sich: 6 s Überladung, Schläge und Tritte +25 % Blitzschaden."
+	},
+	"loadout": {
+		"neutral": "funkenhaken",
+		"forward": "blitzschritt",
+		"up": "gewittersaeule",
+		"down": "donnerkeil"
+	},
+	"zuege": {
+		"funkenhaken": {
+			"name": "Funkenhaken",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Vier knisternde Schläge, der letzte ein Haken.",
+			"params": {
+				"hits": 4,
+				"damage": 4,
+				"len": 34
+			},
+			"enhanced": {
+				"hits_add": 2,
+				"damage_add": 1
+			},
+			"alts": [
+				{
+					"id": "kettenblitz",
+					"name": "Kettenblitz",
+					"sp": 2,
+					"desc": "Sechs sehr schnelle, leichte Schläge.",
+					"params": {
+						"hits": 6,
+						"damage": 3
+					}
+				},
+				{
+					"id": "donnerknie",
+					"name": "Donnerknie",
+					"sp": 2,
+					"desc": "Zwei harte Knie, das zweite schleudert hoch.",
+					"params": {
+						"hits": 2,
+						"damage": 9,
+						"launch": 260
+					}
+				},
+				{
+					"id": "stromgriff",
+					"name": "Stromgriff",
+					"sp": 2,
+					"desc": "Zieht den Gegner beim letzten Treffer heran.",
+					"params": {
+						"pull": 60
+					}
+				}
+			]
+		},
+		"blitzschritt": {
+			"name": "Blitzschritt",
+			"kind": "sturm",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				5,
+				12,
+				12
+			],
+			"desc": "Ein Schritt so schnell wie ein Blitz, trifft alles auf dem Weg.",
+			"params": {
+				"dist": 160,
+				"damage": 10
+			},
+			"enhanced": {
+				"dist_mul": 1.5,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "zickzack",
+					"name": "Zickzack",
+					"sp": 2,
+					"desc": "Hin und zurück, kürzer.",
+					"params": {
+						"back": true,
+						"dist": 110
+					}
+				},
+				{
+					"id": "nachgluehen",
+					"name": "Nachglühen",
+					"sp": 2,
+					"desc": "Die Spur knistert noch kurz nach.",
+					"params": {
+						"trail": true
+					}
+				},
+				{
+					"id": "einschlagschritt",
+					"name": "Einschlagschritt",
+					"sp": 2,
+					"desc": "Kürzer, endet in einem harten Treffer.",
+					"params": {
+						"dist": 100,
+						"damage": 16
+					}
+				}
+			]
+		},
+		"gewittersaeule": {
+			"name": "Gewittersäule",
+			"kind": "saeule",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				9,
+				14,
+				16
+			],
+			"desc": "Ein Blitz schlägt vor dir ein und schleudert Gegner hoch.",
+			"params": {
+				"at": 60,
+				"width": 26,
+				"height": 120,
+				"damage": 13,
+				"launch": 360
+			},
+			"enhanced": {
+				"launch_add": 100,
+				"damage_add": 4
+			},
+			"alts": [
+				{
+					"id": "dreifach",
+					"name": "Dreifach",
+					"sp": 2,
+					"desc": "Drei Einschläge nacheinander.",
+					"params": {
+						"count": 3,
+						"step": 42,
+						"damage": 8
+					}
+				},
+				{
+					"id": "aufladung",
+					"name": "Aufladung",
+					"sp": 2,
+					"desc": "Du fährst mit dem Blitz in die Luft.",
+					"params": {
+						"ride": true,
+						"at": 8
+					}
+				},
+				{
+					"id": "breiter_schlag",
+					"name": "Breiter Schlag",
+					"sp": 2,
+					"desc": "Breiter, aber weniger hoch.",
+					"params": {
+						"width": 56,
+						"launch": 240
+					}
+				}
+			]
+		},
+		"donnerkeil": {
+			"name": "Donnerkeil",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Du schlägst wie ein Donnerkeil in den Boden ein.",
+			"params": {
+				"damage": 13,
+				"radius": 46,
+				"waves": true,
+				"wave_damage": 7
+			},
+			"enhanced": {
+				"radius_add": 18,
+				"damage_add": 4
+			},
+			"alts": [
+				{
+					"id": "einschlag",
+					"name": "Großer Einschlag",
+					"sp": 2,
+					"desc": "Großer Radius, keine Wellen.",
+					"params": {
+						"radius": 72,
+						"waves": false
+					}
+				},
+				{
+					"id": "nachbeben",
+					"name": "Nachbeben",
+					"sp": 2,
+					"desc": "Kurz danach ein zweiter Wellenstoß.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "ladungsfeld",
+					"name": "Ladungsfeld",
+					"sp": 2,
+					"desc": "Lässt 2 s ein knisterndes Feld zurück.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"kugelblitz": {
+			"name": "Kugelblitz",
+			"kind": "geschoss",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Eine langsame Blitzkugel sucht sich ein Ziel.",
+			"params": {
+				"damage": 14,
+				"speed": 260,
+				"dist": 340,
+				"homing": 0.6,
+				"size": 1.0
+			},
+			"enhanced": {
+				"size_mul": 1.4,
+				"damage_add": 6
+			},
+			"alts": [
+				{
+					"id": "zwillingskugeln",
+					"name": "Zwillingskugeln",
+					"sp": 2,
+					"desc": "Zwei kleinere Kugeln.",
+					"params": {
+						"count": 2,
+						"spread": 20,
+						"damage": 8
+					}
+				},
+				{
+					"id": "durchschlag",
+					"name": "Durchschlag",
+					"sp": 2,
+					"desc": "Schnell, gerade, durchschlägt Gegner.",
+					"params": {
+						"pierce": true,
+						"speed": 520,
+						"homing": 0
+					}
+				},
+				{
+					"id": "entladung",
+					"name": "Entladung",
+					"sp": 2,
+					"desc": "Explodiert am Ende in einem Blitzring.",
+					"params": {
+						"burst": true
+					}
+				}
+			]
+		},
+		"hochspannung": {
+			"name": "Hochspannung",
+			"kind": "aura",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 6.0,
+			"frames": [
+				12,
+				6,
+				12
+			],
+			"desc": "Du lädst dich auf: 5 s lang treffen Schläge und Tritte mit Blitz, +20 %.",
+			"params": {
+				"buff": 5,
+				"bonus": 0.2
+			},
+			"enhanced": {
+				"buff_add": 2,
+				"bonus_add": 0.1
+			},
+			"alts": [
+				{
+					"id": "ueberstrom",
+					"name": "Überstrom",
+					"sp": 2,
+					"desc": "Kürzer, aber +35 %.",
+					"params": {
+						"bonus": 0.35,
+						"buff": 3.5
+					}
+				},
+				{
+					"id": "dauerstrom",
+					"name": "Dauerstrom",
+					"sp": 2,
+					"desc": "8 s lang, +12 %.",
+					"params": {
+						"buff": 8,
+						"bonus": 0.12
+					}
+				},
+				{
+					"id": "entladungsring",
+					"name": "Entladungsring",
+					"sp": 2,
+					"desc": "Beim Aufladen schlägt ein Blitzring um dich.",
+					"params": {
+						"nova": 18
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "himmelszorn",
+				"name": "Himmelszorn",
+				"kind": "regen",
+				"sp": 0,
+				"desc": "Der Himmel reißt auf: Blitze schlagen über den ganzen Bildschirm ein.",
+				"params": {
+					"damage": 12,
+					"count": 18
+				}
+			},
+			{
+				"id": "tausend_volt",
+				"name": "Tausend Volt",
+				"kind": "ansturm",
+				"sp": 2,
+				"desc": "Du springst als Blitz von Ziel zu Ziel, sieben Treffer.",
+				"params": {
+					"damage": 12,
+					"slashes": 7
+				}
+			},
+			{
+				"id": "gewitterkern",
+				"name": "Gewitterkern",
+				"kind": "nova",
+				"sp": 2,
+				"desc": "Du sammelst den ganzen Sturm in dir und entlädst ihn in einer Kugel.",
+				"params": {
+					"damage": 75,
+					"radius": 150
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

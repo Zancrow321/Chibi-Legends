@@ -1,0 +1,404 @@
+{
+	"_doc": "Baukasten-Kampfstil Spiegelseele (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "spiegelseele",
+	"name": "Spiegelseele",
+	"element": "licht",
+	"caster": "form",
+	"subtitle": "Spiegelkunst · Konter, Lichtbrechung, Spiegelkabinett",
+	"moveset": "res://assets/combat/movesets/lauffeuer.json",
+	"armed": false,
+	"colors": {
+		"main": "e8f0ff",
+		"accent": "8ad8ff",
+		"light": "ffffff",
+		"dark": "141828",
+		"white": "ffffff"
+	},
+	"kern": {
+		"type": "fokus",
+		"name": "Spiegelruhe",
+		"desc": "Wer 1,5 s keinen Zug nutzt und nicht getroffen wird, sammelt Spiegelruhe. Der nächste Zug verbraucht sie: bis zu +60 % Schaden."
+	},
+	"loadout": {
+		"neutral": "spiegelwand",
+		"forward": "lichtsplitter",
+		"up": "spiegelstrahl",
+		"down": "spiegelsturz"
+	},
+	"zuege": {
+		"spiegelwand": {
+			"name": "Spiegelwand",
+			"kind": "konter",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				4,
+				24,
+				14
+			],
+			"desc": "Eine Spiegelwand wirft Angriffe und Geschosse zurück.",
+			"params": {
+				"stance": 0.5,
+				"counter_damage": 20,
+				"reflect": true
+			},
+			"enhanced": {
+				"counter_damage_add": 10,
+				"stance_add": 0.15
+			},
+			"alts": [
+				{
+					"id": "harter_spiegel",
+					"name": "Harter Spiegel",
+					"sp": 2,
+					"desc": "Ohne Zurückwerfen, mehr Schaden.",
+					"params": {
+						"reflect": false,
+						"counter_damage": 28
+					}
+				},
+				{
+					"id": "lange_wand",
+					"name": "Lange Wand",
+					"sp": 2,
+					"desc": "Längeres Fenster.",
+					"params": {
+						"stance": 0.85,
+						"counter_damage": 13
+					}
+				},
+				{
+					"id": "heilspiegel",
+					"name": "Heilspiegel",
+					"sp": 2,
+					"desc": "Heilt 60 LP.",
+					"params": {
+						"heal": 60
+					}
+				}
+			]
+		},
+		"lichtsplitter": {
+			"name": "Lichtsplitter",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Drei Lichtsplitter fliegen nach vorn.",
+			"params": {
+				"count": 3,
+				"spread": 16,
+				"damage": 6,
+				"speed": 600,
+				"dist": 320,
+				"size": 0.8
+			},
+			"enhanced": {
+				"count_add": 2,
+				"damage_add": 2
+			},
+			"alts": [
+				{
+					"id": "splitterfaecher",
+					"name": "Splitterfächer",
+					"sp": 2,
+					"desc": "Fünf im Fächer.",
+					"params": {
+						"count": 5,
+						"spread": 50,
+						"damage": 4
+					}
+				},
+				{
+					"id": "prismensplitter",
+					"name": "Prismensplitter",
+					"sp": 2,
+					"desc": "Einer, durchschlägt.",
+					"params": {
+						"count": 1,
+						"pierce": true,
+						"size": 1.3,
+						"damage": 14
+					}
+				},
+				{
+					"id": "suchsplitter",
+					"name": "Suchsplitter",
+					"sp": 2,
+					"desc": "Suchen ihr Ziel.",
+					"params": {
+						"homing": 0.7,
+						"speed": 420
+					}
+				}
+			]
+		},
+		"spiegelstrahl": {
+			"name": "Spiegelstrahl",
+			"kind": "strahl",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.6,
+			"frames": [
+				12,
+				30,
+				16
+			],
+			"desc": "Ein gebrochener Lichtstrahl schießt schräg nach oben.",
+			"params": {
+				"len": 220,
+				"width": 14,
+				"damage": 3.5,
+				"tick": 0.08,
+				"up": true
+			},
+			"enhanced": {
+				"width_add": 10,
+				"damage_add": 1.5
+			},
+			"alts": [
+				{
+					"id": "gerader_strahl",
+					"name": "Gerader Strahl",
+					"sp": 2,
+					"desc": "Gerade nach vorn.",
+					"params": {
+						"up": false
+					}
+				},
+				{
+					"id": "breiter_strahl",
+					"name": "Breiter Strahl",
+					"sp": 2,
+					"desc": "Dick, kürzer.",
+					"params": {
+						"width": 26,
+						"len": 160
+					}
+				},
+				{
+					"id": "lichtblitz",
+					"name": "Lichtblitz",
+					"sp": 2,
+					"desc": "Kurz und hart.",
+					"params": {
+						"damage": 6,
+						"width": 8
+					},
+					"frames": [
+						8,
+						14,
+						14
+					]
+				}
+			]
+		},
+		"spiegelsturz": {
+			"name": "Spiegelsturz",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Du fällst herab, Spiegelscherben spritzen.",
+			"params": {
+				"damage": 12,
+				"radius": 44,
+				"waves": true,
+				"wave_damage": 8
+			},
+			"enhanced": {
+				"radius_add": 16,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "scherbenmeer",
+					"name": "Scherbenmeer",
+					"sp": 2,
+					"desc": "Großer Radius.",
+					"params": {
+						"radius": 72,
+						"waves": false
+					}
+				},
+				{
+					"id": "nachglanz",
+					"name": "Nachglanz",
+					"sp": 2,
+					"desc": "Zweiter Stoß.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "scherbenfeld",
+					"name": "Scherbenfeld",
+					"sp": 2,
+					"desc": "Scherben bleiben 2 s.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"spiegelschritt": {
+			"name": "Spiegelschritt",
+			"kind": "schritt",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				4,
+				6,
+				12
+			],
+			"desc": "Du trittst durch einen Spiegel hinter den Gegner.",
+			"params": {
+				"dist": 140,
+				"damage": 9
+			},
+			"enhanced": {
+				"damage_add": 6,
+				"dist_add": 40
+			},
+			"alts": [
+				{
+					"id": "spiegeltor",
+					"name": "Spiegeltor",
+					"sp": 2,
+					"desc": "Nach vorn ohne Ziel.",
+					"params": {
+						"behind": false,
+						"dist": 120
+					}
+				},
+				{
+					"id": "scherbenstoss",
+					"name": "Scherbenstoß",
+					"sp": 2,
+					"desc": "Härter.",
+					"params": {
+						"damage": 15
+					}
+				},
+				{
+					"id": "weiter_spiegel",
+					"name": "Weiter Spiegel",
+					"sp": 2,
+					"desc": "Weiter.",
+					"params": {
+						"dist": 190
+					}
+				}
+			]
+		},
+		"spiegelkabinett": {
+			"name": "Spiegelkabinett",
+			"kind": "feld",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 2.0,
+			"frames": [
+				10,
+				8,
+				16
+			],
+			"desc": "Spiegel vor dir werfen Licht hin und her.",
+			"params": {
+				"at": 60,
+				"width": 90,
+				"life": 2.4,
+				"tick": 0.3,
+				"damage": 3
+			},
+			"enhanced": {
+				"life_add": 1.5,
+				"damage_add": 1
+			},
+			"alts": [
+				{
+					"id": "grosses_kabinett",
+					"name": "Großes Kabinett",
+					"sp": 2,
+					"desc": "Breiter.",
+					"params": {
+						"width": 140
+					}
+				},
+				{
+					"id": "lichtfalle",
+					"name": "Lichtfalle",
+					"sp": 2,
+					"desc": "Kurz, schleudert hoch.",
+					"params": {
+						"life": 1.0,
+						"damage": 8,
+						"launch": 220
+					}
+				},
+				{
+					"id": "spiegelkreis",
+					"name": "Spiegelkreis",
+					"sp": 2,
+					"desc": "Um dich herum.",
+					"params": {
+						"at": 0
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "tausend_spiegel",
+				"name": "Tausend Spiegel",
+				"kind": "regen",
+				"sp": 0,
+				"desc": "Spiegelscherben regnen auf alle Gegner.",
+				"params": {
+					"damage": 10,
+					"count": 22
+				}
+			},
+			{
+				"id": "spiegelbruch",
+				"name": "Spiegelbruch",
+				"kind": "nova",
+				"sp": 2,
+				"desc": "Die Welt ist ein Spiegel, und er zerbricht um dich.",
+				"params": {
+					"damage": 76,
+					"radius": 150
+				}
+			},
+			{
+				"id": "lichtbrechung",
+				"name": "Lichtbrechung",
+				"kind": "strahl",
+				"sp": 2,
+				"desc": "Ein Strahl, tausendfach gebrochen, schneidet über den Bildschirm.",
+				"params": {
+					"damage": 5,
+					"width": 56
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

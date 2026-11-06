@@ -1,0 +1,407 @@
+{
+	"_doc": "Baukasten-Kampfstil Zeitriss (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "zeitriss",
+	"name": "Zeitriss",
+	"element": "licht",
+	"caster": "form",
+	"subtitle": "Chronomagie · Zeiger, Zeitblasen, Rückspulen · Zeitecho",
+	"moveset": "res://assets/combat/movesets/lauffeuer.json",
+	"armed": false,
+	"colors": {
+		"main": "ffe08a",
+		"accent": "8ad8ff",
+		"light": "fff6d8",
+		"dark": "14121e",
+		"white": "ffffff"
+	},
+	"kern": {
+		"type": "echo",
+		"name": "Zeitecho",
+		"desc": "Jeder Zug, der trifft, wiederholt sich als Zeitecho: 0,4 s später trifft er dieselben Gegner noch einmal mit 40 % Schaden."
+	},
+	"loadout": {
+		"neutral": "sekundenschlag",
+		"forward": "zeiger",
+		"up": "zeitsprung",
+		"down": "zeitblase"
+	},
+	"zuege": {
+		"sekundenschlag": {
+			"name": "Sekundenschlag",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Drei Schläge im Sekundentakt, Uhrzeiger blitzen.",
+			"params": {
+				"hits": 3,
+				"damage": 5,
+				"len": 42
+			},
+			"enhanced": {
+				"hits_add": 2
+			},
+			"alts": [
+				{
+					"id": "minutenschlag",
+					"name": "Minutenschlag",
+					"sp": 2,
+					"desc": "Ein schwerer Schlag.",
+					"params": {
+						"hits": 1,
+						"damage": 17
+					}
+				},
+				{
+					"id": "doppelzeit",
+					"name": "Doppelzeit",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				},
+				{
+					"id": "zeitsprung_hieb",
+					"name": "Zeitheber",
+					"sp": 2,
+					"desc": "Schleudert hoch.",
+					"params": {
+						"launch": 280
+					}
+				}
+			]
+		},
+		"zeiger": {
+			"name": "Zeiger",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Zwei goldene Uhrzeiger fliegen nach vorn.",
+			"params": {
+				"count": 2,
+				"spread": 10,
+				"damage": 7,
+				"speed": 560,
+				"dist": 320,
+				"size": 0.9
+			},
+			"enhanced": {
+				"count_add": 2,
+				"damage_add": 2
+			},
+			"alts": [
+				{
+					"id": "stundenzeiger",
+					"name": "Stundenzeiger",
+					"sp": 2,
+					"desc": "Ein großer Zeiger, durchschlägt.",
+					"params": {
+						"count": 1,
+						"size": 1.5,
+						"pierce": true,
+						"damage": 15
+					}
+				},
+				{
+					"id": "zeigerkranz",
+					"name": "Zeigerkranz",
+					"sp": 2,
+					"desc": "Fünf Zeiger im Fächer.",
+					"params": {
+						"count": 5,
+						"spread": 50,
+						"damage": 4
+					}
+				},
+				{
+					"id": "rueckzeiger",
+					"name": "Rücklaufzeiger",
+					"sp": 2,
+					"desc": "Kehrt zurück.",
+					"params": {
+						"count": 1,
+						"boomerang": true,
+						"damage": 11
+					}
+				}
+			]
+		},
+		"zeitsprung": {
+			"name": "Zeitsprung",
+			"kind": "schritt",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				4,
+				6,
+				12
+			],
+			"desc": "Du springst eine Sekunde voraus, hinter den Gegner.",
+			"params": {
+				"dist": 140,
+				"damage": 9
+			},
+			"enhanced": {
+				"damage_add": 6,
+				"dist_add": 40
+			},
+			"alts": [
+				{
+					"id": "zeitfenster",
+					"name": "Zeitfenster",
+					"sp": 2,
+					"desc": "Nach vorn ohne Ziel.",
+					"params": {
+						"behind": false,
+						"dist": 120
+					}
+				},
+				{
+					"id": "zeitstoss",
+					"name": "Zeitstoß",
+					"sp": 2,
+					"desc": "Härter.",
+					"params": {
+						"damage": 15
+					}
+				},
+				{
+					"id": "weiter_sprung",
+					"name": "Weiter Sprung",
+					"sp": 2,
+					"desc": "Weiter.",
+					"params": {
+						"dist": 190
+					}
+				}
+			]
+		},
+		"zeitblase": {
+			"name": "Zeitblase",
+			"kind": "feld",
+			"dir": "down",
+			"sp": 1,
+			"cd": 2.0,
+			"frames": [
+				10,
+				8,
+				16
+			],
+			"desc": "Eine Zeitblase vor dir: drinnen läuft die Zeit gegen die Gegner.",
+			"params": {
+				"at": 60,
+				"width": 80,
+				"life": 2.5,
+				"tick": 0.3,
+				"damage": 3,
+				"pull": 30
+			},
+			"enhanced": {
+				"life_add": 1.5,
+				"damage_add": 1
+			},
+			"alts": [
+				{
+					"id": "grosse_blase",
+					"name": "Große Blase",
+					"sp": 2,
+					"desc": "Breiter.",
+					"params": {
+						"width": 130
+					}
+				},
+				{
+					"id": "zeitfalle",
+					"name": "Zeitfalle",
+					"sp": 2,
+					"desc": "Kurz, schleudert hoch.",
+					"params": {
+						"life": 1.0,
+						"damage": 8,
+						"launch": 220
+					}
+				},
+				{
+					"id": "schutzblase",
+					"name": "Schutzblase",
+					"sp": 2,
+					"desc": "Um dich herum.",
+					"params": {
+						"at": 0
+					}
+				}
+			]
+		},
+		"rueckspulen": {
+			"name": "Rückspulen",
+			"kind": "konter",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				4,
+				24,
+				14
+			],
+			"desc": "Du spulst den Treffer zurück und schlägst zu.",
+			"params": {
+				"stance": 0.45,
+				"counter_damage": 20,
+				"heal": 40
+			},
+			"enhanced": {
+				"counter_damage_add": 10,
+				"heal_add": 30
+			},
+			"alts": [
+				{
+					"id": "spiegelzeit",
+					"name": "Spiegelzeit",
+					"sp": 2,
+					"desc": "Wirft Geschosse zurück.",
+					"params": {
+						"reflect": true,
+						"heal": 0
+					}
+				},
+				{
+					"id": "lange_sekunde",
+					"name": "Lange Sekunde",
+					"sp": 2,
+					"desc": "Längeres Fenster.",
+					"params": {
+						"stance": 0.75,
+						"counter_damage": 13
+					}
+				},
+				{
+					"id": "vorspulen",
+					"name": "Vorspulen",
+					"sp": 2,
+					"desc": "Nach dem Konter 4 s +20 %.",
+					"params": {
+						"buff": 4,
+						"heal": 0
+					}
+				}
+			]
+		},
+		"zeitlinie": {
+			"name": "Zeitlinie",
+			"kind": "strahl",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.6,
+			"frames": [
+				12,
+				30,
+				16
+			],
+			"desc": "Eine goldene Zeitlinie schneidet nach vorn.",
+			"params": {
+				"len": 230,
+				"width": 12,
+				"damage": 3.5,
+				"tick": 0.08
+			},
+			"enhanced": {
+				"width_add": 10,
+				"damage_add": 1.5
+			},
+			"alts": [
+				{
+					"id": "breite_linie",
+					"name": "Breite Linie",
+					"sp": 2,
+					"desc": "Dick, kürzer.",
+					"params": {
+						"width": 26,
+						"len": 160
+					}
+				},
+				{
+					"id": "steigende_linie",
+					"name": "Steigende Linie",
+					"sp": 2,
+					"desc": "Schräg nach oben.",
+					"params": {
+						"up": true
+					}
+				},
+				{
+					"id": "augenblick",
+					"name": "Augenblick",
+					"sp": 2,
+					"desc": "Kurz und hart.",
+					"params": {
+						"damage": 6,
+						"width": 8
+					},
+					"frames": [
+						8,
+						14,
+						14
+					]
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "stillstand",
+				"name": "Stillstand",
+				"kind": "feld",
+				"sp": 0,
+				"desc": "Die Zeit bleibt stehen, nur du bewegst dich.",
+				"params": {
+					"damage": 5,
+					"pull": 20
+				}
+			},
+			{
+				"id": "tausend_sekunden",
+				"name": "Tausend Sekunden",
+				"kind": "ansturm",
+				"sp": 2,
+				"desc": "In einer Sekunde schlägst du achtmal zu.",
+				"params": {
+					"damage": 12,
+					"slashes": 8
+				}
+			},
+			{
+				"id": "uhrwerk",
+				"name": "Uhrwerk",
+				"kind": "nova",
+				"sp": 2,
+				"desc": "Ein riesiges Uhrwerk dreht sich um dich und bricht auf.",
+				"params": {
+					"damage": 76,
+					"radius": 150
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}
