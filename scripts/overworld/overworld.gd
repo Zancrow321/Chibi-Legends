@@ -30,7 +30,7 @@ const LAYERS := [["sky", 0.0, -6], ["far", 0.05, -5], ["mid", 0.22, -4], ["near"
 ## Props: [name, foot x, z, lit by the scene light]
 const PROPS := [
 	["dorm", 70.0, -3, true], ["board", 250.0, -1, true], ["guild_hall", 385.0, -3, true], ["fountain", 520.0, -2, true],
-	["sakura", 770.0, -4, true], ["forge_stall", 930.0, -2, true], ["shrine", 1270.0, -2, true],
+	["god_altar", 690.0, -2, true], ["sakura", 770.0, -4, true], ["forge_stall", 930.0, -2, true], ["shrine", 1270.0, -2, true],
 	["gate_wald", 1730.0, -2, true], ["gate_glut", 2060.0, -2, true], ["gate_turm", 2300.0, -2, true],
 	["gate_riss", 2540.0, -2, true],
 ]
@@ -172,6 +172,10 @@ func _use(s: OverworldSpot) -> void:
 		Sfx.play("ui_confirm")
 		get_tree().call_group("marks_shop", "open")
 		return
+	if s.id == "godaltar":
+		Sfx.play("ui_confirm")
+		get_tree().call_group("god_hall", "open")
+		return
 	if s.id == "sternschrein":
 		Sfx.play("ui_confirm")
 		get_tree().call_group("gacha", "open")
@@ -254,10 +258,50 @@ func _build_props() -> void:
 	tower.position = Vector2(2300.0, GROUND_Y - 50.0)
 	tower.z_index = -1
 	add_child(tower)
+	_altar_glow(690.0)
 	var water := FountainFx.new()
 	water.position = Vector2(520.0, GROUND_Y)
 	water.z_index = -1
 	add_child(water)
+
+
+## GOD-Altar: der Kristall glüht und streut Regenbogen-Funken.
+func _altar_glow(x: float) -> void:
+	var h := 0.0
+	var t := load(DIR + "god_altar.png") as Texture2D
+	if t != null:
+		h = t.get_height()
+	var at := Vector2(x, ground_y(x) - h + 14.0)
+	var glow := Sprite2D.new()
+	glow.texture = GodFx.dot()
+	var add := CanvasItemMaterial.new()
+	add.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	glow.material = add
+	glow.scale = Vector2(1.6, 1.9)
+	glow.modulate = Color(1.6, 1.5, 1.2, 0.5)
+	glow.position = at
+	glow.z_index = -1
+	add_child(glow)
+	var p := CPUParticles2D.new()
+	p.amount = 26
+	p.lifetime = 1.8
+	p.texture = GodFx.dot()
+	p.material = add
+	p.emission_shape = CPUParticles2D.EMISSION_SHAPE_SPHERE
+	p.emission_sphere_radius = 10.0
+	p.gravity = Vector2(0, -18)
+	p.scale_amount_min = 0.06
+	p.scale_amount_max = 0.16
+	var g := Gradient.new()
+	g.set_color(0, Color(2.5, 1.2, 1.2, 0.0))
+	g.add_point(0.25, Color(2.5, 2.2, 1.0))
+	g.add_point(0.5, Color(1.0, 2.5, 1.4))
+	g.add_point(0.75, Color(1.0, 1.6, 2.8))
+	g.set_color(g.get_point_count() - 1, Color(2.2, 1.0, 2.6, 0.0))
+	p.color_ramp = g
+	p.position = at
+	p.z_index = -1
+	add_child(p)
 
 
 func _npc(id: String, name: String, x: float, tex: String, accent: Color, lines: Array) -> OverworldSpot:
@@ -316,6 +360,9 @@ func _build_spots() -> void:
 	var guild := _spot(OverworldSpot.Kind.SIGN, "gildenhaus", "Gildenhaus", 385.0, [], "", 30.0, -118.0)
 	guild.verb = "Gilde"
 	guild.accent = Color("e83b3b")
+	var altar := _spot(OverworldSpot.Kind.SIGN, "godaltar", "GOD-Halle", 690.0, [], "", 28.0, -120.0)
+	altar.verb = "GOD-Teile ansehen"
+	altar.accent = Color("fff1b8")
 	var hino := _npc("schmiedin", "Schmiedin Hino", 985.0, "npc_schmiedin", Color("fb6b1d"), [
 		"Bring mir Raid-Marken aus der Glutschmiede und dem Turm. Dafür schmiede ich dir genau das Teil, das du willst.",
 	])

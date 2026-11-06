@@ -56,7 +56,9 @@
     "luftkapitaen": "Luftkapitäns-Mantel",
     "messingkaempfer": "Messingfaust-Weste",
     "dampfdame": "Erfinderinnen-Korsett",
-    "kesselflicker": "Kesselflicker-Overall"
+    "kesselflicker": "Kesselflicker-Overall",
+    "god_seraph": "GOD · Seraph",
+    "god_abgrund": "GOD · Abgrund"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -106,7 +108,9 @@
     "kesselflicker": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
     "luftkapitaen": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)",
     "zahnradtechniker": "Spielerstufe 26 (Steampunk)",
-    "dampfdame": "Spielerstufe 30 (Steampunk)"
+    "dampfdame": "Spielerstufe 30 (Steampunk)",
+    "god_seraph": "GOD-Teil: weltweit nur einmal (Gewand des Ersten Lichts)",
+    "god_abgrund": "GOD-Teil: weltweit nur einmal (Panzer des Höllenfürsten)"
    }
   },
   "pants": {
@@ -161,7 +165,9 @@
     "luftkapitaen": "Reithose",
     "messingkaempfer": "Gestreifte Hose",
     "dampfdame": "Tournürenrock",
-    "kesselflicker": "Overall-Hose"
+    "kesselflicker": "Overall-Hose",
+    "god_seraph": "GOD · Seraph",
+    "god_abgrund": "GOD · Abgrund"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -211,7 +217,9 @@
     "kesselflicker": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
     "luftkapitaen": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)",
     "zahnradtechniker": "Spielerstufe 26 (Steampunk)",
-    "dampfdame": "Spielerstufe 30 (Steampunk)"
+    "dampfdame": "Spielerstufe 30 (Steampunk)",
+    "god_seraph": "GOD-Teil: weltweit nur einmal (Beinkleid der Gnade)",
+    "god_abgrund": "GOD-Teil: weltweit nur einmal (Kettenbeinkleid)"
    }
   },
   "shoes": {
@@ -266,7 +274,9 @@
     "luftkapitaen": "Hohe Reitstiefel",
     "messingkaempfer": "Schnallenstiefel",
     "dampfdame": "Schnürstiefeletten",
-    "kesselflicker": "Werkstattstiefel"
+    "kesselflicker": "Werkstattstiefel",
+    "god_seraph": "GOD · Seraph",
+    "god_abgrund": "GOD · Abgrund"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -316,7 +326,9 @@
     "kesselflicker": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
     "luftkapitaen": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)",
     "zahnradtechniker": "Spielerstufe 26 (Steampunk)",
-    "dampfdame": "Spielerstufe 30 (Steampunk)"
+    "dampfdame": "Spielerstufe 30 (Steampunk)",
+    "god_seraph": "GOD-Teil: weltweit nur einmal (Schritte des Morgens)",
+    "god_abgrund": "GOD-Teil: weltweit nur einmal (Aschewandler)"
    }
   },
   "hair": {
@@ -351,7 +363,9 @@
     "zylinder": "Zylinder",
     "gothlocken": "Silberlocken mit Spitzenband",
     "fliegerbrille": "Fliegerbrille",
-    "melone": "Melone mit Zahnrad"
+    "melone": "Melone mit Zahnrad",
+    "god_sonnenkrone": "GOD · Sonnenkrone",
+    "god_hoernerkrone": "GOD · Hörnerkrone"
    },
    "unlock": {
     "wuschel": "Saisonpass, Stufe 5",
@@ -377,7 +391,9 @@
     "zylinder": "Gacha-Banner „Der schwarze Mond“ (Kampfstil Schwarzmond)",
     "gothlocken": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)",
     "fliegerbrille": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
-    "melone": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)"
+    "melone": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)",
+    "god_sonnenkrone": "GOD-Teil: weltweit nur einmal (Sonnenkrone des Seraphen)",
+    "god_hoernerkrone": "GOD-Teil: weltweit nur einmal (Hörnerkrone des Abgrunds)"
    }
   },
   "weapon": {
@@ -391,7 +407,11 @@
     "fremdklinge": "Fremdklinge",
     "zwillingsrohr": "Zwillingsrohr",
     "lanzenstrahl": "Lanzenstrahl",
-    "schrotflinte": "Schrotflinte"
+    "schrotflinte": "Schrotflinte",
+    "god_hoellenschlund": "GOD · Höllenschlund",
+    "god_mondfresser": "GOD · Mondfresser",
+    "god_glockenschwinge": "GOD · Glockenschwinge",
+    "god_engelsruf": "GOD · Engelsruf"
    },
    "unlock": {
     "wachhund": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
@@ -400,7 +420,11 @@
     "fremdklinge": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
     "zwillingsrohr": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
     "lanzenstrahl": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
-    "schrotflinte": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)"
+    "schrotflinte": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "god_hoellenschlund": "GOD-Teil: weltweit nur einmal (Höllenschlund)",
+    "god_mondfresser": "GOD-Teil: weltweit nur einmal (Mondfresser)",
+    "god_glockenschwinge": "GOD-Teil: weltweit nur einmal (Glockenschwinge)",
+    "god_engelsruf": "GOD-Teil: weltweit nur einmal (Engelsruf)"
    }
   }
  },
@@ -529,6 +553,57 @@
    "tip": [
     44.5,
     4.0
+   ],
+   "hold": "gun"
+  },
+  "god_hoellenschlund": {
+   "texture": "res://assets/creator/weapons/god/god_hoellenschlund.png",
+   "scale": 1.7,
+   "grip": [
+    5.8,
+    33.2
+   ],
+   "tip": [
+    38.5,
+    0.5
+   ]
+  },
+  "god_mondfresser": {
+   "texture": "res://assets/creator/weapons/god/god_mondfresser.png",
+   "scale": 1.6,
+   "grip": [
+    7.1,
+    37.6
+   ],
+   "tip": [
+    41.5,
+    1.5
+   ],
+   "twohand": true
+  },
+  "god_glockenschwinge": {
+   "texture": "res://assets/creator/weapons/god/god_glockenschwinge.png",
+   "scale": 1.6,
+   "grip": [
+    7.2,
+    37.2
+   ],
+   "tip": [
+    42.5,
+    10.5
+   ],
+   "twohand": true
+  },
+  "god_engelsruf": {
+   "texture": "res://assets/creator/weapons/god/god_engelsruf.png",
+   "scale": 1,
+   "grip": [
+    14.1,
+    22.5
+   ],
+   "tip": [
+    47.5,
+    4.5
    ],
    "hold": "gun"
   }

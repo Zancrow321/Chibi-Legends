@@ -81,6 +81,9 @@ func connect_account() -> void:
 			var g := await call_fn("cl_guild_mine")
 			if g.ok:
 				GuildState.set_from(g.data)
+			var gods := await call_fn("cl_god_mine")
+			if gods.ok and gods.data is Array:
+				GodItems.sync(gods.data)  # GOD-Besitz entscheidet der Server
 			return
 		ok = false
 	print("Online: offline weiter (%s)" % last_error)

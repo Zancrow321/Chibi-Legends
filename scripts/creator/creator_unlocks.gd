@@ -41,6 +41,8 @@ static func hint(slot: String, id: String) -> String:
 
 
 static func is_unlocked(slot: String, id: String) -> bool:
+	if id.begins_with("god_"):  # GOD-Teile: nur wer das Teil besitzt (weltweit einmal)
+		return GodItems.owns_part(slot, id)
 	if hint(slot, id) == "":
 		return true
 	_load()
