@@ -110,6 +110,23 @@ OUTFITS.update({
     "rosendiener": "a gothic butler outfit: black waistcoat with a red rose pinned on the chest, white shirt "
                    "with rolled sleeves and black arm garters, black trousers, black oxford shoes",
 })
+OUTFITS.update({
+    "zahnradtechniker": "a steampunk engineer outfit: brown leather apron over a cream shirt with rolled sleeves, "
+                        "brass gears and tools hanging from a tool belt, brown suspenders, dark brown trousers, "
+                        "heavy brass-capped work boots",
+    "luftkapitaen": "a steampunk airship captain outfit: long dark blue double-breasted coat with brass buttons "
+                    "and gold epaulettes, a brown leather harness, tan trousers, tall polished brown riding boots",
+    "messingkaempfer": "a steampunk brawler outfit: sleeveless brown leather vest with brass rivets, a brass "
+                       "mechanical gauntlet on the right forearm, grey striped trousers, brown boots with buckles",
+    "dampfdame": "a steampunk lady inventor outfit: burgundy corset vest with brass buckles over a white blouse "
+                 "with puffed sleeves, a short brown bustle skirt over black leggings, laced brown ankle boots",
+    "kesselflicker": "a steampunk tinker outfit: oil-stained grey coveralls with many pockets and brass patches, "
+                     "a red scarf around the neck, leather knee pads, sturdy black boots",
+})
+HEADS.update({
+    "fliegerbrille": "messy brown hair with brass aviator goggles pushed up on the forehead, the face stays visible",
+    "melone": "short neat ginger hair under a small brown bowler hat with a brass gear pin, the face stays visible",
+})
 HEADS.update({
     "zylinder": "slicked back black hair with a small tall black top hat with a thin crimson band sitting on top of the head above the forehead, the eyes and face stay fully visible",
     "gothlocken": "long wavy silver white hair with a black lace headband and a small red rose",

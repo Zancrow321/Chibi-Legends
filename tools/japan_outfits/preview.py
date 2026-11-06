@@ -12,8 +12,10 @@ NAMES = {"hanabi": "Hanabi-Kimono", "mondhakama": "Mond-Hakama", "kranich": "Kra
          "baerenhaut": "Bärenhaut", "nordwanderer": "Nordwanderer",
          "jadegelehrter": "Jade-Gelehrter", "drachenwache": "Drachenwache", "lotusfaust": "Lotusfaust",
          "pflaumentaenzerin": "Pflaumentänzerin", "schattenmeister": "Schattenmeister",
-         "blutgraf": "Blutgraf", "mondgraefin": "Mondfürstin", "jaegerorden": "Jägerorden",
-         "kirchhofwaechter": "Kirchhofwächter", "rosendiener": "Rosendiener"}
+         "blutgraf": "Blutgraf", "mondgraefin": "Mondgräfin", "jaegerorden": "Jägerorden",
+         "kirchhofwaechter": "Kirchhofwächter", "rosendiener": "Rosendiener",
+         "zahnradtechniker": "Zahnrad-Techniker", "luftkapitaen": "Luftkapitän", "messingkaempfer": "Messingfaust",
+         "dampfdame": "Dampf-Erfinderin", "kesselflicker": "Kesselflicker"}
 if len(sys.argv) > 4:
     NAMES = {k: v for k, v in NAMES.items() if k in sys.argv[4].split(",")}
 POSES = sys.argv[3].split(",") if len(sys.argv) > 3 else ["idle_0", "walk_1", "run_1", "run_3"]

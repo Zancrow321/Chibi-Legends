@@ -48,10 +48,15 @@
     "pflaumentaenzerin": "Pflaumentänzerin-Seidenkleid",
     "schattenmeister": "Schattenmeister-Robe",
     "blutgraf": "Blutgraf-Frack",
-    "mondgraefin": "Mondfürstin-Korsettkleid",
+    "mondgraefin": "Mondgräfin-Korsettkleid",
     "jaegerorden": "Jägerorden-Ledermantel",
     "kirchhofwaechter": "Kirchhofwächter-Cape",
-    "rosendiener": "Rosendiener-Weste"
+    "rosendiener": "Rosendiener-Weste",
+    "zahnradtechniker": "Zahnrad-Schürze",
+    "luftkapitaen": "Luftkapitäns-Mantel",
+    "messingkaempfer": "Messingfaust-Weste",
+    "dampfdame": "Erfinderinnen-Korsett",
+    "kesselflicker": "Kesselflicker-Overall"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -96,7 +101,12 @@
     "mondgraefin": "Gacha-Banner „Der schwarze Mond“ (Kampfstil Schwarzmond)",
     "jaegerorden": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)",
     "kirchhofwaechter": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)",
-    "rosendiener": "Saisonpass Premium, Stufe 27"
+    "rosendiener": "Saisonpass Premium, Stufe 27",
+    "messingkaempfer": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "kesselflicker": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "luftkapitaen": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)",
+    "zahnradtechniker": "Spielerstufe 26 (Steampunk)",
+    "dampfdame": "Spielerstufe 30 (Steampunk)"
    }
   },
   "pants": {
@@ -146,7 +156,12 @@
     "mondgraefin": "Spitzenrock",
     "jaegerorden": "Jägerorden-Hose",
     "kirchhofwaechter": "Geflickte Hose",
-    "rosendiener": "Butler-Hose"
+    "rosendiener": "Butler-Hose",
+    "zahnradtechniker": "Techniker-Hose",
+    "luftkapitaen": "Reithose",
+    "messingkaempfer": "Gestreifte Hose",
+    "dampfdame": "Tournürenrock",
+    "kesselflicker": "Overall-Hose"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -191,7 +206,12 @@
     "mondgraefin": "Gacha-Banner „Der schwarze Mond“ (Kampfstil Schwarzmond)",
     "jaegerorden": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)",
     "kirchhofwaechter": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)",
-    "rosendiener": "Saisonpass Premium, Stufe 27"
+    "rosendiener": "Saisonpass Premium, Stufe 27",
+    "messingkaempfer": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "kesselflicker": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "luftkapitaen": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)",
+    "zahnradtechniker": "Spielerstufe 26 (Steampunk)",
+    "dampfdame": "Spielerstufe 30 (Steampunk)"
    }
   },
   "shoes": {
@@ -241,7 +261,12 @@
     "mondgraefin": "Plateau-Absätze",
     "jaegerorden": "Hohe Jägerstiefel",
     "kirchhofwaechter": "Ausgetretene Stiefel",
-    "rosendiener": "Oxford-Schuhe"
+    "rosendiener": "Oxford-Schuhe",
+    "zahnradtechniker": "Messingkappen-Stiefel",
+    "luftkapitaen": "Hohe Reitstiefel",
+    "messingkaempfer": "Schnallenstiefel",
+    "dampfdame": "Schnürstiefeletten",
+    "kesselflicker": "Werkstattstiefel"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -286,7 +311,12 @@
     "mondgraefin": "Gacha-Banner „Der schwarze Mond“ (Kampfstil Schwarzmond)",
     "jaegerorden": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)",
     "kirchhofwaechter": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)",
-    "rosendiener": "Saisonpass Premium, Stufe 27"
+    "rosendiener": "Saisonpass Premium, Stufe 27",
+    "messingkaempfer": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "kesselflicker": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "luftkapitaen": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)",
+    "zahnradtechniker": "Spielerstufe 26 (Steampunk)",
+    "dampfdame": "Spielerstufe 30 (Steampunk)"
    }
   },
   "hair": {
@@ -319,7 +349,9 @@
     "gelehrtenknoten": "Jade-Haarknoten",
     "drachenkrone": "Drachenkrone",
     "zylinder": "Zylinder",
-    "gothlocken": "Silberlocken mit Spitzenband"
+    "gothlocken": "Silberlocken mit Spitzenband",
+    "fliegerbrille": "Fliegerbrille",
+    "melone": "Melone mit Zahnrad"
    },
    "unlock": {
     "wuschel": "Saisonpass, Stufe 5",
@@ -343,7 +375,9 @@
     "gelehrtenknoten": "Wochen-Herausforderung: Besiege 300 Gegner",
     "drachenkrone": "Gacha-Banner „Über jedes Limit“ (Kampfstil Grenzbrecher)",
     "zylinder": "Gacha-Banner „Der schwarze Mond“ (Kampfstil Schwarzmond)",
-    "gothlocken": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)"
+    "gothlocken": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)",
+    "fliegerbrille": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "melone": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)"
    }
   },
   "weapon": {

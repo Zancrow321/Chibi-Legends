@@ -8,6 +8,7 @@ const HEADS := ["hachimaki", "chonmage", "kitsune", "kasa"]
 const FROST := ["eisjaeger", "runenschild", "frostseherin", "baerenhaut", "nordwanderer"]
 const WUXIA := ["jadegelehrter", "drachenwache", "lotusfaust", "pflaumentaenzerin", "schattenmeister"]
 const VAMP := ["blutgraf", "mondgraefin", "jaegerorden", "kirchhofwaechter", "rosendiener"]
+const STEAM := ["zahnradtechniker", "luftkapitaen", "messingkaempfer", "dampfdame", "kesselflicker"]
 const CYBER := ["neonlaeufer", "chromsoeldner", "datenhoodie", "synthidol", "konzern", "strassenklinge"]
 
 var fails := 0
@@ -105,5 +106,15 @@ func _initialize() -> void:
 		check(CreatorCatalog.slot_texture("hair", h) != null and CreatorCatalog.hair_meta.has(h), "Vampir-Kopfteil %s" % h)
 	check("top/blutgraf" in by_title.get("Der schwarze Mond", []) and "hair/zylinder" in by_title.get("Der schwarze Mond", []), "Banner Schwarzmond Vampirhof")
 	check("top/jaegerorden" in by_title.get("Ein Takt, zwei Seelen", []), "Banner Gleichklang Vampirhof")
+	# Steampunk: Banner Bollwerk / Spannkraft, Spielerstufen 26 und 30
+	for o in STEAM:
+		for slot in ["top", "pants", "shoes"]:
+			check(CreatorCatalog.slot_texture(slot, o) != null, "Steam-Ebene %s/%s" % [slot, o])
+			check(CreatorUnlocks.hint(slot, o) != "", "Steam-Hinweis %s/%s" % [slot, o])
+	for h in ["fliegerbrille", "melone"]:
+		check(CreatorCatalog.slot_texture("hair", h) != null and CreatorCatalog.hair_meta.has(h), "Steam-Kopfteil %s" % h)
+	check("top/messingkaempfer" in by_title.get("Die letzte Linie", []) and "hair/melone" in by_title.get("Kein Meer zu weit", []), "Banner Steampunk")
+	ThemeOutfits.on_level(30)
+	check(CreatorUnlocks.is_unlocked("top", "dampfdame") and CreatorUnlocks.is_unlocked("top", "zahnradtechniker"), "Stufe 30 Steampunk")
 	print("KLEIDUNG-TEST OK" if fails == 0 else "KLEIDUNG-TEST FEHLER: %d" % fails)
 	quit()
