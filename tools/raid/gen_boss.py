@@ -23,6 +23,9 @@ SUBJECTS = {
     "essenwaechter": (128, "huge hulking forge golem guardian made of dark iron plates and riveted armor, glowing molten orange cracks "
                       "in its chest, a small chimney-like head with two burning ember eyes and smoke, massive arms, "
                       "holding a giant blacksmith hammer with a glowing anvil-shaped head, short heavy legs", (11, 22, 33)),
+    "donnerhorn": (128, "colossal ancient storm titan beast, hunched gorilla-like body covered in slate grey stone armor plates with "
+                   "glowing electric blue rune cracks, a huge bull-like head with two long curved ivory horns crackling with lightning, "
+                   "shaggy dark storm-cloud mane on its shoulders, enormous stone fists, glowing cyan eyes", (41, 52, 63)),
     "kristall": (64, "floating magic shield crystal, tall orange-gold gem with glowing core, small iron ring bracket around it, "
                  "sparkles, game object, centered", (5, 6)),
 }
@@ -35,6 +38,15 @@ ACTIONS = {
         "roar": (8, "golem throws its arms wide and roars upward, chest cracks glow brighter, sparks burst from its body"),
         "hurt": (4, "golem is hit from the left: staggers back to the right, head tilts back, arms flail"),
         "death": (8, "golem is defeated: falls to its knees, the glow fades and the iron body collapses forward onto the ground"),
+    },
+    "donnerhorn": {
+        "idle": (8, "giant storm beast breathing idle: shoulders rise and fall, lightning flickers along its horns, mane drifts"),
+        "walk": (8, "giant storm beast lumbers forward to the left in place on its knuckles and legs, heavy slow steps"),
+        "slam": (8, "storm beast rears up and raises both stone fists high above its head, then smashes them down hard onto the ground in front to the left"),
+        "swipe": (8, "storm beast lowers its head and swings its huge horns in a wide sweeping arc to the front left"),
+        "roar": (8, "storm beast throws its head back and roars at the sky, lightning bursts from its horns and rune cracks"),
+        "hurt": (4, "storm beast is hit from the left: staggers back to the right, head jerks back"),
+        "death": (8, "storm beast is defeated: collapses to its knees, the blue glow fades and it falls forward onto the ground"),
     },
     "kristall": {
         "idle": (8, "crystal floats up and down slowly, glow pulses, small sparkles"),

@@ -61,6 +61,12 @@ const TYPES := {
 		"range": 110.0, "damage": 80.0, "windup": 0.9, "cooldown": 1.6, "exp": 400,
 		"hurt": Vector2(72, 104), "color": Color("ff8a2a"), "hit": 6, "elite": true, "wucht": 260.0,
 	},
+	# world boss of the Weltenriss (scripts/raid/world_boss.gd); its health is shared by all players
+	"donnerhorn": {
+		"name": "Donnerhorn", "kind": "boss", "hp": 60000.0, "speed": 58.0, "aggro": 9999.0,
+		"range": 120.0, "damage": 90.0, "windup": 0.85, "cooldown": 1.5, "exp": 600,
+		"hurt": Vector2(84, 118), "color": Color("7fd8ff"), "hit": 6, "elite": true, "wucht": 340.0, "scale": 1.15,
+	},
 }
 
 static var _frames: Dictionary = {}

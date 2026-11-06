@@ -58,3 +58,17 @@ Dateien: `scripts/raid/tower_director.gd` (erbt vom RaidDirector, nutzt Boss-Lei
 | Raid-Marken | Immer: Essenwächter 4, Turmwache 1. Anzeige oben rechts im Hof. |
 | Tausch | Bei Schmiedin Hino („Raid-Marken tauschen“): Teil-Art frei wählbar, Werte zufällig, Gegenstandsstufe = Spielerstufe. Episch 20 Marken, Legendär 60 (mit Veränderung). |
 | Online | Wenn die Online-Basis steht, zählt der Server dieselben Werte; offline liegen sie in `user://raid_loot.json` und im Profil. |
+
+# Weltenriss: Weltboss Donnerhorn (Schritt 8, ohne Kampfserver)
+
+Ganz rechts im Hof ist der Himmel aufgerissen. Drinnen tobt Donnerhorn, ein Sturm-Koloss
+(PixelLab, `tools/raid/gen_boss.py`, `tools/raid/finish_boss.py donnerhorn`). Jeder kämpft in
+seiner eigenen Arena, aber alle gegen dieselbe Lebensleiste (Supabase, siehe docs/online.md).
+
+- Kein Schild, dafür Wucht-Leiste und Bruch wie beim Essenwächter. Phasen nach der gemeinsamen
+  Leiste: unter 66 % und 33 % wird er schneller und stürmt los.
+- Blitze statt Glut: Schockwellen, Blitzeinschläge und Sturmflut in Blau (`BossHazard.storm`).
+- K.o. setzt nur dich zurück, der Boss behält seine Lebenspunkte. Dein Schaden zählt weiter.
+- Rechts unter der Karte: wer gerade kämpft, dein Schaden und Anteil, die besten fünf.
+- `scripts/raid/world_boss.gd`, `world_boss_director.gd`, `world_boss_panel.gd`;
+  Probe `tools/worldboss/probe.gd`; im Web `?modus=weltboss`.

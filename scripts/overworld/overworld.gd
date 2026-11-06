@@ -13,11 +13,11 @@ extends Node2D
 ## Props and NPCs are PixelLab drawings (assets/overworld, see
 ## tools/overworld/), backdrop and ground are drawn in code.
 
-const WIDTH := 2400.0
+const WIDTH := 2660.0
 const GROUND_Y := 300.0
 const TERRACE_Y := 272.0
 ## Solid ground [x, y, w]; the terrace has ramps (drawn as stairs) on both sides.
-const GROUND := [[0.0, 300.0, 1060.0], [1060.0, 272.0, 420.0], [1480.0, 300.0, 920.0]]
+const GROUND := [[0.0, 300.0, 1060.0], [1060.0, 272.0, 420.0], [1480.0, 300.0, 1180.0]]
 const RAMPS := [[1024.0, 1060.0, 300.0, 272.0], [1480.0, 1516.0, 272.0, 300.0]]
 ## One-way platforms [x, y, w]: dorm balcony and two floating rune stones.
 const PLATFORMS := [[24.0, 214.0, 84.0], [1790.0, 238.0, 56.0], [1900.0, 206.0, 56.0]]
@@ -32,8 +32,9 @@ const PROPS := [
 	["dorm", 70.0, -3, true], ["board", 250.0, -1, true], ["guild_hall", 385.0, -3, true], ["fountain", 520.0, -2, true],
 	["sakura", 770.0, -4, true], ["forge_stall", 930.0, -2, true], ["shrine", 1270.0, -2, true],
 	["gate_wald", 1730.0, -2, true], ["gate_glut", 2060.0, -2, true], ["gate_turm", 2300.0, -2, true],
+	["gate_riss", 2540.0, -2, true],
 ]
-const LANTERNS := [180.0, 640.0, 1090.0, 1450.0, 1880.0, 2180.0]
+const LANTERNS := [180.0, 640.0, 1090.0, 1450.0, 1880.0, 2180.0, 2420.0]
 
 var walker: OverworldWalker
 var camera: Camera2D
@@ -50,6 +51,7 @@ var _forge_light: PointLight2D
 var _portal_light: PointLight2D
 var _seal_light: PointLight2D
 var _star_light: PointLight2D
+var _rift_light: PointLight2D
 var _walker_mat: ShaderMaterial
 var _shafts: Sprite2D
 var _petals: CPUParticles2D
@@ -331,6 +333,7 @@ func _build_spots() -> void:
 		"Das Siegel der Glutschmiede ist durchgebrannt. Drinnen wacht der Essenwächter, ein Golem aus Eisen und Glut.",
 		"Schläge prallen an ihm ab, bis seine Wucht weg ist. Dann bricht er ein und du hast ein paar Sekunden für alles, was du hast.",
 		"Ganz hinten steht der Turm der Prüfungen. Etage um Etage, jede härter. Alle fünf Etagen wartet eine Turmwache.",
+		"Und dahinter ist der Himmel aufgerissen. Im Weltenriss tobt Donnerhorn. Alle Schüler kämpfen gegen dieselbe Lebensleiste.",
 	])
 	var wald := _spot(OverworldSpot.Kind.DOOR, "tor_wald", "Waldtor", 1730.0, [], "trainingswald", 28.0, -128.0)
 	wald.accent = Color("0eaf9b")
@@ -339,6 +342,8 @@ func _build_spots() -> void:
 	glut.accent = Color("fb6b1d")
 	var turm := _spot(OverworldSpot.Kind.DOOR, "tor_turm", "Turm der Prüfungen", 2300.0, [], "turm", 30.0, -134.0)
 	turm.accent = Color("a46bff")
+	var riss := _spot(OverworldSpot.Kind.DOOR, "tor_riss", "Weltenriss", 2540.0, [], "weltenriss", 30.0, -128.0)
+	riss.accent = Color("4dc8ff")
 
 
 # --- light ------------------------------------------------------------------------------
@@ -398,6 +403,9 @@ func _build_light() -> void:
 	_seal_light.position = Vector2(2060, GROUND_Y - 34)
 	var tl := _light(Color(0.7, 0.45, 1.0), 1.1, 1.0)
 	tl.position = Vector2(2300, GROUND_Y - 50)
+	_rift_light = _light(Color(0.4, 0.8, 1.0), 1.3, 1.1)  # the Weltenriss
+	_rift_light.position = Vector2(2540, GROUND_Y - 58)
+	_halo_sprite(Color(0.5, 1.1, 1.8, 0.45), 0.6, _rift_light.position)
 	_star_light = _light(Color(0.5, 0.85, 1.0), 0.9, 0.8)
 	_star_light.position = Vector2(1270, TERRACE_Y - 38)
 	_halo_sprite(Color(0.6, 1.2, 1.6, 0.5), 0.55, _star_light.position)
@@ -491,6 +499,8 @@ func _animate(_delta: float) -> void:
 		_lanterns[i].energy = 0.55 + 0.06 * sin(_t * 9.0 + i * 2.0)
 	_forge_light.energy = 1.1 + 0.2 * sin(_t * 13.0) + 0.12 * sin(_t * 29.0)
 	_portal_light.energy = 1.0 + 0.25 * sin(_t * 2.2)
+	# the rift flickers like lightning
+	_rift_light.energy = 1.2 + 0.2 * sin(_t * 3.1) + (1.2 if fmod(_t, 4.3) < 0.08 or fmod(_t + 1.7, 6.1) < 0.06 else 0.0)
 	_seal_light.energy = 0.95 + 0.2 * sin(_t * 11.0) + 0.1 * sin(_t * 27.0)
 	_star_light.energy = 0.8 + 0.25 * sin(_t * 1.7)
 	_walker_mat.set_shader_parameter("flip", float(walker.facing))
