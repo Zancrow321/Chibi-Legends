@@ -159,7 +159,11 @@ func _do(cmd: String) -> void:
 			_hide_select(root)
 			paused = false
 			var ow := _find_overworld(root)
-			_expect(ow != null and ow.spots.any(func(s): return s.id == "tor_riss" and s.target_area == "weltenriss"), "Weltenriss im Hof")
+			var found := false
+			if ow != null:
+				for s in ow.get("spots"):
+					found = found or (s.get("id") == "tor_riss" and s.get("target_area") == "weltenriss")
+			_expect(found, "Weltenriss im Hof")
 		"shot":
 			_hide_select(root)
 			_shot(parts[1])
@@ -201,8 +205,10 @@ func _find_room(n: Node) -> TrainingRoom:
 	return null
 
 
-func _find_overworld(n: Node) -> Overworld:
-	if n is Overworld:
+## Untyped: naming the Overworld class here would compile it with the
+## autoloads (AreaTransition), which test scripts cannot see.
+func _find_overworld(n: Node) -> Node:
+	if n.get("spots") is Array and n.has_method("ground_y"):
 		return n
 	for c in n.get_children():
 		var r := _find_overworld(c)
