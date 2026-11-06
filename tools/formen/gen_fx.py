@@ -97,7 +97,7 @@ def main():
     todo = []
     if args == ["--weapons"]:
         for wid, desc in P["weapons"].items():
-            if not (ROOT / "assets/creator/weapons/formen" / (wid + ".roh.png")).exists():
+            if not (ROOT / "assets/creator/weapons/formen" / (wid + ".png")).exists():
                 todo.append((job_weapon, (wid, desc)))
     else:
         for st in args:

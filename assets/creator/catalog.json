@@ -391,7 +391,23 @@
     "fremdklinge": "Fremdklinge",
     "zwillingsrohr": "Zwillingsrohr",
     "lanzenstrahl": "Lanzenstrahl",
-    "schrotflinte": "Schrotflinte"
+    "schrotflinte": "Schrotflinte",
+    "wellenschneide": "Wellenschneide",
+    "eisfaecher": "Eisfächer",
+    "nahtdolch": "Nahtdolch",
+    "sonnenspeer": "Sonnenspeer",
+    "sturmfaecher": "Sturmfächer",
+    "schwurklinge": "Schwurklinge",
+    "kettensichel": "Kettensichel",
+    "wirbelklinge": "Wirbelklinge",
+    "lavahammer": "Lavahammer",
+    "nordlichtstab": "Nordlichtstab",
+    "sandsaebel": "Sandsäbel",
+    "geisterlaterne": "Geisterlaterne",
+    "donnerhammer": "Donnerhammer",
+    "bluetenklinge": "Blütenklinge",
+    "runenhammer": "Runenhammer",
+    "leerenklinge": "Leerenklinge"
    },
    "unlock": {
     "wachhund": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
@@ -400,7 +416,23 @@
     "fremdklinge": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
     "zwillingsrohr": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
     "lanzenstrahl": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
-    "schrotflinte": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)"
+    "schrotflinte": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
+    "wellenschneide": "Gacha-Banner „Wenn die Flut steigt“ (Kampfstil Gezeitenklinge)",
+    "eisfaecher": "Gacha-Banner „Blüte im Eis“ (Kampfstil Frostlotus)",
+    "nahtdolch": "Gacha-Banner „Ein Faden im Dunkel“ (Kampfstil Schattennaht)",
+    "sonnenspeer": "Gacha-Banner „Die Sonne im Speer“ (Kampfstil Sonnenlanze)",
+    "sturmfaecher": "Gacha-Banner „Feder im Sturm“ (Kampfstil Sturmfeder)",
+    "schwurklinge": "Gacha-Banner „Der rote Schwur“ (Kampfstil Rotschwur)",
+    "kettensichel": "Gacha-Banner „Glied um Glied“ (Kampfstil Eisenkette)",
+    "wirbelklinge": "Gacha-Banner „Der Wirbel kennt kein Ende“ (Kampfstil Klingenwirbel)",
+    "lavahammer": "Gacha-Banner „Das Herz des Vulkans“ (Kampfstil Vulkanherz)",
+    "nordlichtstab": "Gacha-Banner „Licht über dem Eis“ (Kampfstil Polarlicht)",
+    "sandsaebel": "Gacha-Banner „Wind über den Dünen“ (Kampfstil Sandsturm)",
+    "geisterlaterne": "Gacha-Banner „Ein Licht für die Verirrten“ (Kampfstil Geisterlaterne)",
+    "donnerhammer": "Gacha-Banner „Der Hammer der Wolken“ (Kampfstil Gewitterhammer)",
+    "bluetenklinge": "Gacha-Banner „Wenn die Kirschen blühen“ (Kampfstil Kirschsturm)",
+    "runenhammer": "Gacha-Banner „Geschrieben in Stein“ (Kampfstil Runenschmied)",
+    "leerenklinge": "Gacha-Banner „Der Schnitt ins Nichts“ (Kampfstil Leerenschnitt)"
    }
   }
  },
@@ -531,6 +563,203 @@
     4.0
    ],
    "hold": "gun"
+  },
+  "wellenschneide": {
+   "texture": "res://assets/creator/weapons/formen/wellenschneide.png",
+   "scale": 1,
+   "grip": [
+    54.0,
+    10.1
+   ],
+   "tip": [
+    4.0,
+    60.5
+   ]
+  },
+  "eisfaecher": {
+   "texture": "res://assets/creator/weapons/formen/eisfaecher.png",
+   "scale": 1,
+   "grip": [
+    9.8,
+    51.8
+   ],
+   "tip": [
+    58.4,
+    5.9
+   ]
+  },
+  "nahtdolch": {
+   "texture": "res://assets/creator/weapons/formen/nahtdolch.png",
+   "scale": 1,
+   "grip": [
+    9.4,
+    54.3
+   ],
+   "tip": [
+    60.2,
+    3.8
+   ]
+  },
+  "sonnenspeer": {
+   "texture": "res://assets/creator/weapons/formen/sonnenspeer.png",
+   "scale": 1,
+   "grip": [
+    20.5,
+    43.6
+   ],
+   "tip": [
+    60.2,
+    4.6
+   ],
+   "twohand": true
+  },
+  "sturmfaecher": {
+   "texture": "res://assets/creator/weapons/formen/sturmfaecher.png",
+   "scale": 1,
+   "grip": [
+    10.5,
+    48.4
+   ],
+   "tip": [
+    57.1,
+    8.4
+   ]
+  },
+  "schwurklinge": {
+   "texture": "res://assets/creator/weapons/formen/schwurklinge.png",
+   "scale": 1,
+   "grip": [
+    9.7,
+    54.7
+   ],
+   "tip": [
+    60.8,
+    4.2
+   ]
+  },
+  "kettensichel": {
+   "texture": "res://assets/creator/weapons/formen/kettensichel.png",
+   "scale": 1,
+   "grip": [
+    19.1,
+    45.8
+   ],
+   "tip": [
+    53.1,
+    10.3
+   ]
+  },
+  "wirbelklinge": {
+   "texture": "res://assets/creator/weapons/formen/wirbelklinge.png",
+   "scale": 1,
+   "grip": [
+    10.3,
+    53.3
+   ],
+   "tip": [
+    60.2,
+    4.6
+   ]
+  },
+  "lavahammer": {
+   "texture": "res://assets/creator/weapons/formen/lavahammer.png",
+   "scale": 1,
+   "grip": [
+    18.0,
+    46.0
+   ],
+   "tip": [
+    52.9,
+    10.2
+   ],
+   "twohand": true
+  },
+  "nordlichtstab": {
+   "texture": "res://assets/creator/weapons/formen/nordlichtstab.png",
+   "scale": 1,
+   "grip": [
+    20.5,
+    43.5
+   ],
+   "tip": [
+    59.5,
+    5.0
+   ],
+   "twohand": true
+  },
+  "sandsaebel": {
+   "texture": "res://assets/creator/weapons/formen/sandsaebel.png",
+   "scale": 1,
+   "grip": [
+    9.5,
+    53.5
+   ],
+   "tip": [
+    60.4,
+    4.8
+   ]
+  },
+  "geisterlaterne": {
+   "texture": "res://assets/creator/weapons/formen/geisterlaterne.png",
+   "scale": 1,
+   "grip": [
+    19.7,
+    43.0
+   ],
+   "tip": [
+    55.2,
+    7.2
+   ]
+  },
+  "donnerhammer": {
+   "texture": "res://assets/creator/weapons/formen/donnerhammer.png",
+   "scale": 1,
+   "grip": [
+    16.5,
+    48.5
+   ],
+   "tip": [
+    51.6,
+    9.1
+   ],
+   "twohand": true
+  },
+  "bluetenklinge": {
+   "texture": "res://assets/creator/weapons/formen/bluetenklinge.png",
+   "scale": 1,
+   "grip": [
+    54.0,
+    10.0
+   ],
+   "tip": [
+    4.0,
+    60.5
+   ]
+  },
+  "runenhammer": {
+   "texture": "res://assets/creator/weapons/formen/runenhammer.png",
+   "scale": 1,
+   "grip": [
+    18.0,
+    46.2
+   ],
+   "tip": [
+    52.2,
+    9.3
+   ],
+   "twohand": true
+  },
+  "leerenklinge": {
+   "texture": "res://assets/creator/weapons/formen/leerenklinge.png",
+   "scale": 1,
+   "grip": [
+    10.2,
+    54.2
+   ],
+   "tip": [
+    60.7,
+    4.2
+   ]
   }
  },
  "colors": [
@@ -897,7 +1126,7 @@
    "name": "Gezeitenklinge",
    "text": "Wasser-Schwertkunst: Wellen schneiden, Gezeiten im Takt (Legendär)",
    "unlock": "",
-   "weapon": "schwert_kaiser"
+   "weapon": "wellenschneide"
   },
   "donnerschritt": {
    "name": "Donnerschritt",
@@ -910,7 +1139,7 @@
    "name": "Frostlotus",
    "text": "Eisfächer-Tanz: Frostblüten setzen und zerspringen lassen (Legendär)",
    "unlock": "",
-   "weapon": "schwert_kaiser"
+   "weapon": "eisfaecher"
   },
   "erdenfaust": {
    "name": "Erdenfaust",
@@ -923,13 +1152,13 @@
    "name": "Schattennaht",
    "text": "Schatten-Nadelkunst: Gegner vernähen und aufreißen (Legendär)",
    "unlock": "",
-   "weapon": "schwert_kaiser"
+   "weapon": "nahtdolch"
   },
   "sonnenlanze": {
    "name": "Sonnenlanze",
    "text": "Licht-Lanzenkunst: Sonnenstrahlen und Kometenstöße (Legendär)",
    "unlock": "",
-   "weapon": "schwert_kaiser"
+   "weapon": "sonnenspeer"
   },
   "giftranke": {
    "name": "Giftranke",
@@ -942,13 +1171,13 @@
    "name": "Sturmfeder",
    "text": "Wind-Fächerkunst: Federklingen und Nachwind (Legendär)",
    "unlock": "",
-   "weapon": "schwert_kaiser"
+   "weapon": "sturmfaecher"
   },
   "rotschwur": {
    "name": "Rotschwur",
    "text": "Blutschwur-Schwertkunst: Leben opfern für rohe Kraft (Legendär)",
    "unlock": "",
-   "weapon": "schwert_kaiser"
+   "weapon": "schwurklinge"
   },
   "sternensang": {
    "name": "Sternensang",
@@ -961,7 +1190,7 @@
    "name": "Eisenkette",
    "text": "Kettensichel-Kunst: Ketten werfen, ziehen und kreiseln (Legendär)",
    "unlock": "",
-   "weapon": "schwert_kaiser"
+   "weapon": "kettensichel"
   },
   "trommelherz": {
    "name": "Trommelherz",
@@ -1009,43 +1238,43 @@
    "name": "Klingenwirbel",
    "text": "Wirbelklingen-Kunst: Doppelklinge kreiseln und werfen (Legendär)",
    "unlock": "",
-   "weapon": "schwert_kaiser"
+   "weapon": "wirbelklinge"
   },
   "vulkanherz": {
    "name": "Vulkanherz",
    "text": "Vulkan-Hammerkunst: Lava, Ausbrüche und schwere Schläge (Legendär)",
    "unlock": "",
-   "weapon": "schwert_kaiser"
+   "weapon": "lavahammer"
   },
   "polarlicht": {
    "name": "Polarlicht",
    "text": "Nordlicht-Magie: Lichtbänder, Eisregen und Polarnacht (Legendär)",
    "unlock": "",
-   "weapon": "schwert_kaiser"
+   "weapon": "nordlichtstab"
   },
   "sandsturm": {
    "name": "Sandsturm",
    "text": "Wüsten-Säbelkunst: Sandhosen und Wüstenecho (Legendär)",
    "unlock": "",
-   "weapon": "schwert_kaiser"
+   "weapon": "sandsaebel"
   },
   "geisterlaterne": {
    "name": "Geisterlaterne",
    "text": "Geisterlaternen-Kunst: Irrlichter und Seelenflammen (Legendär)",
    "unlock": "",
-   "weapon": "schwert_kaiser"
+   "weapon": "geisterlaterne"
   },
   "gewitterhammer": {
    "name": "Gewitterhammer",
    "text": "Donnerhammer-Kunst: Blitze in den Boden schlagen (Legendär)",
    "unlock": "",
-   "weapon": "schwert_kaiser"
+   "weapon": "donnerhammer"
   },
   "kirschsturm": {
    "name": "Kirschsturm",
    "text": "Blütenklingen-Kunst: Kirschblüten-Schnitte im Wind (Legendär)",
    "unlock": "",
-   "weapon": "schwert_kaiser"
+   "weapon": "bluetenklinge"
   },
   "abgrundtiefe": {
    "name": "Abgrundtiefe",
@@ -1065,7 +1294,7 @@
    "name": "Runenschmied",
    "text": "Runen-Hammerkunst: Runen einbrennen und zünden (Legendär)",
    "unlock": "",
-   "weapon": "schwert_kaiser"
+   "weapon": "runenhammer"
   },
   "bestienklaue": {
    "name": "Bestienklaue",
@@ -1085,7 +1314,7 @@
    "name": "Leerenschnitt",
    "text": "Leeren-Schwertkunst: Risse in den Raum schneiden (Legendär)",
    "unlock": "",
-   "weapon": "schwert_kaiser"
+   "weapon": "leerenklinge"
   }
  },
  "start_items_note": "Teile ohne unlock-Eintrag sind von Anfang an frei. CreatorUnlocks.unlock(slot, id) schaltet frei.",
