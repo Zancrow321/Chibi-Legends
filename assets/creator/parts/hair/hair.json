@@ -60,7 +60,8 @@
    30.6,
    22.9
   ],
-  "angle": 1.3
+  "angle": 1.3,
+  "covers_head": true
  },
  "deckshand_muetze": {
   "neck": [
@@ -74,41 +75,47 @@
    30.6,
    22.9
   ],
-  "angle": 1.3
+  "angle": 1.3,
+  "covers_head": true
  },
  "raid_ungewoehnlich": {
   "neck": [
    30.6,
    22.9
   ],
-  "angle": 1.3
+  "angle": 1.3,
+  "covers_head": true
  },
  "raid_selten": {
   "neck": [
    30.6,
    22.9
   ],
-  "angle": 1.3
+  "angle": 1.3,
+  "covers_head": true
  },
  "raid_episch": {
   "neck": [
    30.6,
    22.9
   ],
-  "angle": 1.3
+  "angle": 1.3,
+  "covers_head": true
  },
  "raid_legendaer": {
   "neck": [
    30.6,
    22.9
   ],
-  "angle": 1.3
+  "angle": 1.3,
+  "covers_head": true
  },
  "raid_mythisch": {
   "neck": [
    30.6,
    22.9
   ],
-  "angle": 1.3
+  "angle": 1.3,
+  "covers_head": true
  }
 }

@@ -45,3 +45,12 @@ Stand 6. November 2026. Erste Raid-Rüstung, Beute vom Essenwächter in der Glut
 - `tools/raid_armor/preview.py`, `sheet_preview.py`: Vorschaubilder.
 - Tests: `tools/raid_armor/test_armor.gd` (CI), Schaubild `tools/raid_armor/probe.gd`
   (CI legt die Bilder auf den Branch `ci-bilder/ruestung`).
+
+## Helme decken den ganzen Kopf ab (Fix 6. November)
+
+- Helme mit `covers_head` in `hair.json` (alle `raid_*` und `bollwerk_helm`) blenden den Kopf
+  des Körpers aus (Shader `head_hide`, Kreis Radius 10 um `LayeredBody.HEAD_CENTER`) und drehen
+  sich voll mit dem Kopf (auch liegend; Ankerwinkel werden auf ±180° normalisiert).
+- `tools/raid_armor/helm_layers.py` schneidet die Helm-Ebene aus dem PixelLab-Bild neu
+  (mit Gesicht, ohne Glatze), `clear_head_in_top.py` entfernt Kronen/Kragen-Pixel im Kopfkreis
+  der Oberteile, `helm_preview.py` zeigt alle 68 Posen wie im Spiel.

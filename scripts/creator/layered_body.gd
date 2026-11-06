@@ -15,6 +15,8 @@ const ORIGIN := Vector2(32, 58)
 const CLOTH_ORDER := ["pants", "shoes", "top"]
 const HEAD_DEADZONE := 12.0   # kleine Kopfneigungen ignorieren, damit die Frisur nicht zittert
 const HEAD_LIMIT := 40.0
+## Kopfmitte relativ zum Hals-Anker (aufrecht), für Helme, die den Kopf ganz bedecken.
+const HEAD_CENTER := Vector2(0.0, -11.0)
 
 var look: Dictionary = {}:
 	set(v):
@@ -233,13 +235,25 @@ func set_pose(name: String) -> void:
 	var f: Dictionary = CreatorCatalog.frames[name]
 	# Frisur: am Hals-Anker, gedreht um die Kopfneigung gegenüber idle_0
 	var hid := str(look.get("hair", ""))
+	var covers := false
 	if CreatorCatalog.hair_meta.has(hid):
-		var ref_angle: float = CreatorCatalog.hair_meta[hid]["angle"]
-		var da: float = clampf(float(f["head"]["angle"]) - ref_angle, -HEAD_LIMIT, HEAD_LIMIT)
+		var meta: Dictionary = CreatorCatalog.hair_meta[hid]
+		covers = bool(meta.get("covers_head", false))
+		var ref_angle: float = meta["angle"]
+		# Winkel aus den Ankern können um 360° versetzt sein (Liegen: -296° = +64°)
+		var da: float = wrapf(float(f["head"]["angle"]) - ref_angle, -180.0, 180.0)
+		if not covers:  # Frisuren nur leicht mitdrehen; Helme folgen dem Kopf ganz
+			da = clampf(da, -HEAD_LIMIT, HEAD_LIMIT)
 		if absf(da) < HEAD_DEADZONE:
 			da = 0.0
 		_hair.position = _cell(f["head"]["pos"])
 		_hair.rotation = -deg_to_rad(da)
+		if covers:
+			# Kopfmitte über dem Hals-Anker, mit dem Helm gedreht
+			var hc := Vector2(f["head"]["pos"][0], f["head"]["pos"][1]) + HEAD_CENTER.rotated(_hair.rotation)
+			var bm := _body.material as ShaderMaterial
+			bm.set_shader_parameter("head_c", r.position + hc)
+	(_body.material as ShaderMaterial).set_shader_parameter("head_hide", covers)
 	# Waffe: Griff auf die Faust, Klinge entlang des Unterarms
 	if not _wdata.is_empty():
 		var fa := float(f["hand_front"]["angle"])
