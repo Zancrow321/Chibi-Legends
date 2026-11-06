@@ -239,7 +239,7 @@ func tick(delta: float) -> void:
 
 func _decide_enhanced() -> void:
 	_decided = true
-	if Input.is_action_pressed("special") and (player.gauge >= 100.0 or player.infinite_aura):
+	if player.ctl.is_action_pressed("special") and (player.gauge >= 100.0 or player.infinite_aura):
 		enhanced = true
 		if not player.infinite_aura:
 			player.gauge -= 100.0
