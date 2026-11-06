@@ -36,6 +36,10 @@ func _ready() -> void:
 func _allowed() -> bool:
 	if DisplayServer.get_name() == "headless":
 		return false
+	# Test- und Probe-Skripte (godot -s ...) laufen mit eigener Hauptschleife
+	# und bleiben offline, auch mit Bildschirm (xvfb in der CI).
+	if Engine.get_main_loop().get_script() != null:
+		return false
 	for a in OS.get_cmdline_user_args() + OS.get_cmdline_args():
 		if a == "--offline":
 			return false
@@ -74,6 +78,9 @@ func connect_account() -> void:
 			Profile.save()
 			_set_state("online")
 			print("Online: angemeldet (%s)" % str(profile.get("name", "")))
+			var g := await call_fn("cl_guild_mine")
+			if g.ok:
+				GuildState.set_from(g.data)
 			return
 		ok = false
 	print("Online: offline weiter (%s)" % last_error)

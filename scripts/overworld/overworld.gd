@@ -29,7 +29,7 @@ const LAYERS := [["sky", 0.0, -6], ["far", 0.05, -5], ["mid", 0.22, -4], ["near"
 
 ## Props: [name, foot x, z, lit by the scene light]
 const PROPS := [
-	["dorm", 70.0, -3, true], ["board", 250.0, -1, true], ["fountain", 520.0, -2, true],
+	["dorm", 70.0, -3, true], ["board", 250.0, -1, true], ["guild_hall", 385.0, -3, true], ["fountain", 520.0, -2, true],
 	["sakura", 770.0, -4, true], ["forge_stall", 930.0, -2, true], ["shrine", 1270.0, -2, true],
 	["gate_wald", 1730.0, -2, true], ["gate_glut", 2060.0, -2, true], ["gate_turm", 2300.0, -2, true],
 ]
@@ -160,6 +160,10 @@ func _use(s: OverworldSpot) -> void:
 	if s.id == "questbrett":
 		Sfx.play("ui_confirm")
 		get_tree().call_group("season_pass", "open", 0)
+		return
+	if s.id == "gildenhaus":
+		Sfx.play("ui_confirm")
+		get_tree().call_group("guild_screen", "open")
 		return
 	if s.id == "schmiedin":
 		_gift(s.id)
@@ -307,6 +311,9 @@ func _build_spots() -> void:
 		"Hinter den Toren auf der rechten Seite liegen die Kampfareale. Das Waldtor führt in den Trainingswald.",
 		"In jedem Areal bringt dich das Portal am Eingang wieder hierher zurück. Geh mit Bedacht, aber geh.",
 	])
+	var guild := _spot(OverworldSpot.Kind.SIGN, "gildenhaus", "Gildenhaus", 385.0, [], "", 30.0, -118.0)
+	guild.verb = "Gilde"
+	guild.accent = Color("e83b3b")
 	var hino := _npc("schmiedin", "Schmiedin Hino", 985.0, "npc_schmiedin", Color("fb6b1d"), [
 		"Bring mir Raid-Marken aus der Glutschmiede und dem Turm. Dafür schmiede ich dir genau das Teil, das du willst.",
 	])

@@ -39,9 +39,12 @@ PROPS = {
     "shrine": "small elegant star shrine seen from the front, white stone walls with a dark blue doorway holding a floating glowing "
               "blue star crystal, dark blue tiled roof with upturned golden eaves, two small blue lanterns on posts at both sides, "
               "stone plinth steps",
+    "guild_hall": "small guild house of a magic academy seen from the front, warm timber frame walls on a stone base, wide wooden "
+                  "double door, dark red tiled roof with upturned eaves, two tall cloth banners hanging at both sides of the door "
+                  "in red and gold with an empty round crest, a lantern above the door, stone plinth steps",
 }
 ## Props without their own sketch borrow one (the tower gate has the arch of the forest gate).
-SKETCH_OF = {"gate_turm": "gate_wald"}
+SKETCH_OF = {"gate_turm": "gate_wald", "guild_hall": "shrine"}
 # (seed, init_image_strength): low keeps only the layout, high keeps the sketch closer
 RUNS = [(7, 40), (21, 60), (33, 85)]
 

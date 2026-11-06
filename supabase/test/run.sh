@@ -12,6 +12,11 @@ run "$bin/pg_ctl -D $dir/db -o '-k $dir -p 54329 -c listen_addresses=' -l $dir/l
 trap 'run "$bin/pg_ctl -D $dir/db stop -m fast >/dev/null"; rm -rf "$dir"' EXIT
 psql="psql -h $dir -p 54329 -U postgres -q -v ON_ERROR_STOP=1"
 $psql -f "$here/stub_auth.sql"
-$psql -f "$here/../migrations/0001_online_base.sql"
-$psql -f "$here/../migrations/0001_online_base.sql"
-$psql -f "$here/test_online_base.sql"
+# every migration twice in order (they must be repeatable), then every test
+for round in 1 2; do
+  for m in "$here"/../migrations/*.sql; do $psql -f "$m"; done
+done
+for t in "$here"/test_*.sql; do
+  echo "== $(basename "$t")"
+  $psql -f "$t"
+done

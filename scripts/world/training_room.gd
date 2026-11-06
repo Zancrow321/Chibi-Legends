@@ -158,7 +158,7 @@ func on_enemy_died(e: Enemy) -> void:
 	exp_points += float(e.data.exp)
 	player.add_gauge(8.0)
 	Profile.add_splitter(int(ceil(float(e.data.exp) / 4.0)))
-	if Profile.add_exp(float(e.data.exp)) > 0:
+	if Profile.add_exp(float(e.data.exp) * GuildState.exp_factor()) > 0:
 		_level_up()
 	_drop_loot(e)
 	# kill feel: a short slow motion, longer and with a zoom for the last one of a wave

@@ -29,3 +29,17 @@ Online gilt der Marken-Stand des Servers; offline gesammelte Marken werden nicht
 - `supabase/test/run.sh`: Wegwerf-Postgres, Schema zweimal einspielen, Regeln und Rechte prüfen (CI-Job „datenbank“).
 - `tools/online/test_online.gd`: Client bleibt headless offline, Seed-Beute ist stabil.
 - Web: `?offline=1` schaltet die Verbindung ab.
+
+## Gilden (`supabase/migrations/0002_guilds.sql`, Schritt 6)
+
+Gildenhaus im Akademie-Hof (x 385, PixelLab-Sprite `guild_hall`), Bildschirm `scripts/guild/guild_screen.gd`.
+
+| Regel | Wert |
+| --- | --- |
+| Gründen | Name 3-20 Zeichen, Kürzel 2-4 Buchstaben/Ziffern, beides eindeutig. Eine Gilde pro Spieler. |
+| Stufen | 1-10, Stufe n → n+1 braucht n × 1000 Gilden-XP. Plätze 15 + 5 je Stufe (Stufe 10: 60). |
+| XP | Essenwächter/Turmwache 20, neue Turm-Etage 2, Raid-Marke 1, erfülltes Wochenziel 400. Der Server zählt selbst mit (Trigger), Spieler melden nichts. |
+| Wochenziele | Drei aus: Essenwächter 15, Turm-Etagen 120, Raid-Marken 100, Turmwachen 25. Jede Woche fällt ein anderes weg. Erfülltes Ziel = Trophäe in der Halle. |
+| Boni | +1 % EXP je Stufe; ab Stufe 5 +1 Raid-Marke pro Essenwächter. Banner-Farben: 2 zum Start, eine mehr je Stufe (8 insgesamt). |
+| Ränge | Anführer (Banner, Ränge, entfernen), Offizier (Mitglieder entfernen), Mitglied. Geht der Anführer, übernimmt der dienstälteste Offizier, sonst das älteste Mitglied; leere Gilden lösen sich auf. |
+| Später | Gilden-Krieg 4v4 und Wochen-Liga brauchen den Kampfserver. |

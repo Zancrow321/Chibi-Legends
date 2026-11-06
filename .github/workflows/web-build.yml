@@ -61,6 +61,12 @@ jobs:
           grep -q "ONLINE-CLIENT OK" online.log
           ! grep -E "SCRIPT ERROR|Parse Error" online.log
 
+      - name: Gilden-Bildschirm baut (Vorschau ohne Server)
+        run: |
+          timeout 120 godot --headless --fixed-fps 60 -s res://tools/guild/probe.gd 2>&1 | tee gilden.log | grep -E "GILDEN|SCRIPT ERROR" || true
+          grep -q "GILDEN-PROBE OK" gilden.log
+          ! grep -E "SCRIPT ERROR|Parse Error" gilden.log
+
       - name: Turm-Logiktest (Endloser Turm)
         run: |
           timeout 300 godot --headless --fixed-fps 60 -s res://tools/tower/probe.gd 2>&1 | tee turm.log | grep -E "TURM|SCRIPT ERROR" || true
@@ -115,6 +121,20 @@ jobs:
           git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" bilder:refs/heads/ci-bilder/raid
           rm -rf .git
 
+      - name: Gilden-Probe (Bilder auf ci-bilder/gilden)
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        continue-on-error: true
+        run: |
+          mkdir -p gilden-probe
+          timeout 120 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/guild/probe.gd -- "$PWD/gilden-probe" > gilden-probe.log 2>&1 || true
+          cd gilden-probe
+          ls *.png > /dev/null 2>&1 || exit 0
+          git init -q . && git checkout -q -b bilder
+          git add *.png
+          git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -qm "Gilden-Probe ${{ github.event.pull_request.head.sha }}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" bilder:refs/heads/ci-bilder/gilden
+          rm -rf .git
+
       - uses: actions/upload-artifact@v4
         if: github.event_name == 'pull_request'
         continue-on-error: true
@@ -160,6 +180,7 @@ jobs:
           echo "--- Raid-Probe Regeln:"; grep -E "^RAID" raid-probe.log || true
           echo "--- Turm-Probe Fehler:"; grep -A3 -E "SCRIPT ERROR|ERROR:" turm-probe.log | head -40 || true
           echo "--- Turm-Probe Regeln:"; grep -E "^TURM" turm-probe.log || true
+          echo "--- Gilden-Probe:"; grep -E "SCRIPT ERROR|ERROR:|GILDEN" -A2 gilden-probe.log | head -30 || true
 
       - uses: actions/upload-pages-artifact@v3
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
