@@ -220,7 +220,7 @@ func _draw() -> void:
 		var lr := Rect2(x0, iy + 18, pw - 56.0, R.end.y - iy - 42)
 		draw_rect(lr, Color(Loot.color(last_item), 0.18))
 		draw_rect(lr, Loot.color(last_item), false, 2.0)
-		ItemIcon.draw_icon(self, lr.position + Vector2(44, lr.size.y * 0.5), last_item, 3.2)
+		ItemFrame.box(self, Rect2(lr.position + Vector2(12, lr.size.y * 0.5 - 32), Vector2(64, 64)), last_item, float(Time.get_ticks_msec()) / 1000.0)
 		_ink(Vector2(lr.position.x + 92, lr.position.y + 30), str(last_item.name), 20, Loot.color(last_item), HORIZONTAL_ALIGNMENT_LEFT, -1.0, INK)
 		var sy := lr.position.y + 54.0
 		for st in last_item.stats:

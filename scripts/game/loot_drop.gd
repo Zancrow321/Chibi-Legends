@@ -72,6 +72,7 @@ func _collect() -> void:
 		elif item.has("mod"):
 			extra = "  ·  Mod %s" % str(ItemMods.info(str(item.mod)).get("name", ""))
 		world.toast("%s: %s%s" % [Loot.rarity_info(item).name, item.name, extra])
+		world.loot_feed_add(item)
 		if world.glut_fx != null and int(item.rarity) >= Loot.RARE:
 			world.glut_fx.word(world.player.global_position + Vector2(0, -70), "%s!" % Loot.rarity_info(item).name.to_upper(), col, 22 + int(item.rarity) * 3)
 	else:

@@ -53,6 +53,8 @@ var last_reaction := ""
 var reactions_found: Dictionary = {}
 var toast_text := ""
 var toast_time := 0.0
+## Beute-Leiste (Hud): [item, seconds shown], newest last, at most 4.
+var loot_feed: Array = []
 var _hits: Array = []  # [time, damage]
 var _enemy_layer: Node2D
 var _clock := 0.0
@@ -227,6 +229,9 @@ func _process(delta: float) -> void:
 		_slow_until = 0
 		Engine.time_scale = CombatDebug.time_factor
 	toast_time = maxf(0.0, toast_time - delta)
+	for e in loot_feed:
+		e[1] += delta
+	loot_feed = loot_feed.filter(func(e): return e[1] < Hud.FEED_TIME)
 	camera.global_position = player.global_position + Vector2(player.facing * 30.0, -40.0)
 	if Input.is_action_just_pressed("cycle_fx"):
 		FxSettings.cycle()
@@ -554,6 +559,13 @@ func dps() -> float:
 	for h in _hits:
 		sum += h[1]
 	return sum / DPS_WINDOW
+
+
+## Shows a picked-up item in the Beute-Leiste (framed by rarity).
+func loot_feed_add(item: Dictionary) -> void:
+	loot_feed.append([item, 0.0])
+	while loot_feed.size() > 4:
+		loot_feed.pop_front()
 
 
 func toast(text: String) -> void:

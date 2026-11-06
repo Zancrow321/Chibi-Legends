@@ -1,0 +1,99 @@
+{
+ "episch_311": {
+  "prompt": "purple amethyst crystal frame with silver filigree and glowing violet gems in the four corners, square picture frame border, empty hollow middle, game UI inventory slot, pixel art, front view, symmetric, no text, no item inside",
+  "seed": 311,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "episch_512": {
+  "prompt": "purple amethyst crystal frame with silver filigree and glowing violet gems in the corners, square RPG inventory item slot frame, ornate border, hollow empty center, front view, symmetric, pixel art, bold dark outline, no text, no item inside",
+  "seed": 512,
+  "init_image_strength": 220,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gewoehnlich_77": {
+  "prompt": "plain worn grey iron frame with simple round rivets in the four corners, square picture frame border, empty hollow middle, game UI inventory slot, pixel art, front view, symmetric, no text, no item inside",
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gewoehnlich_311": {
+  "prompt": "plain worn grey iron frame with simple round rivets in the four corners, square picture frame border, empty hollow middle, game UI inventory slot, pixel art, front view, symmetric, no text, no item inside",
+  "seed": 311,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "ungewoehnlich_77": {
+  "prompt": "bronze frame wrapped with green jade vines, small leaves and green gems in the four corners, square picture frame border, empty hollow middle, game UI inventory slot, pixel art, front view, symmetric, no text, no item inside",
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "ungewoehnlich_311": {
+  "prompt": "bronze frame wrapped with green jade vines, small leaves and green gems in the four corners, square picture frame border, empty hollow middle, game UI inventory slot, pixel art, front view, symmetric, no text, no item inside",
+  "seed": 311,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "selten_77": {
+  "prompt": "polished blue steel frame with silver rivets and sapphire gems in the four corners, square picture frame border, empty hollow middle, game UI inventory slot, pixel art, front view, symmetric, no text, no item inside",
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "selten_311": {
+  "prompt": "polished blue steel frame with silver rivets and sapphire gems in the four corners, square picture frame border, empty hollow middle, game UI inventory slot, pixel art, front view, symmetric, no text, no item inside",
+  "seed": 311,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "legendaer_77": {
+  "prompt": "ornate golden frame with sun engravings and glowing amber gems in the four corners, square picture frame border, empty hollow middle, game UI inventory slot, pixel art, front view, symmetric, no text, no item inside",
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "legendaer_311": {
+  "prompt": "ornate golden frame with sun engravings and glowing amber gems in the four corners, square picture frame border, empty hollow middle, game UI inventory slot, pixel art, front view, symmetric, no text, no item inside",
+  "seed": 311,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "mythisch_77": {
+  "prompt": "crimson and black dragon scale frame with flame ornaments, small horns and glowing red gems in the four corners, square picture frame border, empty hollow middle, game UI inventory slot, pixel art, front view, symmetric, no text, no item inside",
+  "seed": 77,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "mythisch_311": {
+  "prompt": "crimson and black dragon scale frame with flame ornaments, small horns and glowing red gems in the four corners, square picture frame border, empty hollow middle, game UI inventory slot, pixel art, front view, symmetric, no text, no item inside",
+  "seed": 311,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ }
+}

@@ -196,10 +196,53 @@ static func reforge(uid: String, stat: String) -> String:
 	return s
 
 
-## Breaks an item into Splitter (never one that is worn).
+## Aufwerten one step for Splitter. Returns the new step (0 = not possible).
+static func upgrade(uid: String) -> int:
+	var it := item(uid)
+	if it.is_empty() or not Loot.can_upgrade(it):
+		return 0
+	var cost := Loot.upgrade_cost(it)
+	if splitter < cost:
+		return 0
+	splitter -= cost
+	it["plus"] = int(it.get("plus", 0)) + 1
+	save()
+	return int(it.plus)
+
+
+## Locked items can't be salvaged (single or bulk).
+static func toggle_lock(uid: String) -> bool:
+	var it := item(uid)
+	if it.is_empty():
+		return false
+	if it.get("locked", false):
+		it.erase("locked")
+	else:
+		it["locked"] = true
+	save()
+	return it.get("locked", false)
+
+
+## What Sammel-Zerlegen would break: up to max_rarity, not worn, not locked.
+static func bulk_candidates(max_rarity: int = Loot.BULK_MAX) -> Array:
+	ensure()
+	return items.filter(func(it): return int(it.get("rarity", 0)) <= max_rarity and not is_equipped(it.uid) and not it.get("locked", false))
+
+
+## Sammel-Zerlegen. Returns [count, splitter gained].
+static func salvage_bulk(max_rarity: int = Loot.BULK_MAX) -> Array:
+	var n := 0
+	var gain := 0
+	for it in bulk_candidates(max_rarity):
+		gain += salvage(str(it.uid))
+		n += 1
+	return [n, gain]
+
+
+## Breaks an item into Splitter (never one that is worn or locked).
 static func salvage(uid: String) -> int:
 	var it := item(uid)
-	if it.is_empty() or is_equipped(uid):
+	if it.is_empty() or is_equipped(uid) or it.get("locked", false):
 		return 0
 	var gain := int(Loot.salvage_value(it))
 	for g in it.get("sockets", []):  # gems go back into the pouch
@@ -263,7 +306,7 @@ static func bonus(stat: String) -> float:
 	for s in SLOTS:
 		var it := equipped_item(s)
 		if not it.is_empty():
-			total += float(it.stats.get(stat, 0.0)) + Loot.gem_bonus(it, stat)
+			total += Loot.affix(it, stat) + Loot.gem_bonus(it, stat)
 	return total + ItemSets.bonus(stat)
 
 
