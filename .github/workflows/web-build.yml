@@ -61,6 +61,27 @@ jobs:
           grep -q "TURM-TEST OK" turm.log
           ! grep -E "SCRIPT ERROR|Parse Error" turm.log
 
+      - name: Raid-Rüstung-Logiktest (Essenwacht, 6 Seltenheiten)
+        run: |
+          godot --headless -s res://tools/raid_armor/test_armor.gd 2>&1 | tee ruestung.log | grep -E "RUESTUNG|SCRIPT ERROR" || true
+          grep -q "RUESTUNG-TEST OK" ruestung.log
+          ! grep -E "SCRIPT ERROR|Parse Error" ruestung.log
+
+      - name: Raid-Rüstung-Probe (Bilder auf ci-bilder/ruestung)
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        continue-on-error: true
+        run: |
+          mkdir -p ruestung-probe
+          timeout 120 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/raid_armor/probe.gd -- "$PWD/ruestung-probe" > ruestung-probe.log 2>&1 || true
+          grep -A3 -E "RUESTUNG|SCRIPT ERROR" ruestung-probe.log | head -30 || true
+          cd ruestung-probe
+          ls *.png > /dev/null 2>&1 || exit 0
+          git init -q . && git checkout -q -b bilder
+          git add *.png
+          git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -qm "Rüstungs-Probe ${{ github.event.pull_request.head.sha }}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" bilder:refs/heads/ci-bilder/ruestung
+          rm -rf .git
+
       - name: Raid-Probe (Bilder)
         if: github.event_name == 'pull_request'
         continue-on-error: true

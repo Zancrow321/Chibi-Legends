@@ -36,7 +36,7 @@ func _physics_process(delta: float) -> void:
 			global_position.y = _floor_y
 			_landed = true
 			world.dust.land(global_position, 0.6)
-			if int(item.rarity) >= 2:
+			if int(item.rarity) >= (2 if _is_gem() else Loot.EPIC):
 				world.effects.ring(global_position + Vector2(0, -4), 22.0, Loot.color(item))
 				Sfx.play("rare_drop", -8.0 + float(item.rarity) * 2.0)
 	elif _t > 3.2 or global_position.distance_to(p) < 46.0:
@@ -63,7 +63,7 @@ func _collect() -> void:
 		queue_free()
 		return
 	SeasonPass.track("loot")
-	if int(item.get("rarity", 0)) >= 2:
+	if int(item.get("rarity", 0)) >= Loot.EPIC:
 		SeasonPass.track("loot_epic")
 	if Profile.add_item(item):
 		var extra := ""
@@ -72,7 +72,7 @@ func _collect() -> void:
 		elif item.has("mod"):
 			extra = "  ·  Mod %s" % str(ItemMods.info(str(item.mod)).get("name", ""))
 		world.toast("%s: %s%s" % [Loot.rarity_info(item).name, item.name, extra])
-		if world.glut_fx != null and int(item.rarity) >= 1:
+		if world.glut_fx != null and int(item.rarity) >= Loot.RARE:
 			world.glut_fx.word(world.player.global_position + Vector2(0, -70), "%s!" % Loot.rarity_info(item).name.to_upper(), col, 22 + int(item.rarity) * 3)
 	else:
 		var gain := int(Loot.salvage_value(item))

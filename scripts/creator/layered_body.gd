@@ -39,6 +39,7 @@ var _ribbon: Line2D
 var _ribbon_shade: Line2D
 var _ribbon_line: Line2D
 var _wdata := {}
+var _sparks: CPUParticles2D
 ## Extra aim of a gun in degrees (positive = muzzle up), set by the style.
 var aim_deg := 0.0
 var _clock := 0.0
@@ -131,7 +132,54 @@ func _apply_look() -> void:
 		_hair.offset = -Vector2(n[0], n[1])
 	_apply_tint(_hair, d["colors"][clampi(int(colors.get("hair", 0)), 0, d["colors"].size() - 1)])
 	_load_weapon(str(look.get("weapon", "")))
+	_apply_raid_glow()
 	set_pose(pose)
+
+
+## Raid-Rüstung Essenwacht: ab Episch leuchten die Glut-Adern, Mythisch hat
+## dazu eine wandernde Lichtwelle und aufsteigende Funken.
+func _apply_raid_glow() -> void:
+	var parts := {"top": _cloth["top"], "pants": _cloth["pants"], "shoes": _cloth["shoes"], "hair": _hair}
+	for slot in parts:
+		var r := RaidArmor.part_rarity(str(look.get(slot, "")))
+		var m := (parts[slot] as CanvasItem).material as ShaderMaterial
+		var on := r >= Loot.EPIC
+		m.set_shader_parameter("glow", [0.0, 0.0, 0.0, 1.0, 0.75, 1.3][r] if on else 0.0)
+		m.set_shader_parameter("shimmer", 1.0 if r == Loot.MYTHIC else 0.0)
+		if on:
+			m.set_shader_parameter("glow_color", RaidArmor.glow_color(r))
+	var best := RaidArmor.glow_level(look)
+	if best < Loot.EPIC:
+		if _sparks != null:
+			_sparks.emitting = false
+		return
+	if _sparks == null:
+		_sparks = CPUParticles2D.new()
+		var add := CanvasItemMaterial.new()
+		add.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+		_sparks.material = add
+		_sparks.emission_shape = CPUParticles2D.EMISSION_SHAPE_RECTANGLE
+		_sparks.emission_rect_extents = Vector2(9, 14)
+		_sparks.position = Vector2(0, -24)
+		_sparks.direction = Vector2(0, -1)
+		_sparks.spread = 25.0
+		_sparks.gravity = Vector2(0, -30)
+		_sparks.initial_velocity_min = 6.0
+		_sparks.initial_velocity_max = 18.0
+		_sparks.scale_amount_min = 1.0
+		_sparks.scale_amount_max = 2.0
+		_sparks.local_coords = false
+		_rig.add_child(_sparks)
+	var c := RaidArmor.glow_color(best)
+	var grad := Gradient.new()
+	var hot := c.lightened(0.4) * 2.2  # über 1.0: der Bloom lässt die Funken glühen
+	grad.set_color(0, Color(hot.r, hot.g, hot.b, 1.0))
+	grad.set_color(1, Color(c, 0.0))
+	_sparks.color_ramp = grad
+	# Episch: vereinzelte Funken, Legendär: mehr, Mythisch: ein Funkenschleier
+	_sparks.amount = [0, 0, 0, 6, 10, 22][best]
+	_sparks.lifetime = 1.4 if best == Loot.MYTHIC else 1.0
+	_sparks.emitting = true
 
 
 ## Swaps the weapon in the hand (a fighting style can show another weapon

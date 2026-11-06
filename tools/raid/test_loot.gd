@@ -32,13 +32,13 @@ func _initialize() -> void:
 	_expect(is_equal_approx(RaidLoot.bonus_chance("essenwaechter"), 1.0), "neuer Tag: volle Chance")
 	var bag := Profile.items.size()
 	var before := Profile.marks
-	_expect(RaidLoot.buy("schuhe", 2) == "", "Tausch: epische Schuhe")
+	_expect(RaidLoot.buy("schuhe", Loot.EPIC) == "", "Tausch: epische Schuhe")
 	var it: Dictionary = Profile.items.back()
-	_expect(Profile.items.size() == bag + 1 and it.slot == "schuhe" and int(it.rarity) == 2 and it.stats.has("gauge"), "Wunschteil liegt in der Tasche (%s)" % it.name)
-	_expect(Profile.marks == before - RaidLoot.price(2), "Marken abgezogen")
-	_expect(RaidLoot.buy("waffe", 3) != "", "zu wenig Marken für Legendär: abgelehnt")
+	_expect(Profile.items.size() == bag + 1 and it.slot == "schuhe" and int(it.rarity) == Loot.EPIC and it.stats.has("gauge"), "Wunschteil liegt in der Tasche (%s)" % it.name)
+	_expect(Profile.marks == before - RaidLoot.price(Loot.EPIC), "Marken abgezogen")
+	_expect(RaidLoot.buy("waffe", Loot.LEGENDARY) != "", "zu wenig Marken für Legendär: abgelehnt")
 	Profile.marks = 100
-	_expect(RaidLoot.buy("waffe", 3) == "" and Profile.items.back().has("mod"), "Legendäre Waffe mit Veränderung")
+	_expect(RaidLoot.buy("waffe", Loot.LEGENDARY) == "" and Profile.items.back().has("mod"), "Legendäre Waffe mit Veränderung")
 	Profile.reset()
 	print("LOOT-TEST OK" if errors.is_empty() else "LOOT-TEST FEHLER: %s" % ", ".join(errors))
 	quit()

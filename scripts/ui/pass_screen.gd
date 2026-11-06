@@ -291,7 +291,7 @@ func _reward_icon(r: Dictionary, c: Vector2, s: float) -> void:
 			pts.append(pts[0])
 			draw_polyline(pts, INK, 2.0)
 		"gear":
-			ItemIcon.draw_icon(self, c, {"slot": "waffe", "rarity": int(r.get("rarity", 1))}, s / 10.0)
+			ItemIcon.draw_icon(self, c, {"slot": "waffe", "rarity": int(r.get("rarity", Loot.RARE))}, s / 10.0)
 		"color":
 			draw_circle(c, s * 0.6, Color("e8597a"))
 			draw_arc(c, s * 0.6, 0, TAU, 24, INK, 2.0)

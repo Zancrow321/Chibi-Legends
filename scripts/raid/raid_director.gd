@@ -146,10 +146,11 @@ func boss_defeated(b: Boss) -> void:
 	else:
 		world.toast("Heute schon oft besiegt: keine Bonus-Beute, aber +%d Raid-Marken" % roll.marks)
 		return
-	# personal loot: two good pieces on top of the normal elite drop
-	for i in 2:
-		var item := Loot.roll(Profile.level, maxi(2, Loot.roll_rarity(true)), "", world.player.style.id)
-		world._spawn_drop(item, at + Vector2(-26 + 52 * i, -40))
+	# personal loot: a good piece and a piece of the Essenwacht raid armour
+	# (any of the six rarities, see RaidArmor) on top of the normal elite drop
+	var item := Loot.roll(Profile.level, maxi(Loot.EPIC, Loot.roll_rarity(true)), "", world.player.style.id)
+	world._spawn_drop(item, at + Vector2(-26, -40))
+	world._spawn_drop(RaidArmor.roll(Profile.level, world.player.style.id), at + Vector2(26, -40))
 	var gem := ""
 	while gem == "":
 		gem = Gems.roll_drop(true)

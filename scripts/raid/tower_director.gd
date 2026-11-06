@@ -162,7 +162,7 @@ func _floor_cleared() -> void:
 	if is_guard_floor(floor_no):
 		# gear whose item level climbs with the tower, at least rare
 		var lv := Profile.level + floor_no / GUARD_EVERY
-		var item := Loot.roll(lv, maxi(2, Loot.roll_rarity(true)), "", world.player.style.id)
+		var item := Loot.roll(lv, maxi(Loot.EPIC, Loot.roll_rarity(true)), "", world.player.style.id)
 		world._spawn_drop(item, at)
 		run_items += 1
 		SeasonPass.track("boss")
