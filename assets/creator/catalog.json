@@ -16,7 +16,13 @@
     "steilpfad": "Steilpfad-Gi",
     "bollwerk": "Bollwerk-Panzer",
     "feuerwacht": "Feuerwacht-Jacke",
-    "deckshand": "Deckshand-Hemd"
+    "deckshand": "Deckshand-Hemd",
+    "raid_gewoehnlich": "Essenwacht-Rekrut (Harnisch)",
+    "raid_ungewoehnlich": "Essenwacht-Posten (Harnisch)",
+    "raid_selten": "Essenwacht-Hüter (Harnisch)",
+    "raid_episch": "Essenwacht-Glutritter (Harnisch)",
+    "raid_legendaer": "Essenwacht-Schmiedekönig (Harnisch)",
+    "raid_mythisch": "Essenwacht-Sternenglut (Harnisch)"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -26,7 +32,13 @@
     "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
     "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
     "feuerwacht": "Kampfstil Lauffeuer (Banner „Wer am Feuer sitzt“)",
-    "deckshand": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)"
+    "deckshand": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)",
+    "raid_gewoehnlich": "Raid Glutschmiede: Essenwacht-Oberteil (Gewöhnlich)",
+    "raid_ungewoehnlich": "Raid Glutschmiede: Essenwacht-Oberteil (Ungewöhnlich)",
+    "raid_selten": "Raid Glutschmiede: Essenwacht-Oberteil (Selten)",
+    "raid_episch": "Raid Glutschmiede: Essenwacht-Oberteil (Episch)",
+    "raid_legendaer": "Raid Glutschmiede: Essenwacht-Oberteil (Legendär)",
+    "raid_mythisch": "Raid Glutschmiede: Essenwacht-Oberteil (Mythisch)"
    }
   },
   "pants": {
@@ -41,7 +53,13 @@
     "steilpfad": "Steilpfad-Wickelhose",
     "bollwerk": "Bollwerk-Beinpanzer",
     "feuerwacht": "Feuerwacht-Hose",
-    "deckshand": "Segeltuchhose"
+    "deckshand": "Segeltuchhose",
+    "raid_gewoehnlich": "Essenwacht-Rekrut (Beinschienen)",
+    "raid_ungewoehnlich": "Essenwacht-Posten (Beinschienen)",
+    "raid_selten": "Essenwacht-Hüter (Beinschienen)",
+    "raid_episch": "Essenwacht-Glutritter (Beinschienen)",
+    "raid_legendaer": "Essenwacht-Schmiedekönig (Beinschienen)",
+    "raid_mythisch": "Essenwacht-Sternenglut (Beinschienen)"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -51,7 +69,13 @@
     "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
     "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
     "feuerwacht": "Kampfstil Lauffeuer (Banner „Wer am Feuer sitzt“)",
-    "deckshand": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)"
+    "deckshand": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)",
+    "raid_gewoehnlich": "Raid Glutschmiede: Essenwacht-Hose (Gewöhnlich)",
+    "raid_ungewoehnlich": "Raid Glutschmiede: Essenwacht-Hose (Ungewöhnlich)",
+    "raid_selten": "Raid Glutschmiede: Essenwacht-Hose (Selten)",
+    "raid_episch": "Raid Glutschmiede: Essenwacht-Hose (Episch)",
+    "raid_legendaer": "Raid Glutschmiede: Essenwacht-Hose (Legendär)",
+    "raid_mythisch": "Raid Glutschmiede: Essenwacht-Hose (Mythisch)"
    }
   },
   "shoes": {
@@ -66,7 +90,13 @@
     "steilpfad": "Stoffschuhe",
     "bollwerk": "Bollwerk-Stiefel",
     "feuerwacht": "Feuerstein-Stiefel",
-    "deckshand": "Messingschnallen-Stiefel"
+    "deckshand": "Messingschnallen-Stiefel",
+    "raid_gewoehnlich": "Essenwacht-Rekrut (Stiefel)",
+    "raid_ungewoehnlich": "Essenwacht-Posten (Stiefel)",
+    "raid_selten": "Essenwacht-Hüter (Stiefel)",
+    "raid_episch": "Essenwacht-Glutritter (Stiefel)",
+    "raid_legendaer": "Essenwacht-Schmiedekönig (Stiefel)",
+    "raid_mythisch": "Essenwacht-Sternenglut (Stiefel)"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -76,7 +106,13 @@
     "schmied": "Bei Schmiedin Hino (Akademie-Hof)",
     "bollwerk": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
     "feuerwacht": "Kampfstil Lauffeuer (Banner „Wer am Feuer sitzt“)",
-    "deckshand": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)"
+    "deckshand": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)",
+    "raid_gewoehnlich": "Raid Glutschmiede: Essenwacht-Schuhe (Gewöhnlich)",
+    "raid_ungewoehnlich": "Raid Glutschmiede: Essenwacht-Schuhe (Ungewöhnlich)",
+    "raid_selten": "Raid Glutschmiede: Essenwacht-Schuhe (Selten)",
+    "raid_episch": "Raid Glutschmiede: Essenwacht-Schuhe (Episch)",
+    "raid_legendaer": "Raid Glutschmiede: Essenwacht-Schuhe (Legendär)",
+    "raid_mythisch": "Raid Glutschmiede: Essenwacht-Schuhe (Mythisch)"
    }
   },
   "hair": {
@@ -91,14 +127,26 @@
     "lang": "Lange Mähne",
     "kamm": "Stachelkamm",
     "bollwerk_helm": "Bollwerk-Helm",
-    "deckshand_muetze": "Segeltuch-Kapitänsmütze"
+    "deckshand_muetze": "Segeltuch-Kapitänsmütze",
+    "raid_gewoehnlich": "Essenwacht-Rekrut-Helm",
+    "raid_ungewoehnlich": "Essenwacht-Posten-Helm",
+    "raid_selten": "Essenwacht-Hüter-Helm",
+    "raid_episch": "Essenwacht-Glutritter-Helm",
+    "raid_legendaer": "Essenwacht-Schmiedekönig-Helm",
+    "raid_mythisch": "Essenwacht-Sternenglut-Helm"
    },
    "unlock": {
     "wuschel": "Saisonpass, Stufe 5",
     "zwillinge": "Erfolg: 3 Super-Treffer in einem Kampf",
     "kamm": "Herausforderung im Trainingswald",
     "bollwerk_helm": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
-    "deckshand_muetze": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)"
+    "deckshand_muetze": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)",
+    "raid_gewoehnlich": "Raid Glutschmiede: Essenwacht-Oberteil (Gewöhnlich)",
+    "raid_ungewoehnlich": "Raid Glutschmiede: Essenwacht-Oberteil (Ungewöhnlich)",
+    "raid_selten": "Raid Glutschmiede: Essenwacht-Oberteil (Selten)",
+    "raid_episch": "Raid Glutschmiede: Essenwacht-Oberteil (Episch)",
+    "raid_legendaer": "Raid Glutschmiede: Essenwacht-Oberteil (Legendär)",
+    "raid_mythisch": "Raid Glutschmiede: Essenwacht-Oberteil (Mythisch)"
    }
   },
   "weapon": {

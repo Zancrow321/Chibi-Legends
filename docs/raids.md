@@ -13,7 +13,7 @@ Plan und Hintergrund: Design-Dokument „Kampf-Endgame“ (Abschnitt Raids und B
 | Schild-Phasen | Bei 70 % und 35 % HP: Glutschild, Boss unverwundbar, Kristalle erscheinen auf den Plattformen. Alle zerstört = sofort Bruch. Zeit um = **Essensturm** (Feuer auf dem ganzen Boden, rauf auf eine Plattform). |
 | Angriffe | Hammerschlag (vorne + zwei Schockwellen am Boden, drüberspringen), Glutschwung (weiter Schwung), Glutregen (markierte Stellen), Ansturm (ab Phase 2, quer durch die Arena). |
 | K.o. | Neuer Versuch: Boss steht wieder voll da, Spieler am Eingang. |
-| Sieg | Normale Elite-Beute plus 2 Teile ab Episch und ein Edelstein. Auswahl-Truhe und Tageschance kommen mit Schritt 5. |
+| Sieg | Normale Elite-Beute plus ein Teil ab Episch, ein Teil der Raid-Rüstung **Essenwacht** (alle sechs Seltenheiten, siehe `docs/raid-ruestung.md`) und ein Edelstein. Auswahl-Truhe und Tageschance kommen mit Schritt 5. |
 
 ## Skalierung (`scripts/raid/raid_scaling.gd`)
 

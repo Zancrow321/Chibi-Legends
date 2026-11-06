@@ -246,7 +246,7 @@ func _salvage_selected() -> void:
 	if Profile.is_equipped(it.uid):
 		_say("Erst ablegen, dann zerlegen")
 		return
-	if _confirm_salvage != it.uid and int(it.rarity) >= 2:
+	if _confirm_salvage != it.uid and int(it.rarity) >= Loot.EPIC:
 		_confirm_salvage = it.uid
 		_say("Nochmal drücken: %s wirklich zerlegen?" % it.name)
 		return
@@ -689,8 +689,13 @@ func _icon_box(r: Rect2, it: Dictionary, slot := "") -> void:
 	draw_rect(r, col.lerp(PAPER, 0.7))
 	_halftone(r, Color(col, 0.5), 5)
 	if not it.is_empty():
-		if int(it.rarity) >= 2:  # epic and legendary glow
+		if int(it.rarity) >= Loot.EPIC:  # epic and better glow
 			draw_circle(r.get_center(), r.size.x * (0.36 + 0.03 * sin(_t * 4.0)), Color(col, 0.35))
+		if int(it.rarity) >= Loot.MYTHIC:  # mythic: turning star rays
+			for k in 6:
+				var a := _t * 0.9 + k * TAU / 6.0
+				var tip := r.get_center() + Vector2.from_angle(a) * r.size.x * 0.5
+				draw_line(r.get_center(), tip, Color(col.lightened(0.3), 0.35 + 0.15 * sin(_t * 5.0 + k)), r.size.x * 0.06)
 		ItemIcon.draw_icon(self, r.get_center(), it, r.size.x / 22.0)
 		_badges(r, it)
 	elif slot != "":

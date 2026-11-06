@@ -1,7 +1,7 @@
 class_name Loot
 extends RefCounted
 ## Gear drops with randomized stats. Each item has a kind ("slot": Waffe,
-## Oberteil, Hose, Schuhe, Accessoire, Talisman), a rarity and 1-4 stat rolls
+## Oberteil, Hose, Schuhe, Accessoire, Talisman), a rarity and 1-5 stat rolls
 ## (affixes); the rarity sets how many rolls and how strong. The kind always
 ## rolls its main stat first. Legendary items also carry a short flavour line.
 ## Umschmieden (reforge, at Schmiedin Hino) rerolls one affix for Splitter.
@@ -14,12 +14,25 @@ extends RefCounted
 ##  - Legendäre Mods: every legendary changes one Zug of a fighting style
 ##    ("mod", see ItemMods).
 
+## Six rarities (since the Essenwacht raid armour). Saves before that had
+## four (0 Gewöhnlich, 1 Selten, 2 Episch, 3 Legendär); Profile moves them
+## up with migrate_rarity(). Always use the named constants below.
 const RARITIES := [
 	{"id": "gewoehnlich", "name": "Gewöhnlich", "color": Color("c7cfcc"), "rolls": 1, "power": 1.0},
+	{"id": "ungewoehnlich", "name": "Ungewöhnlich", "color": Color("1ebc73"), "rolls": 2, "power": 1.1},
 	{"id": "selten", "name": "Selten", "color": Color("4d9be6"), "rolls": 2, "power": 1.25},
 	{"id": "episch", "name": "Episch", "color": Color("a884f3"), "rolls": 3, "power": 1.55},
 	{"id": "legendaer", "name": "Legendär", "color": Color("f9c22b"), "rolls": 4, "power": 2.0},
+	{"id": "mythisch", "name": "Mythisch", "color": Color("e83b3b"), "rolls": 5, "power": 2.5},
 ]
+const COMMON := 0
+const UNCOMMON := 1
+const RARE := 2
+const EPIC := 3
+const LEGENDARY := 4
+const MYTHIC := 5
+## Save format of the rarity indices (Profile "rarity_version").
+const RARITY_VERSION := 2
 
 ## Stats: what a roll adds (fraction), base range at item level 1.
 const STATS := {
@@ -45,8 +58,13 @@ const NAMES := {
 	"talisman": ["Holzamulett", "Glutperle", "Mooskristall", "Sumpfauge", "Tigerzahn", "Igelfeder"],
 }
 ## Sockets per rarity: [min, max].
-const SOCKETS := [[0, 0], [0, 1], [1, 1], [1, 2]]
+const SOCKETS := [[0, 0], [0, 0], [0, 1], [1, 1], [1, 2], [2, 2]]
 
+const MYTHIC_LINES := [
+	"Ein Stern ist hineingefallen und brennt noch.",
+	"Die Esse selbst hat es sich ausgesucht.",
+	"Es glüht im Takt deines Herzens.",
+]
 const LEGEND_LINES := [
 	"Summt leise, wenn ein Elite in der Nähe ist.",
 	"Wer es trägt, hört den Wald atmen.",
@@ -56,11 +74,32 @@ const LEGEND_LINES := [
 
 
 ## Rarity index by luck: elites roll much better.
+## Normal: 0,1 % Mythisch, 1 % Legendär, 6 % Episch, 18 % Selten, 30 % Ungewöhnlich.
+## Elite: 1,5 % Mythisch, 16,5 % Legendär, 42 % Episch, 30 % Selten, 10 % Ungewöhnlich.
 static func roll_rarity(elite := false) -> int:
+	var table: Array = ELITE_TABLE if elite else DROP_TABLE
+	return pick_rarity(table)
+
+
+const DROP_TABLE := [0.001, 0.01, 0.06, 0.18, 0.30]  # Mythisch .. Ungewöhnlich
+const ELITE_TABLE := [0.015, 0.165, 0.42, 0.30, 0.10]
+## Raid armour (Essenwacht) from the raid boss: every rarity can drop.
+const RAID_TABLE := [0.02, 0.07, 0.16, 0.25, 0.27]
+
+
+static func pick_rarity(table: Array) -> int:
 	var r := randf()
-	if elite:
-		return 3 if r < 0.18 else (2 if r < 0.6 else 1)
-	return 3 if r < 0.01 else (2 if r < 0.07 else (1 if r < 0.3 else 0))
+	var acc := 0.0
+	for i in table.size():
+		acc += float(table[i])
+		if r < acc:
+			return MYTHIC - i
+	return COMMON
+
+
+## Old saves (4 rarities) -> 6 rarities: Selten 1->2, Episch 2->3, Legendär 3->4.
+static func migrate_rarity(old: int) -> int:
+	return old + 1 if old >= 1 else old
 
 
 ## style_hint: the fighting style in use; legendary mods favour it.
@@ -89,15 +128,16 @@ static func roll(item_level: int, rarity: int = -1, slot := "", style_hint := ""
 	}
 	var sk: Array = SOCKETS[rarity]
 	var n := randi_range(int(sk[0]), int(sk[1]))
-	if rarity == 2 and randf() < ItemSets.DROP_SHARE:
+	if rarity == EPIC and randf() < ItemSets.DROP_SHARE:
 		ItemSets.make_piece(it)
 	if n > 0:
 		var sockets: Array = []
 		sockets.resize(n)
 		sockets.fill("")
 		it["sockets"] = sockets
-	if rarity == 3:
-		it["line"] = LEGEND_LINES[randi() % LEGEND_LINES.size()]
+	if rarity >= LEGENDARY:
+		var lines: Array = MYTHIC_LINES if rarity == MYTHIC else LEGEND_LINES
+		it["line"] = lines[randi() % lines.size()]
 		it["mod"] = ItemMods.roll(style_hint if style_hint != "" else ItemMods.current_style())
 	return it
 
@@ -127,7 +167,7 @@ static func roll_value(stat: String, rarity: int, item_level: int) -> float:
 
 ## Umschmieden: Splitter cost for the next reforge of this item.
 static func reforge_cost(it: Dictionary) -> int:
-	return int(20.0 * pow(2.0, float(it.get("rarity", 0))) * (1 + int(it.get("reforged", 0))) + float(it.get("ilvl", 1)))
+	return int(20.0 * pow(1.75, float(it.get("rarity", 0))) * (1 + int(it.get("reforged", 0))) + float(it.get("ilvl", 1)))
 
 
 ## Rerolls one affix (never the main stat): it may become another stat the
@@ -172,7 +212,7 @@ static func score(it: Dictionary) -> float:
 
 
 static func salvage_value(it: Dictionary) -> float:
-	return 5.0 * pow(3.0, float(it.get("rarity", 0))) + float(it.get("ilvl", 1))
+	return 5.0 * pow(2.4, float(it.get("rarity", 0))) + float(it.get("ilvl", 1))
 
 
 ## "+5,2 % Schaden"

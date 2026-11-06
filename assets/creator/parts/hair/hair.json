@@ -68,5 +68,47 @@
    22.9
   ],
   "angle": 1.3
+ },
+ "raid_gewoehnlich": {
+  "neck": [
+   30.6,
+   22.9
+  ],
+  "angle": 1.3
+ },
+ "raid_ungewoehnlich": {
+  "neck": [
+   30.6,
+   22.9
+  ],
+  "angle": 1.3
+ },
+ "raid_selten": {
+  "neck": [
+   30.6,
+   22.9
+  ],
+  "angle": 1.3
+ },
+ "raid_episch": {
+  "neck": [
+   30.6,
+   22.9
+  ],
+  "angle": 1.3
+ },
+ "raid_legendaer": {
+  "neck": [
+   30.6,
+   22.9
+  ],
+  "angle": 1.3
+ },
+ "raid_mythisch": {
+  "neck": [
+   30.6,
+   22.9
+  ],
+  "angle": 1.3
  }
 }

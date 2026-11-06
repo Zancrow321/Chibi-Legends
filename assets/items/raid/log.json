@@ -1,0 +1,146 @@
+{
+ "essenwacht_oberteil_gewoehnlich": {
+  "prompt": "a chest armor breastplate with shoulder plates, dull grey iron and brown leather, plain, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "essenwacht_hose_gewoehnlich": {
+  "prompt": "armored leg greaves with knee plates, dull grey iron and brown leather, plain, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "essenwacht_schuhe_gewoehnlich": {
+  "prompt": "a pair of armored boots, dull grey iron and brown leather, plain, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "essenwacht_oberteil_ungewoehnlich": {
+  "prompt": "a chest armor breastplate with shoulder plates, blackened iron with green enamel trim, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "essenwacht_hose_ungewoehnlich": {
+  "prompt": "armored leg greaves with knee plates, blackened iron with green enamel trim, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "essenwacht_schuhe_ungewoehnlich": {
+  "prompt": "a pair of armored boots, blackened iron with green enamel trim, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "essenwacht_oberteil_selten": {
+  "prompt": "a chest armor breastplate with shoulder plates, polished bright steel with deep blue cloth and blue enamel, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "essenwacht_hose_selten": {
+  "prompt": "armored leg greaves with knee plates, polished bright steel with deep blue cloth and blue enamel, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "essenwacht_schuhe_selten": {
+  "prompt": "a pair of armored boots, polished bright steel with deep blue cloth and blue enamel, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "essenwacht_oberteil_episch": {
+  "prompt": "a chest armor breastplate with shoulder plates, black-violet plate with glowing purple rune lines, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "essenwacht_hose_episch": {
+  "prompt": "armored leg greaves with knee plates, black-violet plate with glowing purple rune lines, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "essenwacht_schuhe_episch": {
+  "prompt": "a pair of armored boots, black-violet plate with glowing purple rune lines, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "essenwacht_oberteil_legendaer": {
+  "prompt": "a chest armor breastplate with shoulder plates, ornate white and gold plate with molten orange glowing cracks, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "essenwacht_hose_legendaer": {
+  "prompt": "armored leg greaves with knee plates, ornate white and gold plate with molten orange glowing cracks, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "essenwacht_schuhe_legendaer": {
+  "prompt": "a pair of armored boots, ornate white and gold plate with molten orange glowing cracks, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "essenwacht_oberteil_mythisch": {
+  "prompt": "a chest armor breastplate with shoulder plates, obsidian black plate with bright crimson glowing star-fire veins, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "essenwacht_hose_mythisch": {
+  "prompt": "armored leg greaves with knee plates, obsidian black plate with bright crimson glowing star-fire veins, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "essenwacht_schuhe_mythisch": {
+  "prompt": "a pair of armored boots, obsidian black plate with bright crimson glowing star-fire veins, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ }
+}

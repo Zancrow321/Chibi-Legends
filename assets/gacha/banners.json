@@ -12,7 +12,7 @@
  "max_stars": 6,
  "selten_rewards": [
   {"kind": "splitter", "amount": 40, "weight": 5},
-  {"kind": "gear", "rarity": 1, "weight": 4},
+  {"kind": "gear", "rarity": 2, "weight": 4},
   {"kind": "color", "weight": 1}
  ],
  "banners": [

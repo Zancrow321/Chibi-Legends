@@ -14,8 +14,8 @@ const DECAY := 0.6
 const FLOOR := 0.2
 ## Raid-Marken per kill.
 const MARKS := {"essenwaechter": 4, "turmwache": 1}
-## Shop prices in Raid-Marken by rarity (Episch, Legendär).
-const PRICE := {2: 20, 3: 60}
+## Shop prices in Raid-Marken by rarity (Loot.EPIC 3, Loot.LEGENDARY 4).
+const PRICE := {3: 20, 4: 60}
 
 static var day := -1
 static var kills := {}  # boss id -> kills today

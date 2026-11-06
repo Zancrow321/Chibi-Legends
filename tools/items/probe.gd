@@ -55,9 +55,9 @@ func _do(cmd: String) -> void:
 			Profile.splitter = 900
 			var i := 0
 			for k in Profile.KINDS:
-				Profile.add_item(Loot.roll(8, i % 4, k))
+				Profile.add_item(Loot.roll(8, i % Loot.RARITIES.size(), k))
 				i += 1
-			Profile.add_item(Loot.roll(8, 3, "talisman"))
+			Profile.add_item(Loot.roll(8, Loot.LEGENDARY, "talisman"))
 			for it in Profile.items.duplicate():
 				Profile.toggle_equip(it.uid)
 			for j in 8:
@@ -67,17 +67,17 @@ func _do(cmd: String) -> void:
 			Gems.reset()
 			for g in ["rubin_1", "rubin_1", "rubin_1", "rubin_2", "smaragd_1", "topas_3", "saphir_2", "amethyst_1", "onyx_2", "onyx_1"]:
 				Gems.add(g)
-			var legend := Loot.roll(8, 3, "waffe", "glutatem")
+			var legend := Loot.roll(8, Loot.LEGENDARY, "waffe", "glutatem")
 			legend["mod"] = "esse_atem"
 			legend["sockets"] = ["topas_3", ""]
 			Profile.add_item(legend)
 			Profile.toggle_equip(legend.uid)
 			for k in ["oberteil", "hose", "schuhe", "accessoire"]:
-				var piece := Loot.roll(8, 2, k)
+				var piece := Loot.roll(8, Loot.EPIC, k)
 				ItemSets.make_piece(piece, "glutschmied")
 				Profile.add_item(piece)
 				Profile.toggle_equip(piece.uid)
-			var other := Loot.roll(8, 3, "talisman", "bollwerk")
+			var other := Loot.roll(8, Loot.LEGENDARY, "talisman", "bollwerk")
 			other["mod"] = "panzerkammer"
 			Profile.add_item(other)
 			Profile.toggle_equip(other.uid)

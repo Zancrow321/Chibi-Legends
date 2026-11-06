@@ -270,7 +270,7 @@ static func give(r: Dictionary) -> String:
 			return "+%d Splitter" % int(r.amount)
 		"gear":
 			Profile.ensure()
-			var it := Loot.roll(Profile.level, int(r.get("rarity", 1)))
+			var it := Loot.roll(Profile.level, int(r.get("rarity", Loot.RARE)))
 			if Profile.add_item(it):
 				return "%s (%s)" % [it.name, Loot.rarity_info(it).name]
 			var sp := int(round(Loot.salvage_value(it)))
@@ -298,7 +298,7 @@ static func label(r: Dictionary) -> String:
 		"splitter":
 			return "%d Splitter" % int(r.amount)
 		"gear":
-			return "%s Ausrüstung" % Loot.RARITIES[int(r.get("rarity", 1))].name
+			return "%s Ausrüstung" % Loot.RARITIES[int(r.get("rarity", Loot.RARE))].name
 		"part":
 			return CreatorCatalog.item_name(str(r.slot), str(r.id))
 		"color":

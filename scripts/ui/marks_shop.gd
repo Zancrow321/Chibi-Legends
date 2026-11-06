@@ -9,7 +9,7 @@ const INK := UiSkin.INK
 const PAPER := UiSkin.PAPER
 const RED := UiSkin.RED
 const VIOLET := Color("a46bff")
-const RARITIES := [2, 3]
+const RARITIES := [Loot.EPIC, Loot.LEGENDARY]
 
 var font: Font
 var is_open := false
@@ -186,7 +186,7 @@ func _draw() -> void:
 	var hint := "%s %s, Gegenstandsstufe %d, %d zufällige Werte, Hauptwert immer %s." % [
 		info2.name, Profile.SLOT_NAMES[Profile.KINDS[kind]], Profile.level, int(info2.rolls),
 		Loot.STATS[Loot.MAIN_STAT[Profile.KINDS[kind]]].name]
-	if RARITIES[rar] == 3:
+	if RARITIES[rar] == Loot.LEGENDARY:
 		hint += " Mit legendärer Veränderung für deinen Kampfstil."
 	_ink(Vector2(x0, iy), hint, 15, Color(INK, 0.8), HORIZONTAL_ALIGNMENT_LEFT, pw - 56.0)
 	if not last_item.is_empty():

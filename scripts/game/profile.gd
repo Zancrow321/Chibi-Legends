@@ -55,6 +55,9 @@ static func ensure() -> void:
 	for it in items:
 		if str(it.get("slot", "")) == "ruestung":
 			it["slot"] = "oberteil"
+	if int(d.get("rarity_version", 1)) < Loot.RARITY_VERSION:
+		for it in items:  # 4 rarities -> 6 (Ungewöhnlich and Mythisch added)
+			it["rarity"] = Loot.migrate_rarity(int(it.get("rarity", 0)))
 	for s in SLOTS:
 		equipped[s] = str(eq.get(s, ""))
 	_next_uid = int(d.get("next_uid", items.size() + 1))
@@ -63,7 +66,7 @@ static func ensure() -> void:
 static func save() -> void:
 	var f := FileAccess.open(SAVE, FileAccess.WRITE)
 	if f:
-		f.store_string(JSON.stringify({"level": level, "exp": xp, "splitter": splitter, "marks": marks, "items": items, "equipped": equipped, "next_uid": _next_uid}))
+		f.store_string(JSON.stringify({"level": level, "exp": xp, "splitter": splitter, "marks": marks, "items": items, "equipped": equipped, "next_uid": _next_uid, "rarity_version": Loot.RARITY_VERSION}))
 
 
 ## EXP for the next level: grows a little each level.
@@ -118,6 +121,8 @@ static func add_item(item: Dictionary) -> bool:
 	_next_uid += 1
 	items.append(item)
 	save()
+	if item.has("raid"):
+		RaidArmor.on_obtained(item)  # unlocks the look in the Character Creator
 	return true
 
 

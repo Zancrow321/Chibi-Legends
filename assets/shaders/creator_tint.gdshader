@@ -11,6 +11,12 @@ uniform bool warm_only = false;
 uniform float hue = 0.0;
 uniform float sat = 1.0;
 uniform float val = 1.0;
+// Raid-Rüstung (RaidArmor.glow_level): Glut-Adern in glow_color leuchten
+// über 1.0 (Bloom). glow > 0 ab Episch, shimmer > 0 bei Mythisch (wandernde
+// Lichtwelle und flackernde Glut).
+uniform float glow = 0.0;
+uniform vec4 glow_color : source_color = vec4(1.0, 0.6, 0.1, 1.0);
+uniform float shimmer = 0.0;
 
 vec3 rgb2hsv(vec3 c) {
 	vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
@@ -49,6 +55,23 @@ void fragment() {
 			vec3 g = t < 0.55 ? mix(dark, target.rgb, t / 0.55) : mix(target.rgb, light, (t - 0.55) / 0.45);
 			col.rgb = mix(col.rgb, g, amount);
 		}
+	}
+	if (glow > 0.0 && !outline) {
+		vec3 o = rgb2hsv(texture(TEXTURE, UV).rgb);
+		vec3 gh = rgb2hsv(glow_color.rgb);
+		float dh = abs(o.x - gh.x);
+		dh = min(dh, 1.0 - dh);
+		float vein = smoothstep(0.1, 0.04, dh) * smoothstep(0.4, 0.7, o.y) * smoothstep(0.5, 0.85, o.z);
+		float pulse = 0.75 + 0.25 * sin(TIME * 3.0);
+		float wave = 0.0;
+		if (shimmer > 0.0) {
+			// Lichtwelle schräg über die Rüstung, dazu Flackern pro Pixelzeile
+			vec2 px = mod(UV / TEXTURE_PIXEL_SIZE, 64.0);  // Pixel in der Pose-Zelle
+			wave = pow(max(0.0, sin(px.y * 0.16 - px.x * 0.08 - TIME * 4.0)), 8.0) * shimmer;
+			pulse += 0.2 * sin(TIME * 11.0 + px.y * 1.7) * shimmer;
+		}
+		col.rgb += glow_color.rgb * vein * glow * pulse * 1.4;
+		col.rgb += mix(glow_color.rgb, vec3(1.0), 0.4) * wave * (0.35 + vein) * step(0.3, o.z);
 	}
 	COLOR = col * COLOR;
 }

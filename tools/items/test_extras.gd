@@ -19,16 +19,16 @@ func _initialize() -> void:
 	# rolls: sockets by rarity, every legendary has a mod, epic set share
 	var sets := 0
 	for i in 400:
-		var r := i % 4
+		var r := i % Loot.RARITIES.size()
 		var it := Loot.roll(10, r, "", "glutatem")
 		var n: int = it.get("sockets", []).size()
 		check(n >= Loot.SOCKETS[r][0] and n <= Loot.SOCKETS[r][1], "Sockelzahl %d bei Seltenheit %d" % [n, r])
-		check((r == 3) == it.has("mod"), "Mod nur bei Legendär")
+		check((r >= Loot.LEGENDARY) == it.has("mod"), "Mod nur ab Legendär")
 		if it.has("set"):
 			sets += 1
-			check(r == 2, "Set-Teile sind episch")
+			check(r == Loot.EPIC, "Set-Teile sind episch")
 			check(str(it.name) == str(ItemSets.SETS[it.set].pieces[it.slot]), "Set-Name")
-	check(sets > 10 and sets < 60, "Set-Anteil %d / 100 epische" % sets)
+	check(sets > 5 and sets < 45, "Set-Anteil %d / 67 epische" % sets)
 
 	# gems: value, fuse, drops
 	check(is_equal_approx(Gems.value("rubin_1"), snappedf(0.07 * 0.7, 0.001)), "Rubin-Wert")
@@ -41,7 +41,7 @@ func _initialize() -> void:
 	check(Profile.fuse_gem("rubin_1") == "", "Verschmelzen braucht 3")
 
 	# sockets change the stats, salvage returns gems
-	var w := Loot.roll(10, 3, "waffe", "glutatem")
+	var w := Loot.roll(10, Loot.LEGENDARY, "waffe", "glutatem")
 	w["sockets"] = ["", ""]
 	Profile.add_item(w)
 	Profile.toggle_equip(w.uid)
@@ -56,7 +56,7 @@ func _initialize() -> void:
 	var kinds := ["oberteil", "hose", "schuhe", "accessoire", "talisman", "waffe"]
 	var hp0 := Profile.bonus("hp")
 	for k in kinds.size() - 1:
-		var piece := Loot.roll(10, 2, kinds[k])
+		var piece := Loot.roll(10, Loot.EPIC, kinds[k])
 		ItemSets.make_piece(piece, "waldwaechter")
 		Profile.add_item(piece)
 		Profile.toggle_equip(piece.uid)
@@ -66,7 +66,7 @@ func _initialize() -> void:
 	check(ItemSets.bonus("hp") >= 0.08 - 0.0001 and ItemSets.bonus("def") >= 0.04 - 0.0001, "Set-Boni 2+4")
 	check(is_equal_approx(ItemSets.cooldown_factor(), 1.0), "noch kein 6er-Bonus")
 	check(Profile.bonus("hp") > hp0, "Set zählt in bonus()")
-	var weapon := Loot.roll(10, 2, "waffe")
+	var weapon := Loot.roll(10, Loot.EPIC, "waffe")
 	ItemSets.make_piece(weapon, "waldwaechter")
 	weapon.erase("mod")
 	Profile.add_item(weapon)
@@ -77,12 +77,12 @@ func _initialize() -> void:
 	# legendary mods change the Zug of their style only
 	var st := FightingStyle.load_style("glutatem")
 	var hits0 := float(st.params("funkenschlag").get("hits", 0))
-	var ring := Loot.roll(10, 3, "accessoire")
+	var ring := Loot.roll(10, Loot.LEGENDARY, "accessoire")
 	ring["mod"] = "esse_atem"
 	Profile.add_item(ring)
 	Profile.toggle_equip(ring.uid)  # replaces the set accessoire: 5 pieces, no Abklingzeit bonus
 	var cd0 := st.cooldown("weissglut")
-	var ring2 := Loot.roll(10, 3, "talisman")
+	var ring2 := Loot.roll(10, Loot.LEGENDARY, "talisman")
 	ring2["mod"] = "schmiedeherz"
 	Profile.add_item(ring2)
 	Profile.toggle_equip(ring2.uid)

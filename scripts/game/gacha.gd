@@ -317,7 +317,7 @@ static func _rare() -> Dictionary:
 		if x <= 0.0:
 			match str(p.kind):
 				"gear":
-					return _gear(0, int(p.get("rarity", 1)))
+					return _gear(0, int(p.get("rarity", Loot.RARE)))
 				"color":
 					var c := _color_prize(0)
 					if not c.is_empty():
