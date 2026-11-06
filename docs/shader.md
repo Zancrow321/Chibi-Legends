@@ -19,7 +19,7 @@ Ein einziger Bildschirm-Durchgang (`post_fx.gdshader`), billig genug für den Br
   Trainingswald `dusk` (violette Schatten, orange Lichter, blauer Bodennebel), Akademie-Hof `day`
   (Sonnenlicht, hellblaue Luft), Glutschmiede `ember` (rote Schatten, Rauch), Turm `arcane` (violett/cyan).
 - **Vignette + Bayer-Dithering** in Kunstpixeln gegen Farbstreifen.
-- **Wenig Leben** (< 30 %): Farbe wird blasser, der Rand pulsiert rot (`hp_player`).
+- **Wenig Leben** (< 30 %): Farbe wird blasser, der Rand pulsiert rot (`hp_room`).
 - **Große Treffer**: kurzer Helligkeits-Stoß (`exposure_punch`), Farbversatz, Schockwelle.
 - **Super-Finisher**: Manga-Einschlagbild (Tusche/Papier für ein paar Frames, `impact_frame`)
   und radiale Zoom-Unschärfe (`zoom_blur`); während der Super-Pause leichte Zoom-Unschärfe um den Spieler.

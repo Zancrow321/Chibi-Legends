@@ -196,7 +196,7 @@ void fragment() {
 	if (impact > 0.0) {
 		float l4 = dot(col, vec3(0.299, 0.587, 0.114));
 		vec2 ap = floor(FRAGCOORD.xy / art_px);
-		float th = 0.55 + bayer4(ap) * 0.12;
+		float th = 0.86 + bayer4(ap) * 0.1;
 		float ink = step(th, l4);
 		ink = mix(ink, 1.0 - ink, impact_invert);
 		vec3 two = mix(impact_ink, impact_paper, ink);

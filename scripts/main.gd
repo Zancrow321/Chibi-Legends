@@ -52,7 +52,7 @@ func _ready() -> void:
 		post = _add_post_fx(String(PostFx.AREA_MOODS.get(GameFlow.area, "dusk")) if view_mode == 3 else "flat")
 	var room := TrainingRoom.new()
 	if post != null:
-		post.hp_player = room.player
+		post.hp_room = room  # the room builds its player in _ready
 	var numbers := DamageNumbers.new()
 	match view_mode:
 		1:

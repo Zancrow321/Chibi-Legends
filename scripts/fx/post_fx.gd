@@ -69,8 +69,8 @@ var _blur_hold := 0.0  # steady blur while a super holds the screen
 var _blur_pos := Vector2.ZERO  # world position of the blur centre
 var _punch := 0.0
 var _danger := 0.0
-## The fighter whose HP drives the danger pulse (needs hp and max_hp). null = none.
-var hp_player: Node
+## The room whose player's HP drives the danger pulse (player needs hp and max_hp). null = none.
+var hp_room: Node
 
 
 func _init() -> void:
@@ -282,8 +282,9 @@ func _process(delta: float) -> void:
 
 	# low HP: below 30 % the edge starts to breathe red
 	var target := 0.0
-	if not legacy and is_instance_valid(hp_player):
-		var frac := float(hp_player.get("hp")) / maxf(float(hp_player.get("max_hp")), 1.0)
+	var pl: Variant = hp_room.get("player") if is_instance_valid(hp_room) else null
+	if not legacy and pl is Node and is_instance_valid(pl):
+		var frac := float(pl.get("hp")) / maxf(float(pl.get("max_hp")), 1.0)
 		target = clampf((0.3 - frac) / 0.25, 0.0, 1.0) if frac > 0.0 else 0.0
 	_danger = move_toward(_danger, target, delta * 1.5)
 	_mat.set_shader_parameter("danger", _danger)
