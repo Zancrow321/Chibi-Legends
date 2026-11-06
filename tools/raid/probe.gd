@@ -25,7 +25,8 @@ func _initialize() -> void:
 		out = args[0]
 		DirAccess.make_dir_recursive_absolute(out)
 	b64 = args.has("b64")
-	Main.show_title = false
+	var main_script: GDScript = load("res://scripts/main.gd")
+	main_script.set("show_title", false)
 	GameFlow.area = "glutschmiede"
 	GameFlow.mode = GameFlow.DUNGEON
 	change_scene_to_file("res://scenes/main.tscn")
