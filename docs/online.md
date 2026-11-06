@@ -1,0 +1,31 @@
+# Online-Basis (Endgame Schritt 3)
+
+Supabase-Projekt `twfapncxxfykevinakke` (https://twfapncxxfykevinakke.supabase.co). Der Client (`scripts/autoload/online.gd`) meldet sich als Gast an und ruft Server-Funktionen auf. Ohne Verbindung läuft alles offline mit denselben Regeln weiter.
+
+## Einmal einrichten (im Supabase-Dashboard)
+
+1. **Schema einspielen:** SQL Editor → New query → Inhalt von `supabase/migrations/0001_online_base.sql` einfügen → Run. Kann gefahrlos wiederholt werden.
+2. **Gast-Konten erlauben:** Authentication → Sign In / Providers → „Allow anonymous sign-ins“ an.
+
+Der öffentliche Anon-Key steht im Client (so ist er gedacht). Der service_role-Key gehört nie ins Repo oder in den Chat.
+
+## Was der Server entscheidet
+
+| Funktion | Zweck |
+| --- | --- |
+| `cl_state()` | Profil anlegen/holen (Name, Raid-Marken, Turm-Woche) |
+| `cl_claim_boss(boss, fight_seconds, level)` | Boss-Sieg: Marken, Tageschance, Bonus-Beute (Seltenheit, Teil-Art, Seed). Kampfzeit und Abstand werden grob geprüft, bis der Kampfserver (Schritt 4/5) mitschaut. |
+| `cl_buy(kind, rarity, level)` | Raid-Marken gegen Wunschteil |
+| `cl_tower(floor_reached)` | Turm-Wochenrekord, gibt den Platz zurück |
+| `cl_tower_board()` | Wochen-Bestenliste Top 50 |
+| `cl_set_name(name)` | Anzeigename |
+
+Beute kommt als `{slot, rarity, ilvl, seed}`; `Online.build_item()` baut daraus mit festem Zufall immer dasselbe Teil. Spieler dürfen ihre Tabellen nur lesen, geschrieben wird nur über diese Funktionen.
+
+Online gilt der Marken-Stand des Servers; offline gesammelte Marken werden nicht hochgeladen (sonst wären sie fälschbar). Edelsteine aus dem Raid würfelt vorerst noch der Client.
+
+## Tests
+
+- `supabase/test/run.sh`: Wegwerf-Postgres, Schema zweimal einspielen, Regeln und Rechte prüfen (CI-Job „datenbank“).
+- `tools/online/test_online.gd`: Client bleibt headless offline, Seed-Beute ist stabil.
+- Web: `?offline=1` schaltet die Verbindung ab.
