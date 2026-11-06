@@ -85,3 +85,29 @@ in einem `edit-image-pixen`-Aufruf (1 Generierung), statt 10 Generierungen pro E
   `tools/bollwerk/fix_outfit_grids.py` misst je Raster, wie viel vom Grundkörper bedeckt ist,
   und erzeugt schlechte Raster neu (1 Generierung pro Raster). Eine Referenzfigur in Zelle 16
   hat nicht funktioniert (Modell zog die Figuren kaum an).
+
+## Anime- und japanische Kleidung (2026-11-06)
+
+Eigene Entwürfe, keine Kostüme aus bestimmten Serien. PixelLab: 78 Generierungen
+(8 Entwürfe, 32 Raster, 4 Kopfteile, 34 Nachbesserungen verrutschter oder nicht angezogener Posen).
+
+| Outfit (id) | Freischalten |
+| --- | --- |
+| Sommer-Yukata (`yukata`) | Saisonpass gratis, Stufe 7 |
+| Gakuran (`gakuran`) | Saisonpass Premium, Stufe 6 |
+| Hanabi-Kimono (`hanabi`) | Saisonpass Premium, Stufe 12 |
+| Matrosen-Uniform (`matrose`) | Saisonpass Premium, Stufe 16 |
+| Kranich-Haori (`kranich`) | Saisonpass Premium, Stufe 22 |
+| Mond-Hakama (`mondhakama`) + Strohhut `kasa` | Gacha-Banner „Der schwarze Mond“ |
+| Shinobi-Anzug (`shinobi`) + Stirnband `hachimaki` | Gacha-Banner „Ein Versprechen wird Stärke“ |
+| Schreingewand (`miko`) + Fuchsmaske `kitsune` | Gacha-Banner „Ein Takt, zwei Seelen“ |
+| Samurai-Knoten (`chonmage`) | frei |
+
+- Saisonpass: Belohnung `{"kind": "part", "slot": "outfit", "id": ...}` schaltet Oberteil, Hose und Schuhe zusammen frei.
+- Werkzeuge in `tools/japan_outfits/`: `gen_outfits.py` (draft/outfit/head/install), `fix_frames.py`
+  (schlechte Einzelposen in ein eigenes Raster, `--dress` auch für Posen, in denen PixelLab die Figur
+  nackt gelassen hat), `check_dressed.py` (findet solche Posen), `preview.py`, `probe.gd` (Bild im Spiel),
+  `test_outfits.gd` (CI).
+- Lehre: Liegende Posen (`lie_0`, `getup_*`) und Siegesposen (`win_*`, `taunt_*`, im letzten Raster nur
+  4 Figuren) lässt PixelLab öfter unbekleidet oder verschiebt sie. Ein Raster nur aus den schlechten
+  Posen klappt deutlich besser als das ganze Raster neu.

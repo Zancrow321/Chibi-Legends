@@ -277,6 +277,10 @@ static func give(r: Dictionary) -> String:
 			Profile.add_splitter(sp)
 			return "Tasche voll: +%d Splitter" % sp
 		"part":
+			if str(r.slot) == "outfit":  # ganzes Outfit: Oberteil, Hose und Schuhe
+				for slot in ["top", "pants", "shoes"]:
+					CreatorUnlocks.unlock(slot, str(r.id))
+				return "Neues Outfit im Creator: " + CreatorCatalog.item_name("top", str(r.id))
 			CreatorUnlocks.unlock(str(r.slot), str(r.id))
 			return "Neu im Creator: " + CreatorCatalog.item_name(str(r.slot), str(r.id))
 		"color":
@@ -300,6 +304,8 @@ static func label(r: Dictionary) -> String:
 		"gear":
 			return "%s Ausrüstung" % Loot.RARITIES[int(r.get("rarity", Loot.RARE))].name
 		"part":
+			if str(r.slot) == "outfit":
+				return "Outfit " + CreatorCatalog.item_name("top", str(r.id))
 			return CreatorCatalog.item_name(str(r.slot), str(r.id))
 		"color":
 			return "Farbstoff"
