@@ -277,6 +277,13 @@ func _bar(r: Rect2, frac: float, col: Color) -> void:
 ## Reward icon: PixelLab art when there, else a drawn stand-in.
 func _reward_icon(r: Dictionary, c: Vector2, s: float) -> void:
 	var kind := str(r.get("kind", ""))
+	if kind == "skin":  # the style's PixelLab Meisterzug icon in the skin's colours
+		var it := StyleSkin.icon(str(r.get("style", "")), str(r.get("id", "")))
+		if it != null:
+			draw_texture_rect(it, Rect2(c - Vector2(s, s), Vector2(s, s) * 2.0), false)
+		else:
+			draw_circle(c, s * 0.7, StyleSkin.map_color(StyleSkin.info(str(r.get("style", "")), str(r.get("id", ""))), Color("ff9a2a")))
+		return
 	var name: String = {"crystals": "crystal", "splitter": "icon_splitter", "gear": "icon_chest", "part": "icon_outfit", "color": "icon_dye"}.get(kind, "")
 	var t: Texture2D = _tex(name) if name != "" else null
 	if t == null and kind == "crystals":

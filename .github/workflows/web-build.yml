@@ -43,6 +43,12 @@ jobs:
           grep -q "ITEM-TEST OK" items.log
           ! grep -E "SCRIPT ERROR|Parse Error|ITEM-TEST FEHLER" items.log
 
+      - name: Effekt-Skin-Logiktest (Kampfstil-Skins)
+        run: |
+          godot --headless -s res://tools/skins/test_skins.gd 2>&1 | tee skins.log | grep -E "SKIN|SCRIPT ERROR" || true
+          grep -q "SKIN-TEST OK" skins.log
+          ! grep -E "SCRIPT ERROR|Parse Error|SKIN-TEST FEHLER" skins.log
+
       - name: Raid-Logiktest (Essenwächter)
         run: |
           timeout 300 godot --headless --fixed-fps 60 -s res://tools/raid/probe.gd 2>&1 | tee raid.log | grep -E "RAID|SCRIPT ERROR" || true

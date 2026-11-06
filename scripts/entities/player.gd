@@ -178,6 +178,7 @@ func init_style() -> void:
 		glut = GlutCaster.new()
 	add_child(glut)
 	glut.setup(self, style)
+	StyleSkin.attach(self)  # effect skin of the style (only looks)
 
 
 func _glut_busy() -> bool:
@@ -755,7 +756,7 @@ func _tick_move(delta: float) -> void:
 			if glut.normal_element() != "":
 				el = glut.normal_element()
 			mul = glut.normal_mul()
-			trail = glut.trail_color()
+			trail = StyleSkin.player_color(self, glut.trail_color())
 		# bigger weapons reach further: the box grows forward, its back edge stays
 		var r := sprite.reach() if move.button != "grab" else 1.0
 		var w := float(hb[2]) * r
@@ -924,7 +925,7 @@ func _use_meisterzug() -> void:
 		ms.room = world
 		ms.player = self
 		ms.caster = mond
-		ms.fx = world.glut_fx
+		ms.fx = mond.fx
 		ms.variant = style.super_variant
 		ms.title = style.variant().get("name", "Meisterzug")
 		Sfx.play("mond_super", -2.0)
@@ -986,7 +987,7 @@ func _use_meisterzug() -> void:
 	s.room = world
 	s.player = self
 	s.caster = glut
-	s.fx = world.glut_fx
+	s.fx = glut.fx
 	s.variant = style.super_variant
 	s.title = style.variant().get("name", "Meisterzug")
 	world.add_child(s)

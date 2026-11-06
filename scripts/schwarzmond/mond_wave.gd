@@ -76,11 +76,11 @@ func _physics_process(delta: float) -> void:
 	_trail -= delta
 	if _trail <= 0.0:
 		_trail = 0.03
-		var fx: GlutFx = world.glut_fx
+		var fx: GlutFx = caster.fx if caster != null else world.glut_fx
 		fx.glow(global_position - dir * r * 0.9, Color(rim_col, 0.35), r * 0.35, 0.2)
 		if caster != null:
 			caster.mfx.ink(global_position - dir * r * 0.2 + Vector2(randf_range(-r, r) * 0.3, randf_range(-r, r) * 0.6), 1, 30.0, 0.4)
-		world.glut_fx.light(global_position, rim_col, 1.2, 0.5, 0.06)
+		fx.light(global_position, rim_col, 1.2, 0.5, 0.06)
 	var area := _area()
 	var hits: Array = []
 	for t in world.get_tree().get_nodes_in_group("targets"):

@@ -1,5 +1,5 @@
 {
- "_doc": "Saison 1 und Herausforderungen. Pass-EP kommen aus Herausforderungen (Haupt-Quelle), besiegten Gegnern und geschafften Wellen. 30 Stufen à 1000 EP. Gratis-Spur fuer alle; die Premium-Spur wird spaeter ueber den Shop freigeschaltet (Echtgeld braucht Stripe und eine Rechtspruefung), bis dahin ist sie nur sichtbar. Belohnungs-Arten: crystals, splitter, gear (rarity = Loot-Seltenheit), part (slot/id aus catalog.json; slot outfit = Oberteil, Hose und Schuhe zusammen), color (naechster gesperrter Farbstoff). Herausforderungen: event = Name aus Challenges.track(), mode count (addieren) oder max (hoechster Wert). Code: scripts/game/challenges.gd, scripts/game/season_pass.gd, Bildschirm scripts/ui/pass_screen.gd.",
+ "_doc": "Saison 1 und Herausforderungen. Pass-EP kommen aus Herausforderungen (Haupt-Quelle), besiegten Gegnern und geschafften Wellen. 30 Stufen à 1000 EP. Gratis-Spur fuer alle; die Premium-Spur wird spaeter ueber den Shop freigeschaltet (Echtgeld braucht Stripe und eine Rechtspruefung), bis dahin ist sie nur sichtbar. Belohnungs-Arten: crystals, splitter, gear (rarity = Loot-Seltenheit), part (slot/id aus catalog.json; slot outfit = Oberteil, Hose und Schuhe zusammen), color (naechster gesperrter Farbstoff), skin (style/id aus assets/combat/skins.json: Effekt-Skin eines Kampfstils). Herausforderungen: event = Name aus Challenges.track(), mode count (addieren) oder max (hoechster Wert). Code: scripts/game/challenges.gd, scripts/game/season_pass.gd, Bildschirm scripts/ui/pass_screen.gd.",
  "season": {"id": "s1", "name": "Saison 1: Funkenflug", "tiers": 30, "ep_per_tier": 1000},
  "ep_per_kill": 10,
  "ep_per_wave": 40,
@@ -28,7 +28,7 @@
   {"tier": 1, "kind": "crystals", "amount": 100},
   {"tier": 2, "kind": "splitter", "amount": 100},
   {"tier": 3, "kind": "gear", "rarity": 2},
-  {"tier": 4, "kind": "crystals", "amount": 100},
+  {"tier": 4, "kind": "skin", "style": "glutatem", "id": "giftglut"},
   {"tier": 5, "kind": "part", "slot": "hair", "id": "wuschel"},
   {"tier": 6, "kind": "splitter", "amount": 150},
   {"tier": 7, "kind": "part", "slot": "outfit", "id": "yukata"},
@@ -63,7 +63,7 @@
   {"tier": 5, "kind": "crystals", "amount": 300},
   {"tier": 6, "kind": "part", "slot": "outfit", "id": "gakuran"},
   {"tier": 8, "kind": "gear", "rarity": 4},
-  {"tier": 10, "kind": "crystals", "amount": 500},
+  {"tier": 10, "kind": "skin", "style": "glutatem", "id": "blauglut"},
   {"tier": 12, "kind": "part", "slot": "outfit", "id": "hanabi"},
   {"tier": 13, "kind": "color"},
   {"tier": 15, "kind": "crystals", "amount": 500},
@@ -72,7 +72,7 @@
   {"tier": 20, "kind": "crystals", "amount": 800},
   {"tier": 22, "kind": "part", "slot": "outfit", "id": "kranich"},
   {"tier": 23, "kind": "color"},
-  {"tier": 25, "kind": "crystals", "amount": 800},
+  {"tier": 25, "kind": "skin", "style": "glutatem", "id": "schattenglut"},
   {"tier": 28, "kind": "gear", "rarity": 4},
   {"tier": 30, "kind": "crystals", "amount": 1600}
  ]

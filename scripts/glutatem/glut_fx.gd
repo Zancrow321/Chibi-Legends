@@ -18,6 +18,7 @@ const SMOKE := Color(0.16, 0.12, 0.13, 0.5)
 static var _glow_tex: Texture2D
 
 var room: Node  # TrainingRoom
+var skin: Dictionary = {}  # effect skin of the player's style (StyleSkin), {} = original
 var stage: Node  # DuskStage (lights), may be null
 var font: Font
 
@@ -83,7 +84,7 @@ func _ready() -> void:
 ## Short flash of real 2D light (only in the dusk look).
 func light(pos: Vector2, col: Color, energy: float, size: float, life: float) -> void:
 	if stage != null and stage.has_method("flash_light"):
-		stage.flash_light(pos, col, energy, size, life)
+		stage.flash_light(pos, StyleSkin.map_color(skin, col), energy, size, life)
 
 
 # --- building blocks ----------------------------------------------------------
