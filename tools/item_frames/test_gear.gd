@@ -49,8 +49,8 @@ func _initialize() -> void:
 	Profile.toggle_equip(w.uid)
 	for r in [Loot.COMMON, Loot.UNCOMMON, Loot.RARE, Loot.RARE, Loot.EPIC, Loot.LEGENDARY]:
 		Profile.add_item(Loot.roll(5, r, "hose"))
-	var keep := Profile.items[2]  # Ungewöhnlich
-	var worn := Profile.items[3]  # Selten
+	var keep: Dictionary = Profile.items[2]  # Ungewöhnlich
+	var worn: Dictionary = Profile.items[3]  # Selten
 	check(Profile.toggle_lock(keep.uid), "Sperren")
 	Profile.toggle_equip(worn.uid)
 	check(Profile.salvage(keep.uid) == 0, "Gesperrtes nicht zerlegbar")
