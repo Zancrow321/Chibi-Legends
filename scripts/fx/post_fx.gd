@@ -24,8 +24,8 @@ const MOODS := {
 		"sky": Color(1.0, 0.55, 0.3, 0.22), "haze": Color(0.36, 0.3, 0.6, 0.3), "haze_h": 0.36},
 	# academy courtyard by day: clean, warm sunlight from above, light blue air
 	"day": {"exposure": 1.03, "contrast": 1.04, "saturation": 1.06, "lift": Color(0.015, 0.015, 0.035), "gain": Color(1.03, 1.0, 0.96), "vignette": 0.24, "vcol": Color(0.08, 0.05, 0.14),
-		"filmic": 0.85, "shadow": Color(-0.015, 0.02, 0.06), "high": Color(0.06, 0.035, -0.015), "vibrance": 0.4,
-		"sky": Color(1.0, 0.9, 0.65, 0.2), "haze": Color(0.62, 0.74, 0.92, 0.18), "haze_h": 0.3},
+		"filmic": 0.85, "shadow": Color(0.012, 0.0, 0.05), "high": Color(0.06, 0.035, -0.015), "vibrance": 0.4,
+		"sky": Color(1.0, 0.85, 0.7, 0.16), "haze": Color(0.55, 0.6, 0.85, 0.1), "haze_h": 0.26},
 	# raid Glutschmiede: deep red shadows, molten highlights, smoke at the ground
 	"ember": {"exposure": 1.04, "contrast": 1.1, "saturation": 1.08, "lift": Color(0.05, 0.008, 0.01), "gain": Color(1.06, 0.97, 0.88), "vignette": 0.55, "vcol": Color(0.08, 0.0, 0.01),
 		"filmic": 0.9, "shadow": Color(0.06, 0.0, -0.01), "high": Color(0.06, 0.03, -0.04), "vibrance": 0.3,
