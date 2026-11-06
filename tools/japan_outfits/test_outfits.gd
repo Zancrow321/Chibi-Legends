@@ -18,6 +18,9 @@ func check(cond: bool, what: String) -> void:
 
 func _initialize() -> void:
 	CreatorCatalog.ensure()
+	# frischer Freischalt-Stand: frühere CI-Schritte (Turm-Probe) schalten schon Teile frei
+	CreatorUnlocks._loaded = true
+	CreatorUnlocks._data = {}
 	for o in OUTFITS:
 		for slot in ["top", "pants", "shoes"]:
 			check(CreatorCatalog.slot_texture(slot, o) != null, "Ebene %s/%s" % [slot, o])
