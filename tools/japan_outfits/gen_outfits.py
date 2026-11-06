@@ -45,7 +45,8 @@ OUTFITS = {
 HEADS = {
     "hachimaki": "short spiky black hair with a white headband tied around the forehead with two long "
                  "trailing ends",
-    "chonmage": "a samurai topknot: dark hair pulled back tight with a small folded top knot",
+    "chonmage": "thick dark brown hair that fully covers the whole top and sides of the head with no bald skin "
+                "visible, combed back into a samurai topknot on the crown",
     "kitsune": "long white hair with a red and white fox mask worn tilted on the side of the head, "
                "the face stays visible",
     "kasa": "short black hair under a wide conical straw kasa hat, the face stays visible",
