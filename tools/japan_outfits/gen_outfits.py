@@ -54,6 +54,48 @@ HEADS = {
 
 RAW = Path("/tmp/japan_outfits")
 
+# Weitere Themen-Kollektionen: OUTFITS/HEADS werden erweitert, RAW bleibt gemeinsam.
+OUTFITS.update({
+    "neonlaeufer": "a cyberpunk runner outfit: black cropped techwear jacket with glowing cyan seams and a high "
+                   "collar, black cargo pants with hanging straps and cyan stripes, chunky white sneakers with "
+                   "glowing cyan soles",
+    "chromsoeldner": "a cyberpunk mercenary outfit: dark olive armored tactical vest over a black shirt, chrome "
+                     "metal cybernetic plating on both forearms, dark grey cargo pants with knee pads, heavy black "
+                     "combat boots with yellow warning stripes",
+    "datenhoodie": "a cyberpunk hacker outfit: oversized purple hoodie with a glowing magenta circuit pattern, "
+                   "black jogger pants with a magenta stripe, black high-top sneakers with glowing magenta LED strips",
+    "synthidol": "a cyberpunk pop idol outfit: glossy white and pink short jacket with holographic iridescent "
+                 "panels, neon pink pleated short skirt over black tights, white platform boots with pink glowing soles",
+    "konzern": "a cyberpunk corporate agent outfit: sleek black long trench coat with thin glowing red trim, "
+               "white shirt with a slim black tie, black slacks, polished black shoes",
+    "strassenklinge": "a cyberpunk street samurai outfit: red and black armored bomber jacket with one angular "
+                      "shoulder plate and glowing orange seams, black wide cargo hakama pants, black tech boots "
+                      "with glowing orange soles",
+})
+OUTFITS.update({
+    "eisjaeger": "a nordic frost hunter outfit: thick grey wolf fur mantle over a dark blue leather tunic with "
+                 "silver clasps, brown leather trousers with fur-lined leg wraps, heavy brown fur boots",
+    "runenschild": "a nordic shield warrior outfit: steel scale mail shirt over a deep red wool tunic, a wide "
+                   "leather belt with a silver knot buckle, dark grey trousers with criss-cross leather bindings, "
+                   "iron-capped leather boots",
+    "frostseherin": "a nordic frost seer outfit: long pale blue robe (no hood, head uncovered) with glowing light blue rune "
+                    "embroidery and white fur trim, a belt of bone charms, white wool leggings, soft white fur boots",
+    "baerenhaut": "a nordic berserker outfit: a huge brown bear pelt over the bare shoulders and back, "
+                  "bare chest with blue war paint lines, wide brown leather kilt-like trousers, fur-wrapped boots",
+    "nordwanderer": "a nordic traveler outfit: dark green wool cloak without hood (head uncovered) with a bronze brooch, cream linen "
+                    "shirt, brown wool trousers, worn leather turnshoes with wraps",
+})
+HEADS.update({
+    "hoernerhelm": "short blonde hair under an open iron helmet with two short curved horns, nothing hangs over the face or chest, the face "
+                   "stays visible",
+    "flechtbart": "wild red hair shaved on the sides with thick braids falling down the back",
+})
+HEADS.update({
+    "neonvisier": "short white undercut hair with a sleek glowing cyan visor band over the eyes, the rest of the "
+                  "face stays visible",
+    "neonkamm": "a tall neon pink mohawk with glowing light strips along the shaved sides, the face stays visible",
+})
+
 
 def desc(oid):
     return "Dress all figures in the exact same outfit: " + OUTFITS[oid] + ". " + STYLE + ". " + ol.KEEP

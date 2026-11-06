@@ -176,6 +176,9 @@ func _floor_cleared() -> void:
 		_report_floor(floor_no)
 	if floor_no > best:
 		best = floor_no
+		var neon := ThemeOutfits.tower_floor(floor_no)
+		if neon != "":
+			world.toast(neon)
 	if floor_no > week_best:
 		week_best = floor_no
 	_save()

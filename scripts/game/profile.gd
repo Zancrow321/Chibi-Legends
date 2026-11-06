@@ -92,6 +92,10 @@ static func add_exp(amount: float) -> int:
 	if ups > 0:
 		Gacha.on_level_up(ups)
 		SeasonPass.track("level", ups)
+		for t in ThemeOutfits.on_level(level):
+			var tree := Engine.get_main_loop() as SceneTree
+			if tree != null:
+				tree.call_group("toaster", "toast", t)
 	return ups
 
 

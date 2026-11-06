@@ -145,5 +145,33 @@
    22.9
   ],
   "angle": 1.3
+ },
+ "neonvisier": {
+  "neck": [
+   30.6,
+   22.9
+  ],
+  "angle": 1.3
+ },
+ "neonkamm": {
+  "neck": [
+   30.6,
+   22.9
+  ],
+  "angle": 1.3
+ },
+ "hoernerhelm": {
+  "neck": [
+   30.6,
+   22.9
+  ],
+  "angle": 1.3
+ },
+ "flechtbart": {
+  "neck": [
+   30.6,
+   22.9
+  ],
+  "angle": 1.3
  }
 }
