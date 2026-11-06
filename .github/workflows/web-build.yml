@@ -15,6 +15,8 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # nur für den Bilder-Branch ci-bilder/* (Probe-Screenshots)
     steps:
       - uses: actions/checkout@v4
 
@@ -52,8 +54,20 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p raid-probe
-          timeout 300 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/raid/probe.gd -- "$PWD/raid-probe" b64 > raid-probe.log 2>&1 || true
+          timeout 300 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/raid/probe.gd -- "$PWD/raid-probe" > raid-probe.log 2>&1 || true
           ls -la raid-probe
+
+      - name: Raid-Bilder auf den Branch ci-bilder/raid legen
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        continue-on-error: true
+        run: |
+          cd raid-probe
+          ls *.png > /dev/null 2>&1 || exit 0
+          git init -q . && git checkout -q -b bilder
+          git add *.png
+          git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -qm "Raid-Probe ${{ github.event.pull_request.head.sha }}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" bilder:refs/heads/ci-bilder/raid
+          rm -rf .git
 
       - uses: actions/upload-artifact@v4
         if: github.event_name == 'pull_request'
@@ -98,7 +112,6 @@ jobs:
           echo "--- Ende der Probe:"; tail -8 probe.log || true
           echo "--- Raid-Probe Fehler:"; grep -A3 -E "SCRIPT ERROR|ERROR:" raid-probe.log | head -40 || true
           echo "--- Raid-Probe Regeln:"; grep -E "^RAID" raid-probe.log || true
-          echo "--- Raid-Bilder:"; grep -E "^IMG " raid-probe.log || true
 
       - uses: actions/upload-pages-artifact@v3
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
