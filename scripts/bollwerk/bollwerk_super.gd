@@ -130,9 +130,9 @@ func _next(p: String) -> void:
 
 func _aim_input(speed: float, lo: float, hi: float) -> void:
 	var d := 0.0
-	if Input.is_action_pressed("move_up"):
+	if player.ctl.is_action_pressed("move_up"):
 		d = 1.0
-	elif Input.is_action_pressed("move_down"):
+	elif player.ctl.is_action_pressed("move_down"):
 		d = -1.0
 	_aim = clampf(_aim + d * speed * get_process_delta_time(), lo, hi)
 	caster.aim_deg = _aim

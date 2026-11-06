@@ -195,7 +195,7 @@ func _barrage() -> void:
 	var sh := _shoulder()
 	ffx.steam(_center(), 1, 10.0)
 	# one turn allowed during the barrage
-	var dx := Input.get_axis("move_left", "move_right")
+	var dx := player.ctl.get_axis("move_left", "move_right")
 	if _step < 50 and dx != 0.0 and signf(dx) != player.facing:
 		player.facing = 1 if dx > 0.0 else -1
 		_step += 50

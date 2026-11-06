@@ -254,7 +254,7 @@ func cast(dir: String) -> bool:
 
 func _decide_enhanced() -> void:
 	_decided = true
-	if not Input.is_action_pressed("special") or not (player.gauge >= 100.0 or player.infinite_aura):
+	if not player.ctl.is_action_pressed("special") or not (player.gauge >= 100.0 or player.infinite_aura):
 		return
 	if not player.infinite_aura:
 		player.gauge -= 100.0
@@ -321,7 +321,7 @@ func tick(delta: float) -> void:
 	_age += delta
 	if not _decided and _age >= 0.15:
 		_decide_enhanced()
-	if phase != "startup" and Input.is_action_just_pressed("special"):
+	if phase != "startup" and player.ctl.is_action_just_pressed("special"):
 		_follow = true
 	match zug_id:
 		"sicheltakt":

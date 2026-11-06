@@ -190,7 +190,7 @@ func _decide_enhanced() -> void:
 	_decided = true
 	if style.zug(zug_id).get("spann", false):
 		return
-	if not Input.is_action_pressed("special") or not (player.gauge >= 100.0 or player.infinite_aura or is_free()):
+	if not player.ctl.is_action_pressed("special") or not (player.gauge >= 100.0 or player.infinite_aura or is_free()):
 		return
 	if not player.infinite_aura and not is_free():
 		player.gauge -= 100.0
@@ -271,7 +271,7 @@ func tick(delta: float) -> void:
 			_end_chain()
 	# Rückschwung: a different Zug pressed right after a hit cancels into it
 	_swing_buf = maxf(0.0, _swing_buf - delta)
-	if busy() and phase != "charge" and Input.is_action_just_pressed("special") and _zug_for(_dir_now()) != zug_id:
+	if busy() and phase != "charge" and player.ctl.is_action_just_pressed("special") and _zug_for(_dir_now()) != zug_id:
 		_swing_buf = 0.15
 		_swing_dir = _dir_now()
 	if busy() and _snap_t > 0.0 and chain_left > 0 and _swing_buf > 0.0 and not player.in_super:
@@ -286,7 +286,7 @@ func tick(delta: float) -> void:
 	_age += delta
 	if phase != "charge" and not _decided and _age >= 0.15:
 		_decide_enhanced()
-	if phase != "startup" and phase != "charge" and Input.is_action_just_pressed("special"):
+	if phase != "startup" and phase != "charge" and player.ctl.is_action_just_pressed("special"):
 		_follow = true
 	if phase == "charge":
 		_tick_charge(delta)
@@ -307,11 +307,11 @@ func tick(delta: float) -> void:
 
 
 func _dir_now() -> String:
-	if Input.is_action_pressed("move_up"):
+	if player.ctl.is_action_pressed("move_up"):
 		return "up"
-	if Input.is_action_pressed("move_down"):
+	if player.ctl.is_action_pressed("move_down"):
 		return "down"
-	if Input.get_axis("move_left", "move_right") != 0.0:
+	if player.ctl.get_axis("move_left", "move_right") != 0.0:
 		return "forward"
 	return "neutral"
 
@@ -319,7 +319,7 @@ func _dir_now() -> String:
 func _take_swing(z: String) -> void:
 	chain_left -= 1
 	_snap_t = 0.0
-	var dx := Input.get_axis("move_left", "move_right")
+	var dx := player.ctl.get_axis("move_left", "move_right")
 	if dx != 0.0:
 		player.facing = 1 if dx > 0.0 else -1
 	var c := _center()
@@ -363,7 +363,7 @@ func _free_finale() -> void:
 func _tick_charge(delta: float) -> void:
 	var speed := 1.3 if _transfer else 1.0
 	charge += delta * speed
-	var held := Input.is_action_pressed("special") and charge < AUTO_RELEASE and not is_free()
+	var held := player.ctl.is_action_pressed("special") and charge < AUTO_RELEASE and not is_free()
 	var lvl := 0
 	for i in STEPS.size():
 		if charge >= STEPS[i]:
@@ -1015,7 +1015,7 @@ func _land() -> void:
 func drive_velocity(v: Vector2, delta: float, on_floor: bool) -> Vector2:
 	var g := minf(v.y + Player.GRAVITY * delta, Player.MAX_FALL)
 	if phase == "charge":
-		var dx := Input.get_axis("move_left", "move_right")
+		var dx := player.ctl.get_axis("move_left", "move_right")
 		if dx != 0.0 and on_floor:
 			player.facing = 1 if dx > 0.0 else -1
 		return Vector2(dx * Player.RUN_SPEED * 0.4 if on_floor else v.x * 0.95, minf(v.y + Player.GRAVITY * 0.6 * delta, Player.MAX_FALL))

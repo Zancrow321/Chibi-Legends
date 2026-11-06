@@ -225,7 +225,7 @@ func cast(dir: String) -> bool:
 
 func _decide_enhanced() -> void:
 	_decided = true
-	if not Input.is_action_pressed("special") or not (player.gauge >= 100.0 or player.infinite_aura):
+	if not player.ctl.is_action_pressed("special") or not (player.gauge >= 100.0 or player.infinite_aura):
 		return
 	# Salve: hammering the button must not eat the Leiste; only a real hold counts
 	if zug_id == "salve" and _age < 0.15:
@@ -364,7 +364,7 @@ func _tick_ammo(delta: float) -> void:
 			bfx.word(player.global_position + Vector2(0, -52), "KLICK", style.color("amber"), 12)
 		return
 	# manual reload: hold down on the ground (not while L is held)
-	if not busy() and player.is_on_floor() and Input.is_action_pressed("move_down") and not Input.is_action_pressed("special") and ammo < mag:
+	if not busy() and player.is_on_floor() and player.ctl.is_action_pressed("move_down") and not player.ctl.is_action_pressed("special") and ammo < mag:
 		_down_t += delta
 		if _down_t >= _r("manual_reload_hold", 0.3):
 			_down_t = 0.0
@@ -569,8 +569,8 @@ func _on_start() -> void:
 				bfx.word(player.global_position + Vector2(0, -52), "NOTRESERVE…", style.color("shield"), 13)
 		"kettenhaken":
 			if str(params.get("kind", "")) == "schub":
-				var dx := Input.get_axis("move_left", "move_right")
-				var dy := Input.get_axis("move_up", "move_down")
+				var dx := player.ctl.get_axis("move_left", "move_right")
+				var dy := player.ctl.get_axis("move_up", "move_down")
 				_push = Vector2(dx, dy)
 				if _push == Vector2.ZERO:
 					_push = Vector2(player.facing, 0)
@@ -589,9 +589,9 @@ func _tick_salve() -> void:
 			_next_phase()
 	elif phase == "active":
 		var tilt := 0.0
-		if Input.is_action_pressed("move_up"):
+		if player.ctl.is_action_pressed("move_up"):
 			tilt = -AIM_TILT
-		elif Input.is_action_pressed("move_down"):
+		elif player.ctl.is_action_pressed("move_down"):
 			tilt = AIM_TILT
 		aim_deg = -tilt  # body: positive = muzzle up
 		while _shots_fired < n and t >= _shots_fired * every:
@@ -841,7 +841,7 @@ func _tick_haken() -> void:
 		bfx.chain(hand, _grab)
 		if randf() < 0.5:
 			bfx.speedlines(_center(), (_grab - _center()).angle() + PI, 2, 26.0, style.color("white"))
-		if Input.is_action_just_pressed("special") and params.get("finisher", true):
+		if player.ctl.is_action_just_pressed("special") and params.get("finisher", true):
 			_follow = true
 		var arrive := player.global_position.distance_to(_grab + Vector2(-player.facing * 14.0, 22.0)) < 18.0
 		if arrive or t >= _f(1) or player.is_on_wall():
@@ -1034,7 +1034,7 @@ func drive_velocity(v: Vector2, delta: float, on_floor: bool) -> Vector2:
 			match phase:
 				"startup":
 					if str(params.get("kind", "")) in ["sturz"]:
-						var dx := Input.get_axis("move_left", "move_right")
+						var dx := player.ctl.get_axis("move_left", "move_right")
 						return Vector2(dx * 50.0, minf(v.y * 0.85 + 20.0 * delta, 30.0))
 				"fall":
 					return Vector2(0.0, 820.0)

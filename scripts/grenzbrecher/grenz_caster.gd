@@ -265,7 +265,7 @@ func _decide_enhanced() -> void:
 	_decided = true
 	if zug_id == "kernstrahl" or zug_id == "sammeln" or zug_id == "sonnenkern_prep":
 		return
-	if not Input.is_action_pressed("special") or not (player.gauge >= 100.0 or player.infinite_aura):
+	if not player.ctl.is_action_pressed("special") or not (player.gauge >= 100.0 or player.infinite_aura):
 		return
 	if not player.infinite_aura:
 		player.gauge -= 100.0
@@ -423,9 +423,9 @@ func _tick_burst(delta: float) -> void:
 # --- Ki sammeln -------------------------------------------------------------------
 
 func _check_gather(delta: float) -> void:
-	var want: bool = player.is_on_floor() and Input.is_action_pressed("move_down") and not Input.is_action_pressed("special") \
+	var want: bool = player.is_on_floor() and player.ctl.is_action_pressed("move_down") and not player.ctl.is_action_pressed("special") \
 		and player.move.is_empty() and not player.blocking and player.hitstun <= 0.0 and player.dash_timer <= 0.0 \
-		and Input.get_axis("move_left", "move_right") == 0.0
+		and player.ctl.get_axis("move_left", "move_right") == 0.0
 	_down_t = _down_t + delta if want else 0.0
 	if _down_t >= GATHER_HOLD:
 		_down_t = 0.0
@@ -442,9 +442,9 @@ func _check_gather(delta: float) -> void:
 
 
 func _tick_gather(delta: float) -> void:
-	var stop := not Input.is_action_pressed("move_down") or Input.is_action_just_pressed("special") \
-		or Input.is_action_just_pressed("light") or Input.is_action_just_pressed("heavy") \
-		or Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("dash") or not player.is_on_floor()
+	var stop := not player.ctl.is_action_pressed("move_down") or player.ctl.is_action_just_pressed("special") \
+		or player.ctl.is_action_just_pressed("light") or player.ctl.is_action_just_pressed("heavy") \
+		or player.ctl.is_action_just_pressed("jump") or player.ctl.is_action_just_pressed("dash") or not player.is_on_floor()
 	if stop:
 		zug_id = ""
 		phase = ""
@@ -597,7 +597,7 @@ func _tick_strahl(delta: float) -> void:
 				_step = 1
 				gfx.ring(fist, 20.0, style.color("white"), 0.25, 2.0)
 				gfx.word(fist + Vector2(-player.facing * 16.0, -26), "VOLL", style.color("white"), 14)
-		var held := Input.is_action_pressed("special") and _charge < cmax + 0.05
+		var held := player.ctl.is_action_pressed("special") and _charge < cmax + 0.05
 		var min_t := _f(0)
 		if _charge >= min_t and (not held or _charge >= cmax):
 			_fire(k)
@@ -609,9 +609,9 @@ func _tick_strahl(delta: float) -> void:
 			return
 		var dur := _f(1)
 		var v := 0.0
-		if Input.is_action_pressed("move_up"):
+		if player.ctl.is_action_pressed("move_up"):
 			v = -1.0
-		elif Input.is_action_pressed("move_down"):
+		elif player.ctl.is_action_pressed("move_down"):
 			v = 1.0
 		_aim = clampf(_aim + v * delta * 0.9, -0.26, 0.26)
 		var palm := player.global_position + _fwd(14.0, -24.0)
@@ -660,7 +660,7 @@ func _fire(k: float) -> void:
 			_kimpact(_fist() + _fwd(16), 26.0, "")
 		return
 	var full := k >= 1.0
-	if full and Input.is_action_pressed("special") and (player.gauge >= 100.0 or player.infinite_aura):
+	if full and player.ctl.is_action_pressed("special") and (player.gauge >= 100.0 or player.infinite_aura):
 		if not player.infinite_aura:
 			player.gauge -= 100.0
 		_make_enhanced("VOLL GELADEN!")
@@ -760,7 +760,7 @@ func _tick_auftakt() -> void:
 			_next_phase()
 	elif phase == "recovery":
 		# Sprung within 0.4 s after a hit: the air kick follows
-		if _hit_any and t < 0.4 and Input.is_action_just_pressed("jump"):
+		if _hit_any and t < 0.4 and player.ctl.is_action_just_pressed("jump"):
 			phase = "kick"
 			t = 0.0
 			_step = 0
@@ -795,7 +795,7 @@ func _tick_gegen() -> void:
 		gfx.glow(_fist(), Color(style.color("sky"), 0.35), 12.0, 0.05)
 		gfx.ring(c, 18.0, Color(style.color("pale"), 0.5), 0.06, 1.0)
 		var end := _f(1)
-		if mode == "ki_guard" and Input.is_action_pressed("special") and t < 1.0:
+		if mode == "ki_guard" and player.ctl.is_action_pressed("special") and t < 1.0:
 			# Ki-Deckung: 10 Ki per 0.2 s keeps the stance up
 			if fmod(t, 0.2) < get_physics_process_delta_time() and t > 0.05:
 				if not spend_ki(10.0):
@@ -808,7 +808,7 @@ func _tick_gegen() -> void:
 			_next_phase()
 	elif phase == "counter":
 		if _evade:
-			if Input.is_action_just_pressed("special") and not _back_kick and t < 0.4:
+			if player.ctl.is_action_just_pressed("special") and not _back_kick and t < 0.4:
 				_back_kick = true
 				player.facing = -player.facing if _step == 1 else player.facing
 				var tg := _hit(_rect_front(0.0, 40.0, -44.0, 40.0), 12.0, 200.0, "heavy", 60.0, {}, true, enhanced)

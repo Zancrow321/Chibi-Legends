@@ -113,7 +113,7 @@ func cast(dir: String) -> bool:
 
 func _decide_enhanced() -> void:
 	_decided = true
-	if not Input.is_action_pressed("special") or not (player.gauge >= 100.0 or player.infinite_aura):
+	if not player.ctl.is_action_pressed("special") or not (player.gauge >= 100.0 or player.infinite_aura):
 		return
 	if float(params.get("charge", 0.0)) > 0.0:
 		return  # Geladene Faust: holding L charges instead
@@ -323,7 +323,7 @@ func _tick_knoechel() -> void:
 func _tick_faust(delta: float) -> void:
 	var charge_max: float = float(params.get("charge", 0.0))
 	if phase == "startup":
-		var hold := charge_max > 0.0 and Input.is_action_pressed("special") and _charge < charge_max
+		var hold := charge_max > 0.0 and player.ctl.is_action_pressed("special") and _charge < charge_max
 		if hold and t >= _f(0) * 0.5:
 			_charge += delta
 			t = _f(0) * 0.5  # stay in the wind-up while charging

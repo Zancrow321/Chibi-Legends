@@ -117,6 +117,8 @@ var infinite_aura := false
 const BUFFER_TIME := 0.15
 const BUFFERED := ["jump", "dash", "light", "heavy", "special", "super", "cycle_look", "toggle_figure", "cycle_moveset"]
 var _buffer: Dictionary = {}
+## Where the buttons come from (keyboard/pad, or scripted for AI / network).
+var ctl := PlayerControl.new()
 var _jump_held := false
 
 var build: Array = GameData.START_BUILD.duplicate()
@@ -128,6 +130,7 @@ var in_super := false  # locked in place while the super move plays
 
 
 func _ready() -> void:
+	ctl.player = self
 	collision_layer = 0
 	collision_mask = LAYER_GROUND | LAYER_PLATFORM
 	floor_snap_length = 4.0
@@ -313,9 +316,17 @@ func _unhandled_input(event: InputEvent) -> void:
 
 ## Also called by CombatFx while the world is frozen (hit-stop, super pause).
 func buffer_input(event: InputEvent) -> void:
+	if ctl.scripted:
+		return
 	for action in BUFFERED:
 		if event.is_action_pressed(action, false):
 			_buffer[action] = BUFFER_TIME
+
+
+## A scripted press (PlayerControl): goes into the buffer like a key press.
+func press(action: String) -> void:
+	if action in BUFFERED:
+		_buffer[action] = BUFFER_TIME
 
 
 func _take(action: String) -> bool:
@@ -326,6 +337,11 @@ func _take(action: String) -> bool:
 
 
 func _physics_process(delta: float) -> void:
+	_physics_step(delta)
+	ctl.end_frame()
+
+
+func _physics_step(delta: float) -> void:
 	_tick_timers(delta)
 	_tick_move(delta)
 	if glut != null:
@@ -370,7 +386,7 @@ func _physics_process(delta: float) -> void:
 		visual.set_state("cast")
 		return
 
-	var dir := Input.get_axis("move_left", "move_right")
+	var dir := ctl.get_axis("move_left", "move_right")
 	if _glut_busy():
 		# a Zug drives the body; buttons pressed meanwhile are queued
 		velocity = glut.drive_velocity(velocity, delta, on_floor)
@@ -383,7 +399,7 @@ func _physics_process(delta: float) -> void:
 		return
 	var busy := not move.is_empty() or cast_timer > 0.0
 	# guard: only on the ground and outside of attacks
-	var want_block := Input.is_action_pressed("block") and on_floor and not busy and dash_timer <= 0.0
+	var want_block := ctl.is_action_pressed("block") and on_floor and not busy and dash_timer <= 0.0
 	if want_block and not blocking:
 		_block_t = 0.0
 	blocking = want_block
@@ -485,7 +501,7 @@ func _tick_timers(delta: float) -> void:
 
 func _handle_jump(on_floor: bool) -> void:
 	if _buffer.get("jump", 0.0) > 0.0:
-		if Input.is_action_pressed("move_down") and on_floor:
+		if ctl.is_action_pressed("move_down") and on_floor:
 			_buffer.erase("jump")
 			set_collision_mask_value(LAYER_PLATFORM, false)
 			drop_timer = 0.25
@@ -519,7 +535,7 @@ func _handle_jump(on_floor: bool) -> void:
 			if jumps_used == 2:
 				world.spawn_burst(global_position, Color(1, 1, 1, 0.8), 8)
 	# releasing early cuts the jump short (once per jump)
-	if _jump_held and not Input.is_action_pressed("jump"):
+	if _jump_held and not ctl.is_action_pressed("jump"):
 		_jump_held = false
 		if velocity.y < -120.0:
 			velocity.y *= 0.5
@@ -553,9 +569,9 @@ func _cancel_move() -> void:
 
 ## Direction held right now, relative to facing. Up and down win over sideways.
 func _input_dir(dir_x: float) -> String:
-	if Input.is_action_pressed("move_up"):
+	if ctl.is_action_pressed("move_up"):
 		return "up"
-	if Input.is_action_pressed("move_down"):
+	if ctl.is_action_pressed("move_down"):
 		return "down"
 	if dir_x != 0.0:
 		return "forward"
@@ -609,7 +625,7 @@ func _try_queued(on_floor: bool) -> void:
 	if move.is_empty():
 		var q := _queued
 		_queued = ""
-		var dx := Input.get_axis("move_left", "move_right")
+		var dx := ctl.get_axis("move_left", "move_right")
 		if dx != 0.0:
 			facing = 1 if dx > 0.0 else -1
 		_start(q, _queued_dir, on_floor)

@@ -157,7 +157,7 @@ func _decide_enhanced() -> void:
 		return  # L held charges this Zug instead
 	if erschoepft > 0.0:
 		return
-	if Input.is_action_pressed("special") and (player.gauge >= 100.0 or player.infinite_aura):
+	if player.ctl.is_action_pressed("special") and (player.gauge >= 100.0 or player.infinite_aura):
 		if not player.infinite_aura:
 			player.gauge -= 100.0
 		_both = enhanced
@@ -312,7 +312,7 @@ func _wave(dir: Vector2, dmg: float, r: float, reach: float, speed := 430.0, pie
 
 
 func _charging(max_charge: float) -> bool:
-	return max_charge > 0.0 and Input.is_action_pressed("special") and t < _f(0) + max_charge
+	return max_charge > 0.0 and player.ctl.is_action_pressed("special") and t < _f(0) + max_charge
 
 
 func _charge_fx(k: float) -> void:
@@ -439,7 +439,7 @@ func _tick_aufsteigend() -> void:
 	elif phase == "active" and t >= _f(1):
 		_next_phase()
 	elif phase == "recovery":
-		if float(params.get("follow", 0)) > 0.0 and _hit_any and Input.is_action_just_pressed("special"):
+		if float(params.get("follow", 0)) > 0.0 and _hit_any and player.ctl.is_action_just_pressed("special"):
 			player.velocity.y = -float(params.follow)
 			player.world.afterimages.add(player.sprite.snapshot(), Color(0.3, 0.4, 0.8, 0.6))
 			mfx.streaks(player.global_position + Vector2(0, -10), PI / 2.0, 0.3, 6, 180.0, 0.25, rim_color())
