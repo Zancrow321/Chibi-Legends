@@ -15,6 +15,7 @@ func _initialize() -> void:
 	DirAccess.make_dir_recursive_absolute(out)
 	GameFlow.area = "akademie_hof"
 	GameFlow.mode = GameFlow.OVERWORLD
+	load("res://scripts/main.gd").show_title = false
 	change_scene_to_file("res://scenes/main.tscn")
 	steps = [[50, "fill"], [60, "open:1"], [70, "sel:0"], [80, "shot:01_inventar_mythisch"],
 		[84, "sel:1"], [92, "shot:02_legendaer"], [96, "sel:2"], [104, "shot:03_episch"],
@@ -72,6 +73,9 @@ func _do(cmd: String) -> void:
 			load("res://scripts/main.gd").show_title = false
 			change_scene_to_file("res://scenes/main.tscn")
 		"feed":
+			for n in get_nodes_in_group("creator"):
+				if n.visible:
+					n.close(false)
 			_hide_select(root)
 			paused = false
 			var room := _find_room(root)
