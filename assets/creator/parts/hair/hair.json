@@ -173,5 +173,19 @@
    22.9
   ],
   "angle": 1.3
+ },
+ "gelehrtenknoten": {
+  "neck": [
+   30.6,
+   22.9
+  ],
+  "angle": 1.3
+ },
+ "drachenkrone": {
+  "neck": [
+   30.6,
+   22.9
+  ],
+  "angle": 1.3
  }
 }

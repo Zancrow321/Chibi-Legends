@@ -15,11 +15,11 @@
   {"id": "d_react", "text": "Löse %d Element-Reaktionen aus", "event": "reaction", "target": 4, "ep": 300, "crystals": 20}
  ],
  "weekly": [
-  {"id": "w_kill", "text": "Besiege %d Gegner", "event": "kill", "target": 300, "ep": 1200, "crystals": 100},
-  {"id": "w_elite", "text": "Besiege %d Elite-Gegner", "event": "elite", "target": 10, "ep": 1200, "crystals": 100},
-  {"id": "w_super", "text": "Setze %d Meisterzüge ein", "event": "meisterzug", "target": 15, "ep": 1200, "crystals": 100},
+  {"id": "w_kill", "text": "Besiege %d Gegner", "event": "kill", "target": 300, "ep": 1200, "crystals": 100, "part": ["hair", "gelehrtenknoten"]},
+  {"id": "w_elite", "text": "Besiege %d Elite-Gegner", "event": "elite", "target": 10, "ep": 1200, "crystals": 100, "part": ["outfit", "jadegelehrter"]},
+  {"id": "w_super", "text": "Setze %d Meisterzüge ein", "event": "meisterzug", "target": 15, "ep": 1200, "crystals": 100, "part": ["outfit", "schattenmeister"]},
   {"id": "w_combo", "text": "Schaffe eine Kombo mit %d Treffern", "event": "combo", "mode": "max", "target": 30, "ep": 1200, "crystals": 100, "part": ["hair", "kamm"]},
-  {"id": "w_wave", "text": "Schaffe %d Wellen", "event": "wave", "target": 25, "ep": 1200, "crystals": 100},
+  {"id": "w_wave", "text": "Schaffe %d Wellen", "event": "wave", "target": 25, "ep": 1200, "crystals": 100, "part": ["outfit", "pflaumentaenzerin"]},
   {"id": "w_gacha", "text": "Rufe %d-mal im Sternschrein", "event": "gacha", "target": 10, "ep": 1200, "crystals": 100},
   {"id": "w_epic", "text": "Finde %d epische oder legendäre Beute", "event": "loot_epic", "target": 2, "ep": 1200, "crystals": 100},
   {"id": "w_level", "text": "Steige %d Stufen auf", "event": "level", "target": 2, "ep": 1200, "crystals": 100}

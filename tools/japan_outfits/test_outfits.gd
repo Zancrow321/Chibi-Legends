@@ -6,6 +6,7 @@ extends SceneTree
 const OUTFITS := ["hanabi", "mondhakama", "kranich", "gakuran", "matrose", "yukata", "shinobi", "miko"]
 const HEADS := ["hachimaki", "chonmage", "kitsune", "kasa"]
 const FROST := ["eisjaeger", "runenschild", "frostseherin", "baerenhaut", "nordwanderer"]
+const WUXIA := ["jadegelehrter", "drachenwache", "lotusfaust", "pflaumentaenzerin", "schattenmeister"]
 const CYBER := ["neonlaeufer", "chromsoeldner", "datenhoodie", "synthidol", "konzern", "strassenklinge"]
 
 var fails := 0
@@ -79,5 +80,20 @@ func _initialize() -> void:
 	check(got.size() == 3 and CreatorUnlocks.is_unlocked("shoes", "runenschild") and CreatorUnlocks.is_unlocked("hair", "flechtbart"), "Stufe 10 holt 3 Teile nach (%d)" % got.size())
 	check(not CreatorUnlocks.is_unlocked("top", "baerenhaut"), "Bärenhaut erst ab 22")
 	check(ThemeOutfits.on_level(10).is_empty(), "nichts doppelt")
+	# Wuxia-Hof: Wochen-Herausforderungen und Gacha-Banner
+	for o in WUXIA:
+		for slot in ["top", "pants", "shoes"]:
+			check(CreatorCatalog.slot_texture(slot, o) != null, "Wuxia-Ebene %s/%s" % [slot, o])
+			check(CreatorUnlocks.hint(slot, o) != "", "Wuxia-Hinweis %s/%s" % [slot, o])
+	for h in ["gelehrtenknoten", "drachenkrone"]:
+		check(CreatorCatalog.slot_texture("hair", h) != null and CreatorCatalog.hair_meta.has(h), "Wuxia-Kopfteil %s" % h)
+	var parts := Gacha.banners().filter(func(b): return str(b.title) == "Über jedes Limit")
+	check(not parts.is_empty() and Gacha.banner_parts(parts[0]).any(func(p): return p.id == "lotusfaust"), "Banner Grenzbrecher gibt Lotusfaust")
+	var weekly_outfits := 0
+	for d in SeasonPass.data.get("weekly", []):
+		if d.has("part") and str(d.part[0]) == "outfit":
+			weekly_outfits += 1
+	check(weekly_outfits == 3, "3 Wuxia-Outfits in Wochen-Herausforderungen (%d)" % weekly_outfits)
+	check(ThemeOutfits.give("outfit", "schattenmeister") != "" and CreatorUnlocks.is_unlocked("shoes", "schattenmeister"), "Wochen-Outfit schaltet alle Teile frei")
 	print("KLEIDUNG-TEST OK" if fails == 0 else "KLEIDUNG-TEST FEHLER: %d" % fails)
 	quit()

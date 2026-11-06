@@ -150,3 +150,18 @@ werden auch verpasste Stufen nachgeholt). PixelLab: 38 Generierungen.
 
 - Lehre: Kapuzen nicht beschreiben ("no hood, head uncovered"). Der Kopf gehört zum Grundkörper,
   eine Kapuze wird abgeschnitten. Lange Zöpfe am Helm hängen vor das Gesicht.
+
+## Themen-Kollektion Wuxia-Hof (2026-11-06)
+
+Fünf Outfits und zwei Kopfteile. PixelLab: 37 Generierungen.
+
+| Teil | Freischalten |
+| --- | --- |
+| Jade-Gelehrter (`jadegelehrter`) | Wochen-Herausforderung Elite-Gegner (`w_elite`) |
+| Schattenmeister (`schattenmeister`) | Wochen-Herausforderung Meisterzüge (`w_super`) |
+| Pflaumentänzerin (`pflaumentaenzerin`) | Wochen-Herausforderung Wellen (`w_wave`) |
+| Jade-Haarknoten (`gelehrtenknoten`) | Wochen-Herausforderung Gegner (`w_kill`) |
+| Lotusfaust (`lotusfaust`) + Drachenkrone | Gacha-Banner „Über jedes Limit“ |
+| Drachenwache (`drachenwache`) | Gacha-Banner „Wer am Feuer sitzt“ |
+
+- Herausforderungen können jetzt `"part": ["outfit", id]` geben (alle drei Teile, `ThemeOutfits.give`).

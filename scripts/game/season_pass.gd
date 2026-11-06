@@ -193,8 +193,7 @@ static func claim(c: Dictionary) -> String:
 	var out := "+%d Pass-EP · +%d Sternkristalle" % [int(d.get("ep", 0)), int(d.get("crystals", 0))]
 	if d.has("part"):
 		var p: Array = d.part
-		CreatorUnlocks.unlock(p[0], p[1])
-		out += " · " + CreatorCatalog.item_name(p[0], p[1])
+		out += " · " + ThemeOutfits.give(str(p[0]), str(p[1]))  # "outfit" = alle drei Teile
 	add_ep(int(d.get("ep", 0)), false)
 	save()
 	return out

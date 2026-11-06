@@ -1,6 +1,6 @@
 extends SceneTree
 ## Schaubild der Anime- und japanischen Kleidung im Spiel (LayeredBody mit Bloom).
-##   xvfb-run godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/japan_outfits/probe.gd -- <out_dir> [cyber|frost]
+##   xvfb-run godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/japan_outfits/probe.gd -- <out_dir> [cyber|frost|wuxia]
 
 const LOOKS := [
 	["hanabi", "kitsune", 0], ["mondhakama", "chonmage", 0], ["kranich", "kasa", 0], ["gakuran", "stachel", 0],
@@ -17,6 +17,11 @@ const FROST_LOOKS := [
 	["nordwanderer", "kurz", 0], ["eisjaeger", "flechtbart", 0], ["runenschild", "hoernerhelm", 0], ["baerenhaut", "hoernerhelm", 0],
 ]
 
+const WUXIA_LOOKS := [
+	["jadegelehrter", "gelehrtenknoten", 0], ["drachenwache", "drachenkrone", 0], ["lotusfaust", "kurz", 0], ["pflaumentaenzerin", "gelehrtenknoten", 0],
+	["schattenmeister", "zopf", 0], ["lotusfaust", "drachenkrone", 0], ["jadegelehrter", "lang", 0], ["schattenmeister", "gelehrtenknoten", 0],
+]
+
 var out := "user://kleidung_shots"
 var f := 0
 var bodies: Array = []
@@ -29,7 +34,7 @@ func _initialize() -> void:
 	DirAccess.make_dir_recursive_absolute(out)
 	CreatorCatalog.ensure()
 	var theme := args[1] if args.size() > 1 else ""
-	var looks: Array = {"cyber": CYBER_LOOKS, "frost": FROST_LOOKS}.get(theme, LOOKS)
+	var looks: Array = {"cyber": CYBER_LOOKS, "frost": FROST_LOOKS, "wuxia": WUXIA_LOOKS}.get(theme, LOOKS)
 	var stage := Node2D.new()
 	root.add_child(stage)
 	var bg := ColorRect.new()

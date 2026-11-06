@@ -9,7 +9,9 @@ NAMES = {"hanabi": "Hanabi-Kimono", "mondhakama": "Mond-Hakama", "kranich": "Kra
          "neonlaeufer": "Neonläufer", "chromsoeldner": "Chrom-Söldner", "datenhoodie": "Daten-Hoodie",
          "synthidol": "Synth-Idol", "konzern": "Konzern-Agent", "strassenklinge": "Straßenklinge",
          "eisjaeger": "Eisjäger", "runenschild": "Runenschild", "frostseherin": "Frostseherin",
-         "baerenhaut": "Bärenhaut", "nordwanderer": "Nordwanderer"}
+         "baerenhaut": "Bärenhaut", "nordwanderer": "Nordwanderer",
+         "jadegelehrter": "Jade-Gelehrter", "drachenwache": "Drachenwache", "lotusfaust": "Lotusfaust",
+         "pflaumentaenzerin": "Pflaumentänzerin", "schattenmeister": "Schattenmeister"}
 if len(sys.argv) > 4:
     NAMES = {k: v for k, v in NAMES.items() if k in sys.argv[4].split(",")}
 POSES = sys.argv[3].split(",") if len(sys.argv) > 3 else ["idle_0", "walk_1", "run_1", "run_3"]

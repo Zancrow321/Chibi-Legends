@@ -41,7 +41,12 @@
     "runenschild": "Runenschild-Schuppenhemd",
     "frostseherin": "Frostseherin-Robe",
     "baerenhaut": "Bärenhaut-Fell",
-    "nordwanderer": "Nordwanderer-Umhang"
+    "nordwanderer": "Nordwanderer-Umhang",
+    "jadegelehrter": "Jade-Hanfu",
+    "drachenwache": "Drachenwache-Lamellenweste",
+    "lotusfaust": "Lotusfaust-Hemd",
+    "pflaumentaenzerin": "Pflaumentänzerin-Seidenkleid",
+    "schattenmeister": "Schattenmeister-Robe"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -76,7 +81,12 @@
     "runenschild": "Spielerstufe 6 (Frostnorden)",
     "eisjaeger": "Spielerstufe 12 (Frostnorden)",
     "frostseherin": "Spielerstufe 15 (Frostnorden)",
-    "baerenhaut": "Spielerstufe 22 (Frostnorden)"
+    "baerenhaut": "Spielerstufe 22 (Frostnorden)",
+    "jadegelehrter": "Wochen-Herausforderung: Besiege 10 Elite-Gegner",
+    "schattenmeister": "Wochen-Herausforderung: Setze 15 Meisterzüge ein",
+    "pflaumentaenzerin": "Wochen-Herausforderung: Schaffe 25 Wellen",
+    "lotusfaust": "Gacha-Banner „Über jedes Limit“ (Kampfstil Grenzbrecher)",
+    "drachenwache": "Gacha-Banner „Wer am Feuer sitzt“ (Kampfstil Lauffeuer)"
    }
   },
   "pants": {
@@ -116,7 +126,12 @@
     "runenschild": "Runenschild-Hose",
     "frostseherin": "Frostseherin-Beinlinge",
     "baerenhaut": "Bärenhaut-Lederrock",
-    "nordwanderer": "Nordwanderer-Wollhose"
+    "nordwanderer": "Nordwanderer-Wollhose",
+    "jadegelehrter": "Weiße Gelehrtenhose",
+    "drachenwache": "Drachenwache-Hose",
+    "lotusfaust": "Kung-Fu-Hose",
+    "pflaumentaenzerin": "Pflaumentänzerin-Rock",
+    "schattenmeister": "Schattenmeister-Hose"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -151,7 +166,12 @@
     "runenschild": "Spielerstufe 6 (Frostnorden)",
     "eisjaeger": "Spielerstufe 12 (Frostnorden)",
     "frostseherin": "Spielerstufe 15 (Frostnorden)",
-    "baerenhaut": "Spielerstufe 22 (Frostnorden)"
+    "baerenhaut": "Spielerstufe 22 (Frostnorden)",
+    "jadegelehrter": "Wochen-Herausforderung: Besiege 10 Elite-Gegner",
+    "schattenmeister": "Wochen-Herausforderung: Setze 15 Meisterzüge ein",
+    "pflaumentaenzerin": "Wochen-Herausforderung: Schaffe 25 Wellen",
+    "lotusfaust": "Gacha-Banner „Über jedes Limit“ (Kampfstil Grenzbrecher)",
+    "drachenwache": "Gacha-Banner „Wer am Feuer sitzt“ (Kampfstil Lauffeuer)"
    }
   },
   "shoes": {
@@ -191,7 +211,12 @@
     "runenschild": "Eisenkappen-Lederstiefel",
     "frostseherin": "Weiße Pelzschuhe",
     "baerenhaut": "Fellwickel-Stiefel",
-    "nordwanderer": "Wickelschuhe"
+    "nordwanderer": "Wickelschuhe",
+    "jadegelehrter": "Stoffschuhe",
+    "drachenwache": "Drachenwache-Stiefel",
+    "lotusfaust": "Stoffslipper",
+    "pflaumentaenzerin": "Bestickte Schuhe",
+    "schattenmeister": "Wickelstiefel"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -226,7 +251,12 @@
     "runenschild": "Spielerstufe 6 (Frostnorden)",
     "eisjaeger": "Spielerstufe 12 (Frostnorden)",
     "frostseherin": "Spielerstufe 15 (Frostnorden)",
-    "baerenhaut": "Spielerstufe 22 (Frostnorden)"
+    "baerenhaut": "Spielerstufe 22 (Frostnorden)",
+    "jadegelehrter": "Wochen-Herausforderung: Besiege 10 Elite-Gegner",
+    "schattenmeister": "Wochen-Herausforderung: Setze 15 Meisterzüge ein",
+    "pflaumentaenzerin": "Wochen-Herausforderung: Schaffe 25 Wellen",
+    "lotusfaust": "Gacha-Banner „Über jedes Limit“ (Kampfstil Grenzbrecher)",
+    "drachenwache": "Gacha-Banner „Wer am Feuer sitzt“ (Kampfstil Lauffeuer)"
    }
   },
   "hair": {
@@ -255,7 +285,9 @@
     "neonvisier": "Neon-Visier",
     "neonkamm": "Neon-Irokese",
     "hoernerhelm": "Hörnerhelm",
-    "flechtbart": "Nordzöpfe"
+    "flechtbart": "Nordzöpfe",
+    "gelehrtenknoten": "Jade-Haarknoten",
+    "drachenkrone": "Drachenkrone"
    },
    "unlock": {
     "wuschel": "Saisonpass, Stufe 5",
@@ -275,7 +307,9 @@
     "neonkamm": "Turm der Prüfungen: Etage 15 (Neon-Belohnung)",
     "neonvisier": "Turm der Prüfungen: Etage 30 (Neon-Belohnung)",
     "flechtbart": "Spielerstufe 9 (Frostnorden)",
-    "hoernerhelm": "Spielerstufe 18 (Frostnorden)"
+    "hoernerhelm": "Spielerstufe 18 (Frostnorden)",
+    "gelehrtenknoten": "Wochen-Herausforderung: Besiege 300 Gegner",
+    "drachenkrone": "Gacha-Banner „Über jedes Limit“ (Kampfstil Grenzbrecher)"
    }
   },
   "weapon": {
