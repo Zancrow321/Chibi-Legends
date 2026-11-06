@@ -341,3 +341,11 @@ ist vollständig übernommen, auch die Idee des sprechenden Waffenpartners.
 - **Stil:** Gleichklang · Zweiklang · Seelengeläut · Stundenschlag
 - **Partner:** Nachhall · Bronn (alter Glockengießer-Name) · Hallmar · Klöppel (als Spitzname)
 - **Heimatwelt:** Hallgrund · Glockenschlund · Stundenturm
+
+## PixelLab-Effekte (2026-11-06)
+
+13 Effekt-Sprites in `assets/combat/vfx/gleichklang/` (`tools/gleichklang/gen_fx.py`, 13 Generierungen):
+3 Sensen-Schnittbögen für J/K (quer, hoch, Wirbel, in der Klangfarbe), je ein Effekt für die
+6 Züge, den Meisterzug (Geisterglocke) und Erntebogen / Totengeläut / Reiner Klang.
+`KlangFx.klang_burst()` legt sie additiv über die gezeichneten Bögen, damit der Bloom greift.
+Takt-Hilfe „nur Ton“ blendet die Schnittbögen mit aus. Test: `tools/gleichklang/probe.gd`.

@@ -492,6 +492,25 @@ func _sweep(r: float, a0: float, a1: float, w: float, col: Color, life := 0.24, 
 	kfx.arc(c, r, _fa(a0), _fa(a1), w, col, life)
 
 
+## J/K swing with the scythe: a PixelLab arc along the hitbox in the
+## Klangfarbe (replaces the Glutatem katana arcs of the base class).
+func on_swing(move: Dictionary, center: Vector2, width: float) -> void:
+	if kfx == null or not show_visual():
+		return
+	var ang := float(move.get("angle", 0.0))
+	var id := "schnitt_quer"
+	var rot := 0.0
+	if str(move.get("draw", "")) == "sweep" or str(move.get("draw", "")) == "spin":
+		id = "schnitt_wirbel"
+	elif ang < -30.0 or float(move.get("launch", 0.0)) > 150.0:
+		id = "schnitt_hoch"
+	elif ang > 30.0:
+		rot = 0.5 * player.facing
+	var heavy: bool = move.get("button", "") == "heavy"
+	var col := trail_color().lerp(Color.WHITE, 0.5)
+	kfx.klang_burst(id, center, clampf(width * (1.7 if heavy else 1.4), 44.0, 120.0), 0.22 if not heavy else 0.28, rot, player.facing < 0, col, 0.7)
+
+
 func _swing_sound(heavy: bool) -> void:
 	Sfx.play("swing_heavy" if heavy else "swing_light")
 
@@ -529,6 +548,7 @@ func _tick_sicheltakt() -> void:
 			if last:
 				_break(tg)
 				_swing_sound(true)
+				kfx.klang_burst("sicheltakt", player.global_position + Vector2(player.facing * reach * 0.6, -26.0), 64.0, 0.3, 0.0, player.facing < 0)
 				if not tg.is_empty():
 					kfx.word(player.global_position + Vector2(player.facing * reach * 0.8, -50), "SHING!", style.color("white"), 22)
 					world.fx.shake(3.0 * FxSettings.factor("shake"), player.facing)
@@ -566,10 +586,12 @@ func _tick_seelensichel() -> void:
 			if params.get("wave", false):
 				_spawn_wave(player.global_position + Vector2(player.facing * 20.0, -22.0), player.facing, 213.0 * (1.5 if enhanced else 1.0), float(params.damage), false)
 				kfx.word(player.global_position + Vector2(player.facing * 30.0, -50), "SWISH!", style.color("pale"), 20)
+				kfx.klang_burst("seelensichel", player.global_position + Vector2(player.facing * 40.0, -24.0), 70.0, 0.45, 0.0, player.facing < 0, Color.WHITE, 0.5, Vector2(player.facing * 420.0, 0))
 				return
 			var soul: bool = params.get("soul", false)
 			var r := reach * 0.6
 			_sweep(r, -0.9, 0.7, 8.0, style.color("blue"), 0.24)
+			kfx.klang_burst("seelensichel", player.global_position + Vector2(player.facing * reach * 0.55, -24.0), 76.0 if not soul else 92.0, 0.32, 0.0, player.facing < 0, Color.WHITE, 0.6)
 			if soul:
 				_sweep(reach * 0.75, -0.8, 0.6, 14.0, style.color("violet"), 0.36)
 				kfx.contour(_center(), reach * 0.75, minf(_fa(-0.8), _fa(0.6)), maxf(_fa(-0.8), _fa(0.6)), 0.3)
@@ -628,12 +650,14 @@ func _tick_himmelsreigen() -> void:
 				var r0 := Rect2(player.global_position.x - 34, player.global_position.y - 92, 68, 56)
 				var tg0 := _hit(r0, dmg, 160.0, "heavy", 0.0, _hit_set)
 				_break(tg0)
+				kfx.klang_burst("himmelsreigen", player.global_position + Vector2(player.facing * 12.0, -56.0), 96.0, 0.4, 0.0, player.facing < 0)
 				if not tg0.is_empty():
 					kfx.word(player.global_position + Vector2(0, -96), "KLANG!", style.color("white"), 22)
 				return
 			var wide: bool = params.get("wide", false)
 			var w := 88.0 if wide else 52.0
 			_sweep(34.0 if not wide else 44.0, 1.1, -1.8, 9.0, style.color("blue"), 0.26)
+			kfx.klang_burst("himmelsreigen", player.global_position + Vector2(player.facing * w * 0.4, -46.0), 100.0 if not wide else 120.0, 0.36, 0.0, player.facing < 0)
 			var rect := Rect2(player.global_position.x + (0.0 if player.facing > 0 else -w), player.global_position.y - 70, w, 70)
 			var tg := _hit(rect, dmg, 30.0, "heavy", float(params.get("launch", 330)), _hit_set, w)
 			_break(tg)
@@ -688,6 +712,7 @@ func _tick_lauschen() -> void:
 				if params.get("break", false):
 					_break(tg)
 				kfx.word(player.global_position + Vector2(player.facing * 30.0, -56), "SHING!", style.color("white"), 24)
+				kfx.klang_burst("sicheltakt", player.global_position + Vector2(player.facing * 34.0, -26.0), 80.0, 0.35, 0.0, player.facing < 0)
 		if t >= 0.32:
 			_next_phase()
 	elif phase == "recovery" and t >= _f(2) * 0.6:
@@ -716,6 +741,7 @@ func try_counter(from_x: float, projectile: Node = null) -> bool:
 	kfx.ring(c, 34.0, style.color("white"), 0.4, 4.0)
 	kfx.shards(c, -PI / 2.0, PI, 14, 240.0, style.color("pale"))
 	kfx.word(c + Vector2(0, -44), "KONTER!", style.color("white"), 28)
+	kfx.klang_burst("seelenlauschen", c, 72.0, 0.5, 0.0, false, Color.WHITE, 0.3)
 	world.fx.flash(0.2 * FxSettings.factor("flash"), Color(0.75, 0.88, 1.0))
 	world.fx.freeze(0.1 * FxSettings.factor("stop"))
 	world.fx.shake(5.0 * FxSettings.factor("shake"))
@@ -754,6 +780,7 @@ func _tick_schritt() -> void:
 				if not tg.is_empty():
 					on_zug_hit(zug_id, tg)
 			kfx.word(player.global_position + Vector2(0, -50), "SWISH!", style.color("pale"), 18)
+			kfx.klang_burst("sichelschritt", player.global_position + Vector2(player.facing * 30.0, -22.0), 90.0, 0.3, 0.0, player.facing < 0, Color.WHITE, 0.6, Vector2(player.facing * 240.0, 0))
 	elif phase == "active":
 		_ghost_t -= get_physics_process_delta_time()
 		if _ghost_t <= 0.0:
@@ -835,6 +862,7 @@ func _land() -> void:
 	kfx.ring(p + Vector2(0, -4), 34.0, style.color("pale"), 0.3, 3.0)
 	kfx.shards(p + Vector2(player.facing * 10.0, -2), -PI / 2.0, 1.1, 10, 220.0, style.color("pale"))
 	kfx.word(p + Vector2(0, -52), "KLANG!", style.color("white"), 26)
+	kfx.klang_burst("fallende_sichel", p + Vector2(player.facing * 8.0, -44.0), 96.0, 0.45, 0.0, player.facing < 0)
 	world.fx.shake(5.0 * FxSettings.factor("shake"))
 	world.fx.punch(0.03)
 	var hs := {}

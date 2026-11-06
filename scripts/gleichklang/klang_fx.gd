@@ -13,6 +13,11 @@ const WHITE := Color("f4fbff")
 const VIOLET := Color("a884f3")
 const RED := Color("e83b3b")
 const INK := Color("16121f")
+## PixelLab effect sprites (tools/gleichklang/gen_fx.py), drawn additive with
+## crisp pixels on top of the code arcs so the bloom picks them up.
+const KPIC_DIR := "res://assets/combat/vfx/gleichklang/%s.png"
+
+static var _kpic_tex := {}
 
 var room: Node  # TrainingRoom
 var font: Font
@@ -23,6 +28,8 @@ var _fx: Array = []
 var _once: Array = []      # one-frame shapes (beat ring, Klangloch glow)
 var _speech: Dictionary = {}
 var _speech_pos := Vector2.ZERO
+var _kspr: Node2D
+var _kpics: Array = []
 ## Colour of the beat ring (follows the Klangfarbe).
 var beat_col := BLUE
 
@@ -39,6 +46,14 @@ func _ready() -> void:
 	_add.material = m
 	_add.draw.connect(_draw_add)
 	add_child(_add)
+	_kspr = Node2D.new()
+	_kspr.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	var sm := CanvasItemMaterial.new()
+	sm.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	sm.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	_kspr.material = sm
+	_kspr.draw.connect(_draw_kpics)
+	add_child(_kspr)
 	_top = Node2D.new()
 	_top.z_index = 3
 	var tm := CanvasItemMaterial.new()
@@ -50,6 +65,24 @@ func _ready() -> void:
 
 
 # --- building blocks ----------------------------------------------------------
+
+static func kpic(id: String) -> Texture2D:
+	if not _kpic_tex.has(id):
+		var p := KPIC_DIR % id
+		_kpic_tex[id] = load(p) if ResourceLoader.exists(p) else null
+	return _kpic_tex[id]
+
+
+## A PixelLab effect sprite that pops in, grows a little and fades.
+## `size` is the drawn width in px, `grow0` the start scale, `drift` moves it.
+func klang_burst(id: String, pos: Vector2, size: float, life := 0.35, rot := 0.0, flip := false,
+		col := Color.WHITE, grow0 := 0.5, drift := Vector2.ZERO) -> void:
+	if kpic(id) == null:
+		return
+	_kpics.append({"id": id, "pos": pos, "size": size, "life": life, "max": life, "rot": rot,
+		"flip": flip, "col": col, "g0": grow0, "vel": drift})
+	glow(pos, Color(BLUE, 0.45), size * 0.4, life * 0.7)
+
 
 ## Sickle arc: a crescent band around `center` from angle a0 to a1 that
 ## sweeps in during the first third of its life, then fades. `width` is the
@@ -136,6 +169,11 @@ func _process(delta: float) -> void:
 			if f.type == "shard":
 				f.vel *= pow(0.9, delta * 60.0)
 	_fx = _fx.filter(func(f): return f.life > 0.0)
+	for q in _kpics:
+		q.life -= delta
+		q.pos += q.vel * delta
+	_kpics = _kpics.filter(func(q): return q.life > 0.0)
+	_kspr.queue_redraw()
 	if not _speech.is_empty():
 		_speech.life -= delta
 		if _speech.life <= 0.0:
@@ -145,6 +183,18 @@ func _process(delta: float) -> void:
 
 
 # --- draw -------------------------------------------------------------------------
+
+func _draw_kpics() -> void:
+	for q in _kpics:
+		var p: float = 1.0 - q.life / q.max
+		var k := minf(1.0, p * 5.0)
+		var sc: float = lerpf(q.g0, 1.0, 1.0 - pow(1.0 - k, 3.0)) * (1.0 + 0.12 * p)
+		var a: float = 1.0 if p < 0.4 else 1.0 - (p - 0.4) / 0.6
+		var s: float = q.size * sc
+		_kspr.draw_set_transform(q.pos, q.rot, Vector2(-1.0 if q.flip else 1.0, 1.0))
+		_kspr.draw_texture_rect(kpic(q.id), Rect2(Vector2(-s, -s) * 0.5, Vector2(s, s)), false, Color(q.col, q.col.a * a))
+	_kspr.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+
 
 func _glow(ci: CanvasItem, pos: Vector2, r: float, col: Color) -> void:
 	ci.draw_texture_rect(GlutFx.glow_texture(), Rect2(pos - Vector2(r, r), Vector2(r, r) * 2.0), false, col)
