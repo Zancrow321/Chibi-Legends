@@ -99,7 +99,8 @@ jobs:
 
       - name: Kampfstil-Test (30 Baukasten-Stile, alle Züge und Meisterzüge)
         run: |
-          timeout 900 godot --headless --fixed-fps 60 -s res://tools/formen/test_formen.gd 2>&1 | tee formen.log | grep -E "FORMEN|SCRIPT ERROR" | head -120 || true
+          timeout 900 godot --headless --fixed-fps 60 -s res://tools/formen/test_formen.gd > formen.log 2>&1 || true
+          grep -E "FORMEN|SCRIPT ERROR" -A2 formen.log | head -150 || true
           grep -q "FORMEN-TEST OK" formen.log
           ! grep -E "SCRIPT ERROR|Parse Error" formen.log
 
