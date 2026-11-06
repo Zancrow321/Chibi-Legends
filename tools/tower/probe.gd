@@ -44,6 +44,10 @@ func _initialize() -> void:
 
 func _process(_delta: float) -> bool:
 	f += 1
+	if room != null and is_instance_valid(room):
+		# kill slow motions run on the wall clock; the test runs faster than real time
+		room._slow_until = 0
+		Engine.time_scale = 1.0
 	if p != null and is_instance_valid(p) and tw != null and tw.state != "over" and not _ko:
 		p.hp = p.max_hp
 	for s in steps:
