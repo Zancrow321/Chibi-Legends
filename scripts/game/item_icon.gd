@@ -27,14 +27,15 @@ static func draw_icon(ci: CanvasItem, c: Vector2, item: Dictionary, s: float) ->
 	var col := Loot.color(item)
 	var v := int(item.get("icon", 0)) % 3
 	var kind := str(item.get("slot", "waffe"))
-	var t := texture(kind, v)
+	var t: Texture2D = ItemSets.texture(str(item.set), kind) if item.has("set") else null  # set pieces have their own look
 	var own := str(item.get("icon_key", ""))  # own PixelLab icon, e.g. the katana Glutklinge
-	if own != "":
-		var p := "res://assets/items/%s.png" % own
+	if t == null and own != "":
 		if not _tex.has(own):
+			var p := "res://assets/items/%s.png" % own
 			_tex[own] = load(p) if ResourceLoader.exists(p) else null
-		if _tex[own] != null:
-			t = _tex[own]
+		t = _tex[own]
+	if t == null:
+		t = texture(kind, v)
 	if t != null:
 		var size := 18.0 * s
 		ci.draw_texture_rect(t, Rect2(c - Vector2(size, size) * 0.5, Vector2(size, size)), false)

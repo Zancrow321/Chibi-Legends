@@ -9,9 +9,9 @@ extends Node2D
 ## Combat areas: background, training room and HUD.
 ## Look test: [B] switches the view (flat original / HD-2D A with a 3D
 ## backdrop / HD-2D B fully 3D / Licht: 2D lights at dusk + parallax, the
-## default), [G] the graphics preset (Hoch/Mittel/Niedrig), [N] jumps between
-## Licht and flat. The Licht view is built by DuskStage inside the training room.
-## On the web, ?view=flat|a|b|licht, ?abend=0 and ?q=0|1|2 in the URL pick them directly.
+## default), [N] jumps between Licht and flat. Effects always run at the
+## highest graphics preset (Hd2dSettings). The Licht view is built by DuskStage inside the training room.
+## On the web, ?view=flat|a|b|licht and ?abend=0 in the URL pick them directly.
 
 const VIEWS := ["Original (flach)", "HD-2D A: 3D-Kulisse", "HD-2D B: alles 3D", "Licht: Pixel + Dämmerung"]
 
@@ -27,7 +27,7 @@ func _ready() -> void:
 	_read_url()
 	GameSettings.ensure()
 	Profile.ensure()
-	for a in [["cycle_view", KEY_B], ["cycle_quality", KEY_G], ["open_creator", KEY_O]]:
+	for a in [["cycle_view", KEY_B], ["open_creator", KEY_O]]:
 		if not InputMap.has_action(a[0]):
 			InputMap.add_action(a[0])
 			var ev := InputEventKey.new()
@@ -86,8 +86,6 @@ func _ready() -> void:
 	hud.room = room
 	hud.process_mode = Node.PROCESS_MODE_ALWAYS  # cut-in banner plays during the super pause
 	room.hud = hud
-	hud.show_help = not GameFlow.combat_help_seen  # H opens it again
-	GameFlow.combat_help_seen = true
 	hud_layer.add_child(hud)
 	var info := Hd2dInfo.new()
 	info.view_name = VIEWS[view_mode]
@@ -184,7 +182,7 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("open_creator"):
 		get_tree().call_group("creator", "open")
 	if GameFlow.is_overworld():
-		return  # the look test (views, quality) belongs to the combat areas
+		return  # the look test (views) belongs to the combat areas
 	if Input.is_action_just_pressed("cycle_view"):
 		view_mode = (view_mode + 1) % VIEWS.size()
 		get_tree().reload_current_scene.call_deferred()
@@ -192,9 +190,6 @@ func _process(_delta: float) -> void:
 		view_mode = 0 if view_mode == 3 else 3
 		get_tree().paused = false
 		get_tree().reload_current_scene.call_deferred()
-	if Input.is_action_just_pressed("cycle_quality"):
-		Hd2dSettings.quality = (Hd2dSettings.quality + 2) % 3  # Hoch -> Mittel -> Niedrig -> Hoch
-		get_tree().call_group("hd2d_view", "apply_quality")
 
 
 static func _read_url() -> void:
@@ -212,5 +207,3 @@ static func _read_url() -> void:
 			view_mode = 0 if kv[1] == "0" else 3
 		elif kv[0] == "titel":
 			show_title = kv[1] != "0"
-		elif kv[0] == "q" and kv[1].is_valid_int():
-			Hd2dSettings.quality = clampi(kv[1].to_int(), 0, 2)

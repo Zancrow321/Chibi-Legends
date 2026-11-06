@@ -213,7 +213,7 @@ func cast(dir: String) -> bool:
 	_grab = Vector2.INF
 	_grab_target = null
 	var alt_cd = style.alt(z).get("cd", null)
-	cooldowns[z] = float(alt_cd) if alt_cd != null else float(style.zug(z).get("cd", 1.0))
+	cooldowns[z] = style.cooldown(z, alt_cd)
 	player.move = {}
 	if style.zug(z).get("gear", false):
 		_spent = _spend_energy()

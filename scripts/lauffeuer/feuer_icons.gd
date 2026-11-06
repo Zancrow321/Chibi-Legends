@@ -21,6 +21,8 @@ const ICON := {
 
 
 static func draw(ci: CanvasItem, r: Rect2, id: String, t := 0.0) -> void:
+	if PixelSkillIcon.try_draw(ci, r, "lauffeuer", id, t, BG, EDGE, Color(1.0, 0.7, 0.35)):
+		return
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = BG
 	sb.set_corner_radius_all(6)

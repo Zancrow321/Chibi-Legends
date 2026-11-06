@@ -235,12 +235,12 @@ func _build_props() -> void:
 	for p in PROPS:
 		_prop(p[0], p[1], p[2])
 	var portal := PortalFx.new()
-	portal.position = Vector2(1730.0 - 1.0, GROUND_Y - 56.0)
+	portal.position = Vector2(1730.0, GROUND_Y - 52.0)
 	portal.z_index = -1
 	add_child(portal)
 	var seal := PortalFx.new()
 	seal.sealed = true
-	seal.position = Vector2(2060.0 + 4.0, GROUND_Y - 44.0)
+	seal.position = Vector2(2060.0, GROUND_Y - 46.0)
 	seal.z_index = -1
 	add_child(seal)
 	var water := FountainFx.new()
@@ -379,16 +379,16 @@ func _build_light() -> void:
 		_lanterns.append(l)
 		_halo_sprite(Color(1.4, 1.1, 0.6, 0.4), 0.5, l.position)
 	_portal_light = _light(Color(0.35, 1.0, 0.85), 1.1, 1.0)
-	_portal_light.position = Vector2(1729, GROUND_Y - 56)
+	_portal_light.position = Vector2(1730, GROUND_Y - 52)
 	_seal_light = _light(Color(1.0, 0.5, 0.2), 1.0, 0.9)
-	_seal_light.position = Vector2(2064, GROUND_Y - 44)
+	_seal_light.position = Vector2(2060, GROUND_Y - 46)
 	_star_light = _light(Color(0.5, 0.85, 1.0), 0.9, 0.8)
-	_star_light.position = Vector2(1270, TERRACE_Y - 45)
+	_star_light.position = Vector2(1270, TERRACE_Y - 38)
 	_halo_sprite(Color(0.6, 1.2, 1.6, 0.5), 0.55, _star_light.position)
 	_forge_light = _light(Color(1.0, 0.55, 0.25), 1.2, 0.8)
-	_forge_light.position = Vector2(930, GROUND_Y - 30)
+	_forge_light.position = Vector2(953, GROUND_Y - 50)
 	PostFx.add_heat_source(_forge_light, Vector2(0, -8), 26.0, 0.7)
-	_halo_sprite(Color(1.6, 0.8, 0.3, 0.45), 0.5, Vector2(926, GROUND_Y - 32))
+	_halo_sprite(Color(1.6, 0.8, 0.3, 0.45), 0.5, Vector2(953, GROUND_Y - 52))
 	var wl := _light(Color(0.85, 0.9, 1.0), 0.35, 0.42, walker)
 	wl.position = Vector2(0, -24)
 

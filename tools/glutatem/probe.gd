@@ -24,7 +24,6 @@ func _initialize() -> void:
 	DirAccess.remove_absolute(ProjectSettings.globalize_path("user://style_glutatem.json"))
 	GameFlow.area = "trainingswald"
 	GameFlow.mode = GameFlow.DUNGEON
-	GameFlow.combat_help_seen = true
 	load("res://scripts/main.gd").show_title = false
 	change_scene_to_file("res://scenes/main.tscn")
 	var t := 40

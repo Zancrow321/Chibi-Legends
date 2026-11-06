@@ -39,7 +39,7 @@ func _init() -> void:
 
 func _ready() -> void:
 	_inst = self
-	add_to_group("hd2d_view")  # G key and the options call apply_quality()
+	add_to_group("hd2d_view")  # apply_quality() runs once; quality is fixed at Hoch
 	process_mode = Node.PROCESS_MODE_ALWAYS  # rings keep running during hit-stop
 	_rect = ColorRect.new()
 	_rect.set_anchors_preset(Control.PRESET_FULL_RECT)

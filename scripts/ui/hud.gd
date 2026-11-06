@@ -26,7 +26,14 @@ const MENU := [
 
 var room: TrainingRoom
 var font: Font
-var show_help := true
+## Steuerungshilfe: standardmaessig aus, H oder Optionen schalten sie ein (gespeichert).
+var show_help: bool:
+	get:
+		GameSettings.ensure()
+		return GameSettings.controls_help
+	set(v):
+		GameSettings.ensure()
+		GameSettings.controls_help = v
 ## Manga-Panel-Skin (PixelLab-Teile, Taste I oder ?ui=alt schaltet zurueck auf das alte UI)
 var manga := true
 var _menu_rects: Array = []
@@ -69,6 +76,7 @@ func _process(delta: float) -> void:
 	size = get_viewport_rect().size
 	if Input.is_action_just_pressed("toggle_help"):
 		show_help = not show_help
+		GameSettings.save()
 	if Input.is_action_just_pressed("toggle_ui"):
 		manga = not manga
 	queue_redraw()
@@ -86,7 +94,7 @@ func _gui_input(event: InputEvent) -> void:
 				"Inventar":
 					get_tree().call_group("game_menu", "open", 1)
 				"Optionen":
-					get_tree().call_group("game_menu", "open", 2)
+					get_tree().call_group("game_menu", "open", GameMenu.OPTIONS_TAB)
 				"Gacha":
 					get_tree().call_group("gacha", "open")
 				"Pass":
@@ -771,7 +779,7 @@ func _draw_style_slots(slots: Array, arrows: Array, sk: String) -> void:
 		if z == "":
 			slots.append({"label": "leer", "key": arrows[i] + sk, "icon": "", "cd": 0.0, "max": 1.0})
 			continue
-		slots.append({"label": p.style.zug(z).name, "key": arrows[i] + sk, "icon": z, "cd": g.cooldowns.get(z, 0.0), "max": float(p.style.zug(z).get("cd", 1.0)), "zug": true})
+		slots.append({"label": p.style.zug(z).name, "key": arrows[i] + sk, "icon": z, "cd": g.cooldowns.get(z, 0.0), "max": p.style.cooldown(z), "zug": true})
 	slots.append({"label": p.style.variant().get("name", "Meisterzug"), "key": GameInput.key_label("super"), "icon": "meisterzug", "cd": 0.0, "max": 1.0, "super": true})
 	var slot := 46.0
 	var gap := 8.0

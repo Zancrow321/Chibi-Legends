@@ -18,11 +18,21 @@ func _initialize() -> void:
 	GameFlow.mode = GameFlow.OVERWORLD
 	change_scene_to_file("res://scenes/main.tscn")
 	steps = [[50, "fill"], [60, "open:0"], [80, "shot:01_charakter"], [90, "open:1"], [110, "shot:02_inventar"],
-		[115, "reforge"], [130, "shot:03_umgeschmiedet"], [140, "quit"]]
+		[115, "reforge"], [130, "shot:03_umgeschmiedet"],
+		[135, "extras"], [140, "open:1"], [150, "pick_legend"], [165, "shot:04_legendaer_mod"],
+		[170, "pick_set"], [180, "socket"], [195, "shot:05_set_sockel"],
+		[200, "open:2"], [215, "shot:06_steine"], [220, "open:0"], [235, "shot:07_charakter_sets"], [240, "quit"]]
 
 
 func _menu() -> GameMenu:
 	return get_nodes_in_group("game_menu")[0]
+
+
+func _index_of(pred: Callable) -> int:
+	for i in Profile.items.size():
+		if pred.call(Profile.items[i]):
+			return i
+	return 0
 
 
 func _process(_delta: float) -> bool:
@@ -53,6 +63,31 @@ func _do(cmd: String) -> void:
 			for j in 8:
 				Profile.add_item(Loot.roll(8, -1))
 			print("Plätze: ", Profile.equipped)
+		"extras":
+			Gems.reset()
+			for g in ["rubin_1", "rubin_1", "rubin_1", "rubin_2", "smaragd_1", "topas_3", "saphir_2", "amethyst_1", "onyx_2", "onyx_1"]:
+				Gems.add(g)
+			var legend := Loot.roll(8, 3, "waffe", "glutatem")
+			legend["mod"] = "esse_atem"
+			legend["sockets"] = ["topas_3", ""]
+			Profile.add_item(legend)
+			Profile.toggle_equip(legend.uid)
+			for k in ["oberteil", "hose", "schuhe", "accessoire"]:
+				var piece := Loot.roll(8, 2, k)
+				ItemSets.make_piece(piece, "glutschmied")
+				Profile.add_item(piece)
+				Profile.toggle_equip(piece.uid)
+			var other := Loot.roll(8, 3, "talisman", "bollwerk")
+			other["mod"] = "panzerkammer"
+			Profile.add_item(other)
+			Profile.toggle_equip(other.uid)
+		"pick_legend":
+			_menu()._sel = _index_of(func(it): return str(it.get("mod", "")) == "esse_atem")
+		"pick_set":
+			_menu()._sel = _index_of(func(it): return it.has("set") and Loot.free_socket(it) >= 0)
+		"socket":
+			_menu()._gsel = 3  # Rubin, Geschliffen
+			_menu()._socket_selected()
 		"open":
 			_menu().open(int(parts[1]))
 			_menu()._set_tab(int(parts[1]))

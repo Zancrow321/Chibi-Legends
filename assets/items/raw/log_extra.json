@@ -1,0 +1,402 @@
+{
+ "gems/rubin_2": {
+  "prompt": "a faceted cut red ruby gem, clean polished facets, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gems/rubin_1": {
+  "prompt": "a small rough uncut red ruby gem stone, raw crystal chunk, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gems/rubin_3": {
+  "prompt": "a large radiant brilliant cut red ruby gem, glowing sparkles and light rays, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gems/smaragd_1": {
+  "prompt": "a small rough uncut green emerald gem stone, raw crystal chunk, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gems/smaragd_2": {
+  "prompt": "a faceted cut green emerald gem, clean polished facets, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gems/smaragd_3": {
+  "prompt": "a large radiant brilliant cut green emerald gem, glowing sparkles and light rays, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gems/topas_1": {
+  "prompt": "a small rough uncut yellow topaz gem stone, raw crystal chunk, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gems/topas_2": {
+  "prompt": "a faceted cut yellow topaz gem, clean polished facets, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gems/topas_3": {
+  "prompt": "a large radiant brilliant cut yellow topaz gem, glowing sparkles and light rays, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gems/saphir_1": {
+  "prompt": "a small rough uncut blue sapphire gem stone, raw crystal chunk, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gems/saphir_2": {
+  "prompt": "a faceted cut blue sapphire gem, clean polished facets, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gems/saphir_3": {
+  "prompt": "a large radiant brilliant cut blue sapphire gem, glowing sparkles and light rays, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gems/amethyst_1": {
+  "prompt": "a small rough uncut purple amethyst gem stone, raw crystal chunk, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gems/amethyst_2": {
+  "prompt": "a faceted cut purple amethyst gem, clean polished facets, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gems/amethyst_3": {
+  "prompt": "a large radiant brilliant cut purple amethyst gem, glowing sparkles and light rays, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gems/onyx_1": {
+  "prompt": "a small rough uncut black onyx with a white sheen gem stone, raw crystal chunk, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gems/onyx_2": {
+  "prompt": "a faceted cut black onyx with a white sheen gem, clean polished facets, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gems/onyx_3": {
+  "prompt": "a large radiant brilliant cut black onyx with a white sheen gem, glowing sparkles and light rays, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/waldwaechter_waffe": {
+  "prompt": "a sword, moss green and bark brown, leaf and vine ornaments, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/waldwaechter_oberteil": {
+  "prompt": "a chest armor vest, moss green and bark brown, leaf and vine ornaments, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/waldwaechter_hose": {
+  "prompt": "armored trousers, moss green and bark brown, leaf and vine ornaments, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/waldwaechter_schuhe": {
+  "prompt": "a pair of boots, moss green and bark brown, leaf and vine ornaments, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/waldwaechter_accessoire": {
+  "prompt": "a belt with a buckle, moss green and bark brown, leaf and vine ornaments, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/waldwaechter_talisman": {
+  "prompt": "a pendant amulet, moss green and bark brown, leaf and vine ornaments, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/glutschmied_waffe": {
+  "prompt": "a sword, dark iron with glowing orange ember cracks, forge-heated metal, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/glutschmied_oberteil": {
+  "prompt": "a chest armor vest, dark iron with glowing orange ember cracks, forge-heated metal, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/glutschmied_hose": {
+  "prompt": "armored trousers, dark iron with glowing orange ember cracks, forge-heated metal, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/glutschmied_schuhe": {
+  "prompt": "a pair of boots, dark iron with glowing orange ember cracks, forge-heated metal, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/glutschmied_accessoire": {
+  "prompt": "a belt with a buckle, dark iron with glowing orange ember cracks, forge-heated metal, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/glutschmied_talisman": {
+  "prompt": "a pendant amulet, dark iron with glowing orange ember cracks, forge-heated metal, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/sturmlaeufer_waffe": {
+  "prompt": "a sword, white and sky blue, feather and wind swirl ornaments, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/sturmlaeufer_oberteil": {
+  "prompt": "a chest armor vest, white and sky blue, feather and wind swirl ornaments, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/sturmlaeufer_hose": {
+  "prompt": "armored trousers, white and sky blue, feather and wind swirl ornaments, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/sturmlaeufer_schuhe": {
+  "prompt": "a pair of boots, white and sky blue, feather and wind swirl ornaments, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/sturmlaeufer_accessoire": {
+  "prompt": "a belt with a buckle, white and sky blue, feather and wind swirl ornaments, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/sturmlaeufer_talisman": {
+  "prompt": "a pendant amulet, white and sky blue, feather and wind swirl ornaments, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/mondschatten_waffe": {
+  "prompt": "a sword, dark violet and silver, crescent moon ornaments, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/mondschatten_oberteil": {
+  "prompt": "a chest armor vest, dark violet and silver, crescent moon ornaments, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/mondschatten_hose": {
+  "prompt": "armored trousers, dark violet and silver, crescent moon ornaments, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/mondschatten_schuhe": {
+  "prompt": "a pair of boots, dark violet and silver, crescent moon ornaments, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/mondschatten_accessoire": {
+  "prompt": "a belt with a buckle, dark violet and silver, crescent moon ornaments, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "sets/mondschatten_talisman": {
+  "prompt": "a pendant amulet, dark violet and silver, crescent moon ornaments, matching equipment set piece, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "mods/glutatem": {
+  "prompt": "a glowing orange fire rune stone with a breath flame swirl, legendary magic engraving, golden frame, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "mods/bollwerk": {
+  "prompt": "a steel blue armor rune plate with a shield emblem, legendary magic engraving, golden frame, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "mods/gleichklang": {
+  "prompt": "a crimson soul rune stone with a scythe crescent emblem, legendary magic engraving, golden frame, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "mods/grenzbrecher": {
+  "prompt": "a golden energy rune orb with a bright fist emblem, legendary magic engraving, golden frame, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "mods/lauffeuer": {
+  "prompt": "a red orange flame rune stone with a fist of fire emblem, legendary magic engraving, golden frame, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "mods/schwarzmond": {
+  "prompt": "a black and crimson rune stone with a dark moon emblem, legendary magic engraving, golden frame, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "mods/spannkraft": {
+  "prompt": "a rubbery tan rune stone with a coiled spring emblem, legendary magic engraving, golden frame, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "mods/wirbelwille": {
+  "prompt": "an orange wind rune stone with a spiral swirl emblem, legendary magic engraving, golden frame, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "seed": 83,
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ }
+}

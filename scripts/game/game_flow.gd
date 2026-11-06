@@ -25,8 +25,6 @@ static var area := "akademie_hof"
 ## (empty = first start, the dormitory steps).
 static var entry_door := ""
 static var _url_read := false
-## The combat help panel opens by itself only on the first combat visit.
-static var combat_help_seen := false
 
 
 static func is_overworld() -> bool:

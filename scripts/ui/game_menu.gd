@@ -5,12 +5,15 @@ extends Control
 ##   Charakter: the figure, level and EXP, all stats, the three gear slots.
 ##   Inventar:  the bag (30 places), item card with comparison, equip and
 ##              salvage into Splitter.
+##   Steine:    the Edelstein pouch (fuse 3 into 1 at Hino), the worn sets
+##              with their bonus steps and the worn legendary mods.
 ##   Optionen:  volume, effect strength, graphics, damage numbers, shake,
 ##              fullscreen (GameSettings, saved at once).
 ## Pauses the game while open. Keys: Q/E tab, arrows/WASD choose, Space/Enter
-## use, X salvage, Esc close. Mouse works everywhere.
+## use, X salvage, G set a gem, Esc close. Mouse works everywhere.
 
-const TABS := ["Charakter", "Inventar", "Optionen"]
+const TABS := ["Charakter", "Inventar", "Steine", "Optionen"]
+const OPTIONS_TAB := 3
 const COLS := 6
 const ROWS := 5
 const CELL := 66.0
@@ -34,6 +37,7 @@ var _toast := ""
 var _toast_t := 0.0
 var _confirm_salvage := ""
 var _reforge_stat := ""  # affix picked for Umschmieden on the item card
+var _gsel := 0  # Steine tab: gem cell (row = kind, column = tier)
 
 
 func _ready() -> void:
@@ -145,7 +149,7 @@ func _key(k: Key) -> void:
 		KEY_E, KEY_TAB:
 			_tab(1)
 			return
-		KEY_1, KEY_2, KEY_3:
+		KEY_1, KEY_2, KEY_3, KEY_4:
 			_set_tab(k - KEY_1)
 			return
 	if tab == 1:
@@ -166,7 +170,21 @@ func _key(k: Key) -> void:
 				_sort()
 			KEY_U:
 				_reforge_selected()
+			KEY_G:
+				_socket_selected()
 	elif tab == 2:
+		match k:
+			KEY_LEFT, KEY_A:
+				_move_gsel(-1)
+			KEY_RIGHT, KEY_D:
+				_move_gsel(1)
+			KEY_UP, KEY_W:
+				_move_gsel(-3)
+			KEY_DOWN, KEY_S:
+				_move_gsel(3)
+			KEY_SPACE, KEY_ENTER, KEY_F:
+				_fuse_selected()
+	elif tab == OPTIONS_TAB:
 		match k:
 			KEY_UP, KEY_W:
 				_opt = (_opt - 1 + _options().size()) % _options().size()
@@ -277,6 +295,95 @@ func _reforge_target(it: Dictionary) -> String:
 	return last
 
 
+## Sets a gem into the first free socket: the gem picked on the Steine tab
+## when there is one in the pouch, else the best gem in the pouch.
+func _socket_selected() -> void:
+	var it := _sel_item()
+	if it.is_empty():
+		return
+	if not it.has("sockets"):
+		_say("Dieser Gegenstand hat keinen Sockel")
+		Sfx.play("ui_error")
+		return
+	if Loot.free_socket(it) < 0:
+		_say("Alle Sockel belegt (Hino kann Steine lösen)")
+		Sfx.play("ui_error")
+		return
+	var gem := _socket_gem()
+	if gem == "":
+		_say("Keine Edelsteine im Beutel. Gegner lassen sie fallen.")
+		Sfx.play("ui_error")
+		return
+	Profile.socket_gem(it.uid, gem)
+	get_tree().call_group("profile_user", "apply_profile")
+	_say("%s eingesetzt: %s" % [Gems.display_name(gem), Gems.line(gem)])
+	Sfx.play("rare_drop", -6.0)
+
+
+func _socket_gem() -> String:
+	var picked := _gsel_gem()
+	if Gems.count(picked) > 0:
+		return picked
+	var owned := Gems.owned()
+	return owned[0] if not owned.is_empty() else ""
+
+
+## Hino takes a gem back out of a socket (courtyard only, costs Splitter).
+func _unsocket(i: int) -> void:
+	var it := _sel_item()
+	var sockets: Array = it.get("sockets", [])
+	if i >= sockets.size() or str(sockets[i]) == "":
+		_socket_selected()
+		return
+	if not GameFlow.is_overworld():
+		_say("Steine lösen kann Schmiedin Hino im Akademie-Hof")
+		Sfx.play("ui_error")
+		return
+	var gem := str(sockets[i])
+	var cost := Gems.unsocket_cost(gem)
+	if not Profile.unsocket_gem(it.uid, i):
+		_say("Zu wenig Splitter (%d nötig)" % cost)
+		Sfx.play("ui_error")
+		return
+	get_tree().call_group("profile_user", "apply_profile")
+	_say("%s zurück im Beutel (−%d Splitter)" % [Gems.display_name(gem), cost])
+	Sfx.play("hit_blade", -6.0)
+
+
+func _gsel_gem() -> String:
+	return Gems.make_id(Gems.ORDER[_gsel / 3], _gsel % 3 + 1)
+
+
+func _move_gsel(d: int) -> void:
+	_gsel = clampi(_gsel + d, 0, Gems.ORDER.size() * 3 - 1)
+	Sfx.play("ui_click", -10.0)
+
+
+func _fuse_selected() -> void:
+	var gem := _gsel_gem()
+	if Gems.tier_of(gem) >= Gems.MAX_TIER:
+		_say("Strahlende Steine sind die höchste Stufe")
+		Sfx.play("ui_error")
+		return
+	if not GameFlow.is_overworld():
+		_say("Verschmelzen kann Schmiedin Hino im Akademie-Hof")
+		Sfx.play("ui_error")
+		return
+	if Gems.count(gem) < Gems.FUSE_COUNT:
+		_say("Du brauchst %d × %s" % [Gems.FUSE_COUNT, Gems.display_name(gem)])
+		Sfx.play("ui_error")
+		return
+	var cost := Gems.fuse_cost(gem)
+	var up := Profile.fuse_gem(gem)
+	if up == "":
+		_say("Zu wenig Splitter (%d nötig)" % cost)
+		Sfx.play("ui_error")
+		return
+	_gsel += 1
+	_say("Verschmolzen: %s  (−%d Splitter)" % [Gems.display_name(up), cost])
+	Sfx.play("super_flash", -8.0)
+
+
 func _sort() -> void:
 	Profile.items.sort_custom(func(a, b):
 		if int(a.rarity) != int(b.rarity):
@@ -295,10 +402,10 @@ func _options() -> Array:
 		["Gesamtlautstärke", "slider", "%d %%" % int(round(GameSettings.master * 100.0)), GameSettings.master],
 		["Effektlautstärke", "slider", "%d %%" % int(round(GameSettings.sfx * 100.0)), GameSettings.sfx],
 		["Effektstärke", "choice", FxSettings.level_name(), 0.0],
-		["Grafik", "choice", Hd2dSettings.NAMES[Hd2dSettings.quality], 0.0],
 		["Schadenszahlen", "toggle", "an" if GameSettings.numbers else "aus", 0.0],
 		["Bildschirmwackeln", "toggle", "an" if GameSettings.shake else "aus", 0.0],
 		["Vollbild", "toggle", "an" if GameSettings.fullscreen else "aus", 0.0],
+		["Steuerungshilfe (H)", "toggle", "an" if GameSettings.controls_help else "aus", 0.0],
 	]
 
 
@@ -312,14 +419,13 @@ func _change(i: int, d: int) -> void:
 			FxSettings.level = (FxSettings.level + d + FxSettings.LEVELS.size()) % FxSettings.LEVELS.size()
 			get_tree().call_group("bloom", "apply_level")
 		3:
-			Hd2dSettings.quality = (Hd2dSettings.quality + d + 3) % 3
-			get_tree().call_group("hd2d_view", "apply_quality")
-		4:
 			GameSettings.numbers = not GameSettings.numbers
-		5:
+		4:
 			GameSettings.shake = not GameSettings.shake
-		6:
+		5:
 			GameSettings.fullscreen = not GameSettings.fullscreen
+		6:
+			GameSettings.controls_help = not GameSettings.controls_help
 	GameSettings.apply()
 	GameSettings.save()
 	Sfx.play("ui_click", -2.0)
@@ -430,6 +536,8 @@ func _draw() -> void:
 			_draw_character(R)
 		1:
 			_draw_inventory(R)
+		2:
+			_draw_gems(R)
 		_:
 			_draw_options(R)
 	# footer: keys
@@ -437,8 +545,10 @@ func _draw() -> void:
 	var fy := R.end.y + 14.0
 	var keys := [["Q/E", "Reiter"], ["Esc", "Schließen"]]
 	if tab == 1:
-		keys = [["Q/E", "Reiter"], ["Pfeile", "Wählen"], ["Leer", "Anlegen"], ["X", "Zerlegen"], ["R", "Sortieren"], ["Esc", "Schließen"]]
+		keys = [["Q/E", "Reiter"], ["Pfeile", "Wählen"], ["Leer", "Anlegen"], ["G", "Stein einsetzen"], ["X", "Zerlegen"], ["R", "Sortieren"], ["Esc", "Schließen"]]
 	elif tab == 2:
+		keys = [["Q/E", "Reiter"], ["Pfeile", "Wählen"], ["F", "Verschmelzen (Hof)"], ["Esc", "Schließen"]]
+	elif tab == OPTIONS_TAB:
 		keys = [["Q/E", "Reiter"], ["↑↓", "Wählen"], ["←→", "Ändern"], ["Esc", "Schließen"]]
 	for k in keys:
 		var kw := _keycap(Vector2(fx, fy), k[0])
@@ -513,8 +623,10 @@ func _draw_character(R: Rect2) -> void:
 		["Krit-Schaden", _pct(1.5 + Profile.bonus("critdmg"))],
 		["Schadensminderung", _pct(minf(Loot.DEF_CAP, Profile.bonus("def")))],
 		["Leistenladung", "+" + _pct(Profile.bonus("gauge"))],
+		["Abklingzeit", "−" + _pct(1.0 - ItemSets.cooldown_factor())],
 		["Ausrüstungswert", str(Profile.gear_score())],
 		["Splitter", str(Profile.splitter)],
+		["Edelsteine", str(Gems.total())],
 		["Gegenstände", "%d / %d" % [Profile.items.size(), Profile.BAG_SIZE]],
 	]
 	var y := sr.position.y + 66.0
@@ -523,7 +635,7 @@ func _draw_character(R: Rect2) -> void:
 			draw_rect(Rect2(sr.position.x + 8, y - 20, sr.size.x - 16, 30), Color(INK, 0.06))
 		_ink(Vector2(sr.position.x + 18, y), rows[i][0], 16, Color(INK, 0.8))
 		_ink(Vector2(sr.position.x + 18, y), rows[i][1], 17, INK, HORIZONTAL_ALIGNMENT_RIGHT, sr.size.x - 36)
-		y += 34.0
+		y += 32.0
 	_ink(Vector2(sr.position.x + 16, sr.end.y - 22), "Pro Stufe: +3 % Leben, +2 % Schaden", 13, Color(INK, 0.6))
 
 	# gear slots
@@ -580,9 +692,37 @@ func _icon_box(r: Rect2, it: Dictionary, slot := "") -> void:
 		if int(it.rarity) >= 2:  # epic and legendary glow
 			draw_circle(r.get_center(), r.size.x * (0.36 + 0.03 * sin(_t * 4.0)), Color(col, 0.35))
 		ItemIcon.draw_icon(self, r.get_center(), it, r.size.x / 22.0)
+		_badges(r, it)
 	elif slot != "":
 		var ghost := {"slot": "talisman" if slot == "talisman2" else slot, "rarity": 0, "icon": 0}
 		_ghost(r, ghost)
+
+
+## Small marks on an item box: sockets (bottom left), set (green corner),
+## legendary mod (rune, bottom right).
+func _badges(r: Rect2, it: Dictionary) -> void:
+	var d := clampf(r.size.x * 0.13, 6.0, 12.0)
+	var sockets: Array = it.get("sockets", [])
+	for i in sockets.size():
+		var c := Vector2(r.position.x + d * 0.7 + i * (d + 2.0), r.end.y - d * 0.7)
+		draw_circle(c, d * 0.5 + 1.5, INK)
+		var g := str(sockets[i])
+		draw_circle(c, d * 0.5, Gems.color(g) if g != "" else Color("4a3a4a"))
+		if g != "":
+			draw_circle(c + Vector2(-d, -d) * 0.15, d * 0.15, Color(1, 1, 1, 0.8))
+	if it.has("set"):
+		var col: Color = ItemSets.info(str(it.set)).get("color", ItemSets.COLOR)
+		var p := r.position
+		draw_colored_polygon(PackedVector2Array([p, p + Vector2(d * 1.8, 0), p + Vector2(0, d * 1.8)]), col)
+		draw_polyline(PackedVector2Array([p + Vector2(d * 1.8, 0), p + Vector2(0, d * 1.8)]), INK, 1.5)
+	if it.has("mod"):
+		var mr := Rect2(r.end - Vector2(d * 2.0, d * 2.0), Vector2(d * 2.0, d * 2.0))
+		var t := ItemMods.texture(str(it.mod))
+		if t != null:
+			draw_texture_rect(t, mr, false)
+		else:
+			draw_circle(mr.get_center(), d * 0.8, Color("f9c22b"))
+			draw_arc(mr.get_center(), d * 0.8, 0, TAU, 12, INK, 1.5)
 
 
 ## Faint outline of an empty slot's item kind.
@@ -681,10 +821,11 @@ func _draw_inventory(R: Rect2) -> void:
 		if not same and not worn.is_empty() and absf(v - w) > 0.0005:
 			var d := v - w
 			_ink(Vector2(card.position.x + 24, y), ("%+.1f %%" % (d * 100.0)).replace(".", ","), 16, GOOD if d > 0 else BAD, HORIZONTAL_ALIGNMENT_RIGHT, card.size.x - 48)
-		y += 28.0
+		y += 25.0
+	y = _card_extras(card, it, y)
 	if it.has("line"):
-		_ink(Vector2(card.position.x + 24, y + 8), "„%s“" % it.line, 15, col.darkened(0.35))
-		y += 30.0
+		_ink(Vector2(card.position.x + 24, y + 4), "„%s“" % it.line, 13, col.darkened(0.35))
+		y += 20.0
 	if same:
 		_ink(Vector2(card.position.x + 24, y + 10), "Angelegt", 16, GOOD)
 	elif worn.is_empty():
@@ -699,6 +840,147 @@ func _draw_inventory(R: Rect2) -> void:
 	_button(Rect2(card.position.x + 20, by, 190, 38), "Ablegen" if same else "Anlegen", "Leer", _equip_selected, not same)
 	var gain := int(Loot.salvage_value(it))
 	_button(Rect2(card.position.x + 226, by, card.size.x - 246, 38), "Zerlegen +%d" % gain if _confirm_salvage != it.uid else "Sicher? Nochmal", "X", _salvage_selected)
+
+
+## Sockets (click: set a gem / at Hino take it out), set and legendary mod
+## of the item on the card. Returns the next free y.
+func _card_extras(card: Rect2, it: Dictionary, y: float) -> float:
+	var x := card.position.x + 24.0
+	var sockets: Array = it.get("sockets", [])
+	if not sockets.is_empty():
+		y += 4.0
+		var sx := x
+		for i in sockets.size():
+			var g := str(sockets[i])
+			var label := Gems.line(g) if g != "" else "Sockel frei"
+			var w := font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 14).x + 34.0
+			var r := Rect2(sx, y - 18, w, 26)
+			draw_rect(r, Color(Gems.color(g), 0.18) if g != "" else Color(INK, 0.07))
+			draw_rect(r, Color(INK, 0.5), false, 1.5)
+			draw_circle(Vector2(sx + 13, y - 5), 9.0, INK)
+			if g != "":
+				Gems.draw(self, Vector2(sx + 13, y - 5), g, 20.0)
+			else:
+				draw_circle(Vector2(sx + 13, y - 5), 7.0, Color("4a3a4a"))
+			_ink(Vector2(sx + 27, y), label, 14, INK if g != "" else Color(INK, 0.55))
+			var idx := i
+			_hits.append([r, func(_p): _unsocket(idx)])
+			sx += w + 8.0
+		y += 26.0
+	if it.has("set"):
+		var info := ItemSets.info(str(it.set))
+		var n := ItemSets.worn_count(str(it.set))
+		var col: Color = info.get("color", ItemSets.COLOR)
+		_tagged(Vector2(x + 4, y - 16), "Set", col.darkened(0.25), 13)
+		_ink(Vector2(x + 50, y), "%s  %d/6" % [info.name, n], 16, col.darkened(0.45))
+		var steps := ""
+		for step in ItemSets.STEPS:
+			steps += ("  ✓%d" if n >= step else "  ·%d") % step
+		_ink(Vector2(x, y), steps.strip_edges(), 14, Color(INK, 0.7), HORIZONTAL_ALIGNMENT_RIGHT, card.size.x - 48)
+		y += 24.0
+	if it.has("mod"):
+		var m := ItemMods.info(str(it.mod))
+		var active := str(m.get("style", "")) == ItemMods.current_style()
+		var t := ItemMods.texture(str(it.mod))
+		var ir := Rect2(x - 2, y - 18, 24, 24)
+		if t != null:
+			draw_texture_rect(t, ir, false)
+		_ink(Vector2(x + 28, y), "%s  ·  %s" % [m.get("name", ""), ItemMods.target_line(str(it.mod))], 15, Color("b07a00") if active else Color(INK, 0.5))
+		y += 19.0
+		var txt := str(m.get("text", ""))
+		if not active:
+			txt += "  (wirkt mit %s)" % Gacha.style_name(str(m.style))
+		_ink(Vector2(x + 28, y), txt, 13, INK if active else Color(INK, 0.5))
+		y += 20.0
+	return y
+
+
+# Steine ------------------------------------------------------------------------
+
+func _draw_gems(R: Rect2) -> void:
+	var inner := R.grow(-26)
+	var gx := inner.position.x
+	var gy := inner.position.y + 30.0
+	_ink(Vector2(gx, gy - 6), "Edelsteine", 22, RED)
+	_ink(Vector2(gx, gy - 6), "%d Splitter" % Profile.splitter, 16, INK, HORIZONTAL_ALIGNMENT_RIGHT, 420)
+	gy += 10.0
+	var cw := 134.0
+	var ch := 58.0
+	for i in Gems.ORDER.size() * 3:
+		var kind: String = Gems.ORDER[i / 3]
+		var gem := Gems.make_id(kind, i % 3 + 1)
+		var r := Rect2(gx + (i % 3) * (cw + 8), gy + (i / 3) * (ch + 6), cw, ch)
+		var n := Gems.count(gem)
+		_paper(r, Color(Gems.color(gem), 0.16).blend(Color(PAPER, 0.84)) if n > 0 else Color("e9dfc8"), 2)
+		Gems.draw(self, Vector2(r.position.x + 28, r.get_center().y), gem, 40.0)
+		if n == 0:
+			draw_rect(Rect2(r.position + Vector2(6, 6), Vector2(44, ch - 12)), Color("e9dfc8", 0.65))
+		_ink(Vector2(r.position.x + 54, r.position.y + 24), Gems.TIER_NAMES[i % 3 + 1], 13, Color(INK, 0.65))
+		_ink(Vector2(r.position.x + 54, r.position.y + 46), "× %d" % n, 20, INK if n > 0 else Color(INK, 0.4))
+		if i == _gsel:
+			draw_rect(r.grow(3.0 + sin(_t * 6.0)), RED, false, 3.0)
+		var idx := i
+		_hits.append([r, func(_p):
+			if _gsel == idx:
+				_fuse_selected()
+			else:
+				_gsel = idx
+				Sfx.play("ui_click", -10.0)])
+	# selected gem
+	var gem := _gsel_gem()
+	var by := gy + 6 * (ch + 6) + 6.0
+	_ink(Vector2(gx, by + 16), "%s: %s" % [Gems.display_name(gem), Gems.line(gem)], 16, INK)
+	if Gems.tier_of(gem) < Gems.MAX_TIER:
+		var hot := GameFlow.is_overworld() and Gems.can_fuse(gem)
+		_button(Rect2(gx, by + 28, 418, 36), "3 → 1 %s  −%d Splitter" % [Gems.TIER_NAMES[Gems.tier_of(gem) + 1], Gems.fuse_cost(gem)], "F", _fuse_selected, hot)
+	else:
+		_ink(Vector2(gx, by + 48), "Höchste Stufe", 14, Color(INK, 0.6))
+
+	# right: sets and mods
+	var rx := gx + 3 * (cw + 8) + 18.0
+	var rr := Rect2(rx, inner.position.y + 8, inner.end.x - rx, inner.size.y - 8)
+	_paper(rr)
+	var x := rr.position.x + 18.0
+	var y := rr.position.y + 32.0
+	_ink(Vector2(x, y), "Sets", 22, RED)
+	y += 30.0
+	var sets := ItemSets.worn_sets()
+	if sets.is_empty():
+		_ink(Vector2(x, y), "Kein Set-Teil angelegt.", 15, Color(INK, 0.7))
+		y += 20.0
+		_ink(Vector2(x, y), "Set-Teile sind episch und grün markiert.", 13, Color(INK, 0.6))
+		y += 26.0
+	for st in sets:
+		var col: Color = ItemSets.info(st.id).color
+		draw_rect(Rect2(x - 6, y - 17, 5, 22 + 20 * st.steps.size()), col)
+		_ink(Vector2(x + 4, y), "%s  %d/6" % [st.name, st.count], 17, col.darkened(0.45))
+		y += 22.0
+		for step in st.steps:
+			_ink(Vector2(x + 12, y), "(%d) %s" % [step.n, step.text], 14, INK if step.on else Color(INK, 0.4))
+			y += 20.0
+		y += 8.0
+	y += 10.0
+	_ink(Vector2(x, y), "Legendäre Mods", 22, RED)
+	y += 28.0
+	var mods := ItemMods.worn()
+	if mods.is_empty():
+		_ink(Vector2(x, y), "Keine angelegt.", 15, Color(INK, 0.7))
+		y += 20.0
+		_ink(Vector2(x, y), "Jedes legendäre Teil verändert einen Zug.", 13, Color(INK, 0.6))
+	var cur := ItemMods.current_style()
+	for mid in mods:
+		if y > rr.end.y - 30:
+			break
+		var m := ItemMods.info(mid)
+		var on: bool = m.style == cur
+		var t := ItemMods.texture(mid)
+		if t != null:
+			draw_texture_rect(t, Rect2(x - 2, y - 20, 28, 28), false)
+		_ink(Vector2(x + 32, y), str(m.name), 16, Color("b07a00") if on else Color(INK, 0.5))
+		_ink(Vector2(x + 32, y), ItemMods.target_line(mid), 12, Color(INK, 0.6) if on else Color(INK, 0.4), HORIZONTAL_ALIGNMENT_RIGHT, rr.size.x - 60)
+		y += 18.0
+		_ink(Vector2(x + 32, y), str(m.text) if on else "inaktiv: wirkt mit %s" % Gacha.style_name(str(m.style)), 13, INK if on else Color(INK, 0.45))
+		y += 26.0
 
 
 # Optionen ------------------------------------------------------------------------

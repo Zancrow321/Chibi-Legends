@@ -18,7 +18,9 @@ Fremd-Shader. Sie laufen im Compatibility-Renderer (WebGL 2, Browser).
 - Eigene Effekte: `PostFx.shockwave(pos, stärke)`, `PostFx.aberrate(px)`, `PostFx.heat_burst(pos)`,
   `PostFx.add_heat_source(node, offset, radius, stärke_oder_callable)`.
 
-## Grafikqualität (Optionen → Grafik, Taste G)
+## Grafikqualität
+Das Spiel läuft immer auf **Hoch** (alle Effekte auf Maximum). Es gibt keine Auswahl mehr
+(Taste G und Optionen → Grafik wurden entfernt). Die tieferen Stufen gibt es nur noch für den Testlauf:
 - **Hoch**: alles.
 - **Mittel**: ohne Hitzeflimmern.
 - **Niedrig**: keine Bildnachbearbeitung, keine Lichtstrahlen/Nebel, Gegner blinken statt sich aufzulösen.
