@@ -35,6 +35,28 @@ jobs:
           godot --headless --quit-after 60 2>&1 | tee run.log
           ! grep -E "SCRIPT ERROR|Parse Error" run.log
 
+      - name: Item-Logiktest (Sockel, Sets, Mods)
+        run: |
+          godot --headless -s res://tools/items/test_extras.gd 2>&1 | tee items.log | grep -E "ITEM|Gear-Wert|ERROR" || true
+          grep -q "ITEM-TEST OK" items.log
+          ! grep -E "SCRIPT ERROR|Parse Error|ITEM-TEST FEHLER" items.log
+
+      - name: Item-Probe (Bilder vom Menü)
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        run: |
+          mkdir -p item-probe
+          timeout 120 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/items/probe.gd -- "$PWD/item-probe" > probe.log 2>&1 || true
+          ls -la item-probe
+
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        with:
+          name: item-probe
+          path: item-probe
+          if-no-files-found: ignore
+
       - name: Web-Export
         run: |
           mkdir -p build/web
@@ -44,6 +66,14 @@ jobs:
         with:
           name: chibi-legends-web
           path: build/web
+
+      - name: Item-Bericht (Logiktest und Probe)
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        run: |
+          echo "--- Logiktest:"; grep -E "ITEM|Gear-Wert|ERROR" items.log || true
+          echo "--- Fehler in der Probe:"; grep -A3 -E "SCRIPT ERROR|ERROR:" probe.log | head -60 || true
+          echo "--- Ende der Probe:"; tail -8 probe.log || true
 
       - uses: actions/upload-pages-artifact@v3
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'

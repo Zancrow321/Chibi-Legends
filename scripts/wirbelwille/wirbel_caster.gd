@@ -172,7 +172,7 @@ func cast(dir: String) -> bool:
 	_fist_t = 0.0
 	_target = null
 	var alt_cd = style.alt(z).get("cd", null)
-	cooldowns[z] = float(alt_cd) if alt_cd != null else float(style.zug(z).get("cd", 1.0))
+	cooldowns[z] = style.cooldown(z, alt_cd)
 	player.move = {}
 	wfx.gust(_center(), PI if player.facing > 0 else 0.0, 3, 24.0)
 	_on_start()

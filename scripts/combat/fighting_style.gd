@@ -95,6 +95,7 @@ func frames(zug_id: String) -> Array:
 
 ## Parameters of a Zug: Grundform, then the active alternative, then
 ## (when enhanced) the enhanced values: *_add adds, *_mul multiplies.
+## Worn legendary mods for this Zug come last (ItemMods).
 func params(zug_id: String, enhanced := false) -> Dictionary:
 	var z := zug(zug_id)
 	var p: Dictionary = z.get("params", {}).duplicate(true)
@@ -110,7 +111,15 @@ func params(zug_id: String, enhanced := false) -> Dictionary:
 				p[key] = p.get(key, 0) * v
 			else:
 				p[k] = v
+	ItemMods.apply(id, zug_id, p)
 	return p
+
+
+## Cooldown of a Zug in seconds: its "cd" (or an override such as an
+## alternative's own cd), scaled by worn legendary mods and set bonuses.
+func cooldown(zug_id: String, base = null) -> float:
+	var cd := float(base) if base != null else float(zug(zug_id).get("cd", 1.0))
+	return cd * ItemMods.cd_factor(id, zug_id) * ItemSets.cooldown_factor()
 
 
 ## Puts a Zug into a slot. A Zug sits in at most one slot, so it leaves

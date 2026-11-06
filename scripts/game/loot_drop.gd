@@ -45,13 +45,33 @@ func _physics_process(delta: float) -> void:
 	queue_redraw()
 
 
+func _is_gem() -> bool:
+	return item.has("gem")
+
+
+func _color() -> Color:
+	return Gems.color(str(item.gem)) if _is_gem() else Loot.color(item)
+
+
 func _collect() -> void:
-	var col := Loot.color(item)
+	var col := _color()
+	if _is_gem():
+		Gems.add(str(item.gem))
+		world.toast("Edelstein: %s  (%s)" % [Gems.display_name(str(item.gem)), Gems.line(str(item.gem))])
+		world.effects.burst(global_position, col, 12, 110.0, 160.0)
+		Sfx.play("pickup", -2.0)
+		queue_free()
+		return
 	SeasonPass.track("loot")
 	if int(item.get("rarity", 0)) >= 2:
 		SeasonPass.track("loot_epic")
 	if Profile.add_item(item):
-		world.toast("%s: %s" % [Loot.rarity_info(item).name, item.name])
+		var extra := ""
+		if item.has("set"):
+			extra = "  ·  Set %s" % ItemSets.set_name(str(item.set))
+		elif item.has("mod"):
+			extra = "  ·  Mod %s" % str(ItemMods.info(str(item.mod)).get("name", ""))
+		world.toast("%s: %s%s" % [Loot.rarity_info(item).name, item.name, extra])
 		if world.glut_fx != null and int(item.rarity) >= 1:
 			world.glut_fx.word(world.player.global_position + Vector2(0, -70), "%s!" % Loot.rarity_info(item).name.to_upper(), col, 22 + int(item.rarity) * 3)
 	else:
@@ -64,7 +84,7 @@ func _collect() -> void:
 
 
 func _draw() -> void:
-	var col := Loot.color(item)
+	var col := _color()
 	var hdr := Color(col.r * FxSettings.boost(), col.g * FxSettings.boost(), col.b * FxSettings.boost(), 1.0)
 	var r := int(item.rarity)
 	if _landed and not _fly:
@@ -76,4 +96,7 @@ func _draw() -> void:
 			draw_rect(Rect2(-w * 0.5, -h, w, h), Color(hdr, (0.06 + 0.05 * i) * pulse))
 		draw_circle(Vector2(0, -1), 9.0, Color(hdr, 0.25 * pulse))
 	var bob := -6.0 + sin(_t * 4.0) * 2.0 if _landed else -6.0
-	ItemIcon.draw_icon(self, Vector2(0, bob), item, 1.0)
+	if _is_gem():
+		Gems.draw(self, Vector2(0, bob), str(item.gem), 16.0)
+	else:
+		ItemIcon.draw_icon(self, Vector2(0, bob), item, 1.0)

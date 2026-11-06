@@ -6,6 +6,13 @@ extends RefCounted
 ## rolls its main stat first. Legendary items also carry a short flavour line.
 ## Umschmieden (reforge, at Schmiedin Hino) rerolls one affix for Splitter.
 ## Enemies drop gear in the training forest (see Enemy._die / LootDrop).
+##
+## On top of the affixes:
+##  - Sockel: 0-2 by rarity, filled with Edelsteine (Gems), "sockets" holds
+##    a gem id per socket ("" = free).
+##  - Sets: part of the epic drops are set pieces ("set", see ItemSets).
+##  - Legendäre Mods: every legendary changes one Zug of a fighting style
+##    ("mod", see ItemMods).
 
 const RARITIES := [
 	{"id": "gewoehnlich", "name": "Gewöhnlich", "color": Color("c7cfcc"), "rolls": 1, "power": 1.0},
@@ -37,6 +44,9 @@ const NAMES := {
 	"accessoire": ["Stirnband", "Rindenreif", "Moosschal", "Glutgürtel", "Dornenkette", "Laubbrosche"],
 	"talisman": ["Holzamulett", "Glutperle", "Mooskristall", "Sumpfauge", "Tigerzahn", "Igelfeder"],
 }
+## Sockets per rarity: [min, max].
+const SOCKETS := [[0, 0], [0, 1], [1, 1], [1, 2]]
+
 const LEGEND_LINES := [
 	"Summt leise, wenn ein Elite in der Nähe ist.",
 	"Wer es trägt, hört den Wald atmen.",
@@ -53,7 +63,8 @@ static func roll_rarity(elite := false) -> int:
 	return 3 if r < 0.01 else (2 if r < 0.07 else (1 if r < 0.3 else 0))
 
 
-static func roll(item_level: int, rarity: int = -1, slot := "") -> Dictionary:
+## style_hint: the fighting style in use; legendary mods favour it.
+static func roll(item_level: int, rarity: int = -1, slot := "", style_hint := "") -> Dictionary:
 	if rarity < 0:
 		rarity = roll_rarity()
 	if slot == "":
@@ -76,9 +87,36 @@ static func roll(item_level: int, rarity: int = -1, slot := "") -> Dictionary:
 		"stats": stats,
 		"icon": randi() % 3,  # small variation of the drawn icon
 	}
+	var sk: Array = SOCKETS[rarity]
+	var n := randi_range(int(sk[0]), int(sk[1]))
+	if rarity == 2 and randf() < ItemSets.DROP_SHARE:
+		ItemSets.make_piece(it)
+	if n > 0:
+		var sockets: Array = []
+		sockets.resize(n)
+		sockets.fill("")
+		it["sockets"] = sockets
 	if rarity == 3:
 		it["line"] = LEGEND_LINES[randi() % LEGEND_LINES.size()]
+		it["mod"] = ItemMods.roll(style_hint if style_hint != "" else ItemMods.current_style())
 	return it
+
+
+## What the gems in an item's sockets add to a stat.
+static func gem_bonus(it: Dictionary, stat: String) -> float:
+	var total := 0.0
+	for g in it.get("sockets", []):
+		if str(g) != "" and Gems.stat_of(str(g)) == stat:
+			total += Gems.value(str(g))
+	return total
+
+
+static func free_socket(it: Dictionary) -> int:
+	var sockets: Array = it.get("sockets", [])
+	for i in sockets.size():
+		if str(sockets[i]) == "":
+			return i
+	return -1
 
 
 static func roll_value(stat: String, rarity: int, item_level: int) -> float:
@@ -125,6 +163,11 @@ static func score(it: Dictionary) -> float:
 	var total := 0.0
 	for s in it.get("stats", {}):
 		total += float(it.stats[s]) * 1000.0
+	for g in it.get("sockets", []):
+		if str(g) != "":
+			total += Gems.value(str(g)) * 1000.0
+	if it.has("mod"):
+		total += 40.0
 	return total
 
 
