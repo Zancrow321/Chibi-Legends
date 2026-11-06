@@ -34,6 +34,9 @@ var klang_fx: KlangFx  # effects of Gleichklang (created by its caster)
 var stage: DuskStage  # dusk light look (only in the "Licht" view, see Main)
 var post: SparringPost
 var waves: EnemyWaves  # first real enemies behind the dummies
+## Raid areas (GameFlow.RAIDS): no dummies or waves, a boss instead.
+var raid: RaidDirector
+var is_raid := false
 var debug: CombatDebug  # hitbox view and slow motion (keys 0 and 9)
 var enemies_defeated := 0
 var exp_points := 0.0  # EXP from enemies (shown in the HUD's EXP bar)
@@ -54,20 +57,22 @@ func _ready() -> void:
 	add_to_group("toaster")
 	SeasonPass.new_fight()
 	Engine.time_scale = CombatDebug.time_factor  # a kill slow motion never survives a scene reload
+	is_raid = GameFlow.is_raid()
 	_build_terrain()
 	attacks = Node2D.new()
 	effects = Effects.new()
 	effects.z_index = 50
-	for d in DUMMIES:
+	for d in ([] if is_raid else DUMMIES):
 		var dummy := TrainingDummy.new()
 		dummy.world = self
 		dummy.big = d[2]
 		dummy.position = Vector2(d[0], d[1])
 		add_child(dummy)
-	post = SparringPost.new()
-	post.world = self
-	post.position = POST_POS
-	add_child(post)
+	if not is_raid:
+		post = SparringPost.new()
+		post.world = self
+		post.position = POST_POS
+		add_child(post)
 	player = Player.new()
 	player.world = self
 	player.position = Vector2(110, GROUND_Y - 1)
@@ -107,9 +112,14 @@ func _ready() -> void:
 		stage.room = self
 		add_child(stage)
 		glut_fx.stage = stage
-	waves = EnemyWaves.new()
-	waves.world = self
-	add_child(waves)
+	if is_raid:
+		raid = RaidDirector.new()
+		raid.world = self
+		add_child(raid)
+	else:
+		waves = EnemyWaves.new()
+		waves.world = self
+		add_child(waves)
 	debug = CombatDebug.new()
 	debug.room = self
 	add_child(debug)
@@ -118,6 +128,12 @@ func _ready() -> void:
 ## Enemies live in their own layer (behind the player and the attacks).
 func add_enemy(e: Enemy) -> void:
 	_enemy_layer.add_child(e)
+
+
+## The player hit 0 HP. Returns true when a raid handles it (new attempt);
+## otherwise training goes on with full HP.
+func on_player_down() -> bool:
+	return raid != null and raid.player_down()
 
 
 func on_enemy_died(e: Enemy) -> void:
@@ -242,7 +258,7 @@ func _draw() -> void:
 
 
 func _draw_cliff(r: Rect2, outline: Color) -> void:
-	var dirt := Color("7a5636")
+	var dirt := Color("4a3a3a") if is_raid else Color("7a5636")
 	draw_rect(r, outline)
 	draw_rect(Rect2(r.position + Vector2(1, 1), r.size - Vector2(2, 0)), dirt)
 	# stone blocks texture
@@ -263,6 +279,9 @@ func _draw_cliff(r: Rect2, outline: Color) -> void:
 		row += 1
 	# grass top with tufts
 	draw_rect(Rect2(r.position.x, r.position.y - 1, r.size.x, 7), outline)
+	if is_raid:
+		_draw_forge_floor(r, outline)
+		return
 	draw_rect(Rect2(r.position.x, r.position.y, r.size.x, 5), Color("5cae48"))
 	draw_rect(Rect2(r.position.x, r.position.y, r.size.x, 2), Color("8fd968"))
 	var k := 0
@@ -276,7 +295,33 @@ func _draw_cliff(r: Rect2, outline: Color) -> void:
 		k += 1
 
 
+## Glutschmiede: iron floor plates with glowing seams instead of grass.
+func _draw_forge_floor(r: Rect2, outline: Color) -> void:
+	draw_rect(Rect2(r.position.x, r.position.y, r.size.x, 6), Color("5a5560"))
+	draw_rect(Rect2(r.position.x, r.position.y, r.size.x, 2), Color("8a8590"))
+	var x := r.position.x + 4.0
+	var k := 0
+	while x < r.end.x - 4:
+		var pw := 34.0 + _h(k, 7) * 26.0
+		draw_rect(Rect2(x, r.position.y, 2, 6), outline)
+		draw_rect(Rect2(x + 4, r.position.y + 2, 2, 2), Color("2a2430"))  # rivet
+		if _h(k, 8) > 0.55:
+			draw_rect(Rect2(x + 8, r.position.y + 6, pw * 0.5, 2), Color(2.0, 0.7, 0.25))  # glowing seam
+		x += pw
+		k += 1
+
+
 func _draw_ledge(r: Rect2, outline: Color) -> void:
+	if is_raid:
+		draw_rect(r.grow(1), outline)
+		draw_rect(r, Color("5a5560"))
+		draw_rect(Rect2(r.position, Vector2(r.size.x, 2)), Color("8a8590"))
+		for i in 3:
+			var cx := r.position.x + r.size.x * (0.2 + 0.3 * i)
+			draw_rect(Rect2(cx - 3, r.end.y, 6, 10), outline)
+			draw_rect(Rect2(cx - 2, r.end.y, 4, 9), Color("3a3440"))
+		draw_rect(Rect2(r.position.x + 6, r.end.y - 2, r.size.x - 12, 2), Color(1.8, 0.6, 0.2))
+		return
 	var under := Rect2(r.position.x + 6, r.position.y + 4, r.size.x - 12, 12)
 	draw_rect(under.grow(1), outline)
 	draw_rect(under, Color("7a5636"))
@@ -372,6 +417,8 @@ func deal_hit(target: Node2D, base: float, element: String, from_x: float, knock
 	var res := Reactions.resolve(target.status, element, base)
 	var crit := randf() < 0.05 + Profile.bonus("crit")
 	var dmg := int(round(res.damage * randf_range(0.92, 1.08) * _combo_scale(target) * (1.0 + Profile.bonus("atk")) * (1.5 + Profile.bonus("critdmg") if crit else 1.0)))
+	if target.has_method("damage_factor"):
+		dmg = int(round(dmg * target.damage_factor()))  # boss: shield 0, Bruch +50 %
 	var col: Color = GameData.ELEMENTS[element].color if element != "" else Color("ff4b3e")
 	hit_landed.emit(target.get_hurt_rect().get_center(), col, res.reaction != "")
 	# still staggered from the last hit = a real combo (no gap to escape)

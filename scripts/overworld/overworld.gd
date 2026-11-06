@@ -294,7 +294,7 @@ func _build_spots() -> void:
 	var board := _spot(OverworldSpot.Kind.SIGN, "questbrett", "Questbrett", 250.0, [
 		"AUSHANG: Erste Lektion. Löse im Trainingswald alle vier Element-Reaktionen aus.",
 		"AUSHANG: Freiwillige für den Sparringspfahl gesucht. Achtung, er schlägt zurück und wirft mit Holzscheiten.",
-		"AUSHANG: Die Glutschmiede bleibt versiegelt, bis ein Schüler Glutatem beherrscht.",
+		"AUSHANG: Die Glutschmiede ist offen! Raid gegen den Essenwächter, allein oder bis zu viert.",
 	], "", 26.0, -76.0)
 	board.verb = "Herausforderungen"
 	_npc("rektorin", "Rektorin Yuzuki", 590.0, "npc_rektorin", Color("4d65b4"), [
@@ -316,7 +316,8 @@ func _build_spots() -> void:
 	shrine.accent = Color("f9c22b")
 	_npc("waechter", "Torwächter Gonta", 1620.0, "npc_waechter", Color("1ebc73"), [
 		"Halt! ... Ach, ein Schüler. Das Waldtor ist offen. Drinnen warten Trainingspuppen und der Sparringspfahl.",
-		"Das Tor zur Glutschmiede ist versiegelt. Erst wenn du Glutatem meisterst, brennt das Siegel durch.",
+		"Das Siegel der Glutschmiede ist durchgebrannt. Drinnen wacht der Essenwächter, ein Golem aus Eisen und Glut.",
+		"Schläge prallen an ihm ab, bis seine Wucht weg ist. Dann bricht er ein und du hast ein paar Sekunden für alles, was du hast.",
 	])
 	var wald := _spot(OverworldSpot.Kind.DOOR, "tor_wald", "Waldtor", 1730.0, [], "trainingswald", 28.0, -128.0)
 	wald.accent = Color("0eaf9b")

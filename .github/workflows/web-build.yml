@@ -41,6 +41,28 @@ jobs:
           grep -q "ITEM-TEST OK" items.log
           ! grep -E "SCRIPT ERROR|Parse Error|ITEM-TEST FEHLER" items.log
 
+      - name: Raid-Logiktest (Essenwächter)
+        run: |
+          timeout 300 godot --headless --fixed-fps 60 -s res://tools/raid/probe.gd 2>&1 | tee raid.log | grep -E "RAID|SCRIPT ERROR" || true
+          grep -q "RAID-TEST OK" raid.log
+          ! grep -E "SCRIPT ERROR|Parse Error" raid.log
+
+      - name: Raid-Probe (Bilder)
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        run: |
+          mkdir -p raid-probe
+          timeout 300 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/raid/probe.gd -- "$PWD/raid-probe" b64 > raid-probe.log 2>&1 || true
+          ls -la raid-probe
+
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        with:
+          name: raid-probe
+          path: raid-probe
+          if-no-files-found: ignore
+
       - name: Item-Probe (Bilder vom Menü)
         if: github.event_name == 'pull_request'
         continue-on-error: true
@@ -74,6 +96,9 @@ jobs:
           echo "--- Logiktest:"; grep -E "ITEM|Gear-Wert|ERROR" items.log || true
           echo "--- Fehler in der Probe:"; grep -A3 -E "SCRIPT ERROR|ERROR:" probe.log | head -60 || true
           echo "--- Ende der Probe:"; tail -8 probe.log || true
+          echo "--- Raid-Probe Fehler:"; grep -A3 -E "SCRIPT ERROR|ERROR:" raid-probe.log | head -40 || true
+          echo "--- Raid-Probe Regeln:"; grep -E "^RAID" raid-probe.log || true
+          echo "--- Raid-Bilder:"; grep -E "^IMG " raid-probe.log || true
 
       - uses: actions/upload-pages-artifact@v3
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
