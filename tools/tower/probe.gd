@@ -158,6 +158,7 @@ func _do(cmd: String) -> void:
 			change_scene_to_file("res://scenes/main.tscn")
 		"hide":
 			_hide_select(root)
+			paused = false
 		"near_guard":
 			if tw.boss != null:
 				p.global_position = Vector2(tw.boss.global_position.x - 150.0, 299)
