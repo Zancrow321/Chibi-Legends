@@ -5,6 +5,7 @@ extends SceneTree
 
 const OUTFITS := ["hanabi", "mondhakama", "kranich", "gakuran", "matrose", "yukata", "shinobi", "miko"]
 const HEADS := ["hachimaki", "chonmage", "kitsune", "kasa"]
+const FROST := ["eisjaeger", "runenschild", "frostseherin", "baerenhaut", "nordwanderer"]
 const CYBER := ["neonlaeufer", "chromsoeldner", "datenhoodie", "synthidol", "konzern", "strassenklinge"]
 
 var fails := 0
@@ -66,5 +67,17 @@ func _initialize() -> void:
 	check(ThemeOutfits.tower_floor(5) != "" and CreatorUnlocks.is_unlocked("pants", "datenhoodie"), "Etage 5 schaltet Daten-Hoodie frei")
 	check(ThemeOutfits.tower_floor(5) == "", "nur einmal")
 	check(ThemeOutfits.tower_floor(15) != "" and CreatorUnlocks.is_unlocked("hair", "neonkamm"), "Etage 15 Neon-Irokese")
+	# Frostnorden: Spielerstufen
+	for o in FROST:
+		for slot in ["top", "pants", "shoes"]:
+			check(CreatorCatalog.slot_texture(slot, o) != null, "Frost-Ebene %s/%s" % [slot, o])
+			check(CreatorUnlocks.hint(slot, o).begins_with("Spielerstufe"), "Frost-Hinweis %s/%s" % [slot, o])
+	for h in ["hoernerhelm", "flechtbart"]:
+		check(CreatorCatalog.slot_texture("hair", h) != null and CreatorCatalog.hair_meta.has(h), "Frost-Kopfteil %s" % h)
+	check(ThemeOutfits.on_level(2).is_empty(), "Stufe 2 noch nichts")
+	var got := ThemeOutfits.on_level(10)
+	check(got.size() == 3 and CreatorUnlocks.is_unlocked("shoes", "runenschild") and CreatorUnlocks.is_unlocked("hair", "flechtbart"), "Stufe 10 holt 3 Teile nach (%d)" % got.size())
+	check(not CreatorUnlocks.is_unlocked("top", "baerenhaut"), "Bärenhaut erst ab 22")
+	check(ThemeOutfits.on_level(10).is_empty(), "nichts doppelt")
 	print("KLEIDUNG-TEST OK" if fails == 0 else "KLEIDUNG-TEST FEHLER: %d" % fails)
 	quit()

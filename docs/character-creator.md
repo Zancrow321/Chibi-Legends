@@ -132,3 +132,21 @@ Sechs Outfits und zwei Kopfteile, frei über neue Bestmarken im Turm der Prüfun
   der Raid-Rüstung auf die Leuchtstreifen in dieser Farbe (Bloom).
 - Weitere Themen: Beschreibungen in `tools/japan_outfits/gen_outfits.py` ergänzen, dann
   `draft`, `outfit`, `head`, `install`, `fix_frames.py`, `check_dressed.py` wie oben.
+
+## Themen-Kollektion Frostnorden (2026-11-06)
+
+Fünf Outfits und zwei Kopfteile, frei über Spielerstufen (`ThemeOutfits.LEVEL`, beim Stufenaufstieg
+werden auch verpasste Stufen nachgeholt). PixelLab: 38 Generierungen.
+
+| Stufe | Teil |
+| --- | --- |
+| 3 | Nordwanderer (`nordwanderer`) |
+| 6 | Runenschild (`runenschild`) |
+| 9 | Nordzöpfe (`flechtbart`, Kopfteil) |
+| 12 | Eisjäger (`eisjaeger`) |
+| 15 | Frostseherin (`frostseherin`, Runen leuchten) |
+| 18 | Hörnerhelm (`hoernerhelm`, Kopfteil) |
+| 22 | Bärenhaut (`baerenhaut`) |
+
+- Lehre: Kapuzen nicht beschreiben ("no hood, head uncovered"). Der Kopf gehört zum Grundkörper,
+  eine Kapuze wird abgeschnitten. Lange Zöpfe am Helm hängen vor das Gesicht.

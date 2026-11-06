@@ -1,6 +1,6 @@
 extends SceneTree
 ## Schaubild der Anime- und japanischen Kleidung im Spiel (LayeredBody mit Bloom).
-##   xvfb-run godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/japan_outfits/probe.gd -- <out_dir> [cyber]
+##   xvfb-run godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/japan_outfits/probe.gd -- <out_dir> [cyber|frost]
 
 const LOOKS := [
 	["hanabi", "kitsune", 0], ["mondhakama", "chonmage", 0], ["kranich", "kasa", 0], ["gakuran", "stachel", 0],
@@ -10,6 +10,11 @@ const LOOKS := [
 const CYBER_LOOKS := [
 	["neonlaeufer", "neonvisier", 0], ["chromsoeldner", "kurz", 0], ["datenhoodie", "wuschel", 0], ["synthidol", "zwillinge", 0],
 	["konzern", "lang", 0], ["strassenklinge", "neonkamm", 0], ["neonlaeufer", "neonkamm", 0], ["datenhoodie", "neonvisier", 0],
+]
+
+const FROST_LOOKS := [
+	["eisjaeger", "hoernerhelm", 0], ["runenschild", "flechtbart", 0], ["frostseherin", "lang", 0], ["baerenhaut", "flechtbart", 0],
+	["nordwanderer", "kurz", 0], ["eisjaeger", "flechtbart", 0], ["runenschild", "hoernerhelm", 0], ["baerenhaut", "hoernerhelm", 0],
 ]
 
 var out := "user://kleidung_shots"
@@ -23,7 +28,8 @@ func _initialize() -> void:
 		out = args[0]
 	DirAccess.make_dir_recursive_absolute(out)
 	CreatorCatalog.ensure()
-	var looks: Array = CYBER_LOOKS if args.size() > 1 and args[1] == "cyber" else LOOKS
+	var theme := args[1] if args.size() > 1 else ""
+	var looks: Array = {"cyber": CYBER_LOOKS, "frost": FROST_LOOKS}.get(theme, LOOKS)
 	var stage := Node2D.new()
 	root.add_child(stage)
 	var bg := ColorRect.new()
@@ -43,7 +49,7 @@ func _initialize() -> void:
 		bodies.append(b)
 		var l := Label.new()
 		l.text = CreatorCatalog.item_name("top", lk[0])
-		l.add_theme_font_size_override("font_size", 22)
+		l.add_theme_font_size_override("font_size", 17)
 		l.position = b.position + Vector2(-90, -290)
 		l.size = Vector2(180, 30)
 		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

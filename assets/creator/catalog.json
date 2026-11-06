@@ -36,7 +36,12 @@
     "datenhoodie": "Daten-Hoodie",
     "synthidol": "Synth-Idol-Jacke",
     "konzern": "Konzern-Trenchcoat",
-    "strassenklinge": "Straßenklinge-Bomber"
+    "strassenklinge": "Straßenklinge-Bomber",
+    "eisjaeger": "Eisjäger-Wolfsmantel",
+    "runenschild": "Runenschild-Schuppenhemd",
+    "frostseherin": "Frostseherin-Robe",
+    "baerenhaut": "Bärenhaut-Fell",
+    "nordwanderer": "Nordwanderer-Umhang"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -66,7 +71,12 @@
     "synthidol": "Turm der Prüfungen: Etage 20 (Neon-Belohnung)",
     "chromsoeldner": "Turm der Prüfungen: Etage 25 (Neon-Belohnung)",
     "strassenklinge": "Turm der Prüfungen: Etage 40 (Neon-Belohnung)",
-    "konzern": "Turm der Prüfungen: Etage 50 (Neon-Belohnung)"
+    "konzern": "Turm der Prüfungen: Etage 50 (Neon-Belohnung)",
+    "nordwanderer": "Spielerstufe 3 (Frostnorden)",
+    "runenschild": "Spielerstufe 6 (Frostnorden)",
+    "eisjaeger": "Spielerstufe 12 (Frostnorden)",
+    "frostseherin": "Spielerstufe 15 (Frostnorden)",
+    "baerenhaut": "Spielerstufe 22 (Frostnorden)"
    }
   },
   "pants": {
@@ -101,7 +111,12 @@
     "datenhoodie": "Daten-Jogger",
     "synthidol": "Neon-Faltenrock",
     "konzern": "Konzern-Anzughose",
-    "strassenklinge": "Straßenklinge-Hakama"
+    "strassenklinge": "Straßenklinge-Hakama",
+    "eisjaeger": "Eisjäger-Lederhose",
+    "runenschild": "Runenschild-Hose",
+    "frostseherin": "Frostseherin-Beinlinge",
+    "baerenhaut": "Bärenhaut-Lederrock",
+    "nordwanderer": "Nordwanderer-Wollhose"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -131,7 +146,12 @@
     "synthidol": "Turm der Prüfungen: Etage 20 (Neon-Belohnung)",
     "chromsoeldner": "Turm der Prüfungen: Etage 25 (Neon-Belohnung)",
     "strassenklinge": "Turm der Prüfungen: Etage 40 (Neon-Belohnung)",
-    "konzern": "Turm der Prüfungen: Etage 50 (Neon-Belohnung)"
+    "konzern": "Turm der Prüfungen: Etage 50 (Neon-Belohnung)",
+    "nordwanderer": "Spielerstufe 3 (Frostnorden)",
+    "runenschild": "Spielerstufe 6 (Frostnorden)",
+    "eisjaeger": "Spielerstufe 12 (Frostnorden)",
+    "frostseherin": "Spielerstufe 15 (Frostnorden)",
+    "baerenhaut": "Spielerstufe 22 (Frostnorden)"
    }
   },
   "shoes": {
@@ -166,7 +186,12 @@
     "datenhoodie": "LED-High-Tops",
     "synthidol": "Plateau-Stiefel",
     "konzern": "Konzern-Schuhe",
-    "strassenklinge": "Glutsohlen-Stiefel"
+    "strassenklinge": "Glutsohlen-Stiefel",
+    "eisjaeger": "Pelzstiefel",
+    "runenschild": "Eisenkappen-Lederstiefel",
+    "frostseherin": "Weiße Pelzschuhe",
+    "baerenhaut": "Fellwickel-Stiefel",
+    "nordwanderer": "Wickelschuhe"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -196,7 +221,12 @@
     "synthidol": "Turm der Prüfungen: Etage 20 (Neon-Belohnung)",
     "chromsoeldner": "Turm der Prüfungen: Etage 25 (Neon-Belohnung)",
     "strassenklinge": "Turm der Prüfungen: Etage 40 (Neon-Belohnung)",
-    "konzern": "Turm der Prüfungen: Etage 50 (Neon-Belohnung)"
+    "konzern": "Turm der Prüfungen: Etage 50 (Neon-Belohnung)",
+    "nordwanderer": "Spielerstufe 3 (Frostnorden)",
+    "runenschild": "Spielerstufe 6 (Frostnorden)",
+    "eisjaeger": "Spielerstufe 12 (Frostnorden)",
+    "frostseherin": "Spielerstufe 15 (Frostnorden)",
+    "baerenhaut": "Spielerstufe 22 (Frostnorden)"
    }
   },
   "hair": {
@@ -223,7 +253,9 @@
     "kitsune": "Fuchsmaske",
     "kasa": "Strohhut (Kasa)",
     "neonvisier": "Neon-Visier",
-    "neonkamm": "Neon-Irokese"
+    "neonkamm": "Neon-Irokese",
+    "hoernerhelm": "Hörnerhelm",
+    "flechtbart": "Nordzöpfe"
    },
    "unlock": {
     "wuschel": "Saisonpass, Stufe 5",
@@ -241,7 +273,9 @@
     "kitsune": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)",
     "kasa": "Gacha-Banner „Der schwarze Mond“ (Kampfstil Schwarzmond)",
     "neonkamm": "Turm der Prüfungen: Etage 15 (Neon-Belohnung)",
-    "neonvisier": "Turm der Prüfungen: Etage 30 (Neon-Belohnung)"
+    "neonvisier": "Turm der Prüfungen: Etage 30 (Neon-Belohnung)",
+    "flechtbart": "Spielerstufe 9 (Frostnorden)",
+    "hoernerhelm": "Spielerstufe 18 (Frostnorden)"
    }
   },
   "weapon": {
@@ -766,6 +800,7 @@
   "konzern": "ff2a2a",
   "strassenklinge": "ff8a1e",
   "neonvisier": "36e2ff",
-  "neonkamm": "ff3dd4"
+  "neonkamm": "ff3dd4",
+  "frostseherin": "7fd4ff"
  }
 }

@@ -1,7 +1,7 @@
 class_name ThemeOutfits
 extends RefCounted
 ## Themen-Kollektionen im Character Creator, die über Spielfortschritt frei werden.
-## Cyberpunk: neue Bestmarken im Turm der Prüfungen (Etage -> Teil). Ein Outfit
+## Frostnorden: Spielerstufen (LEVEL). Cyberpunk: neue Bestmarken im Turm der Prüfungen (Etage -> Teil). Ein Outfit
 ## schaltet Oberteil, Hose und Schuhe zusammen frei; "hair" ist ein Kopfteil.
 ## Hinweistexte stehen in catalog.json unter slots.<slot>.unlock.
 
@@ -14,6 +14,18 @@ const TOWER := {
 	30: ["hair", "neonvisier"],
 	40: ["outfit", "strassenklinge"],
 	50: ["outfit", "konzern"],
+}
+
+
+## Frostnorden: Spielerstufen (Stufe -> Teil), frei beim Stufenaufstieg.
+const LEVEL := {
+	3: ["outfit", "nordwanderer"],
+	6: ["outfit", "runenschild"],
+	9: ["hair", "flechtbart"],
+	12: ["outfit", "eisjaeger"],
+	15: ["outfit", "frostseherin"],
+	18: ["hair", "hoernerhelm"],
+	22: ["outfit", "baerenhaut"],
 }
 
 
@@ -36,3 +48,17 @@ static func tower_floor(n: int) -> String:
 	if CreatorUnlocks.is_unlocked(check_slot, str(p[1])):
 		return ""
 	return "Neon-Belohnung: %s, im Creator (O) wählbar" % give(str(p[0]), str(p[1]))
+
+
+## Level reached: unlocks every Frostnorden part up to this level that is still locked
+## (also catches up older saves). Returns the toast texts.
+static func on_level(lv: int) -> Array:
+	var out: Array = []
+	for n in LEVEL:
+		if int(n) > lv:
+			continue
+		var p: Array = LEVEL[n]
+		var check_slot := "top" if p[0] == "outfit" else str(p[0])
+		if not CreatorUnlocks.is_unlocked(check_slot, str(p[1])):
+			out.append("Frostnorden: %s, im Creator (O) wählbar" % give(str(p[0]), str(p[1])))
+	return out

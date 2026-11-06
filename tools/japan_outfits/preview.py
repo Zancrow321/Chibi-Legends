@@ -7,7 +7,9 @@ RAW = Path(sys.argv[1]); OUT = Path(sys.argv[2])
 NAMES = {"hanabi": "Hanabi-Kimono", "mondhakama": "Mond-Hakama", "kranich": "Kranich-Haori", "gakuran": "Gakuran",
          "matrose": "Matrosen-Uniform", "yukata": "Sommer-Yukata", "shinobi": "Shinobi-Anzug", "miko": "Schreingewand",
          "neonlaeufer": "Neonläufer", "chromsoeldner": "Chrom-Söldner", "datenhoodie": "Daten-Hoodie",
-         "synthidol": "Synth-Idol", "konzern": "Konzern-Agent", "strassenklinge": "Straßenklinge"}
+         "synthidol": "Synth-Idol", "konzern": "Konzern-Agent", "strassenklinge": "Straßenklinge",
+         "eisjaeger": "Eisjäger", "runenschild": "Runenschild", "frostseherin": "Frostseherin",
+         "baerenhaut": "Bärenhaut", "nordwanderer": "Nordwanderer"}
 if len(sys.argv) > 4:
     NAMES = {k: v for k, v in NAMES.items() if k in sys.argv[4].split(",")}
 POSES = sys.argv[3].split(",") if len(sys.argv) > 3 else ["idle_0", "walk_1", "run_1", "run_3"]

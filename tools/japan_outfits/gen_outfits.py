@@ -72,6 +72,24 @@ OUTFITS.update({
                       "shoulder plate and glowing orange seams, black wide cargo hakama pants, black tech boots "
                       "with glowing orange soles",
 })
+OUTFITS.update({
+    "eisjaeger": "a nordic frost hunter outfit: thick grey wolf fur mantle over a dark blue leather tunic with "
+                 "silver clasps, brown leather trousers with fur-lined leg wraps, heavy brown fur boots",
+    "runenschild": "a nordic shield warrior outfit: steel scale mail shirt over a deep red wool tunic, a wide "
+                   "leather belt with a silver knot buckle, dark grey trousers with criss-cross leather bindings, "
+                   "iron-capped leather boots",
+    "frostseherin": "a nordic frost seer outfit: long pale blue robe (no hood, head uncovered) with glowing light blue rune "
+                    "embroidery and white fur trim, a belt of bone charms, white wool leggings, soft white fur boots",
+    "baerenhaut": "a nordic berserker outfit: a huge brown bear pelt over the bare shoulders and back, "
+                  "bare chest with blue war paint lines, wide brown leather kilt-like trousers, fur-wrapped boots",
+    "nordwanderer": "a nordic traveler outfit: dark green wool cloak without hood (head uncovered) with a bronze brooch, cream linen "
+                    "shirt, brown wool trousers, worn leather turnshoes with wraps",
+})
+HEADS.update({
+    "hoernerhelm": "short blonde hair under an open iron helmet with two short curved horns, nothing hangs over the face or chest, the face "
+                   "stays visible",
+    "flechtbart": "wild red hair shaved on the sides with thick braids falling down the back",
+})
 HEADS.update({
     "neonvisier": "short white undercut hair with a sleek glowing cyan visor band over the eyes, the rest of the "
                   "face stays visible",
