@@ -20,12 +20,12 @@ const MAX_HEAT := 6
 const MOODS := {
 	# training forest at dusk: violet shadows, glowing orange lights, blue mist at the ground
 	"dusk": {"exposure": 1.05, "contrast": 1.06, "saturation": 1.06, "lift": Color(0.03, 0.01, 0.06), "gain": Color(1.04, 0.98, 0.93), "vignette": 0.46, "vcol": Color(0.04, 0.0, 0.08),
-		"filmic": 0.85, "shadow": Color(0.035, -0.005, 0.07), "high": Color(0.05, 0.02, -0.03), "vibrance": 0.35,
-		"sky": Color(1.0, 0.55, 0.3, 0.16), "haze": Color(0.28, 0.24, 0.45, 0.22), "haze_h": 0.32},
+		"filmic": 1.0, "shadow": Color(0.05, -0.01, 0.09), "high": Color(0.08, 0.035, -0.04), "vibrance": 0.45,
+		"sky": Color(1.0, 0.55, 0.3, 0.22), "haze": Color(0.36, 0.3, 0.6, 0.3), "haze_h": 0.36},
 	# academy courtyard by day: clean, warm sunlight from above, light blue air
 	"day": {"exposure": 1.03, "contrast": 1.04, "saturation": 1.06, "lift": Color(0.015, 0.015, 0.035), "gain": Color(1.03, 1.0, 0.96), "vignette": 0.24, "vcol": Color(0.08, 0.05, 0.14),
-		"filmic": 0.7, "shadow": Color(-0.01, 0.015, 0.045), "high": Color(0.04, 0.025, -0.01), "vibrance": 0.3,
-		"sky": Color(1.0, 0.9, 0.65, 0.14), "haze": Color(0.62, 0.74, 0.92, 0.12), "haze_h": 0.28},
+		"filmic": 0.85, "shadow": Color(-0.015, 0.02, 0.06), "high": Color(0.06, 0.035, -0.015), "vibrance": 0.4,
+		"sky": Color(1.0, 0.9, 0.65, 0.2), "haze": Color(0.62, 0.74, 0.92, 0.18), "haze_h": 0.3},
 	# raid Glutschmiede: deep red shadows, molten highlights, smoke at the ground
 	"ember": {"exposure": 1.04, "contrast": 1.1, "saturation": 1.08, "lift": Color(0.05, 0.008, 0.01), "gain": Color(1.06, 0.97, 0.88), "vignette": 0.55, "vcol": Color(0.08, 0.0, 0.01),
 		"filmic": 0.9, "shadow": Color(0.06, 0.0, -0.01), "high": Color(0.06, 0.03, -0.04), "vibrance": 0.3,
@@ -69,8 +69,8 @@ var _blur_hold := 0.0  # steady blur while a super holds the screen
 var _blur_pos := Vector2.ZERO  # world position of the blur centre
 var _punch := 0.0
 var _danger := 0.0
-## Returns the player's HP fraction (0..1); set by the room. Empty = no danger pulse.
-var hp_source: Callable
+## The fighter whose HP drives the danger pulse (needs hp and max_hp). null = none.
+var hp_player: Node
 
 
 func _init() -> void:
@@ -161,9 +161,9 @@ static func hold_aberration(amount: float) -> void:
 
 
 ## Manga impact frame: for a moment the world turns into ink and paper
-## (the first frames inverted), like a panel in a fighting manga. For super
+## for a few frames, like a panel in a fighting manga. For super
 ## finishers and Meisterzug hits. Scaled by the flash level.
-static func impact_frame(seconds := 0.12, ink := Color(0.04, 0.02, 0.06), paper := Color(1.0, 0.96, 0.9)) -> void:
+static func impact_frame(seconds := 0.07, ink := Color(0.04, 0.02, 0.06), paper := Color(1.0, 0.96, 0.9)) -> void:
 	if not enabled() or legacy or FxSettings.factor("flash") <= 0.05:
 		return
 	_inst._impact = seconds
@@ -266,16 +266,13 @@ func _process(delta: float) -> void:
 	_aberration = maxf(0.0, _aberration - delta * (6.0 + _aberration * 3.0))
 	_mat.set_shader_parameter("aberration", _aberration + _hold_ca)
 
-	# impact frame: inverted for the first third, then ink on paper, then out
+	# impact frame: a hard cut to ink on paper for a few frames, then straight back
 	if _impact > 0.0:
 		_impact = maxf(0.0, _impact - delta)
-		var k3 := 1.0 - _impact / maxf(_impact_len, 0.001)
-		_mat.set_shader_parameter("impact", 1.0 if k3 < 0.7 else (1.0 - k3) / 0.3)
-		_mat.set_shader_parameter("impact_invert", 1.0 if k3 < 0.35 else 0.0)
-	else:
-		_mat.set_shader_parameter("impact", 0.0)
+	_mat.set_shader_parameter("impact", 1.0 if _impact > 0.0 else 0.0)
+	_mat.set_shader_parameter("impact_invert", 0.0)
 
-	_blur = maxf(0.0, _blur - delta * 4.0)
+	_blur = maxf(0.0, _blur - delta * 6.0)
 	var blur := maxf(_blur, _blur_hold)
 	var buv: Vector2 = (ct * _blur_pos) / size
 	_mat.set_shader_parameter("zoom_blur", Vector3(buv.x, buv.y, blur))
@@ -285,8 +282,8 @@ func _process(delta: float) -> void:
 
 	# low HP: below 30 % the edge starts to breathe red
 	var target := 0.0
-	if not legacy and hp_source.is_valid():
-		var frac: float = hp_source.call()
+	if not legacy and is_instance_valid(hp_player):
+		var frac := float(hp_player.get("hp")) / maxf(float(hp_player.get("max_hp")), 1.0)
 		target = clampf((0.3 - frac) / 0.25, 0.0, 1.0) if frac > 0.0 else 0.0
 	_danger = move_toward(_danger, target, delta * 1.5)
 	_mat.set_shader_parameter("danger", _danger)

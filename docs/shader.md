@@ -19,9 +19,9 @@ Ein einziger Bildschirm-Durchgang (`post_fx.gdshader`), billig genug für den Br
   Trainingswald `dusk` (violette Schatten, orange Lichter, blauer Bodennebel), Akademie-Hof `day`
   (Sonnenlicht, hellblaue Luft), Glutschmiede `ember` (rote Schatten, Rauch), Turm `arcane` (violett/cyan).
 - **Vignette + Bayer-Dithering** in Kunstpixeln gegen Farbstreifen.
-- **Wenig Leben** (< 30 %): Farbe wird blasser, der Rand pulsiert rot (`hp_source`).
+- **Wenig Leben** (< 30 %): Farbe wird blasser, der Rand pulsiert rot (`hp_player`).
 - **Große Treffer**: kurzer Helligkeits-Stoß (`exposure_punch`), Farbversatz, Schockwelle.
-- **Super-Finisher**: Manga-Einschlagbild (Tusche/Papier, erste Frames invertiert, `impact_frame`)
+- **Super-Finisher**: Manga-Einschlagbild (Tusche/Papier für ein paar Frames, `impact_frame`)
   und radiale Zoom-Unschärfe (`zoom_blur`); während der Super-Pause leichte Zoom-Unschärfe um den Spieler.
 - `PostFx.legacy = true` zeigt den alten Look (nur für den Vorher/Nachher-Test `tools/postfx/probe.gd`).
 

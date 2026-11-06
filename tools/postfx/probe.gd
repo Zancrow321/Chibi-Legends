@@ -26,7 +26,7 @@ func _initialize() -> void:
 	steps = [
 		[t, "setup:420"], [t + 40, "shot:1_wald"],
 		[t + 50, "lowhp"], [t + 120, "shot:2_wenig_leben"], [t + 121, "fullhp"],
-		[t + 160, "blast"], [t + 162, "shot:3_super_a"], [t + 166, "shot:3_super_b"], [t + 175, "shot:3_super_c"],
+		[t + 160, "blast"], [t + 162, "shot:3_super_a"], [t + 170, "shot:3_super_b"], [t + 175, "shot:3_super_c"],
 		[t + 230, "scene:overworld:akademie_hof"], [t + 300, "hofcam"], [t + 340, "shot:4_hof"],
 		[t + 350, "scene:dungeon:glutschmiede"], [t + 420, "setup:300"], [t + 470, "shot:5_raid"],
 		[t + 480, "scene:dungeon:turm"], [t + 550, "setup:300"], [t + 600, "shot:6_turm"],
@@ -75,6 +75,8 @@ func _do(cmd: String) -> void:
 				w.camera.global_position = Vector2(620, 220)
 				w.camera.reset_smoothing()
 		"shot":
+			for pf in root.find_children("*", "PostFx", true, false):
+				print("POSTFX ", parts[1], " mood=", pf.mood, " danger=", pf._danger, " impact=", pf._impact)
 			root.get_texture().get_image().save_png(out.path_join("%s_%s.png" % [parts[1], tag]))
 			print("POSTFX shot ", parts[1], " ", tag)
 		"quit":

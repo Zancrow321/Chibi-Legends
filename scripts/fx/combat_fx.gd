@@ -75,9 +75,9 @@ func _screen_fx(pos: Vector2, profile: String, is_blast := false) -> void:
 			PostFx.shockwave(pos, 2.0, 1.4, 0.7)
 			PostFx.aberrate(5.0)
 			PostFx.exposure_punch(1.0)
-			PostFx.zoom_blur(pos, 1.2)
+			PostFx.zoom_blur(pos, 0.7)
 			if is_blast:
-				PostFx.impact_frame(0.12)
+				PostFx.impact_frame(0.07)
 
 
 func _apply(p: Dictionary, dir: float) -> void:
