@@ -97,6 +97,23 @@ OUTFITS.update({
     "schattenmeister": "a wuxia assassin outfit: dark navy fitted robe with silver cloud embroidery, black arm "
                        "wraps, a dark grey sash, black trousers tucked into black wrapped boots",
 })
+OUTFITS.update({
+    "blutgraf": "a gothic vampire noble outfit: black velvet tailcoat with crimson lining and silver buttons, "
+                "a white ruffled jabot at the collar, dark red waistcoat, black slim trousers, polished black "
+                "buckle shoes",
+    "mondgraefin": "a gothic lady outfit: black and deep purple corset dress with lace trim and puffed sleeves, "
+                   "a short layered black lace skirt over purple striped stockings, black platform heels",
+    "jaegerorden": "a gothic monster hunter outfit: long dark brown leather coat with silver buckles and a "
+                   "high collar, a bandolier of silver vials across the chest, dark grey trousers, tall black boots",
+    "kirchhofwaechter": "a gothic gravekeeper outfit: tattered dark grey shoulder cape over a black shirt, no hood, head uncovered, "
+                        "a rope belt with a small lantern charm, patched black trousers, muddy worn boots",
+    "rosendiener": "a gothic butler outfit: black waistcoat with a red rose pinned on the chest, white shirt "
+                   "with rolled sleeves and black arm garters, black trousers, black oxford shoes",
+})
+HEADS.update({
+    "zylinder": "slicked back black hair with a small tall black top hat with a thin crimson band sitting on top of the head above the forehead, the eyes and face stay fully visible",
+    "gothlocken": "long wavy silver white hair with a black lace headband and a small red rose",
+})
 HEADS.update({
     "gelehrtenknoten": "long black hair with a neat top bun held by a small jade crown and hairpin",
     "drachenkrone": "black hair in a high ponytail with a golden dragon headpiece, the face stays visible",

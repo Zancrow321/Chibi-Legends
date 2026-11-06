@@ -165,3 +165,15 @@ Fünf Outfits und zwei Kopfteile. PixelLab: 37 Generierungen.
 | Drachenwache (`drachenwache`) | Gacha-Banner „Wer am Feuer sitzt“ |
 
 - Herausforderungen können jetzt `"part": ["outfit", id]` geben (alle drei Teile, `ThemeOutfits.give`).
+
+## Themen-Kollektion Vampirhof (2026-11-06)
+
+Fünf Outfits und zwei Kopfteile. PixelLab: 34 Generierungen.
+
+| Teil | Freischalten |
+| --- | --- |
+| Blutgraf, Mondfürstin, Zylinder | Gacha-Banner „Der schwarze Mond“ |
+| Jägerorden, Kirchhofwächter, Silberlocken | Gacha-Banner „Ein Takt, zwei Seelen“ |
+| Rosendiener (Butler) | Saisonpass Premium, Stufe 27 |
+
+- Lehre: Die Pixelify-Schrift hat kein „fi“ (Ligatur wird zu Müll), Namen ohne „fi“ wählen.

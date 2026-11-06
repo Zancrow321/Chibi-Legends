@@ -73,6 +73,7 @@
   {"tier": 22, "kind": "part", "slot": "outfit", "id": "kranich"},
   {"tier": 23, "kind": "color"},
   {"tier": 25, "kind": "skin", "style": "glutatem", "id": "schattenglut"},
+  {"tier": 27, "kind": "part", "slot": "outfit", "id": "rosendiener"},
   {"tier": 28, "kind": "gear", "rarity": 4},
   {"tier": 30, "kind": "crystals", "amount": 1600}
  ]

@@ -7,6 +7,7 @@ const OUTFITS := ["hanabi", "mondhakama", "kranich", "gakuran", "matrose", "yuka
 const HEADS := ["hachimaki", "chonmage", "kitsune", "kasa"]
 const FROST := ["eisjaeger", "runenschild", "frostseherin", "baerenhaut", "nordwanderer"]
 const WUXIA := ["jadegelehrter", "drachenwache", "lotusfaust", "pflaumentaenzerin", "schattenmeister"]
+const VAMP := ["blutgraf", "mondgraefin", "jaegerorden", "kirchhofwaechter", "rosendiener"]
 const CYBER := ["neonlaeufer", "chromsoeldner", "datenhoodie", "synthidol", "konzern", "strassenklinge"]
 
 var fails := 0
@@ -46,13 +47,13 @@ func _initialize() -> void:
 			var r: Dictionary = SeasonPass.reward(t, prem)
 			if str(r.get("kind", "")) == "part" and str(r.get("slot", "")) == "outfit":
 				found += 1
-				check(str(r.id) in OUTFITS, "Pass-Outfit %s" % r.id)
+				check(CreatorCatalog.slot_texture("top", str(r.id)) != null, "Pass-Outfit %s" % r.id)
 				check(SeasonPass.label(r).begins_with("Outfit "), "Pass-Beschriftung %s" % r.id)
 				var txt := SeasonPass.give(r)
 				check(txt.begins_with("Neues Outfit"), "Pass-Text %s" % txt)
 				for slot in ["top", "pants", "shoes"]:
 					check(CreatorUnlocks.is_unlocked(slot, str(r.id)), "Pass schaltet %s/%s frei" % [slot, r.id])
-	check(found == 5, "5 Outfits im Saisonpass (%d)" % found)
+	check(found == 6, "6 Outfits im Saisonpass (%d)" % found)
 	# Cyberpunk: Ebenen, Neon-Leuchten, Freischalten über Turm-Bestmarken
 	for o in CYBER:
 		for slot in ["top", "pants", "shoes"]:
@@ -95,5 +96,14 @@ func _initialize() -> void:
 			weekly_outfits += 1
 	check(weekly_outfits == 3, "3 Wuxia-Outfits in Wochen-Herausforderungen (%d)" % weekly_outfits)
 	check(ThemeOutfits.give("outfit", "schattenmeister") != "" and CreatorUnlocks.is_unlocked("shoes", "schattenmeister"), "Wochen-Outfit schaltet alle Teile frei")
+	# Vampirhof: Banner Schwarzmond / Gleichklang, Butler im Pass
+	for o in VAMP:
+		for slot in ["top", "pants", "shoes"]:
+			check(CreatorCatalog.slot_texture(slot, o) != null, "Vampir-Ebene %s/%s" % [slot, o])
+			check(CreatorUnlocks.hint(slot, o) != "", "Vampir-Hinweis %s/%s" % [slot, o])
+	for h in ["zylinder", "gothlocken"]:
+		check(CreatorCatalog.slot_texture("hair", h) != null and CreatorCatalog.hair_meta.has(h), "Vampir-Kopfteil %s" % h)
+	check("top/blutgraf" in by_title.get("Der schwarze Mond", []) and "hair/zylinder" in by_title.get("Der schwarze Mond", []), "Banner Schwarzmond Vampirhof")
+	check("top/jaegerorden" in by_title.get("Ein Takt, zwei Seelen", []), "Banner Gleichklang Vampirhof")
 	print("KLEIDUNG-TEST OK" if fails == 0 else "KLEIDUNG-TEST FEHLER: %d" % fails)
 	quit()
