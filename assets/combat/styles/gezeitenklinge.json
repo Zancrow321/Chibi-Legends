@@ -1,0 +1,399 @@
+{
+	"_doc": "Baukasten-Kampfstil Gezeitenklinge (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "gezeitenklinge",
+	"name": "Gezeitenklinge",
+	"element": "wasser",
+	"caster": "form",
+	"subtitle": "Wasser-Schwertkunst · Wellen, Geysire, Ebbe und Flut · Gezeitenfolge",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"armed": true,
+	"colors": {
+		"main": "2f8fff",
+		"accent": "6fe3ff",
+		"light": "c8f4ff",
+		"dark": "0a2a4a",
+		"white": "f2fdff"
+	},
+	"kern": {
+		"type": "rhythmus",
+		"name": "Gezeitenfolge",
+		"desc": "Verschiedene Züge in einer Kombo heben die Flut (Ebbe, Flut, Springflut). Bei Springflut bekommt der nächste Zug eine Extra-Welle und +10 Leiste."
+	},
+	"loadout": {
+		"neutral": "gischtschnitt",
+		"forward": "wellenschlag",
+		"up": "geysirstoss",
+		"down": "wasserfall"
+	},
+	"zuege": {
+		"gischtschnitt": {
+			"name": "Gischtschnitt",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Drei fließende Hiebe, der letzte spritzt eine Gischtwand nach vorn.",
+			"params": {
+				"hits": 3,
+				"damage": 5,
+				"len": 52
+			},
+			"enhanced": {
+				"hits_add": 2,
+				"damage_add": 1
+			},
+			"alts": [
+				{
+					"id": "brandung",
+					"name": "Brandung",
+					"sp": 2,
+					"desc": "Fünf schnelle, kürzere Hiebe wie anrollende Wellen.",
+					"params": {
+						"hits": 5,
+						"damage": 3.5,
+						"len": 44
+					}
+				},
+				{
+					"id": "zwei_ufer",
+					"name": "Zwei Ufer",
+					"sp": 2,
+					"desc": "Hiebe nach vorn und hinten zugleich.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				},
+				{
+					"id": "sog",
+					"name": "Sog",
+					"sp": 2,
+					"desc": "Der letzte Hieb zieht getroffene Gegner zu dir heran.",
+					"params": {
+						"pull": 90
+					}
+				}
+			]
+		},
+		"wellenschlag": {
+			"name": "Wellenschlag",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Eine Wasserwelle rollt nach vorn und trifft alles auf ihrem Weg.",
+			"params": {
+				"damage": 12,
+				"speed": 360,
+				"dist": 300,
+				"size": 1.2,
+				"pierce": true
+			},
+			"enhanced": {
+				"size_mul": 1.5,
+				"damage_add": 4
+			},
+			"alts": [
+				{
+					"id": "springflut",
+					"name": "Springflut",
+					"sp": 2,
+					"desc": "Große, langsame Welle mit kürzerer Reichweite.",
+					"params": {
+						"size": 1.8,
+						"speed": 240,
+						"dist": 220
+					}
+				},
+				{
+					"id": "drei_wellen",
+					"name": "Drei Wellen",
+					"sp": 2,
+					"desc": "Drei kleine Wellen kurz hintereinander.",
+					"params": {
+						"count": 3,
+						"delay": 0.15,
+						"damage": 6
+					}
+				},
+				{
+					"id": "strudelwelle",
+					"name": "Strudelwelle",
+					"sp": 2,
+					"desc": "Die Welle sucht sich das nächste Ziel, trifft aber nur einmal.",
+					"params": {
+						"homing": 0.5,
+						"pierce": false
+					}
+				}
+			]
+		},
+		"geysirstoss": {
+			"name": "Geysirstoß",
+			"kind": "saeule",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				9,
+				14,
+				16
+			],
+			"desc": "Vor dir schießt ein Geysir aus dem Boden und hebt Gegner hoch.",
+			"params": {
+				"at": 56,
+				"width": 30,
+				"height": 90,
+				"damage": 12,
+				"launch": 380
+			},
+			"enhanced": {
+				"launch_add": 120,
+				"width_add": 12
+			},
+			"alts": [
+				{
+					"id": "drei_geysire",
+					"name": "Drei Geysire",
+					"sp": 2,
+					"desc": "Drei Geysire hintereinander, je weniger Schaden.",
+					"params": {
+						"count": 3,
+						"step": 40,
+						"damage": 8
+					}
+				},
+				{
+					"id": "steigfontaene",
+					"name": "Steigfontäne",
+					"sp": 2,
+					"desc": "Du reitest selbst auf der Fontäne nach oben.",
+					"params": {
+						"ride": true,
+						"at": 10
+					}
+				},
+				{
+					"id": "nebelgeysir",
+					"name": "Nebelgeysir",
+					"sp": 2,
+					"desc": "Breiter, niedriger Ausbruch.",
+					"params": {
+						"width": 60,
+						"launch": 220,
+						"height": 70
+					}
+				}
+			]
+		},
+		"wasserfall": {
+			"name": "Wasserfall",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Du stürzt wie ein Wasserfall herab, zwei Wellen laufen zu den Seiten.",
+			"params": {
+				"damage": 12,
+				"radius": 44,
+				"waves": true,
+				"wave_damage": 8
+			},
+			"enhanced": {
+				"wave_damage_add": 6,
+				"radius_add": 16
+			},
+			"alts": [
+				{
+					"id": "tiefsee",
+					"name": "Tiefsee",
+					"sp": 2,
+					"desc": "Größerer Aufprall, keine Wellen.",
+					"params": {
+						"radius": 70,
+						"damage": 16,
+						"waves": false
+					}
+				},
+				{
+					"id": "kaskade",
+					"name": "Kaskade",
+					"sp": 2,
+					"desc": "Kurz nach dem Aufprall folgen zwei weitere Wellen.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "pfuetze",
+					"name": "Strudelpfütze",
+					"sp": 2,
+					"desc": "Hinterlässt 2 s einen Strudel, der Gegner trifft.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"ebbehaltung": {
+			"name": "Ebbehaltung",
+			"kind": "konter",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				4,
+				24,
+				14
+			],
+			"desc": "Kurze Haltung: wer dich jetzt trifft, wird von der Flut zurückgeworfen.",
+			"params": {
+				"stance": 0.45,
+				"counter_damage": 22
+			},
+			"enhanced": {
+				"counter_damage_add": 10
+			},
+			"alts": [
+				{
+					"id": "flut_konter",
+					"name": "Flutkonter",
+					"sp": 2,
+					"desc": "Wirft Geschosse auf den Schützen zurück.",
+					"params": {
+						"reflect": true
+					}
+				},
+				{
+					"id": "stilles_wasser",
+					"name": "Stilles Wasser",
+					"sp": 2,
+					"desc": "Längeres Fenster, weniger Schaden.",
+					"params": {
+						"stance": 0.7,
+						"counter_damage": 14
+					}
+				},
+				{
+					"id": "rueckstrom",
+					"name": "Rückstrom",
+					"sp": 2,
+					"desc": "Ein gelungener Konter heilt 60 LP.",
+					"params": {
+						"heal": 60
+					}
+				}
+			]
+		},
+		"stroemungsschritt": {
+			"name": "Strömungsschritt",
+			"kind": "sturm",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				5,
+				12,
+				12
+			],
+			"desc": "Du gleitest wie eine Strömung nach vorn und schneidest durch.",
+			"params": {
+				"dist": 130,
+				"damage": 9
+			},
+			"enhanced": {
+				"dist_mul": 1.6,
+				"damage_add": 4
+			},
+			"alts": [
+				{
+					"id": "rueckstroemung",
+					"name": "Rückströmung",
+					"sp": 2,
+					"desc": "Hin und wieder zurück, trifft zweimal.",
+					"params": {
+						"back": true
+					}
+				},
+				{
+					"id": "gischtspur",
+					"name": "Gischtspur",
+					"sp": 2,
+					"desc": "Hinterlässt eine Spur aus Gischt, die kurz trifft.",
+					"params": {
+						"trail": true
+					}
+				},
+				{
+					"id": "tauchschnitt",
+					"name": "Tauchschnitt",
+					"sp": 2,
+					"desc": "Kürzer, aber ein harter Schnitt.",
+					"params": {
+						"dist": 90,
+						"damage": 15
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "grosse_flut",
+				"name": "Große Flut",
+				"kind": "feld",
+				"sp": 0,
+				"desc": "Eine Flutwelle füllt den Bildschirm, zieht Gegner in die Mitte und bricht über ihnen.",
+				"params": {
+					"damage": 4,
+					"pull": 90
+				}
+			},
+			{
+				"id": "mahlstrom",
+				"name": "Mahlstrom",
+				"kind": "nova",
+				"sp": 2,
+				"desc": "Ein Strudel um dich herum dreht sich immer schneller und explodiert.",
+				"params": {
+					"damage": 70,
+					"radius": 160
+				}
+			},
+			{
+				"id": "gezeitenschnitt",
+				"name": "Gezeitenschnitt",
+				"kind": "ansturm",
+				"sp": 2,
+				"desc": "Sechs Schnitte wie Brandung: du springst von Ziel zu Ziel.",
+				"params": {
+					"damage": 14,
+					"slashes": 6
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

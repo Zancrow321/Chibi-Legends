@@ -1,0 +1,396 @@
+{
+	"_doc": "Baukasten-Kampfstil Sternensang (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "sternensang",
+	"name": "Sternensang",
+	"element": "licht",
+	"caster": "form",
+	"subtitle": "Astralmagie · Sternbilder, Meteore, jeder Zauber hallt nach",
+	"moveset": "res://assets/combat/movesets/lauffeuer.json",
+	"armed": false,
+	"colors": {
+		"main": "a8b4ff",
+		"accent": "ffe45c",
+		"light": "e8ecff",
+		"dark": "0c0e28",
+		"white": "ffffff"
+	},
+	"kern": {
+		"type": "echo",
+		"name": "Sternecho",
+		"desc": "Jeder Zug, der trifft, hallt als Sternecho nach: 0,4 s später trifft ein Stern dieselben Gegner mit 40 % Schaden."
+	},
+	"loadout": {
+		"neutral": "sternfunke",
+		"forward": "sternschnuppe",
+		"up": "sternregen",
+		"down": "meteorfall"
+	},
+	"zuege": {
+		"sternfunke": {
+			"name": "Sternfunke",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Zwei Sternfunken explodieren direkt vor dir.",
+			"params": {
+				"hits": 2,
+				"damage": 6,
+				"len": 46
+			},
+			"enhanced": {
+				"hits_add": 2,
+				"len_add": 12
+			},
+			"alts": [
+				{
+					"id": "funkenschauer",
+					"name": "Funkenschauer",
+					"sp": 2,
+					"desc": "Vier kleine Funken.",
+					"params": {
+						"hits": 4,
+						"damage": 4
+					}
+				},
+				{
+					"id": "doppelstern",
+					"name": "Doppelstern",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				},
+				{
+					"id": "sternhebel",
+					"name": "Sternhebel",
+					"sp": 2,
+					"desc": "Schleudert hoch.",
+					"params": {
+						"launch": 280
+					}
+				}
+			]
+		},
+		"sternschnuppe": {
+			"name": "Sternschnuppe",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Eine Sternschnuppe sucht sich ihr Ziel.",
+			"params": {
+				"damage": 12,
+				"speed": 380,
+				"dist": 360,
+				"homing": 0.7
+			},
+			"enhanced": {
+				"count_add": 2,
+				"damage_add": 3
+			},
+			"alts": [
+				{
+					"id": "schnuppenschwarm",
+					"name": "Schnuppenschwarm",
+					"sp": 2,
+					"desc": "Drei kleine.",
+					"params": {
+						"count": 3,
+						"spread": 30,
+						"damage": 6
+					}
+				},
+				{
+					"id": "komet",
+					"name": "Komet",
+					"sp": 2,
+					"desc": "Groß, durchschlägt.",
+					"params": {
+						"size": 1.6,
+						"pierce": true,
+						"homing": 0.2
+					}
+				},
+				{
+					"id": "sternexplosion",
+					"name": "Sternexplosion",
+					"sp": 2,
+					"desc": "Explodiert am Ziel.",
+					"params": {
+						"burst": true
+					}
+				}
+			]
+		},
+		"sternregen": {
+			"name": "Sternregen",
+			"kind": "regen",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.6,
+			"frames": [
+				12,
+				10,
+				16
+			],
+			"desc": "Kleine Sterne regnen vor dir herab.",
+			"params": {
+				"count": 6,
+				"width": 110,
+				"at": 90,
+				"damage": 6
+			},
+			"enhanced": {
+				"count_add": 4,
+				"width_add": 40
+			},
+			"alts": [
+				{
+					"id": "dichter_regen",
+					"name": "Dichter Regen",
+					"sp": 2,
+					"desc": "Mehr Sterne, schmaler.",
+					"params": {
+						"count": 10,
+						"width": 70,
+						"damage": 4
+					}
+				},
+				{
+					"id": "fernregen",
+					"name": "Fernregen",
+					"sp": 2,
+					"desc": "Weiter vorn.",
+					"params": {
+						"at": 170
+					}
+				},
+				{
+					"id": "grosse_sterne",
+					"name": "Große Sterne",
+					"sp": 2,
+					"desc": "Drei große Sterne.",
+					"params": {
+						"count": 3,
+						"damage": 12,
+						"big": true
+					}
+				}
+			]
+		},
+		"meteorfall": {
+			"name": "Meteorfall",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Du fällst wie ein Meteor, Sternenstaub spritzt.",
+			"params": {
+				"damage": 13,
+				"radius": 46,
+				"waves": true,
+				"wave_damage": 8
+			},
+			"enhanced": {
+				"radius_add": 18,
+				"damage_add": 4
+			},
+			"alts": [
+				{
+					"id": "krater",
+					"name": "Sternkrater",
+					"sp": 2,
+					"desc": "Großer Aufprall.",
+					"params": {
+						"radius": 72,
+						"waves": false
+					}
+				},
+				{
+					"id": "nachleuchten",
+					"name": "Nachleuchten",
+					"sp": 2,
+					"desc": "Zweiter Stoß.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "sternstaub",
+					"name": "Sternstaub",
+					"sp": 2,
+					"desc": "Leuchtender Staub bleibt 2 s.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"sternbild": {
+			"name": "Sternbild",
+			"kind": "feld",
+			"dir": "down",
+			"sp": 1,
+			"cd": 2.0,
+			"frames": [
+				10,
+				8,
+				16
+			],
+			"desc": "Ein Sternbild leuchtet vor dir auf und trifft immer wieder.",
+			"params": {
+				"at": 70,
+				"width": 90,
+				"life": 2.4,
+				"tick": 0.35,
+				"damage": 3.5
+			},
+			"enhanced": {
+				"life_add": 1.5,
+				"damage_add": 1
+			},
+			"alts": [
+				{
+					"id": "grosser_wagen",
+					"name": "Großer Wagen",
+					"sp": 2,
+					"desc": "Breiter.",
+					"params": {
+						"width": 140
+					}
+				},
+				{
+					"id": "schwerkraft",
+					"name": "Schwerkraft",
+					"sp": 2,
+					"desc": "Zieht Gegner zur Mitte.",
+					"params": {
+						"pull": 60
+					}
+				},
+				{
+					"id": "sternentor",
+					"name": "Sternentor",
+					"sp": 2,
+					"desc": "Um dich herum.",
+					"params": {
+						"at": 0
+					}
+				}
+			]
+		},
+		"lichtjahr": {
+			"name": "Lichtjahr",
+			"kind": "schritt",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				4,
+				6,
+				12
+			],
+			"desc": "Du springst ein Lichtjahr weit und erscheinst hinter dem Gegner.",
+			"params": {
+				"dist": 140,
+				"damage": 9
+			},
+			"enhanced": {
+				"damage_add": 6,
+				"dist_add": 40
+			},
+			"alts": [
+				{
+					"id": "sternentor_schritt",
+					"name": "Sternentor",
+					"sp": 2,
+					"desc": "Nach vorn ohne Ziel.",
+					"params": {
+						"behind": false,
+						"dist": 120
+					}
+				},
+				{
+					"id": "sternenstoss",
+					"name": "Sternenstoß",
+					"sp": 2,
+					"desc": "Härter beim Auftauchen.",
+					"params": {
+						"damage": 15
+					}
+				},
+				{
+					"id": "weiter_sprung",
+					"name": "Weiter Sprung",
+					"sp": 2,
+					"desc": "Weiter.",
+					"params": {
+						"dist": 190
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "supernova",
+				"name": "Supernova",
+				"kind": "nova",
+				"sp": 0,
+				"desc": "Ein Stern in deiner Hand wird zur Supernova.",
+				"params": {
+					"damage": 80,
+					"radius": 160
+				}
+			},
+			{
+				"id": "milchstrasse",
+				"name": "Milchstraße",
+				"kind": "strahl",
+				"sp": 2,
+				"desc": "Die Milchstraße strömt als Strahl über den Bildschirm.",
+				"params": {
+					"damage": 5,
+					"width": 56
+				}
+			},
+			{
+				"id": "sternenhagel",
+				"name": "Sternenhagel",
+				"kind": "regen",
+				"sp": 2,
+				"desc": "Ein Hagel aus Sternschnuppen fällt auf alle Gegner.",
+				"params": {
+					"damage": 11,
+					"count": 20
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

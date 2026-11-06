@@ -892,6 +892,200 @@
    "text": "Gepanzerter Supersoldat: Salven, Schild, Granaten (Legendär)",
    "unlock": "",
    "weapon": "wachhund"
+  },
+  "gezeitenklinge": {
+   "name": "Gezeitenklinge",
+   "text": "Wasser-Schwertkunst: Wellen schneiden, Gezeiten im Takt (Legendär)",
+   "unlock": "",
+   "weapon": "schwert_kaiser"
+  },
+  "donnerschritt": {
+   "name": "Donnerschritt",
+   "text": "Blitz-Kampfkunst: Spannung laden, blitzschnelle Schritte (Legendär)",
+   "unlock": "",
+   "weapon": "",
+   "unarmed": true
+  },
+  "frostlotus": {
+   "name": "Frostlotus",
+   "text": "Eisfächer-Tanz: Frostblüten setzen und zerspringen lassen (Legendär)",
+   "unlock": "",
+   "weapon": "schwert_kaiser"
+  },
+  "erdenfaust": {
+   "name": "Erdenfaust",
+   "text": "Erd-Kampfkunst: Felsruhe sammeln, Berge brechen (Legendär)",
+   "unlock": "",
+   "weapon": "",
+   "unarmed": true
+  },
+  "schattennaht": {
+   "name": "Schattennaht",
+   "text": "Schatten-Nadelkunst: Gegner vernähen und aufreißen (Legendär)",
+   "unlock": "",
+   "weapon": "schwert_kaiser"
+  },
+  "sonnenlanze": {
+   "name": "Sonnenlanze",
+   "text": "Licht-Lanzenkunst: Sonnenstrahlen und Kometenstöße (Legendär)",
+   "unlock": "",
+   "weapon": "schwert_kaiser"
+  },
+  "giftranke": {
+   "name": "Giftranke",
+   "text": "Pflanzen-Giftkunst: Ranken, Sporen und Giftblüten (Legendär)",
+   "unlock": "",
+   "weapon": "",
+   "unarmed": true
+  },
+  "sturmfeder": {
+   "name": "Sturmfeder",
+   "text": "Wind-Fächerkunst: Federklingen und Nachwind (Legendär)",
+   "unlock": "",
+   "weapon": "schwert_kaiser"
+  },
+  "rotschwur": {
+   "name": "Rotschwur",
+   "text": "Blutschwur-Schwertkunst: Leben opfern für rohe Kraft (Legendär)",
+   "unlock": "",
+   "weapon": "schwert_kaiser"
+  },
+  "sternensang": {
+   "name": "Sternensang",
+   "text": "Sternenmagie: Sternschnuppen, Sternbilder und Sternecho (Legendär)",
+   "unlock": "",
+   "weapon": "",
+   "unarmed": true
+  },
+  "eisenkette": {
+   "name": "Eisenkette",
+   "text": "Kettensichel-Kunst: Ketten werfen, ziehen und kreiseln (Legendär)",
+   "unlock": "",
+   "weapon": "schwert_kaiser"
+  },
+  "trommelherz": {
+   "name": "Trommelherz",
+   "text": "Trommel-Kampfkunst: Schallwellen und Paukenschläge (Legendär)",
+   "unlock": "",
+   "weapon": "",
+   "unarmed": true
+  },
+  "nebelfuchs": {
+   "name": "Nebelfuchs",
+   "text": "Fuchsgeist-Kunst: Fuchsfeuer, Nebel und Trugbilder (Legendär)",
+   "unlock": "",
+   "weapon": "",
+   "unarmed": true
+  },
+  "drachenzorn": {
+   "name": "Drachenzorn",
+   "text": "Drachen-Kampfkunst: Drachenodem und Drachenfäuste (Legendär)",
+   "unlock": "",
+   "weapon": "",
+   "unarmed": true
+  },
+  "kristallherz": {
+   "name": "Kristallherz",
+   "text": "Kristall-Kampfkunst: Splitter, Prismen und Kristallpanzer (Legendär)",
+   "unlock": "",
+   "weapon": "",
+   "unarmed": true
+  },
+  "papierkranich": {
+   "name": "Papierkranich",
+   "text": "Papierbann-Magie: Kraniche falten, Siegel zünden (Legendär)",
+   "unlock": "",
+   "weapon": "",
+   "unarmed": true
+  },
+  "puppenfaden": {
+   "name": "Puppenfaden",
+   "text": "Puppenspiel-Kunst: Fäden und eine Marionette, die nachschlägt (Legendär)",
+   "unlock": "",
+   "weapon": "",
+   "unarmed": true
+  },
+  "klingenwirbel": {
+   "name": "Klingenwirbel",
+   "text": "Wirbelklingen-Kunst: Doppelklinge kreiseln und werfen (Legendär)",
+   "unlock": "",
+   "weapon": "schwert_kaiser"
+  },
+  "vulkanherz": {
+   "name": "Vulkanherz",
+   "text": "Vulkan-Hammerkunst: Lava, Ausbrüche und schwere Schläge (Legendär)",
+   "unlock": "",
+   "weapon": "schwert_kaiser"
+  },
+  "polarlicht": {
+   "name": "Polarlicht",
+   "text": "Nordlicht-Magie: Lichtbänder, Eisregen und Polarnacht (Legendär)",
+   "unlock": "",
+   "weapon": "schwert_kaiser"
+  },
+  "sandsturm": {
+   "name": "Sandsturm",
+   "text": "Wüsten-Säbelkunst: Sandhosen und Wüstenecho (Legendär)",
+   "unlock": "",
+   "weapon": "schwert_kaiser"
+  },
+  "geisterlaterne": {
+   "name": "Geisterlaterne",
+   "text": "Geisterlaternen-Kunst: Irrlichter und Seelenflammen (Legendär)",
+   "unlock": "",
+   "weapon": "schwert_kaiser"
+  },
+  "gewitterhammer": {
+   "name": "Gewitterhammer",
+   "text": "Donnerhammer-Kunst: Blitze in den Boden schlagen (Legendär)",
+   "unlock": "",
+   "weapon": "schwert_kaiser"
+  },
+  "kirschsturm": {
+   "name": "Kirschsturm",
+   "text": "Blütenklingen-Kunst: Kirschblüten-Schnitte im Wind (Legendär)",
+   "unlock": "",
+   "weapon": "schwert_kaiser"
+  },
+  "abgrundtiefe": {
+   "name": "Abgrundtiefe",
+   "text": "Tiefsee-Kampfkunst: Tentakel, Tinte und Wasserdruck (Legendär)",
+   "unlock": "",
+   "weapon": "",
+   "unarmed": true
+  },
+  "zeitriss": {
+   "name": "Zeitriss",
+   "text": "Zeit-Magie: Zeiger, Zeitblasen und Zeitecho (Legendär)",
+   "unlock": "",
+   "weapon": "",
+   "unarmed": true
+  },
+  "runenschmied": {
+   "name": "Runenschmied",
+   "text": "Runen-Hammerkunst: Runen einbrennen und zünden (Legendär)",
+   "unlock": "",
+   "weapon": "schwert_kaiser"
+  },
+  "bestienklaue": {
+   "name": "Bestienklaue",
+   "text": "Bestien-Kampfkunst: Klauen, Raubsprünge und Raserei (Legendär)",
+   "unlock": "",
+   "weapon": "",
+   "unarmed": true
+  },
+  "spiegelseele": {
+   "name": "Spiegelseele",
+   "text": "Spiegel-Kunst: Angriffe zurückwerfen, Licht brechen (Legendär)",
+   "unlock": "",
+   "weapon": "",
+   "unarmed": true
+  },
+  "leerenschnitt": {
+   "name": "Leerenschnitt",
+   "text": "Leeren-Schwertkunst: Risse in den Raum schneiden (Legendär)",
+   "unlock": "",
+   "weapon": "schwert_kaiser"
   }
  },
  "start_items_note": "Teile ohne unlock-Eintrag sind von Anfang an frei. CreatorUnlocks.unlock(slot, id) schaltet frei.",

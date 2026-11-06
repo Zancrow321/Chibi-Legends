@@ -140,12 +140,18 @@ static func style_hint(style_id: String) -> String:
 	return "Sternschrein im Akademie-Hof"
 
 
+static var _colors: Dictionary = {}
+
+
 static func style_colors(style_id: String) -> Dictionary:
+	if _colors.has(style_id):
+		return _colors[style_id]
 	var f := FileAccess.open("res://assets/combat/styles/%s.json" % style_id, FileAccess.READ)
 	if f == null:
 		return {}
 	var d: Variant = JSON.parse_string(f.get_as_text())
-	return d.get("colors", {}) if d is Dictionary else {}
+	_colors[style_id] = d.get("colors", {}) if d is Dictionary else {}
+	return _colors[style_id]
 
 
 static func daily_ready() -> bool:

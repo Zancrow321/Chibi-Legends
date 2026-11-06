@@ -160,7 +160,9 @@ func _ready() -> void:
 func init_style() -> void:
 	if style == null or style.zuege.is_empty():
 		return
-	if style.data.get("caster", "") == "schwarzmond":
+	if style.data.get("caster", "") == "form":
+		glut = FormCaster.new()  # the 30 Baukasten styles (scripts/formen)
+	elif style.data.get("caster", "") == "schwarzmond":
 		glut = MondCaster.new()
 	elif style.id == "lauffeuer":
 		glut = FeuerCaster.new()
@@ -911,6 +913,15 @@ func _use_meisterzug() -> void:
 	move = {}
 	_queued = ""
 	Sfx.play("super_flash")
+	if glut is FormCaster:
+		var fo := FormSuper.new()
+		fo.room = world
+		fo.player = self
+		fo.caster = glut
+		fo.variant = style.super_variant
+		fo.title = style.variant().get("name", "Meisterzug")
+		world.add_child(fo)
+		return
 	if glut is FeuerCaster:
 		var fs := FeuerSuper.new()
 		fs.room = world

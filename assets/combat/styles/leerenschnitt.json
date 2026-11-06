@@ -1,0 +1,407 @@
+{
+	"_doc": "Baukasten-Kampfstil Leerenschnitt (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "leerenschnitt",
+	"name": "Leerenschnitt",
+	"element": "schatten",
+	"caster": "form",
+	"subtitle": "Leerenklinge · Schwerkraft, Risse, schwarze Löcher · Leerenhunger",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"armed": true,
+	"colors": {
+		"main": "7a4aff",
+		"accent": "ff4adc",
+		"light": "d0c0ff",
+		"dark": "06040e",
+		"white": "f0e8ff"
+	},
+	"kern": {
+		"type": "blutzoll",
+		"name": "Leerenhunger",
+		"desc": "Jeder Zug kostet 3 % LP (nie unter 1). Dafür bis zu +60 % Schaden, je weniger LP du hast, und jeder Treffer heilt 2 % zurück."
+	},
+	"loadout": {
+		"neutral": "leerenhieb",
+		"forward": "leerensichel",
+		"up": "riss",
+		"down": "schwerkraftsturz"
+	},
+	"zuege": {
+		"leerenhieb": {
+			"name": "Leerenhieb",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Drei Schnitte, die Risse in den Raum ziehen.",
+			"params": {
+				"hits": 3,
+				"damage": 6,
+				"len": 54
+			},
+			"enhanced": {
+				"hits_add": 1,
+				"damage_add": 3
+			},
+			"alts": [
+				{
+					"id": "rissgewitter",
+					"name": "Rissgewitter",
+					"sp": 2,
+					"desc": "Fünf schnelle Schnitte.",
+					"params": {
+						"hits": 5,
+						"damage": 4
+					}
+				},
+				{
+					"id": "weltenschnitt",
+					"name": "Weltenschnitt",
+					"sp": 2,
+					"desc": "Ein gewaltiger Schnitt.",
+					"params": {
+						"hits": 1,
+						"damage": 20,
+						"len": 66
+					}
+				},
+				{
+					"id": "kreisriss",
+					"name": "Kreisriss",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				}
+			]
+		},
+		"leerensichel": {
+			"name": "Leerensichel",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Eine Sichel aus Leere fliegt durch alle Gegner.",
+			"params": {
+				"damage": 13,
+				"speed": 460,
+				"dist": 320,
+				"pierce": true,
+				"size": 1.2
+			},
+			"enhanced": {
+				"size_mul": 1.5,
+				"damage_add": 6
+			},
+			"alts": [
+				{
+					"id": "zwillingsriss",
+					"name": "Zwillingsriss",
+					"sp": 2,
+					"desc": "Zwei Sicheln.",
+					"params": {
+						"count": 2,
+						"spread": 16,
+						"damage": 8
+					}
+				},
+				{
+					"id": "rueckriss",
+					"name": "Rückriss",
+					"sp": 2,
+					"desc": "Kehrt zurück.",
+					"params": {
+						"boomerang": true
+					}
+				},
+				{
+					"id": "grosser_riss",
+					"name": "Großer Riss",
+					"sp": 2,
+					"desc": "Groß, langsam.",
+					"params": {
+						"size": 2.0,
+						"speed": 300,
+						"damage": 18
+					}
+				}
+			]
+		},
+		"riss": {
+			"name": "Riss",
+			"kind": "schritt",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				4,
+				6,
+				12
+			],
+			"desc": "Du schneidest einen Riss und trittst hinter den Gegner.",
+			"params": {
+				"dist": 150,
+				"damage": 11
+			},
+			"enhanced": {
+				"damage_add": 6,
+				"dist_add": 40
+			},
+			"alts": [
+				{
+					"id": "risstor",
+					"name": "Risstor",
+					"sp": 2,
+					"desc": "Nach vorn ohne Ziel.",
+					"params": {
+						"behind": false,
+						"dist": 130
+					}
+				},
+				{
+					"id": "leerenstich",
+					"name": "Leerenstich",
+					"sp": 2,
+					"desc": "Härter.",
+					"params": {
+						"damage": 17
+					}
+				},
+				{
+					"id": "weiter_riss",
+					"name": "Weiter Riss",
+					"sp": 2,
+					"desc": "Weiter.",
+					"params": {
+						"dist": 200
+					}
+				}
+			]
+		},
+		"schwerkraftsturz": {
+			"name": "Schwerkraftsturz",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Die Schwerkraft reißt dich zu Boden, der Raum bebt.",
+			"params": {
+				"damage": 15,
+				"radius": 48,
+				"waves": true,
+				"wave_damage": 9
+			},
+			"enhanced": {
+				"radius_add": 18,
+				"damage_add": 6
+			},
+			"alts": [
+				{
+					"id": "einschlagloch",
+					"name": "Einschlagloch",
+					"sp": 2,
+					"desc": "Großer Radius.",
+					"params": {
+						"radius": 76,
+						"waves": false
+					}
+				},
+				{
+					"id": "nachbeben",
+					"name": "Raumbeben",
+					"sp": 2,
+					"desc": "Zweiter Stoß.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "leerenfleck",
+					"name": "Leerenfleck",
+					"sp": 2,
+					"desc": "Ein Leerenfleck bleibt 2 s.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"schwarzes_loch": {
+			"name": "Schwarzes Loch",
+			"kind": "feld",
+			"dir": "down",
+			"sp": 1,
+			"cd": 2.0,
+			"frames": [
+				10,
+				8,
+				16
+			],
+			"desc": "Ein kleines schwarzes Loch vor dir saugt Gegner an.",
+			"params": {
+				"at": 70,
+				"width": 70,
+				"life": 2.2,
+				"tick": 0.3,
+				"damage": 3,
+				"pull": 140
+			},
+			"enhanced": {
+				"life_add": 1.2,
+				"pull_add": 60
+			},
+			"alts": [
+				{
+					"id": "ereignisfeld",
+					"name": "Ereignisfeld",
+					"sp": 2,
+					"desc": "Breiter, weniger Sog.",
+					"params": {
+						"width": 120,
+						"pull": 70
+					}
+				},
+				{
+					"id": "kollaps",
+					"name": "Kollaps",
+					"sp": 2,
+					"desc": "Kurz, schleudert hoch.",
+					"params": {
+						"life": 1.0,
+						"damage": 9,
+						"launch": 240
+					}
+				},
+				{
+					"id": "leerenschild",
+					"name": "Leerenschild",
+					"sp": 2,
+					"desc": "Um dich herum.",
+					"params": {
+						"at": 0,
+						"pull": 60
+					}
+				}
+			]
+		},
+		"ereignishorizont": {
+			"name": "Ereignishorizont",
+			"kind": "strahl",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.6,
+			"frames": [
+				12,
+				30,
+				16
+			],
+			"desc": "Ein schwarzer Strahl mit leuchtendem Rand schneidet nach vorn.",
+			"params": {
+				"len": 220,
+				"width": 16,
+				"damage": 3.5,
+				"tick": 0.08
+			},
+			"enhanced": {
+				"width_add": 12,
+				"damage_add": 1.5
+			},
+			"alts": [
+				{
+					"id": "breiter_horizont",
+					"name": "Breiter Horizont",
+					"sp": 2,
+					"desc": "Dick, kürzer.",
+					"params": {
+						"width": 28,
+						"len": 160
+					}
+				},
+				{
+					"id": "steigender_horizont",
+					"name": "Steigender Horizont",
+					"sp": 2,
+					"desc": "Schräg nach oben.",
+					"params": {
+						"up": true
+					}
+				},
+				{
+					"id": "leerenpunkt",
+					"name": "Leerenpunkt",
+					"sp": 2,
+					"desc": "Kurz und hart.",
+					"params": {
+						"damage": 6,
+						"width": 9
+					},
+					"frames": [
+						8,
+						14,
+						14
+					]
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "singularitaet",
+				"name": "Singularität",
+				"kind": "nova",
+				"sp": 0,
+				"desc": "Eine Singularität zieht alles zusammen und explodiert.",
+				"params": {
+					"damage": 80,
+					"radius": 160
+				}
+			},
+			{
+				"id": "weltenriss",
+				"name": "Weltenriss",
+				"kind": "strahl",
+				"sp": 2,
+				"desc": "Ein Riss durch die ganze Welt.",
+				"params": {
+					"damage": 5,
+					"width": 60
+				}
+			},
+			{
+				"id": "leere",
+				"name": "Die Leere",
+				"kind": "feld",
+				"sp": 2,
+				"desc": "Die Leere verschluckt den Bildschirm.",
+				"params": {
+					"damage": 5,
+					"pull": 90
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

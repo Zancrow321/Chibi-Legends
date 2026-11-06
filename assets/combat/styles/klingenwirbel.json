@@ -1,0 +1,402 @@
+{
+	"_doc": "Baukasten-Kampfstil Klingenwirbel (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "klingenwirbel",
+	"name": "Klingenwirbel",
+	"element": "wind",
+	"caster": "form",
+	"subtitle": "Doppelklingen-Wirbel · Kreisel, Wurfklingen, Schnittwind",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"armed": true,
+	"colors": {
+		"main": "5fe3e0",
+		"accent": "e8eef2",
+		"light": "d0fffa",
+		"dark": "0c1e22",
+		"white": "ffffff"
+	},
+	"kern": {
+		"type": "rhythmus",
+		"name": "Wirbelzahl",
+		"desc": "Verschiedene Züge in einer Kombo drehen den Wirbel höher (1 bis 3). Bei 3 bekommt der nächste Zug einen Extra-Schnitt und +10 Leiste."
+	},
+	"loadout": {
+		"neutral": "doppelschnitt",
+		"forward": "wurfklinge",
+		"up": "wirbelaufwind",
+		"down": "kreiselfall"
+	},
+	"zuege": {
+		"doppelschnitt": {
+			"name": "Doppelschnitt",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Zwei schnelle Schnitte mit beiden Klingenenden.",
+			"params": {
+				"hits": 2,
+				"damage": 6,
+				"len": 50
+			},
+			"enhanced": {
+				"hits_add": 2
+			},
+			"alts": [
+				{
+					"id": "vierfachschnitt",
+					"name": "Vierfachschnitt",
+					"sp": 2,
+					"desc": "Vier Schnitte.",
+					"params": {
+						"hits": 4,
+						"damage": 4
+					}
+				},
+				{
+					"id": "rundschnitt",
+					"name": "Rundschnitt",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				},
+				{
+					"id": "aufschnitt",
+					"name": "Aufschnitt",
+					"sp": 2,
+					"desc": "Schleudert hoch.",
+					"params": {
+						"launch": 280
+					}
+				}
+			]
+		},
+		"wurfklinge": {
+			"name": "Wurfklinge",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Die Doppelklinge fliegt kreiselnd nach vorn und kehrt zurück.",
+			"params": {
+				"damage": 11,
+				"speed": 480,
+				"dist": 240,
+				"boomerang": true,
+				"size": 1.2
+			},
+			"enhanced": {
+				"dist_add": 80,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "doppelwurf",
+					"name": "Doppelwurf",
+					"sp": 2,
+					"desc": "Zwei Würfe.",
+					"params": {
+						"count": 2,
+						"delay": 0.15,
+						"damage": 7
+					}
+				},
+				{
+					"id": "fernwurf",
+					"name": "Fernwurf",
+					"sp": 2,
+					"desc": "Weit, ohne Rückkehr, durchschlägt.",
+					"params": {
+						"boomerang": false,
+						"pierce": true,
+						"dist": 340
+					}
+				},
+				{
+					"id": "schwerer_kreisel",
+					"name": "Schwerer Kreisel",
+					"sp": 2,
+					"desc": "Groß und langsam.",
+					"params": {
+						"size": 1.7,
+						"speed": 320,
+						"damage": 16
+					}
+				}
+			]
+		},
+		"wirbelaufwind": {
+			"name": "Wirbelaufwind",
+			"kind": "wirbel",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.3,
+			"frames": [
+				6,
+				30,
+				12
+			],
+			"desc": "Du kreiselst nach oben und reißt Gegner mit.",
+			"params": {
+				"radius": 40,
+				"hits": 5,
+				"damage": 3.5,
+				"pull": 50,
+				"lift": 180
+			},
+			"enhanced": {
+				"hits_add": 3,
+				"radius_add": 10
+			},
+			"alts": [
+				{
+					"id": "bodenkreisel",
+					"name": "Bodenkreisel",
+					"sp": 2,
+					"desc": "Am Boden, wandert vorwärts.",
+					"params": {
+						"lift": 0,
+						"drift": 100
+					}
+				},
+				{
+					"id": "grosser_kreisel",
+					"name": "Großer Kreisel",
+					"sp": 2,
+					"desc": "Größer.",
+					"params": {
+						"radius": 60,
+						"hits": 4,
+						"damage": 5
+					}
+				},
+				{
+					"id": "sogkreisel",
+					"name": "Sogkreisel",
+					"sp": 2,
+					"desc": "Starker Sog.",
+					"params": {
+						"pull": 120,
+						"lift": 60
+					}
+				}
+			]
+		},
+		"kreiselfall": {
+			"name": "Kreiselfall",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Du fällst kreiselnd auf den Boden.",
+			"params": {
+				"damage": 12,
+				"radius": 44,
+				"waves": true,
+				"wave_damage": 8
+			},
+			"enhanced": {
+				"radius_add": 16,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "schneidrad",
+					"name": "Schneidrad",
+					"sp": 2,
+					"desc": "Großer Aufprall.",
+					"params": {
+						"radius": 70,
+						"waves": false
+					}
+				},
+				{
+					"id": "nachschnitt",
+					"name": "Nachschnitt",
+					"sp": 2,
+					"desc": "Zweiter Stoß.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "klingenfeld",
+					"name": "Klingenfeld",
+					"sp": 2,
+					"desc": "Schnittwind bleibt 2 s.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"schnittwind": {
+			"name": "Schnittwind",
+			"kind": "sturm",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				5,
+				12,
+				12
+			],
+			"desc": "Du jagst wirbelnd durch die Gegner.",
+			"params": {
+				"dist": 150,
+				"damage": 10
+			},
+			"enhanced": {
+				"dist_mul": 1.5,
+				"damage_add": 4
+			},
+			"alts": [
+				{
+					"id": "pendelwind",
+					"name": "Pendelwind",
+					"sp": 2,
+					"desc": "Hin und zurück.",
+					"params": {
+						"back": true
+					}
+				},
+				{
+					"id": "windspur",
+					"name": "Windspur",
+					"sp": 2,
+					"desc": "Schnittwind bleibt.",
+					"params": {
+						"trail": true
+					}
+				},
+				{
+					"id": "durchschnitt",
+					"name": "Durchschnitt",
+					"sp": 2,
+					"desc": "Kurz, hart.",
+					"params": {
+						"dist": 90,
+						"damage": 16
+					}
+				}
+			]
+		},
+		"klingenkreisel": {
+			"name": "Klingenkreisel",
+			"kind": "wirbel",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 1.3,
+			"frames": [
+				6,
+				30,
+				12
+			],
+			"desc": "Die Klinge kreist um dich und schneidet alles.",
+			"params": {
+				"radius": 42,
+				"hits": 6,
+				"damage": 3,
+				"pull": 30,
+				"drift": 0
+			},
+			"enhanced": {
+				"hits_add": 3,
+				"radius_add": 12
+			},
+			"alts": [
+				{
+					"id": "wanderwirbel",
+					"name": "Wanderwirbel",
+					"sp": 2,
+					"desc": "Wandert vorwärts.",
+					"params": {
+						"drift": 80
+					}
+				},
+				{
+					"id": "weiter_kreisel",
+					"name": "Weiter Kreisel",
+					"sp": 2,
+					"desc": "Größer.",
+					"params": {
+						"radius": 64,
+						"hits": 4
+					}
+				},
+				{
+					"id": "sturmkreisel",
+					"name": "Sturmkreisel",
+					"sp": 2,
+					"desc": "Mehr Treffer, kleiner.",
+					"params": {
+						"hits": 9,
+						"damage": 2.2,
+						"radius": 34
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "klingensturm",
+				"name": "Klingensturm",
+				"kind": "feld",
+				"sp": 0,
+				"desc": "Ein Sturm aus Klingen tobt über den Bildschirm.",
+				"params": {
+					"damage": 4,
+					"pull": 60
+				}
+			},
+			{
+				"id": "hundert_schnitte",
+				"name": "Hundert Schnitte",
+				"kind": "ansturm",
+				"sp": 2,
+				"desc": "Neun Schnitte, du wirbelst von Ziel zu Ziel.",
+				"params": {
+					"damage": 10,
+					"slashes": 9
+				}
+			},
+			{
+				"id": "orkanklinge",
+				"name": "Orkanklinge",
+				"kind": "strahl",
+				"sp": 2,
+				"desc": "Ein Orkan aus Schnittwind schießt über den Bildschirm.",
+				"params": {
+					"damage": 5,
+					"width": 54
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

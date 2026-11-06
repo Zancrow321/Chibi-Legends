@@ -1,0 +1,403 @@
+{
+	"_doc": "Baukasten-Kampfstil Trommelherz (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "trommelherz",
+	"name": "Trommelherz",
+	"element": "wind",
+	"caster": "form",
+	"subtitle": "Festtrommler · Schallwellen, Paukenschläge, im Takt schlagen",
+	"moveset": "res://assets/combat/movesets/lauffeuer.json",
+	"armed": false,
+	"colors": {
+		"main": "ff6a3a",
+		"accent": "ffd23c",
+		"light": "ffe0c8",
+		"dark": "2a1014",
+		"white": "fffaf0"
+	},
+	"kern": {
+		"type": "rhythmus",
+		"name": "Trommeltakt",
+		"desc": "Verschiedene Züge in einer Kombo schlagen den Takt (1 bis 3). Beim dritten Takt bekommt der nächste Zug einen Extra-Schlag und +10 Leiste."
+	},
+	"loadout": {
+		"neutral": "paukenschlag",
+		"forward": "schallwelle",
+		"up": "bodentrommel",
+		"down": "grosser_schlag"
+	},
+	"zuege": {
+		"paukenschlag": {
+			"name": "Paukenschlag",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Drei Schläge wie auf eine Pauke, jeder mit Schallring.",
+			"params": {
+				"hits": 3,
+				"damage": 5.5,
+				"len": 38
+			},
+			"enhanced": {
+				"hits_add": 2,
+				"damage_add": 1
+			},
+			"alts": [
+				{
+					"id": "wirbelschlag",
+					"name": "Wirbelschlag",
+					"sp": 2,
+					"desc": "Sechs schnelle Schläge.",
+					"params": {
+						"hits": 6,
+						"damage": 3
+					}
+				},
+				{
+					"id": "grosse_pauke",
+					"name": "Große Pauke",
+					"sp": 2,
+					"desc": "Ein riesiger Schlag.",
+					"params": {
+						"hits": 1,
+						"damage": 18,
+						"len": 44
+					}
+				},
+				{
+					"id": "taktwechsel",
+					"name": "Taktwechsel",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				}
+			]
+		},
+		"schallwelle": {
+			"name": "Schallwelle",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Eine Schallwelle rollt nach vorn durch alle Gegner.",
+			"params": {
+				"damage": 11,
+				"speed": 420,
+				"dist": 300,
+				"pierce": true,
+				"size": 1.3
+			},
+			"enhanced": {
+				"size_mul": 1.4,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "doppelwelle",
+					"name": "Doppelwelle",
+					"sp": 2,
+					"desc": "Zwei Wellen kurz hintereinander.",
+					"params": {
+						"count": 2,
+						"delay": 0.15,
+						"damage": 7
+					}
+				},
+				{
+					"id": "weite_welle",
+					"name": "Weite Welle",
+					"sp": 2,
+					"desc": "Größer, langsamer.",
+					"params": {
+						"size": 1.9,
+						"speed": 280
+					}
+				},
+				{
+					"id": "echowelle",
+					"name": "Echowelle",
+					"sp": 2,
+					"desc": "Kehrt zurück.",
+					"params": {
+						"boomerang": true
+					}
+				}
+			]
+		},
+		"bodentrommel": {
+			"name": "Bodentrommel",
+			"kind": "saeule",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				9,
+				14,
+				16
+			],
+			"desc": "Du trommelst auf den Boden, vor dir schlägt eine Schallsäule hoch.",
+			"params": {
+				"at": 56,
+				"width": 32,
+				"height": 80,
+				"damage": 12,
+				"launch": 360
+			},
+			"enhanced": {
+				"launch_add": 110,
+				"width_add": 12
+			},
+			"alts": [
+				{
+					"id": "dreiklang",
+					"name": "Dreiklang",
+					"sp": 2,
+					"desc": "Drei Säulen in Reihe.",
+					"params": {
+						"count": 3,
+						"step": 42,
+						"damage": 7
+					}
+				},
+				{
+					"id": "trommelsprung",
+					"name": "Trommelsprung",
+					"sp": 2,
+					"desc": "Du springst mit hoch.",
+					"params": {
+						"ride": true,
+						"at": 8
+					}
+				},
+				{
+					"id": "bassstoss",
+					"name": "Bassstoß",
+					"sp": 2,
+					"desc": "Breiter, niedriger.",
+					"params": {
+						"width": 64,
+						"launch": 220
+					}
+				}
+			]
+		},
+		"grosser_schlag": {
+			"name": "Großer Schlag",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Von oben ein Schlag wie auf die größte Trommel.",
+			"params": {
+				"damage": 13,
+				"radius": 48,
+				"waves": true,
+				"wave_damage": 8
+			},
+			"enhanced": {
+				"radius_add": 18,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "donnerpauke",
+					"name": "Donnerpauke",
+					"sp": 2,
+					"desc": "Großer Radius.",
+					"params": {
+						"radius": 76,
+						"waves": false
+					}
+				},
+				{
+					"id": "nachhall",
+					"name": "Nachhall",
+					"sp": 2,
+					"desc": "Zweiter Schlag.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "taktfeld",
+					"name": "Taktfeld",
+					"sp": 2,
+					"desc": "Der Boden bebt 2 s.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"festrhythmus": {
+			"name": "Festrhythmus",
+			"kind": "aura",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 6.0,
+			"frames": [
+				12,
+				6,
+				12
+			],
+			"desc": "Du kommst in Feststimmung: 5 s schneller laufen und +15 % Schaden.",
+			"params": {
+				"buff": 5,
+				"bonus": 0.15,
+				"speed": 1.25
+			},
+			"enhanced": {
+				"buff_add": 2,
+				"bonus_add": 0.1
+			},
+			"alts": [
+				{
+					"id": "ekstase",
+					"name": "Ekstase",
+					"sp": 2,
+					"desc": "Kurz, +30 %.",
+					"params": {
+						"bonus": 0.3,
+						"buff": 3.5
+					}
+				},
+				{
+					"id": "dauerfest",
+					"name": "Dauerfest",
+					"sp": 2,
+					"desc": "8 s, +10 %.",
+					"params": {
+						"buff": 8,
+						"bonus": 0.1
+					}
+				},
+				{
+					"id": "festring",
+					"name": "Festring",
+					"sp": 2,
+					"desc": "Ein Schallring trifft um dich.",
+					"params": {
+						"nova": 18
+					}
+				}
+			]
+		},
+		"trommelwirbel": {
+			"name": "Trommelwirbel",
+			"kind": "wirbel",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.3,
+			"frames": [
+				6,
+				30,
+				12
+			],
+			"desc": "Ein Wirbel aus Schlägen um dich herum.",
+			"params": {
+				"radius": 38,
+				"hits": 6,
+				"damage": 3,
+				"pull": 40,
+				"drift": 50
+			},
+			"enhanced": {
+				"hits_add": 3
+			},
+			"alts": [
+				{
+					"id": "grosser_wirbel",
+					"name": "Großer Wirbel",
+					"sp": 2,
+					"desc": "Größer.",
+					"params": {
+						"radius": 58,
+						"hits": 4,
+						"damage": 4.5
+					}
+				},
+				{
+					"id": "standwirbel",
+					"name": "Standwirbel",
+					"sp": 2,
+					"desc": "Am Platz, mehr Sog.",
+					"params": {
+						"drift": 0,
+						"pull": 90
+					}
+				},
+				{
+					"id": "hochwirbel",
+					"name": "Hochwirbel",
+					"sp": 2,
+					"desc": "Steigt auf.",
+					"params": {
+						"lift": 160
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "donnerfest",
+				"name": "Donnerfest",
+				"kind": "nova",
+				"sp": 0,
+				"desc": "Der letzte Festschlag: eine Schallexplosion um dich.",
+				"params": {
+					"damage": 76,
+					"radius": 160
+				}
+			},
+			{
+				"id": "schallkanone",
+				"name": "Schallkanone",
+				"kind": "strahl",
+				"sp": 2,
+				"desc": "Ein gebündelter Schallstrahl über den ganzen Bildschirm.",
+				"params": {
+					"damage": 5,
+					"width": 56
+				}
+			},
+			{
+				"id": "festumzug",
+				"name": "Festumzug",
+				"kind": "saeulen",
+				"sp": 2,
+				"desc": "Acht Schallsäulen marschieren im Takt nach vorn.",
+				"params": {
+					"damage": 12,
+					"count": 8
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

@@ -1,0 +1,410 @@
+{
+	"_doc": "Baukasten-Kampfstil Frostlotus (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "frostlotus",
+	"name": "Frostlotus",
+	"element": "frost",
+	"caster": "form",
+	"subtitle": "Eisfächer-Tanz · Frostblüten säen, mit dem Lotusbruch sprengen",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"armed": true,
+	"colors": {
+		"main": "7fd8ff",
+		"accent": "ff9ad8",
+		"light": "e8f8ff",
+		"dark": "16243a",
+		"white": "ffffff"
+	},
+	"kern": {
+		"type": "marken",
+		"name": "Frostblüte",
+		"zuender": "lotusbruch",
+		"desc": "Treffer setzen Frostblüten auf Gegner (bis 3). Lotusbruch lässt alle Blüten zerspringen: +9 Schaden je Blüte."
+	},
+	"loadout": {
+		"neutral": "faecherschnitt",
+		"forward": "eisbluetenwurf",
+		"up": "eisdorn",
+		"down": "lotusbruch"
+	},
+	"zuege": {
+		"faecherschnitt": {
+			"name": "Fächerschnitt",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Zwei elegante Fächerschnitte, die Frost verstreuen.",
+			"params": {
+				"hits": 2,
+				"damage": 6,
+				"len": 46
+			},
+			"enhanced": {
+				"hits_add": 2,
+				"len_add": 14
+			},
+			"alts": [
+				{
+					"id": "bluetenwirbel",
+					"name": "Blütenwirbel",
+					"sp": 2,
+					"desc": "Vier schnellere Schnitte.",
+					"params": {
+						"hits": 4,
+						"damage": 4
+					}
+				},
+				{
+					"id": "doppelfaecher",
+					"name": "Doppelfächer",
+					"sp": 2,
+					"desc": "Schneidet vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				},
+				{
+					"id": "reifhauch",
+					"name": "Reifhauch",
+					"sp": 2,
+					"desc": "Weiter Frosthauch, weniger Schaden.",
+					"params": {
+						"len": 70,
+						"damage": 4.5
+					}
+				}
+			]
+		},
+		"eisbluetenwurf": {
+			"name": "Eisblütenwurf",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Drei Eisblüten fliegen fächerförmig nach vorn.",
+			"params": {
+				"count": 3,
+				"spread": 24,
+				"damage": 6,
+				"speed": 440,
+				"dist": 280
+			},
+			"enhanced": {
+				"count_add": 2,
+				"damage_add": 2
+			},
+			"alts": [
+				{
+					"id": "einzelbluete",
+					"name": "Einzelblüte",
+					"sp": 2,
+					"desc": "Eine große Blüte, durchschlägt.",
+					"params": {
+						"count": 1,
+						"damage": 15,
+						"pierce": true,
+						"size": 1.4
+					}
+				},
+				{
+					"id": "bluetenkreis",
+					"name": "Blütenkreis",
+					"sp": 2,
+					"desc": "Fünf Blüten in weitem Fächer.",
+					"params": {
+						"count": 5,
+						"spread": 60,
+						"damage": 4
+					}
+				},
+				{
+					"id": "bumerangfaecher",
+					"name": "Bumerangfächer",
+					"sp": 2,
+					"desc": "Der Fächer fliegt hin und zurück.",
+					"params": {
+						"count": 1,
+						"boomerang": true,
+						"damage": 10
+					}
+				}
+			]
+		},
+		"eisdorn": {
+			"name": "Eisdorn",
+			"kind": "saeule",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				9,
+				14,
+				16
+			],
+			"desc": "Ein Eisdorn wächst vor dir aus dem Boden.",
+			"params": {
+				"at": 52,
+				"width": 24,
+				"height": 80,
+				"damage": 12,
+				"launch": 340
+			},
+			"enhanced": {
+				"height_add": 30,
+				"launch_add": 100
+			},
+			"alts": [
+				{
+					"id": "dornenhecke",
+					"name": "Dornenhecke",
+					"sp": 2,
+					"desc": "Drei Dornen hintereinander.",
+					"params": {
+						"count": 3,
+						"step": 36,
+						"damage": 7
+					}
+				},
+				{
+					"id": "eisstufe",
+					"name": "Eisstufe",
+					"sp": 2,
+					"desc": "Du stehst auf dem Dorn und wirst hochgehoben.",
+					"params": {
+						"ride": true,
+						"at": 8
+					}
+				},
+				{
+					"id": "frostpfeiler",
+					"name": "Frostpfeiler",
+					"sp": 2,
+					"desc": "Breiter und höher, langsamer.",
+					"params": {
+						"width": 50,
+						"height": 110
+					},
+					"frames": [
+						14,
+						14,
+						16
+					]
+				}
+			]
+		},
+		"lotusteich": {
+			"name": "Lotusteich",
+			"kind": "feld",
+			"dir": "down",
+			"sp": 1,
+			"cd": 2.0,
+			"frames": [
+				10,
+				8,
+				16
+			],
+			"desc": "Ein gefrorener Teich vor dir trifft Gegner immer wieder.",
+			"params": {
+				"at": 40,
+				"width": 80,
+				"life": 2.5,
+				"tick": 0.35,
+				"damage": 3
+			},
+			"enhanced": {
+				"life_add": 1.5,
+				"width_add": 30
+			},
+			"alts": [
+				{
+					"id": "weiter_teich",
+					"name": "Weiter Teich",
+					"sp": 2,
+					"desc": "Viel breiter.",
+					"params": {
+						"width": 130
+					}
+				},
+				{
+					"id": "frostsog",
+					"name": "Frostsog",
+					"sp": 2,
+					"desc": "Zieht Gegner zur Mitte.",
+					"params": {
+						"pull": 60
+					}
+				},
+				{
+					"id": "eisgrab",
+					"name": "Eisgrab",
+					"sp": 2,
+					"desc": "Kurz, aber hart, schleudert hoch.",
+					"params": {
+						"life": 1.2,
+						"damage": 7,
+						"launch": 200
+					}
+				}
+			]
+		},
+		"lotusbruch": {
+			"name": "Lotusbruch",
+			"kind": "hieb",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Ein harter Schlag, der alle Frostblüten zerspringen lässt.",
+			"params": {
+				"hits": 1,
+				"damage": 14,
+				"len": 54
+			},
+			"enhanced": {
+				"damage_add": 8,
+				"len_add": 16
+			},
+			"alts": [
+				{
+					"id": "splitterbruch",
+					"name": "Splitterbruch",
+					"sp": 2,
+					"desc": "Weiter, etwas schwächer.",
+					"params": {
+						"len": 80,
+						"damage": 11
+					}
+				},
+				{
+					"id": "zweiter_bruch",
+					"name": "Zweiter Bruch",
+					"sp": 2,
+					"desc": "Zwei Schläge.",
+					"params": {
+						"hits": 2,
+						"damage": 8
+					}
+				},
+				{
+					"id": "tauender_bruch",
+					"name": "Tauender Bruch",
+					"sp": 2,
+					"desc": "Treffer heilen 40 LP.",
+					"params": {
+						"heal": 40
+					}
+				}
+			]
+		},
+		"schneeflockenschritt": {
+			"name": "Schneeflockenschritt",
+			"kind": "schritt",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				4,
+				6,
+				12
+			],
+			"desc": "Du verschwindest im Schnee und tauchst hinter dem nächsten Gegner auf.",
+			"params": {
+				"dist": 120,
+				"damage": 10
+			},
+			"enhanced": {
+				"damage_add": 6,
+				"dist_add": 40
+			},
+			"alts": [
+				{
+					"id": "eisspiegel",
+					"name": "Eisspiegel",
+					"sp": 2,
+					"desc": "Nur nach vorn, ohne Ziel.",
+					"params": {
+						"behind": false,
+						"dist": 90
+					}
+				},
+				{
+					"id": "frosttritt",
+					"name": "Frosttritt",
+					"sp": 2,
+					"desc": "Stärkerer Treffer beim Auftauchen.",
+					"params": {
+						"damage": 16
+					}
+				},
+				{
+					"id": "weiter_schritt",
+					"name": "Weiter Schritt",
+					"sp": 2,
+					"desc": "Mehr Reichweite.",
+					"params": {
+						"dist": 170
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "ewiger_winter",
+				"name": "Ewiger Winter",
+				"kind": "feld",
+				"sp": 0,
+				"desc": "Ein Schneesturm hüllt den Bildschirm ein und friert alles ein.",
+				"params": {
+					"damage": 4,
+					"pull": 30
+				}
+			},
+			{
+				"id": "lotusbluete",
+				"name": "Lotusblüte",
+				"kind": "nova",
+				"sp": 2,
+				"desc": "Eine riesige Eislotusblüte öffnet sich um dich und zerspringt.",
+				"params": {
+					"damage": 72,
+					"radius": 150
+				}
+			},
+			{
+				"id": "faechertanz",
+				"name": "Fächertanz",
+				"kind": "ansturm",
+				"sp": 2,
+				"desc": "Sechs Fächerschnitte im Tanz von Ziel zu Ziel.",
+				"params": {
+					"damage": 13,
+					"slashes": 6
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}
