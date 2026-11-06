@@ -47,8 +47,7 @@ jobs:
         run: |
           mkdir -p item-probe
           timeout 120 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/items/probe.gd -- "$PWD/item-probe" > probe.log 2>&1 || true
-          echo "--- Fehler in der Probe:"; grep -A3 -E "SCRIPT ERROR|ERROR:" probe.log | head -60 || true
-          echo "--- Ende:"; tail -8 probe.log; ls -la item-probe
+          ls -la item-probe
 
       - uses: actions/upload-artifact@v4
         if: github.event_name == 'pull_request'
@@ -67,6 +66,14 @@ jobs:
         with:
           name: chibi-legends-web
           path: build/web
+
+      - name: Item-Bericht (Logiktest und Probe)
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        run: |
+          echo "--- Logiktest:"; grep -E "ITEM|Gear-Wert|ERROR" items.log || true
+          echo "--- Fehler in der Probe:"; grep -A3 -E "SCRIPT ERROR|ERROR:" probe.log | head -60 || true
+          echo "--- Ende der Probe:"; tail -8 probe.log || true
 
       - uses: actions/upload-pages-artifact@v3
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
