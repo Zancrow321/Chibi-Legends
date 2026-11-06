@@ -48,12 +48,14 @@ func _initialize() -> void:
 		steps.append([t + 16, "shot:%s_a" % tag])
 		steps.append([t + 70, "cast:forward"])
 		steps.append([t + 84, "shot:%s_b" % tag])
-		steps.append([t + 150, "super"])
-		steps.append([t + 150 + 40, "shot:%s_c" % tag])
-		steps.append([t + 150 + 70, "shot:%s_d" % tag])
-		steps.append([t + 150 + 110, "shot:%s_e" % tag])
-		t += 420
-	steps.append([t, "quit"])
+		steps.append([t + 140, "super"])
+		steps.append([t + 140 + 45, "shot:%s_c" % tag])
+		steps.append([t + 140 + 85, "shot:%s_d" % tag])
+		t += 330
+	steps.append([t, "skin:" + str(ids[1])])
+	steps.append([t + 30, "menu"])
+	steps.append([t + 40, "shot:menu"])
+	steps.append([t + 45, "quit"])
 
 
 func _process(_delta: float) -> bool:
@@ -91,6 +93,10 @@ func _do(cmd: String) -> void:
 			p.glut.interrupt()
 			p.gauge = 300.0
 			p._use_meisterzug()
+		"menu":
+			var m: GlutatemMenu = room.hud.menu
+			m.open()
+			m._row = m._rows.size() - 1
 		"shot":
 			root.get_texture().get_image().save_png(out.path_join(parts[1] + ".png"))
 		"quit":

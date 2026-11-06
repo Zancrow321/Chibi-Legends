@@ -22,7 +22,7 @@ Treffer-Funken und Schadenszahlen gehören allen und bleiben ebenfalls.
 | Glutatem | Giftglut (grün), Blauglut (blau), Schattenglut (violett/rosa) |
 | Lauffeuer | Irrlicht (türkisgrün), Seelenfeuer (blau), Purpurbrand (magenta) |
 | Schwarzmond | Blutmond (rot), Goldmond (gold), Leermond (fahles Violett) |
-| Gleichklang | Totenrot (rot), Mondsilber (silbern), Seelengrün (grün) |
+| Gleichklang | Totenrot (rot), Glockengold (gold), Seelengrün (grün) |
 | Bollwerk | Rotalarm (rot), Tarnfeld (oliv/grün), Violettplasma (violett) |
 | Wirbelwille | Glutwind (orange/rot), Sturmviolett (violett), Goldwind (gold) |
 | Grenzbrecher | Goldaura (gold), Purpur-Ki (violett), Zornrot (rot) |
@@ -46,7 +46,8 @@ zeigen, woher man sie bekommt. Gespeichert wird in `user://skins.json`.
 ## Technik
 
 - Daten: `assets/combat/skins.json` (Farbton drehen in Grad, Sättigung,
-  Helligkeit, optional ein Farbverlauf `ramp` über die bunten Stellen).
+  Helligkeit, optional ein Farbverlauf `ramp` über die bunten Stellen und
+  eine Tönung `tint`, die auch Weiß einfärbt, für helle Stile).
 - Code: `scripts/fx/style_skin.gd`. Jeder CanvasItem der Stil-Effekte bekommt
   ein ShaderMaterial mit derselben Mischart wie vorher (additiv, unbeleuchtet
   ...), das danach die Farbe dreht. Weiß und Grau bleiben, HDR-Werte über 1

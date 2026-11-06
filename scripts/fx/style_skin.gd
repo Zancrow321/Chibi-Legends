@@ -8,7 +8,8 @@ extends RefCounted
 ## Stil-Effekte bekommt ein ShaderMaterial, das dieselbe Mischart wie vorher
 ## hat (additiv, unbeleuchtet ...) und die Farbe danach dreht:
 ##   Farbton drehen (um die Graue Achse, Weiß und Grau bleiben), Sättigung,
-##   Helligkeit, optional ein Farbverlauf über die bunten Stellen.
+##   Helligkeit, optional ein Farbverlauf über die bunten Stellen und eine
+##   Tönung (tint), die auch Weiß einfärbt (für helle Stile).
 ## HDR-Werte über 1 bleiben erhalten, das Bloom leuchtet also weiter.
 ##
 ## Daten: assets/combat/skins.json. Gespeichert: user://skins.json
@@ -22,6 +23,7 @@ const SAVE := "user://skins.json"
 const DEFAULT := ""  # Standard-Look des Stils
 const FX_FIELDS := ["fx", "mfx", "kfx", "bfx", "wfx", "gfx", "ffx"]
 const LUMA := Vector3(0.299, 0.587, 0.114)
+const CLIP_SCRIPTS := ["res://scripts/schwarzmond/mond_clip.gd", "res://scripts/lauffeuer/feuer_strip.gd"]
 
 static var data: Dictionary = {}
 static var owned: Array = []        # "stil/skin"
@@ -178,6 +180,10 @@ static func _map_rgb(skin: Dictionary, c: Vector3) -> Vector3:
 		var rc: Color = c0.lerp(c1, lc * 2.0) if lc < 0.5 else c1.lerp(c2, lc * 2.0 - 1.0)
 		var rv := Vector3(rc.r, rc.g, rc.b) * maxf(1.0, mx)
 		r = r.lerp(rv, w)
+	var tm := float(skin.get("tint_mix", 0.0))
+	if tm > 0.0:
+		var tc := Color(str(skin.get("tint", "ffffff")))
+		r = r.lerp(Vector3(tc.r, tc.g, tc.b) * maxf(r.x, maxf(r.y, r.z)), tm)
 	return Vector3(maxf(r.x, 0.0), maxf(r.y, 0.0), maxf(r.z, 0.0))
 
 
@@ -207,6 +213,8 @@ uniform float ramp_mix = 0.0;
 uniform vec3 ramp0 = vec3(0.0);
 uniform vec3 ramp1 = vec3(0.5);
 uniform vec3 ramp2 = vec3(1.0);
+uniform float tint_mix = 0.0;
+uniform vec3 tint = vec3(1.0);
 
 void fragment() {
 	vec3 c = COLOR.rgb;
@@ -220,6 +228,9 @@ void fragment() {
 		float l = clamp(dot(c, vec3(0.299, 0.587, 0.114)), 0.0, 1.0);
 		vec3 rc = l < 0.5 ? mix(ramp0, ramp1, l * 2.0) : mix(ramp1, ramp2, l * 2.0 - 1.0);
 		r = mix(r, rc * max(1.0, mx), w);
+	}
+	if (tint_mix > 0.0) {
+		r = mix(r, tint * max(r.r, max(r.g, r.b)), tint_mix);
 	}
 	COLOR.rgb = max(r, vec3(0.0));
 }
@@ -269,6 +280,10 @@ static func material_for(skin: Dictionary, base: Material) -> ShaderMaterial:
 		for i in 3:
 			var c := Color(str(ramp[i]))
 			m.set_shader_parameter("ramp%d" % i, Vector3(c.r, c.g, c.b))
+	if float(skin.get("tint_mix", 0.0)) > 0.0:
+		var tc := Color(str(skin.get("tint", "ffffff")))
+		m.set_shader_parameter("tint_mix", float(skin.tint_mix))
+		m.set_shader_parameter("tint", Vector3(tc.r, tc.g, tc.b))
 	_mats[key] = m
 	return m
 
@@ -341,7 +356,8 @@ static func attach(player: Player) -> void:
 		if holder == null:
 			continue
 		for c in holder.get_children():
-			if c.get("caster") == caster:
+			if c.get("caster") == caster or _is_style_clip(c):
+				_claim(c)
 				paint(c, skin)
 		if not holder.is_connected("child_entered_tree", _on_world_child):
 			holder.child_entered_tree.connect(_on_world_child)
@@ -354,8 +370,25 @@ static func _on_world_child(child: Node) -> void:
 static func _check_spawn(child: Node) -> void:
 	if not is_instance_valid(child) or not is_instance_valid(_player) or _player.glut == null:
 		return
-	if child.get("caster") == _player.glut:
+	if child.get("caster") == _player.glut or _is_style_clip(child):
+		_claim(child)
 		paint(child, current(_player.style.id))
+
+
+## Effect strips the styles spawn without a caster reference (PixelLab clips
+## of Schwarzmond, flame strips of Lauffeuer). Only the player's style uses them.
+static func _is_style_clip(n: Node) -> bool:
+	var sc: Script = n.get_script()
+	return sc != null and sc.resource_path in CLIP_SCRIPTS
+
+
+## A spawned effect that borrows its parent's material (the dusk look does that
+## for plain attack nodes) gets its own copy, so the skin can colour it.
+static func _claim(n: Node) -> void:
+	var ci := n as CanvasItem
+	if ci != null and ci.use_parent_material and ci.get_parent() is CanvasItem:
+		ci.use_parent_material = false
+		ci.material = (ci.get_parent() as CanvasItem).material
 
 
 ## Skin colour of the player's style for CPU-drawn things (swing trails).
