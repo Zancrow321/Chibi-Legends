@@ -49,12 +49,19 @@ jobs:
           grep -q "RAID-TEST OK" raid.log
           ! grep -E "SCRIPT ERROR|Parse Error" raid.log
 
+      - name: Turm-Logiktest (Endloser Turm)
+        run: |
+          timeout 300 godot --headless --fixed-fps 60 -s res://tools/tower/probe.gd 2>&1 | tee turm.log | grep -E "TURM|SCRIPT ERROR" || true
+          grep -q "TURM-TEST OK" turm.log
+          ! grep -E "SCRIPT ERROR|Parse Error" turm.log
+
       - name: Raid-Probe (Bilder)
         if: github.event_name == 'pull_request'
         continue-on-error: true
         run: |
           mkdir -p raid-probe
           timeout 300 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/raid/probe.gd -- "$PWD/raid-probe" > raid-probe.log 2>&1 || true
+          timeout 300 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/tower/probe.gd -- "$PWD/raid-probe" > turm-probe.log 2>&1 || true
           ls -la raid-probe
 
       - name: Raid-Bilder auf den Branch ci-bilder/raid legen
@@ -112,6 +119,8 @@ jobs:
           echo "--- Ende der Probe:"; tail -8 probe.log || true
           echo "--- Raid-Probe Fehler:"; grep -A3 -E "SCRIPT ERROR|ERROR:" raid-probe.log | head -40 || true
           echo "--- Raid-Probe Regeln:"; grep -E "^RAID" raid-probe.log || true
+          echo "--- Turm-Probe Fehler:"; grep -A3 -E "SCRIPT ERROR|ERROR:" turm-probe.log | head -40 || true
+          echo "--- Turm-Probe Regeln:"; grep -E "^TURM" turm-probe.log || true
 
       - uses: actions/upload-pages-artifact@v3
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'

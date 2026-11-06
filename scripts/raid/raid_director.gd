@@ -38,11 +38,16 @@ func _spawn_boss() -> void:
 	fight_time = 0.0
 
 
-func _physics_process(delta: float) -> void:
+## The boss bar sits on the HUD layer (Main sets world.hud after the room).
+func _ensure_bar() -> void:
 	if _bar == null and world.hud != null:
 		_bar = RaidBossBar.new()
 		_bar.director = self
 		world.hud.get_parent().add_child(_bar)
+
+
+func _physics_process(delta: float) -> void:
+	_ensure_bar()
 	if _respawn >= 0.0:
 		_respawn -= delta
 		if _respawn < 0.0:

@@ -31,9 +31,9 @@ const LAYERS := [["sky", 0.0, -6], ["far", 0.05, -5], ["mid", 0.22, -4], ["near"
 const PROPS := [
 	["dorm", 70.0, -3, true], ["board", 250.0, -1, true], ["fountain", 520.0, -2, true],
 	["sakura", 770.0, -4, true], ["forge_stall", 930.0, -2, true], ["shrine", 1270.0, -2, true],
-	["gate_wald", 1730.0, -2, true], ["gate_glut", 2060.0, -2, true],
+	["gate_wald", 1730.0, -2, true], ["gate_glut", 2060.0, -2, true], ["gate_turm", 2300.0, -2, true],
 ]
-const LANTERNS := [180.0, 640.0, 1090.0, 1450.0, 1880.0, 2230.0]
+const LANTERNS := [180.0, 640.0, 1090.0, 1450.0, 1880.0, 2180.0]
 
 var walker: OverworldWalker
 var camera: Camera2D
@@ -238,11 +238,11 @@ func _build_props() -> void:
 	portal.position = Vector2(1730.0, GROUND_Y - 52.0)
 	portal.z_index = -1
 	add_child(portal)
-	var seal := PortalFx.new()
-	seal.sealed = true
-	seal.position = Vector2(2060.0, GROUND_Y - 46.0)
-	seal.z_index = -1
-	add_child(seal)
+	var tower := PortalFx.new()
+	tower.violet = true
+	tower.position = Vector2(2300.0, GROUND_Y - 50.0)
+	tower.z_index = -1
+	add_child(tower)
 	var water := FountainFx.new()
 	water.position = Vector2(520.0, GROUND_Y)
 	water.z_index = -1
@@ -318,14 +318,15 @@ func _build_spots() -> void:
 		"Halt! ... Ach, ein Schüler. Das Waldtor ist offen. Drinnen warten Trainingspuppen und der Sparringspfahl.",
 		"Das Siegel der Glutschmiede ist durchgebrannt. Drinnen wacht der Essenwächter, ein Golem aus Eisen und Glut.",
 		"Schläge prallen an ihm ab, bis seine Wucht weg ist. Dann bricht er ein und du hast ein paar Sekunden für alles, was du hast.",
+		"Ganz hinten steht der Turm der Prüfungen. Etage um Etage, jede härter. Alle fünf Etagen wartet eine Turmwache.",
 	])
 	var wald := _spot(OverworldSpot.Kind.DOOR, "tor_wald", "Waldtor", 1730.0, [], "trainingswald", 28.0, -128.0)
 	wald.accent = Color("0eaf9b")
 	var glut := _spot(OverworldSpot.Kind.DOOR, "tor_glut", "Tor der Glutschmiede", 2060.0, [
-		"Ein schweres Siegel glüht auf dem Tor. Dahinter hört man Hämmer und das Fauchen einer Esse.",
-		"Das Tor ist noch verschlossen.",
 	], "glutschmiede", 30.0, -134.0)
 	glut.accent = Color("fb6b1d")
+	var turm := _spot(OverworldSpot.Kind.DOOR, "tor_turm", "Turm der Prüfungen", 2300.0, [], "turm", 30.0, -134.0)
+	turm.accent = Color("a46bff")
 
 
 # --- light ------------------------------------------------------------------------------
@@ -381,8 +382,10 @@ func _build_light() -> void:
 		_halo_sprite(Color(1.4, 1.1, 0.6, 0.4), 0.5, l.position)
 	_portal_light = _light(Color(0.35, 1.0, 0.85), 1.1, 1.0)
 	_portal_light.position = Vector2(1730, GROUND_Y - 52)
-	_seal_light = _light(Color(1.0, 0.5, 0.2), 1.0, 0.9)
-	_seal_light.position = Vector2(2060, GROUND_Y - 46)
+	_seal_light = _light(Color(1.0, 0.5, 0.2), 1.0, 0.9)  # the fire inside the forge gate
+	_seal_light.position = Vector2(2060, GROUND_Y - 34)
+	var tl := _light(Color(0.7, 0.45, 1.0), 1.1, 1.0)
+	tl.position = Vector2(2300, GROUND_Y - 50)
 	_star_light = _light(Color(0.5, 0.85, 1.0), 0.9, 0.8)
 	_star_light.position = Vector2(1270, TERRACE_Y - 38)
 	_halo_sprite(Color(0.6, 1.2, 1.6, 0.5), 0.55, _star_light.position)
@@ -476,6 +479,6 @@ func _animate(_delta: float) -> void:
 		_lanterns[i].energy = 0.55 + 0.06 * sin(_t * 9.0 + i * 2.0)
 	_forge_light.energy = 1.1 + 0.2 * sin(_t * 13.0) + 0.12 * sin(_t * 29.0)
 	_portal_light.energy = 1.0 + 0.25 * sin(_t * 2.2)
-	_seal_light.energy = 0.9 + 0.3 * absf(sin(_t * 1.4))
+	_seal_light.energy = 0.95 + 0.2 * sin(_t * 11.0) + 0.1 * sin(_t * 27.0)
 	_star_light.energy = 0.8 + 0.25 * sin(_t * 1.7)
 	_walker_mat.set_shader_parameter("flip", float(walker.facing))

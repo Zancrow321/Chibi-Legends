@@ -31,3 +31,19 @@ Offline spielt man allein; `?spieler=2..4` im Web-Link testet die größeren Stu
 - `scripts/raid/boss.gd` (Boss, erbt von Enemy), `shield_crystal.gd`, `boss_hazard.gd` (Schockwelle, Glutregen-Marker, Essensturm), `raid_director.gd`, `raid_boss_bar.gd`, `raid_scaling.gd`
 - Sprites: `assets/enemies/essenwaechter/` (Eintrag in `frames.json`, drittes Feld = Treffer-Bild), `assets/raid/kristall.png`, Rohdaten in `assets/raid/raw/`
 - Test: `tools/raid/probe.gd` (CI-Schritt „Raid-Logiktest“)
+
+# Turm der Prüfungen (Endloser Turm, Schritt 2)
+
+Solo-Modus hinter dem violetten Tor ganz rechts im Akademie-Hof (Web-Link `?modus=turm`). Etage um Etage, jede härter; ein K.o. beendet den Lauf.
+
+| Regel | Wert |
+| --- | --- |
+| Start | Etage 1 beginnt, sobald man nach rechts in die Arena läuft. |
+| Gegner pro Etage | 2 + Etage/2, höchstens 6. Neue Arten kommen dazu: Säbelzahn ab 4, Moosgolem ab 7. |
+| Stärke | HP ×(1 + 0,18 je Etage), Schaden ×(1 + 0,07 je Etage). Etage 10: HP ×2,6, Schaden ×1,6. |
+| Turmwache | Jede 5. Etage: kleiner Essenwächter (35 % HP × Etagen-Faktor, 60 % Wucht). Ab Etage 15 eine Schild-Phase bei 50 %. |
+| Lohn | Jede Etage 5 × Etage Splitter. Jede Turmwache ein Teil ab Selten, Gegenstandsstufe = Spielerstufe + Etage/5. Normale Gegner-Beute läuft weiter. |
+| Ende | K.o. = Lauf vorbei, nach 3 s wartet wieder Etage 1. |
+| Rekord | `user://turm.json`: beste Etage gesamt und pro Woche (Wochenwechsel Montag). Die Wochen-Bestenliste kommt mit der Online-Basis (Schritt 3). |
+
+Dateien: `scripts/raid/tower_director.gd` (erbt vom RaidDirector, nutzt Boss-Leiste, Kristalle und Gefahrenzonen mit), Tor-Sprites `assets/overworld/gate_turm.png` und die offene `gate_glut.png`, Test `tools/tower/probe.gd` (CI-Schritt „Turm-Logiktest“).

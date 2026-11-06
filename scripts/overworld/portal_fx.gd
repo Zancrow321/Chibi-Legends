@@ -5,6 +5,8 @@ extends Node2D
 ## seal ring with embers drifting up). Pixel-snapped, drawn unshaded.
 
 var sealed := false
+## Violet portal (Turm der Prüfungen) instead of turquoise.
+var violet := false
 var _t := 0.0
 var _motes: Array = []  # [pos, vel, life]
 
@@ -50,7 +52,7 @@ func _draw() -> void:
 		var rx := 13.0 * f
 		var ry := 34.0 * f
 		var n := int(10 + 26 * f)
-		var col := Color(0.4, 1.6, 1.3, 0.55 * (1.0 - f * 0.6))
+		var col := (Color(1.3, 0.6, 1.8, 0.55 * (1.0 - f * 0.6)) if violet else Color(0.4, 1.6, 1.3, 0.55 * (1.0 - f * 0.6)))
 		for i in n:
 			var a := TAU * i / n + _t * (1.2 - f) + ring
 			if fmod(i, 3) == 0:
@@ -58,7 +60,7 @@ func _draw() -> void:
 			var p := Vector2(cos(a) * rx, sin(a) * ry).round()
 			draw_rect(Rect2(p, Vector2(1, 1)), col)
 	var core := 0.5 + 0.3 * sin(_t * 2.2)
-	draw_rect(Rect2(-2, -6, 4, 12), Color(0.8, 2.0, 1.7, core))
+	draw_rect(Rect2(-2, -6, 4, 12), Color(1.8, 1.0, 2.0, core) if violet else Color(0.8, 2.0, 1.7, core))
 	for m in _motes:
 		var a4 := clampf(m[2], 0.0, 1.0)
-		draw_rect(Rect2((m[0] as Vector2).round(), Vector2(1, 1)), Color(0.9, 2.0, 1.6, a4))
+		draw_rect(Rect2((m[0] as Vector2).round(), Vector2(1, 1)), Color(1.7, 1.0, 2.0, a4) if violet else Color(0.9, 2.0, 1.6, a4))

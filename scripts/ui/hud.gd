@@ -630,7 +630,9 @@ func _draw_klang_panel(r: Rect2, g: KlangCaster) -> void:
 func _draw_notice(W: float) -> void:
 	var wv := room.waves
 	var msg2 := ""
-	if wv != null and wv.wave >= 0:
+	if room.tower != null:
+		msg2 = "" if room.tower.is_fighting() else room.tower.notice()  # the boss bar takes the spot
+	elif wv != null and wv.wave >= 0:
 		var left := wv.alive.filter(func(e): return is_instance_valid(e) and e.state != "dead").size() + wv.pending()
 		msg2 = "Welle %d  ·  %d Gegner" % [wv.wave + 1 + wv.round_no * EnemyWaves.WAVES.size(), left] if left > 0 else "Welle geschafft!"
 	elif wv != null:
@@ -638,7 +640,7 @@ func _draw_notice(W: float) -> void:
 	if msg2 != "":
 		var tw := font.get_string_size(msg2, HORIZONTAL_ALIGNMENT_LEFT, -1, 18).x + 36
 		var wr := Rect2(W / 2 - tw / 2, 16, tw, 30)
-		_panel(wr, PANEL, 15, Color("ff9a2a", 0.6))
+		_panel(wr, PANEL, 15, Color("a46bff", 0.7) if room.tower != null else Color("ff9a2a", 0.6))
 		_text(Vector2(wr.position.x, 37), msg2, 18, TEXT, HORIZONTAL_ALIGNMENT_CENTER, tw)
 	return
 	var r := Rect2(480, 16, maxf(W - 480 - 352 - 16, 160), 26)
@@ -687,7 +689,7 @@ func _draw_right_column(W: float) -> void:
 	# quest: one line in the fight, the full list with H
 	if not show_help:
 		_panel(Rect2(x, 128, w, 26), PANEL, 13)
-		var quest := "Quest: Besiege den Essenwächter" if room.is_raid else "Quest: Alle Reaktionen (%d/4)" % room.reactions_found.size()
+		var quest := ("Quest: Erreiche Etage %d" % (room.tower.best + 1)) if room.is_tower else "Quest: Besiege den Essenwächter" if room.is_raid else "Quest: Alle Reaktionen (%d/4)" % room.reactions_found.size()
 		_text(Vector2(x + 14, 147), quest, 15, MUTED)
 		return
 	var q := Rect2(x, 166, w, 168)

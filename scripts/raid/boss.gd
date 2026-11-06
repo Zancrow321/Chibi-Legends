@@ -28,6 +28,9 @@ const SHIELD_AT := [0.7, 0.35]
 const ARENA := Vector2(150.0, 980.0)  # the boss stays on the lower floor
 
 var director: RaidDirector
+## Tower guards are smaller versions: less Wucht, fewer shield phases.
+var wucht_mult := 1.0
+var shield_at: Array = SHIELD_AT.duplicate()
 var wucht := 0.0
 var wucht_max := 260.0
 var wucht_locked := false
@@ -49,9 +52,9 @@ var _charge_dir := 1.0
 
 func _ready() -> void:
 	super._ready()
-	max_hp = float(data.hp) * RaidScaling.hp_factor()
+	max_hp = float(data.hp) * RaidScaling.hp_factor() * hp_mult
 	hp = max_hp
-	wucht_max = float(data.get("wucht", 260.0)) * RaidScaling.wucht_factor()
+	wucht_max = float(data.get("wucht", 260.0)) * RaidScaling.wucht_factor() * wucht_mult
 	wucht = wucht_max
 	_wucht_shown = 1.0
 	_cd = 1.6
@@ -66,6 +69,10 @@ func is_elite() -> bool:
 
 func weight() -> float:
 	return 3.0 if bruch <= 0.0 else 1.6
+
+
+func _dmg() -> float:
+	return float(data.damage) * dmg_mult
 
 
 func is_broken() -> bool:
@@ -150,8 +157,8 @@ func apply_damage(amount: float) -> void:
 		return
 	hp = maxf(0.0, hp - amount)
 	_hp_shown = 3.0
-	if _next_shield < SHIELD_AT.size() and hp <= max_hp * SHIELD_AT[_next_shield]:
-		hp = max_hp * SHIELD_AT[_next_shield]
+	if _next_shield < shield_at.size() and hp <= max_hp * float(shield_at[_next_shield]):
+		hp = max_hp * float(shield_at[_next_shield])
 		_start_shield()
 		return
 	if hp <= 0.0:
@@ -398,7 +405,7 @@ func _strike_begin(_p: Node2D) -> void:
 		"slam":
 			var impact := global_position + Vector2(facing * 54.0, 0)
 			var r := Rect2(global_position.x + (0.0 if facing > 0 else -110.0), global_position.y - 90.0, 110.0, 90.0)
-			_hit_box(r, float(data.damage) * 1.3)
+			_hit_box(r, _dmg() * 1.3)
 			world.dust.land(impact, 2.4)
 			world.effects.burst(impact + Vector2(0, -4), Color("ffb347"), 26, 200.0, 420.0)
 			world.fx.shake(8.0, facing)
@@ -410,10 +417,10 @@ func _strike_begin(_p: Node2D) -> void:
 			if world.stage != null:
 				world.stage.flash_light(impact + Vector2(0, -20), Color(1.0, 0.55, 0.25), 2.0, 1.0, 0.4)
 			for dir in [-1.0, 1.0]:
-				director.spawn_hazard("wave", impact + Vector2(dir * 20.0, 0), dir, float(data.damage) * 0.8)
+				director.spawn_hazard("wave", impact + Vector2(dir * 20.0, 0), dir, _dmg() * 0.8)
 		"swipe":
 			var r := Rect2(global_position.x + (-30.0 if facing > 0 else -110.0), global_position.y - 100.0, 140.0, 100.0)
-			_hit_box(r, float(data.damage))
+			_hit_box(r, _dmg())
 			Sfx.play("swing_heavy", -2.0)
 			world.fx.shake(4.0, facing)
 			if world.glut_fx != null:
@@ -425,7 +432,7 @@ func _strike_begin(_p: Node2D) -> void:
 			_rain_left = 5 + phase + RaidScaling.players - 1
 			_rain_t = 0.0
 		"essensturm":
-			director.spawn_hazard("flood", Vector2(0, TrainingRoom.GROUND_Y), 1.0, float(data.damage) * 1.6)
+			director.spawn_hazard("flood", Vector2(0, TrainingRoom.GROUND_Y), 1.0, _dmg() * 1.6)
 			world.fx.shake(10.0)
 			world.fx.flash(0.35, Color(1.0, 0.5, 0.2))
 			Sfx.play("super_flash")
@@ -448,7 +455,7 @@ func _strike_tick(delta: float, p: Node2D) -> void:
 				# aimed at the player first, then scattered around them
 				var x := p.global_position.x + (0.0 if _rain_left % 3 == 0 else randf_range(-170, 170))
 				x = clampf(x, 40.0, TrainingRoom.WIDTH - 40.0)
-				director.spawn_hazard("marker", Vector2(x, GlutHazard.ground_y(x, p.global_position.y - 4.0)), 1.0, float(data.damage) * 0.9)
+				director.spawn_hazard("marker", Vector2(x, GlutHazard.ground_y(x, p.global_position.y - 4.0)), 1.0, _dmg() * 0.9)
 			if _rain_left <= 0 and _st > 1.2:
 				_end_attack(1.0)
 		"essensturm":
@@ -460,7 +467,7 @@ func _strike_tick(delta: float, p: Node2D) -> void:
 			if randf() < 0.6:
 				world.dust.puff(global_position, -_charge_dir, 2)
 			var s: Vector2 = data.hurt
-			_hit_box(Rect2(global_position + Vector2(-s.x * 0.6, -s.y), Vector2(s.x * 1.2, s.y)), float(data.damage) * 1.1)
+			_hit_box(Rect2(global_position + Vector2(-s.x * 0.6, -s.y), Vector2(s.x * 1.2, s.y)), _dmg() * 1.1)
 			var at_wall := (_charge_dir > 0.0 and global_position.x >= ARENA.y - 4.0) or (_charge_dir < 0.0 and global_position.x <= ARENA.x + 4.0)
 			if at_wall or _st > 2.2:
 				vel.x = -_charge_dir * 80.0

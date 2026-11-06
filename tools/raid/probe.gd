@@ -156,7 +156,7 @@ func _do(cmd: String) -> void:
 			_expect(boss != null and boss.hp == boss.max_hp and boss.phase == 1, "Boss steht neu und voll da")
 		"kill":
 			boss = _boss()
-			boss._next_shield = Boss.SHIELD_AT.size()
+			boss._next_shield = boss.shield_at.size()
 			boss.apply_damage(boss.hp + 10.0)
 		"check_won":
 			_expect(room.raid.won, "Boss besiegt, Raid geschafft")

@@ -59,7 +59,7 @@ func _draw() -> void:
 	var frac := b.hp / b.max_hp
 	draw_rect(Rect2(hr.position, Vector2(w * frac, hr.size.y)), Color(HP_COL, a))
 	draw_rect(Rect2(hr.position, Vector2(w * frac, 3)), Color(HP_COL.lightened(0.35), a))
-	for t in Boss.SHIELD_AT:
+	for t in b.shield_at:
 		draw_rect(Rect2(x + w * t - 1, hr.position.y - 2, 2, hr.size.y + 4), Color(Color("ffd25c"), a * 0.9))
 	_text(Vector2(x + w / 2.0 - 60, hr.position.y + 12), "%d / %d" % [int(ceil(b.hp)), int(b.max_hp)], 12, Color(1, 1, 1, a), HORIZONTAL_ALIGNMENT_CENTER, 120.0)
 	# Wucht-Leiste
