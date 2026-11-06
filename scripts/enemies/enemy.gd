@@ -73,6 +73,9 @@ var label := ""
 var status: Dictionary = {}
 var hp := 100.0
 var max_hp := 100.0
+## Scaling set before _ready (Turm der Prüfungen: stronger every floor).
+var hp_mult := 1.0
+var dmg_mult := 1.0
 var facing := -1
 
 var state := "spawn"  # spawn, idle, move, windup, strike, recover, hurt, dead
@@ -126,7 +129,7 @@ func _ready() -> void:
 	data = TYPES[type_id]
 	look = frame_data()[type_id]
 	label = data.name
-	max_hp = data.hp
+	max_hp = float(data.hp) * hp_mult
 	hp = max_hp
 	add_to_group("targets")
 	add_to_group("enemies")
@@ -454,7 +457,7 @@ func _body_hit(r: Rect2) -> void:
 	var p := world.player
 	if not _struck and r.intersects(p.get_hurt_rect()):
 		_struck = true
-		p.receive_hit(data.damage, global_position.x, self)
+		p.receive_hit(float(data.damage) * dmg_mult, global_position.x, self)
 
 
 func _strike(delta: float) -> void:
@@ -497,7 +500,7 @@ func _strike(delta: float) -> void:
 				debug_rect_t = 0.2
 				_hit_decoys(r)
 				if r.intersects(p.get_hurt_rect()):
-					p.receive_hit(data.damage, global_position.x, self)
+					p.receive_hit(float(data.damage) * dmg_mult, global_position.x, self)
 			if _st > 0.7:
 				_enter("recover")
 	if state == "recover":

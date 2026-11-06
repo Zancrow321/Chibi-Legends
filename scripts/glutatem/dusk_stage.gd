@@ -32,6 +32,11 @@ static var enabled := true
 const FORGE_DUSK := Color(0.38, 0.22, 0.24)
 const FORGE_LAYER_TINT := Color(0.78, 0.45, 0.4)
 var forge := false
+## Turm der Prüfungen: cold violet night, violet crystals and seams.
+const TOWER_DUSK := Color(0.28, 0.26, 0.46)
+const TOWER_LAYER_TINT := Color(0.62, 0.56, 0.95)
+const TOWER_GLOW := Color(0.7, 0.45, 1.0)
+var tower := false
 
 var room: TrainingRoom
 
@@ -68,8 +73,9 @@ func _ready() -> void:
 	_hide_old_background()
 
 	forge = room.is_raid
+	tower = room.is_tower
 	var cm := CanvasModulate.new()
-	cm.color = FORGE_DUSK if forge else DUSK
+	cm.color = TOWER_DUSK if tower else (FORGE_DUSK if forge else DUSK)
 	room.add_child(cm)
 	var sun := DirectionalLight2D.new()
 	sun.color = Color(1.0, 0.62, 0.42)
@@ -120,7 +126,7 @@ func _ready() -> void:
 	for x in LANTERNS:
 		_lantern(x)
 	for c in CRYSTALS:
-		_crystal(c[0], Color(1.0, 0.55, 0.25) if forge else c[1])
+		_crystal(c[0], TOWER_GLOW if tower else (Color(1.0, 0.55, 0.25) if forge else c[1]))
 	for i in FIREFLIES:
 		_firefly(i)
 	_forge()
@@ -218,9 +224,9 @@ func _crystal(x: float, color: Color) -> void:
 
 func _firefly(i: int) -> void:
 	var base := Vector2(fposmod(i * 233.0 + 140.0, TrainingRoom.WIDTH), 200.0 + fposmod(i * 37.0, 70.0))
-	var s := _halo_sprite(Color(1.0, 0.6, 0.3, 0.9) if forge else Color(0.85, 1.0, 0.5, 0.9), 0.09)
+	var s := _halo_sprite(Color(0.8, 0.6, 1.0, 0.9) if tower else (Color(1.0, 0.6, 0.3, 0.9) if forge else Color(0.85, 1.0, 0.5, 0.9)), 0.09)
 	room.add_child(s)
-	var l := _light(Color(1.0, 0.5, 0.25) if forge else Color(0.75, 1.0, 0.45), 0.6, 0.16)
+	var l := _light(TOWER_GLOW if tower else (Color(1.0, 0.5, 0.25) if forge else Color(0.75, 1.0, 0.45)), 0.6, 0.16)
 	room.add_child(l)
 	_flies.append({"sprite": s, "light": l, "base": base, "phase": i * 1.7})
 
@@ -261,6 +267,8 @@ func _build_parallax() -> void:
 			s.material = sway_material(SWAY[spec[0]])
 		if forge and spec[0] != "foreground":
 			s.modulate = FORGE_LAYER_TINT
+		elif tower and spec[0] != "foreground":
+			s.modulate = TOWER_LAYER_TINT
 		cl.add_child(s)
 		_layers.append([s, spec[1]])
 		if spec[0] == "trees_near":

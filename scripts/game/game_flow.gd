@@ -7,7 +7,8 @@ extends RefCounted
 ##
 ## Web URL: ?modus=dungeon starts straight in the training forest,
 ## ?modus=overworld (default) in the academy courtyard, ?modus=raid in the
-## Glutschmiede raid (boss Essenwächter).
+## Glutschmiede raid (boss Essenwächter), ?modus=turm in the Turm der
+## Prüfungen (endless tower).
 
 const OVERWORLD := "overworld"
 const DUNGEON := "dungeon"
@@ -18,6 +19,7 @@ const AREAS := {
 	"akademie_hof": {"title": "Akademie-Hof", "sub": "Overworld · Treffpunkt der Schüler", "kind": OVERWORLD, "accent": Color("4da6ff")},
 	"trainingswald": {"title": "Trainingswald", "sub": "Kampfareal · Stufe 1", "kind": DUNGEON, "accent": Color("e83b3b"), "door": "tor_wald"},
 	"glutschmiede": {"title": "Glutschmiede", "sub": "Raid · Essenwächter", "kind": DUNGEON, "accent": Color("ff8a2a"), "door": "tor_glut", "raid": true},
+	"turm": {"title": "Turm der Prüfungen", "sub": "Endloser Turm · Wie hoch kommst du?", "kind": DUNGEON, "accent": Color("a46bff"), "door": "tor_turm", "tower": true},
 }
 
 static var mode := OVERWORLD
@@ -35,6 +37,11 @@ static func is_overworld() -> bool:
 ## Raid areas have a boss instead of dummies and waves (RaidDirector).
 static func is_raid() -> bool:
 	return mode == DUNGEON and bool(area_info(area).get("raid", false))
+
+
+## The endless tower: floors of enemies instead of waves (TowerDirector).
+static func is_tower() -> bool:
+	return mode == DUNGEON and bool(area_info(area).get("tower", false))
 
 
 static func area_info(id: String) -> Dictionary:
@@ -65,6 +72,9 @@ static func read_url() -> void:
 				mode = DUNGEON
 			elif kv[1] == "raid":
 				area = "glutschmiede"
+				mode = DUNGEON
+			elif kv[1] == "turm":
+				area = "turm"
 				mode = DUNGEON
 			elif kv[1] == "overworld" or kv[1] == "hof":
 				area = "akademie_hof"
