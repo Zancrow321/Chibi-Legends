@@ -101,7 +101,6 @@ jobs:
           mkdir -p raid-probe
           timeout 300 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/raid/probe.gd -- "$PWD/raid-probe" > raid-probe.log 2>&1 || true
           timeout 300 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/tower/probe.gd -- "$PWD/raid-probe" > turm-probe.log 2>&1 || true
-          timeout 120 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/guild/probe.gd -- "$PWD/raid-probe" > gilden-probe.log 2>&1 || true
           ls -la raid-probe
 
       - name: Raid-Bilder auf den Branch ci-bilder/raid legen
@@ -114,6 +113,20 @@ jobs:
           git add *.png
           git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -qm "Raid-Probe ${{ github.event.pull_request.head.sha }}"
           git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" bilder:refs/heads/ci-bilder/raid
+          rm -rf .git
+
+      - name: Gilden-Probe (Bilder auf ci-bilder/gilden)
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        continue-on-error: true
+        run: |
+          mkdir -p gilden-probe
+          timeout 120 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/guild/probe.gd -- "$PWD/gilden-probe" > gilden-probe.log 2>&1 || true
+          cd gilden-probe
+          ls *.png > /dev/null 2>&1 || exit 0
+          git init -q . && git checkout -q -b bilder
+          git add *.png
+          git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -qm "Gilden-Probe ${{ github.event.pull_request.head.sha }}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" bilder:refs/heads/ci-bilder/gilden
           rm -rf .git
 
       - uses: actions/upload-artifact@v4
