@@ -161,6 +161,11 @@ func _use(s: OverworldSpot) -> void:
 		Sfx.play("ui_confirm")
 		get_tree().call_group("season_pass", "open", 0)
 		return
+	if s.id == "schmiedin":
+		_gift(s.id)
+		Sfx.play("ui_confirm")
+		get_tree().call_group("marks_shop", "open")
+		return
 	if s.id == "sternschrein":
 		Sfx.play("ui_confirm")
 		get_tree().call_group("gacha", "open")
@@ -302,10 +307,10 @@ func _build_spots() -> void:
 		"Hinter den Toren auf der rechten Seite liegen die Kampfareale. Das Waldtor führt in den Trainingswald.",
 		"In jedem Areal bringt dich das Portal am Eingang wieder hierher zurück. Geh mit Bedacht, aber geh.",
 	])
-	_npc("schmiedin", "Schmiedin Hino", 985.0, "npc_schmiedin", Color("fb6b1d"), [
-		"Na? Schon Glutatem geübt? Je öfter du die Züge wechselst, desto heißer wird deine Klinge. Bis sie weiß glüht!",
-		"Sobald das Inventar steht, schmiede ich dir Waffen. Bis dahin: Trainingswald, Puppen, üben.",
+	var hino := _npc("schmiedin", "Schmiedin Hino", 985.0, "npc_schmiedin", Color("fb6b1d"), [
+		"Bring mir Raid-Marken aus der Glutschmiede und dem Turm. Dafür schmiede ich dir genau das Teil, das du willst.",
 	])
+	hino.verb = "Raid-Marken tauschen"
 	_npc("hueterin", "Schreinhüterin Kiyo", 1190.0, "npc_hueter", Color("4d9be6"), [
 		"Das ist der Sternschrein. Der Stern in seiner Mitte ist erwacht!",
 		"Mit Sternkristallen rufst du hier Kampfstile, Outfits und Farbstoffe. Die Chancen hängen offen aus, versprochen.",

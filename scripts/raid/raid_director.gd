@@ -19,6 +19,8 @@ var fight_time := 0.0
 var _awake := false
 var _respawn := -1.0
 var _bar: RaidBossBar
+## Result of the last RaidLoot.on_kill (for the test and the HUD).
+var last_loot := {}
 
 
 func _ready() -> void:
@@ -135,8 +137,15 @@ func boss_defeated(b: Boss) -> void:
 	if world.glut_fx != null:
 		world.glut_fx.word(at + Vector2(0, -140), "RAID GESCHAFFT!", Color("ffd25c"), 40)
 	var secs := int(fight_time)
-	world.toast("Essenwächter besiegt in %d:%02d (Versuch %d)" % [secs / 60, secs % 60, attempts])
 	SeasonPass.track("boss")
+	# Raid-Marken always; the bonus loot gets rarer with every kill today
+	var roll := RaidLoot.on_kill(BOSS_ID)
+	last_loot = roll
+	if roll.bonus:
+		world.toast("Essenwächter besiegt in %d:%02d (Versuch %d) · +%d Raid-Marken" % [secs / 60, secs % 60, attempts, roll.marks])
+	else:
+		world.toast("Heute schon oft besiegt: keine Bonus-Beute, aber +%d Raid-Marken" % roll.marks)
+		return
 	# personal loot: two good pieces on top of the normal elite drop
 	for i in 2:
 		var item := Loot.roll(Profile.level, maxi(2, Loot.roll_rarity(true)), "", world.player.style.id)

@@ -160,6 +160,7 @@ func _do(cmd: String) -> void:
 			boss.apply_damage(boss.hp + 10.0)
 		"check_won":
 			_expect(room.raid.won, "Boss besiegt, Raid geschafft")
+			_expect(int(room.raid.last_loot.get("marks", 0)) == RaidLoot.MARKS.essenwaechter, "Raid-Marken für den Sieg")
 			var drops := 0
 			for c in room.get_children():
 				if c is LootDrop:

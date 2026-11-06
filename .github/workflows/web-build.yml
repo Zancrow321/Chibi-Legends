@@ -49,6 +49,12 @@ jobs:
           grep -q "RAID-TEST OK" raid.log
           ! grep -E "SCRIPT ERROR|Parse Error" raid.log
 
+      - name: Raid-Beute-Test (Tageschance, Marken)
+        run: |
+          godot --headless -s res://tools/raid/test_loot.gd 2>&1 | tee loot.log | grep -E "LOOT|SCRIPT ERROR" || true
+          grep -q "LOOT-TEST OK" loot.log
+          ! grep -E "SCRIPT ERROR|Parse Error" loot.log
+
       - name: Turm-Logiktest (Endloser Turm)
         run: |
           timeout 300 godot --headless --fixed-fps 60 -s res://tools/tower/probe.gd 2>&1 | tee turm.log | grep -E "TURM|SCRIPT ERROR" || true
