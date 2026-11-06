@@ -1,0 +1,152 @@
+{
+ "fountain_0": {
+  "prompt": "white marble two tier fountain seen from the side, lower basin as a straight carved stone wall, thin strip of blue water at the rim, central stem holding a smaller bowl, water falling down in two thin streams, a small golden star ornament on top, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 7,
+  "init_image_strength": 40,
+  "init_image": "raw/sketch/fountain.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "fountain_1": {
+  "prompt": "white marble two tier fountain seen from the side, lower basin as a straight carved stone wall, thin strip of blue water at the rim, central stem holding a smaller bowl, water falling down in two thin streams, a small golden star ornament on top, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 21,
+  "init_image_strength": 60,
+  "init_image": "raw/sketch/fountain.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "fountain_2": {
+  "prompt": "white marble two tier fountain seen from the side, lower basin as a straight carved stone wall, thin strip of blue water at the rim, central stem holding a smaller bowl, water falling down in two thin streams, a small golden star ornament on top, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 33,
+  "init_image_strength": 85,
+  "init_image": "raw/sketch/fountain.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "forge_stall_0": {
+  "prompt": "small blacksmith market stall seen from the front, red cloth awning with scalloped edge on two wooden posts, dark wooden back wall with swords and a hammer hanging, stone forge with glowing orange coals in its mouth, iron anvil on a wooden stump in front, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 7,
+  "init_image_strength": 40,
+  "init_image": "raw/sketch/forge_stall.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "forge_stall_1": {
+  "prompt": "small blacksmith market stall seen from the front, red cloth awning with scalloped edge on two wooden posts, dark wooden back wall with swords and a hammer hanging, stone forge with glowing orange coals in its mouth, iron anvil on a wooden stump in front, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 21,
+  "init_image_strength": 60,
+  "init_image": "raw/sketch/forge_stall.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "forge_stall_2": {
+  "prompt": "small blacksmith market stall seen from the front, red cloth awning with scalloped edge on two wooden posts, dark wooden back wall with swords and a hammer hanging, stone forge with glowing orange coals in its mouth, iron anvil on a wooden stump in front, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 33,
+  "init_image_strength": 85,
+  "init_image": "raw/sketch/forge_stall.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gate_wald_0": {
+  "prompt": "tall pale stone archway gate of a magic academy, carved pillars with green moss and small vines, glowing teal rune portal filling the arch, two stone steps at the base seen from the front, small golden star on the keystone, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 7,
+  "init_image_strength": 40,
+  "init_image": "raw/sketch/gate_wald.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gate_wald_1": {
+  "prompt": "tall pale stone archway gate of a magic academy, carved pillars with green moss and small vines, glowing teal rune portal filling the arch, two stone steps at the base seen from the front, small golden star on the keystone, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 21,
+  "init_image_strength": 60,
+  "init_image": "raw/sketch/gate_wald.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gate_wald_2": {
+  "prompt": "tall pale stone archway gate of a magic academy, carved pillars with green moss and small vines, glowing teal rune portal filling the arch, two stone steps at the base seen from the front, small golden star on the keystone, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 33,
+  "init_image_strength": 85,
+  "init_image": "raw/sketch/gate_wald.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gate_glut_0": {
+  "prompt": "tall dark basalt archway gate, sealed with heavy crossed iron chains and a big glowing orange padlock seal, orange glowing cracks and embers, hot forge theme, two stone steps at the base seen from the front, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 7,
+  "init_image_strength": 40,
+  "init_image": "raw/sketch/gate_glut.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gate_glut_1": {
+  "prompt": "tall dark basalt archway gate, sealed with heavy crossed iron chains and a big glowing orange padlock seal, orange glowing cracks and embers, hot forge theme, two stone steps at the base seen from the front, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 21,
+  "init_image_strength": 60,
+  "init_image": "raw/sketch/gate_glut.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gate_glut_2": {
+  "prompt": "tall dark basalt archway gate, sealed with heavy crossed iron chains and a big glowing orange padlock seal, orange glowing cracks and embers, hot forge theme, two stone steps at the base seen from the front, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 33,
+  "init_image_strength": 85,
+  "init_image": "raw/sketch/gate_glut.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "shrine_0": {
+  "prompt": "small elegant star shrine seen from the front, white stone walls with a dark blue doorway holding a floating glowing blue star crystal, dark blue tiled roof with upturned golden eaves, two small blue lanterns on posts at both sides, stone plinth steps, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 7,
+  "init_image_strength": 40,
+  "init_image": "raw/sketch/shrine.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "shrine_1": {
+  "prompt": "small elegant star shrine seen from the front, white stone walls with a dark blue doorway holding a floating glowing blue star crystal, dark blue tiled roof with upturned golden eaves, two small blue lanterns on posts at both sides, stone plinth steps, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 21,
+  "init_image_strength": 60,
+  "init_image": "raw/sketch/shrine.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "shrine_2": {
+  "prompt": "small elegant star shrine seen from the front, white stone walls with a dark blue doorway holding a floating glowing blue star crystal, dark blue tiled roof with upturned golden eaves, two small blue lanterns on posts at both sides, stone plinth steps, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 33,
+  "init_image_strength": 85,
+  "init_image": "raw/sketch/shrine.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ }
+}

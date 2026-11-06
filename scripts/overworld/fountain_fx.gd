@@ -17,11 +17,11 @@ func _process(delta: float) -> void:
 	_t += delta
 	if randf() < delta * 14.0:
 		var side := -1.0 if randf() < 0.5 else 1.0
-		_drops.append([Vector2(side * randf_range(10, 16), -82), Vector2(side * randf_range(4, 10), randf_range(-12, 0))])
+		_drops.append([Vector2(side * randf_range(20, 25), -80), Vector2(side * randf_range(1, 4), randf_range(-6, 0))])
 	for d in _drops:
 		d[1].y += 160.0 * delta
 		d[0] += d[1] * delta
-	_drops = _drops.filter(func(d): return d[0].y < -48.0)
+	_drops = _drops.filter(func(d): return d[0].y < -42.0)
 	queue_redraw()
 
 
@@ -35,6 +35,6 @@ func _draw() -> void:
 		if not on:
 			continue
 		var lower := i < 4
-		var x := sin(i * 2.3 + floor(ph / 2.0)) * (26.0 if lower else 12.0)
-		var y := -46.0 if lower else -80.0
+		var x := sin(i * 2.3 + floor(ph / 2.0)) * (38.0 if lower else 22.0)
+		var y := -41.0 if lower else -84.0
 		draw_rect(Rect2(Vector2(x, y).round(), Vector2(2, 1)), Color(1.8, 1.9, 2.0))
