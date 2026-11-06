@@ -42,9 +42,16 @@ const STATS := {
 	"gauge": {"name": "Leistenladung", "min": 0.04, "max": 0.10},
 	"critdmg": {"name": "Krit-Schaden", "min": 0.05, "max": 0.12},
 	"def": {"name": "Schadensminderung", "min": 0.01, "max": 0.025},
+	"speed": {"name": "Lauftempo", "min": 0.02, "max": 0.045},
+	"lifesteal": {"name": "Lebensraub", "min": 0.005, "max": 0.012},
+	"elem": {"name": "Elementarschaden", "min": 0.04, "max": 0.09},
 }
 ## Defence never goes above this, however much gear stacks.
 const DEF_CAP := 0.5
+## Caps of the newer stats: Lauftempo (run speed), Lebensraub (share of
+## dealt damage healed), Elementarschaden only counts on element hits.
+const SPEED_CAP := 0.3
+const LIFESTEAL_CAP := 0.08
 
 ## Which stat each kind always rolls first.
 const MAIN_STAT := {"waffe": "atk", "oberteil": "hp", "hose": "def", "schuhe": "gauge", "accessoire": "crit", "talisman": "critdmg"}

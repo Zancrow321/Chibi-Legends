@@ -689,18 +689,22 @@ func _draw_character(R: Rect2) -> void:
 		["Schadensminderung", _pct(minf(Loot.DEF_CAP, Profile.bonus("def")))],
 		["Leistenladung", "+" + _pct(Profile.bonus("gauge"))],
 		["Abklingzeit", "−" + _pct(1.0 - ItemSets.cooldown_factor())],
+		["Lauftempo", "+" + _pct(minf(Loot.SPEED_CAP, Profile.bonus("speed")))],
+		["Lebensraub", _pct(minf(Loot.LIFESTEAL_CAP, Profile.bonus("lifesteal")))],
+		["Elementarschaden", "+" + _pct(Profile.bonus("elem"))],
 		["Ausrüstungswert", str(Profile.gear_score())],
 		["Splitter", str(Profile.splitter)],
 		["Edelsteine", str(Gems.total())],
 		["Gegenstände", "%d / %d" % [Profile.items.size(), Profile.BAG_SIZE]],
 	]
-	var y := sr.position.y + 66.0
+	var y := sr.position.y + 62.0
+	var step := minf(32.0, (sr.size.y - 100.0) / rows.size())
 	for i in rows.size():
 		if i % 2 == 0:
-			draw_rect(Rect2(sr.position.x + 8, y - 20, sr.size.x - 16, 30), Color(INK, 0.06))
-		_ink(Vector2(sr.position.x + 18, y), rows[i][0], 16, Color(INK, 0.8))
-		_ink(Vector2(sr.position.x + 18, y), rows[i][1], 17, INK, HORIZONTAL_ALIGNMENT_RIGHT, sr.size.x - 36)
-		y += 32.0
+			draw_rect(Rect2(sr.position.x + 8, y - step * 0.62, sr.size.x - 16, step), Color(INK, 0.06))
+		_ink(Vector2(sr.position.x + 18, y), rows[i][0], 15, Color(INK, 0.8))
+		_ink(Vector2(sr.position.x + 18, y), rows[i][1], 16, INK, HORIZONTAL_ALIGNMENT_RIGHT, sr.size.x - 36)
+		y += step
 	_ink(Vector2(sr.position.x + 16, sr.end.y - 22), "Pro Stufe: +3 % Leben, +2 % Schaden", 13, Color(INK, 0.6))
 
 	# gear slots
@@ -902,6 +906,11 @@ func _draw_inventory(R: Rect2) -> void:
 	var same: bool = not worn.is_empty() and worn.uid == it.uid
 	var target := _reforge_target(it)
 	var hof := GameFlow.is_overworld()
+	var lines := 0
+	for st in Loot.STATS:
+		if Loot.affix(it, st) > 0.0 or (not worn.is_empty() and not same and Loot.affix(worn, st) > 0.0):
+			lines += 1
+	var line_h := 25.0 if lines <= 6 else 21.0  # more stats: tighter rows
 	for st in Loot.STATS:
 		var v := Loot.affix(it, st)
 		var w := Loot.affix(worn, st) if not worn.is_empty() and not same else v
@@ -920,7 +929,7 @@ func _draw_inventory(R: Rect2) -> void:
 		if not same and not worn.is_empty() and absf(v - w) > 0.0005:
 			var d := v - w
 			_ink(Vector2(card.position.x + 24, y), ("%+.1f %%" % (d * 100.0)).replace(".", ","), 16, GOOD if d > 0 else BAD, HORIZONTAL_ALIGNMENT_RIGHT, card.size.x - 48)
-		y += 25.0
+		y += line_h
 	y = _card_extras(card, it, y)
 	if it.has("line"):
 		_ink(Vector2(card.position.x + 24, y + 4), "„%s“" % it.line, 13, col.darkened(0.35))

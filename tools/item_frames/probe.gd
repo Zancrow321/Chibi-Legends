@@ -69,7 +69,6 @@ func _do(cmd: String) -> void:
 		"fight":
 			GameFlow.area = "trainingswald"
 			GameFlow.mode = GameFlow.DUNGEON
-			GameFlow.combat_help_seen = true
 			load("res://scripts/main.gd").show_title = false
 			change_scene_to_file("res://scenes/main.tscn")
 		"feed":

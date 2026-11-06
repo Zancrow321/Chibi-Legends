@@ -454,8 +454,14 @@ func deal_hit(target: Node2D, base: float, element: String, from_x: float, knock
 	var res := Reactions.resolve(target.status, element, base)
 	var crit := randf() < 0.05 + Profile.bonus("crit")
 	var dmg := int(round(res.damage * randf_range(0.92, 1.08) * _combo_scale(target) * (1.0 + Profile.bonus("atk")) * (1.5 + Profile.bonus("critdmg") if crit else 1.0)))
+	if element != "":  # Elementarschaden from gear counts on element hits only
+		dmg = int(round(dmg * (1.0 + Profile.bonus("elem"))))
 	if target.has_method("damage_factor"):
 		dmg = int(round(dmg * target.damage_factor()))  # boss: shield 0, Bruch +50 %
+	if target != player and player != null and player.hp > 0.0:  # Lebensraub
+		var steal := minf(Loot.LIFESTEAL_CAP, Profile.bonus("lifesteal"))
+		if steal > 0.0:
+			player.hp = minf(player.max_hp, player.hp + dmg * steal)
 	var col: Color = GameData.ELEMENTS[element].color if element != "" else Color("ff4b3e")
 	hit_landed.emit(target.get_hurt_rect().get_center(), col, res.reaction != "")
 	# still staggered from the last hit = a real combo (no gap to escape)

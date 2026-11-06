@@ -63,6 +63,22 @@ func _initialize() -> void:
 	check(Profile.items.size() == 5, "Tasche nach Sammel-Zerlegen: %d" % Profile.items.size())
 	check(not Profile.toggle_lock(keep.uid) and Profile.salvage(keep.uid) > 0, "Entsperren")
 
+	# new stats: they roll, count in bonus() and keep their names
+	Profile.reset()
+	var seen := {}
+	for i in 600:
+		var it := Loot.roll(10, Loot.MYTHIC)
+		for st in it.stats:
+			seen[st] = true
+	for st in ["speed", "lifesteal", "elem"]:
+		check(seen.has(st), "Wert %s wird gewürfelt" % st)
+	var boots := Loot.roll(10, Loot.COMMON, "schuhe")
+	boots.stats["speed"] = 0.04
+	Profile.add_item(boots)
+	Profile.toggle_equip(boots.uid)
+	check(is_equal_approx(Profile.bonus("speed"), 0.04), "Lauftempo zählt")
+	check(Loot.stat_line("lifesteal", 0.01) == "+1,0 % Lebensraub", "Name Lebensraub")
+
 	Profile.reset()
 	print("AUSRUESTUNG-TEST OK" if fails == 0 else "AUSRUESTUNG-TEST: %d Fehler" % fails)
 	quit()
