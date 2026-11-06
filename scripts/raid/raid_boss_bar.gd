@@ -37,9 +37,10 @@ func _draw() -> void:
 		return
 	var b := director.boss
 	var W := get_viewport_rect().size.x
-	var w := minf(560.0, W - 80.0)
+	# under the HUD panels (left: player bars, right: map), above the toasts
+	var w := minf(520.0, W - 80.0)
 	var x := (W - w) / 2.0
-	var y := 14.0 - (1.0 - _show) * 40.0
+	var y := 92.0 - (1.0 - _show) * 30.0
 	var a := _show
 	# name + phase pips
 	_text(Vector2(x, y + 16), b.label.to_upper(), 18, Color(1.0, 0.85, 0.45, a))
