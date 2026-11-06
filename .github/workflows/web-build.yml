@@ -73,6 +73,12 @@ jobs:
           grep -q "TURM-TEST OK" turm.log
           ! grep -E "SCRIPT ERROR|Parse Error" turm.log
 
+      - name: Weltboss-Logiktest (Weltenriss, gemeinsame Lebensleiste)
+        run: |
+          timeout 300 godot --headless --fixed-fps 60 -s res://tools/worldboss/probe.gd 2>&1 | tee weltboss.log | grep -E "WELTBOSS|SCRIPT ERROR" || true
+          grep -q "WELTBOSS-PROBE OK" weltboss.log
+          ! grep -E "SCRIPT ERROR|Parse Error" weltboss.log
+
       - name: Raid-Rüstung-Logiktest (Essenwacht, 6 Seltenheiten)
         run: |
           godot --headless -s res://tools/raid_armor/test_armor.gd 2>&1 | tee ruestung.log | grep -E "RUESTUNG|SCRIPT ERROR" || true
@@ -119,6 +125,21 @@ jobs:
           git add *.png
           git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -qm "Raid-Probe ${{ github.event.pull_request.head.sha }}"
           git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" bilder:refs/heads/ci-bilder/raid
+          rm -rf .git
+
+      - name: Weltboss-Probe (Bilder auf ci-bilder/weltboss)
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        continue-on-error: true
+        run: |
+          mkdir -p weltboss-probe
+          timeout 300 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/worldboss/probe.gd -- "$PWD/weltboss-probe" > weltboss-probe.log 2>&1 || true
+          grep -E "SCRIPT ERROR|WELTBOSS" weltboss-probe.log | head -40 || true
+          cd weltboss-probe
+          ls *.png > /dev/null 2>&1 || exit 0
+          git init -q . && git checkout -q -b bilder
+          git add *.png
+          git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -qm "Weltboss-Probe ${{ github.event.pull_request.head.sha }}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" bilder:refs/heads/ci-bilder/weltboss
           rm -rf .git
 
       - name: Gilden-Probe (Bilder auf ci-bilder/gilden)

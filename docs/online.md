@@ -43,3 +43,21 @@ Gildenhaus im Akademie-Hof (x 385, PixelLab-Sprite `guild_hall`), Bildschirm `sc
 | Boni | +1 % EXP je Stufe; ab Stufe 5 +1 Raid-Marke pro Essenwächter. Banner-Farben: 2 zum Start, eine mehr je Stufe (8 insgesamt). |
 | Ränge | Anführer (Banner, Ränge, entfernen), Offizier (Mitglieder entfernen), Mitglied. Geht der Anführer, übernimmt der dienstälteste Offizier, sonst das älteste Mitglied; leere Gilden lösen sich auf. |
 | Später | Gilden-Krieg 4v4 und Wochen-Liga brauchen den Kampfserver. |
+
+## Weltbosse (`supabase/migrations/0003_world_boss.sql`, Schritt 8)
+
+Braucht 0001 und 0002. Einspielen wie die anderen: SQL Editor, Inhalt einfügen, Run.
+
+- `world_bosses`: ein Boss mit EINER Lebensleiste für alle (`hp`, `max_hp`), lebt 72 Stunden.
+  Nach Sieg oder Flucht 20 Minuten Pause, dann öffnet sich der Riss neu mit
+  60 000 Lebenspunkten je Spieler, der beim letzten Boss Schaden gemacht hat (höchstens 40).
+- `world_hits`: Schaden pro Spieler und Boss, Zeitpunkt der letzten Meldung, Beute abgeholt.
+- `cl_world_state()`: Stand für das Spiel (Leiste, wer gerade kämpft, Bestenliste, eigener Platz,
+  `next_in` bis zum nächsten Riss).
+- `cl_world_hit(boss_id, damage, seconds)`: das Spiel meldet alle ~8 Sekunden den eigenen Schaden.
+  Der Server glaubt höchstens 1500 Schaden pro Sekunde seit der letzten Meldung (höchstens 60 s).
+- `cl_world_claim(boss_id, level)`: nach dem Sieg einmal Beute holen, ab 0,5 % Anteil:
+  4 Raid-Marken + bis zu 4 für den Anteil + 2 für den letzten Schlag, ein Teil ab Episch,
+  ein zweites für die drei Besten oder ab 10 % Anteil.
+
+Offline (oder solange 0003 fehlt) kämpft das Spiel gegen einen eigenen Pool (`user://weltboss.json`).

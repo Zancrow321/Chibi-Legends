@@ -208,5 +208,35 @@
    "type": "generations",
    "generations": 1.0
   }
+ },
+ "gate_riss_0": {
+  "prompt": "jagged glowing electric blue dimensional rift tear standing upright between two broken leaning dark stone pillars, crackling white and cyan lightning around its edges, dark storm clouds swirling inside the tear, floating stone shards, two cracked stone steps at the base seen from the front, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 7,
+  "init_image_strength": 40,
+  "init_image": "raw/sketch/gate_wald.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gate_riss_1": {
+  "prompt": "jagged glowing electric blue dimensional rift tear standing upright between two broken leaning dark stone pillars, crackling white and cyan lightning around its edges, dark storm clouds swirling inside the tear, floating stone shards, two cracked stone steps at the base seen from the front, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 21,
+  "init_image_strength": 60,
+  "init_image": "raw/sketch/gate_wald.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "gate_riss_2": {
+  "prompt": "jagged glowing electric blue dimensional rift tear standing upright between two broken leaning dark stone pillars, crackling white and cyan lightning around its edges, dark storm clouds swirling inside the tear, floating stone shards, two cracked stone steps at the base seen from the front, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 33,
+  "init_image_strength": 85,
+  "init_image": "raw/sketch/gate_wald.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
  }
 }

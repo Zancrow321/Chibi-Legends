@@ -5,9 +5,10 @@ Format wie die anderen Gegner, Eintrag in assets/enemies/frames.json, dort
 [Bilder, Bilder pro Sekunde, Treffer-Bild]) und den Schild-Kristall nach
 assets/raid/kristall.png. Kostet keine Generierungen.
 
-    python3 -I tools/raid/finish_boss.py
+    python3 -I tools/raid/finish_boss.py              (Essenwächter + Kristall)
+    python3 -I tools/raid/finish_boss.py donnerhorn   (nur dieser Boss, z. B. der Weltboss)
 """
-import json, pathlib
+import json, pathlib, sys
 from PIL import Image
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -34,19 +35,26 @@ def strip(name: str, anim: str, idx: list, cell: int) -> Image.Image:
     return out
 
 
-def main() -> None:
-    still = Image.open(RAW / "essenwaechter" / "still.png").convert("RGBA")
+def boss(name: str) -> None:
+    still = Image.open(RAW / name / "still.png").convert("RGBA")
     box = still.getbbox()
-    (ENEMIES / "essenwaechter").mkdir(parents=True, exist_ok=True)
+    (ENEMIES / name).mkdir(parents=True, exist_ok=True)
     meta_path = ENEMIES / "frames.json"
     meta = json.loads(meta_path.read_text())
     entry = {"source": "pixellab", "cell": [128, 128], "foot": box[3] - 1, "anims": {}}
     for anim, (idx, fps, hit) in PICK.items():
-        strip("essenwaechter", anim, idx, 128).save(ENEMIES / "essenwaechter" / f"{anim}.png")
+        strip(name, anim, idx, 128).save(ENEMIES / name / f"{anim}.png")
         entry["anims"][anim] = [len(idx), fps, hit]
-    meta["essenwaechter"] = entry
+    meta[name] = entry
     meta_path.write_text(json.dumps(meta, indent=1))
-    print("essenwaechter", entry, "bbox", box)
+    print(name, entry, "bbox", box)
+
+
+def main() -> None:
+    if len(sys.argv) > 1:
+        boss(sys.argv[1])
+        return
+    boss("essenwaechter")
     strip("kristall", "idle", list(range(9)), 64).save(ROOT / "assets" / "raid" / "kristall.png")
     print("kristall", Image.open(RAW / "kristall" / "still.png").getbbox())
 

@@ -37,6 +37,12 @@ const TOWER_DUSK := Color(0.28, 0.26, 0.46)
 const TOWER_LAYER_TINT := Color(0.62, 0.56, 0.95)
 const TOWER_GLOW := Color(0.7, 0.45, 1.0)
 var tower := false
+## Weltenriss (world boss): stormy blue night, lightning over the arena.
+const STORM_DUSK := Color(0.24, 0.3, 0.46)
+const STORM_LAYER_TINT := Color(0.5, 0.62, 0.9)
+const STORM_GLOW := Color(0.45, 0.85, 1.0)
+var storm := false
+var _bolt_t := 2.0
 
 var room: TrainingRoom
 
@@ -72,10 +78,11 @@ func _ready() -> void:
 	_halo = load("res://assets/lightlook/halo.png")
 	_hide_old_background()
 
-	forge = room.is_raid
+	storm = room.is_worldboss
+	forge = room.is_raid and not storm
 	tower = room.is_tower
 	var cm := CanvasModulate.new()
-	cm.color = TOWER_DUSK if tower else (FORGE_DUSK if forge else DUSK)
+	cm.color = STORM_DUSK if storm else (TOWER_DUSK if tower else (FORGE_DUSK if forge else DUSK))
 	room.add_child(cm)
 	var sun := DirectionalLight2D.new()
 	sun.color = Color(1.0, 0.62, 0.42)
@@ -126,7 +133,7 @@ func _ready() -> void:
 	for x in LANTERNS:
 		_lantern(x)
 	for c in CRYSTALS:
-		_crystal(c[0], TOWER_GLOW if tower else (Color(1.0, 0.55, 0.25) if forge else c[1]))
+		_crystal(c[0], STORM_GLOW if storm else (TOWER_GLOW if tower else (Color(1.0, 0.55, 0.25) if forge else c[1])))
 	for i in FIREFLIES:
 		_firefly(i)
 	_forge()
@@ -224,9 +231,9 @@ func _crystal(x: float, color: Color) -> void:
 
 func _firefly(i: int) -> void:
 	var base := Vector2(fposmod(i * 233.0 + 140.0, TrainingRoom.WIDTH), 200.0 + fposmod(i * 37.0, 70.0))
-	var s := _halo_sprite(Color(0.8, 0.6, 1.0, 0.9) if tower else (Color(1.0, 0.6, 0.3, 0.9) if forge else Color(0.85, 1.0, 0.5, 0.9)), 0.09)
+	var s := _halo_sprite(Color(0.5, 0.85, 1.0, 0.9) if storm else Color(0.8, 0.6, 1.0, 0.9) if tower else (Color(1.0, 0.6, 0.3, 0.9) if forge else Color(0.85, 1.0, 0.5, 0.9)), 0.09)
 	room.add_child(s)
-	var l := _light(TOWER_GLOW if tower else (Color(1.0, 0.5, 0.25) if forge else Color(0.75, 1.0, 0.45)), 0.6, 0.16)
+	var l := _light(STORM_GLOW if storm else TOWER_GLOW if tower else (Color(1.0, 0.5, 0.25) if forge else Color(0.75, 1.0, 0.45)), 0.6, 0.16)
 	room.add_child(l)
 	_flies.append({"sprite": s, "light": l, "base": base, "phase": i * 1.7})
 
@@ -265,7 +272,9 @@ func _build_parallax() -> void:
 		s.scale = Vector2(2, 2)
 		if SWAY.has(spec[0]):
 			s.material = sway_material(SWAY[spec[0]])
-		if forge and spec[0] != "foreground":
+		if storm and spec[0] != "foreground":
+			s.modulate = STORM_LAYER_TINT
+		elif forge and spec[0] != "foreground":
 			s.modulate = FORGE_LAYER_TINT
 		elif tower and spec[0] != "foreground":
 			s.modulate = TOWER_LAYER_TINT
@@ -361,6 +370,18 @@ func _process(delta: float) -> void:
 			room.glut_fx.embers(Vector2(FORGE_X, fy - 4), 1, 6.0, 45.0, 1.3)
 		if randf() < 0.12:
 			room.glut_fx.smoke(Vector2(FORGE_X + randf_range(-4, 4), fy - 14), 7.0, Vector2(randf_range(-4, 4), -16), 1.8)
+	# Weltenriss: sparks rise from the seams, lightning flashes over the arena
+	if storm and room.glut_fx != null:
+		if randf() < 0.4:
+			var sx := c.x + randf_range(-vis.x * 0.3, vis.x * 0.3)
+			room.glut_fx.glow(Vector2(sx, _ground_y(sx) - 2.0), Color(0.5, 1.4, 2.4), randf_range(1.5, 3.0), 1.4, Vector2(randf_range(-8, 8), randf_range(-60, -30)))
+		_bolt_t -= delta
+		if _bolt_t <= 0.0:
+			_bolt_t = randf_range(3.0, 7.0)
+			var bx := c.x + randf_range(-vis.x * 0.35, vis.x * 0.35)
+			flash_light(Vector2(bx, 60.0), Color(0.6, 0.85, 1.0), 2.4, 2.4, 0.35)
+			if room.fx != null:
+				room.fx.flash(0.08, Color(0.75, 0.9, 1.0))
 	# Glutschmiede: embers drift up from the glowing floor seams
 	if forge and room.glut_fx != null and randf() < 0.5:
 		var ex := c.x + randf_range(-vis.x * 0.3, vis.x * 0.3)

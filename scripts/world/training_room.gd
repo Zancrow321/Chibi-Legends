@@ -40,6 +40,8 @@ var is_raid := false
 ## Turm der Prüfungen: floors of enemies (TowerDirector, also in `raid`).
 var tower: TowerDirector
 var is_tower := false
+## Weltenriss: world boss with shared health (WorldBossDirector, also in `raid`).
+var is_worldboss := false
 var debug: CombatDebug  # hitbox view and slow motion (keys 0 and 9)
 var enemies_defeated := 0
 var exp_points := 0.0  # EXP from enemies (shown in the HUD's EXP bar)
@@ -62,6 +64,7 @@ func _ready() -> void:
 	Engine.time_scale = CombatDebug.time_factor  # a kill slow motion never survives a scene reload
 	is_raid = GameFlow.is_raid()
 	is_tower = GameFlow.is_tower()
+	is_worldboss = GameFlow.is_worldboss()
 	_build_terrain()
 	attacks = Node2D.new()
 	effects = Effects.new()
@@ -121,6 +124,10 @@ func _ready() -> void:
 		tower.world = self
 		raid = tower
 		add_child(tower)
+	elif is_worldboss:
+		raid = WorldBossDirector.new()
+		raid.world = self
+		add_child(raid)
 	elif is_raid:
 		raid = RaidDirector.new()
 		raid.world = self
@@ -272,7 +279,7 @@ func _draw() -> void:
 
 
 func _draw_cliff(r: Rect2, outline: Color) -> void:
-	var dirt := Color("3a3448") if is_tower else (Color("4a3a3a") if is_raid else Color("7a5636"))
+	var dirt := Color("3a3448") if is_tower else (Color("2e3a4a") if is_worldboss else (Color("4a3a3a") if is_raid else Color("7a5636")))
 	draw_rect(r, outline)
 	draw_rect(Rect2(r.position + Vector2(1, 1), r.size - Vector2(2, 0)), dirt)
 	# stone blocks texture
@@ -325,8 +332,10 @@ func _draw_forge_floor(r: Rect2, outline: Color) -> void:
 		k += 1
 
 
-## Glow of the floor seams: forge orange, tower violet.
+## Glow of the floor seams: forge orange, tower violet, rift storm blue.
 func seam_color() -> Color:
+	if is_worldboss:
+		return Color(0.4, 1.4, 2.4)
 	return Color(1.1, 0.6, 2.0) if is_tower else Color(2.0, 0.7, 0.25)
 
 
