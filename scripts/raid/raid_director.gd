@@ -149,6 +149,7 @@ func _claim_online(at: Vector2, secs: int) -> void:
 		world._spawn_drop(Net.build_item(drop, world.player.style.id), at + Vector2(-26 + 52 * i, -40))
 		i += 1
 	_spawn_gem(at)
+	GodItems.try_roll("raid", Time.get_date_string_from_system(true))  # jeder Sieg: winzige GOD-Chance
 
 
 func _spawn_gem(at: Vector2) -> void:

@@ -1,0 +1,226 @@
+{
+ "icon_god_sonnenkrone": {
+  "prompt": "a tall golden sun crown with sharp rays of light, radiant white and polished gold, glowing holy light, divine, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "icon_god_gewand": {
+  "prompt": "an ornate holy chest armor with a glowing sun emblem and white silk tabard, radiant white and polished gold, glowing holy light, divine, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "god_hoellenschlund_s13": {
+  "prompt": "a demonic katana, black blade with a molten crimson glowing edge and lava cracks, black and red wrapped hilt, guard shaped like a small horned skull, single weapon only, pixel art game item, side view, lying diagonal, blade or muzzle pointing to the upper right, grip lower left, bold dark outline, cel shading, clean readable silhouette, original design, no hands, no character, whole weapon fits inside the canvas",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "fx_fluegel_daemon": {
+  "prompt": "a pair of huge spread demonic bat wings, black leathery membrane torn at the edges with glowing crimson veins and burning ember edges, sharp bone claws at the tips, symmetrical, wings only, no body, no person, pixel art",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "icon_god_beinkleid": {
+  "prompt": "ornate armored leg greaves with white silk, radiant white and polished gold, glowing holy light, divine, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "god_hoellenschlund_s29": {
+  "prompt": "a demonic katana, black blade with a molten crimson glowing edge and lava cracks, black and red wrapped hilt, guard shaped like a small horned skull, single weapon only, pixel art game item, side view, lying diagonal, blade or muzzle pointing to the upper right, grip lower left, bold dark outline, cel shading, clean readable silhouette, original design, no hands, no character, whole weapon fits inside the canvas",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "god_mondfresser_s13": {
+  "prompt": "a gigantic black cleaver greatsword with a glowing crimson crescent moon shaped cutting edge, spikes on the back, chains wrapped around the long hilt, single weapon only, pixel art game item, side view, lying diagonal, blade or muzzle pointing to the upper right, grip lower left, bold dark outline, cel shading, clean readable silhouette, original design, no hands, no character, whole weapon fits inside the canvas",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "fx_fluegel_heilig": {
+  "prompt": "a pair of huge majestic spread angel wings made of radiant white and golden glowing feathers, symmetrical, seen from behind, wings only, no body, no person, glowing light, pixel art",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "god_glockenschwinge_s13": {
+  "prompt": "a holy war scythe, long white and gold staff, curved blade made of radiant golden light, a small golden bell and white feathers hanging below the blade, single weapon only, pixel art game item, side view, lying diagonal, blade or muzzle pointing to the upper right, grip lower left, bold dark outline, cel shading, clean readable silhouette, original design, no hands, no character, whole weapon fits inside the canvas",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "icon_god_engelsruf": {
+  "prompt": "a holy energy rifle with angel wing ornaments, radiant white and polished gold, glowing holy light, divine, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "god_glockenschwinge_s29": {
+  "prompt": "a holy war scythe, long white and gold staff, curved blade made of radiant golden light, a small golden bell and white feathers hanging below the blade, single weapon only, pixel art game item, side view, lying diagonal, blade or muzzle pointing to the upper right, grip lower left, bold dark outline, cel shading, clean readable silhouette, original design, no hands, no character, whole weapon fits inside the canvas",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "god_mondfresser_s29": {
+  "prompt": "a gigantic black cleaver greatsword with a glowing crimson crescent moon shaped cutting edge, spikes on the back, chains wrapped around the long hilt, single weapon only, pixel art game item, side view, lying diagonal, blade or muzzle pointing to the upper right, grip lower left, bold dark outline, cel shading, clean readable silhouette, original design, no hands, no character, whole weapon fits inside the canvas",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "god_engelsruf_s29": {
+  "prompt": "a holy energy rifle, white ceramic and polished gold body, glowing golden light coils along the barrel, small angel wing ornaments on both sides, golden halo ring sight, muzzle pointing right, horizontal, single weapon only, pixel art game item, side view, lying diagonal, blade or muzzle pointing to the upper right, grip lower left, bold dark outline, cel shading, clean readable silhouette, original design, no hands, no character, whole weapon fits inside the canvas",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "god_engelsruf_s13": {
+  "prompt": "a holy energy rifle, white ceramic and polished gold body, glowing golden light coils along the barrel, small angel wing ornaments on both sides, golden halo ring sight, muzzle pointing right, horizontal, single weapon only, pixel art game item, side view, lying diagonal, blade or muzzle pointing to the upper right, grip lower left, bold dark outline, cel shading, clean readable silhouette, original design, no hands, no character, whole weapon fits inside the canvas",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "fx_heiligenschein": {
+  "prompt": "a glowing golden halo ring with small rays of light, seen slightly from below, a single thin ring, pixel art",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "icon_god_morgenschritte": {
+  "prompt": "a pair of armored boots with tiny golden wings at the ankles, radiant white and polished gold, glowing holy light, divine, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "icon_god_seraphfluegel": {
+  "prompt": "a pair of glowing angel wings made of light feathers, radiant white and polished gold, glowing holy light, divine, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "icon_god_hoellenpanzer": {
+  "prompt": "a jagged spiked demon lord chest armor with a red demonic eye, black obsidian and crimson, glowing red lava veins, demonic, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "icon_god_hoernerkrone": {
+  "prompt": "a black iron crown with two huge curved demon horns, black obsidian and crimson, glowing red lava veins, demonic, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "icon_god_kettenbeinkleid": {
+  "prompt": "black leg armor wrapped in iron chains with glowing red runes, black obsidian and crimson, glowing red lava veins, demonic, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "icon_god_aschewandler": {
+  "prompt": "a pair of heavy black clawed boots with glowing red seams, black obsidian and crimson, glowing red lava veins, demonic, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "icon_god_verdammnisschwingen": {
+  "prompt": "a pair of torn demonic bat wings with burning ember edges, black obsidian and crimson, glowing red lava veins, demonic, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "icon_god_glockenschwinge": {
+  "prompt": "a holy war scythe with a blade of golden light and a small bell, radiant white and polished gold, glowing holy light, divine, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "icon_god_sonnenfaeuste": {
+  "prompt": "a pair of golden sun gauntlets with blazing light knuckles, radiant white and polished gold, glowing holy light, divine, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "icon_god_himmelswirbel": {
+  "prompt": "white and gold fist wraps swirling with a small sky blue whirlwind, radiant white and polished gold, glowing holy light, divine, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "icon_god_hoellenschlund": {
+  "prompt": "a demonic katana with a horned skull guard, black obsidian and crimson, glowing red lava veins, demonic, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "icon_god_hoellenfaust": {
+  "prompt": "a pair of black demon claw gauntlets engulfed in crimson hellfire, black obsidian and crimson, glowing red lava veins, demonic, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "icon_god_mondfresser": {
+  "prompt": "a gigantic black cleaver greatsword with a crimson crescent moon edge, black obsidian and crimson, glowing red lava veins, demonic, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "icon_god_teufelsfeder": {
+  "prompt": "a coiled black and red demonic spring gauntlet with devil horns on the knuckles, black obsidian and crimson, glowing red lava veins, demonic, RPG inventory item icon, pixel art, centered, single object, bold dark outline, high contrast, no text, no background",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "fx_feder": {
+  "prompt": "a single small glowing white golden feather, pixel art",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "fx_glutfetzen": {
+  "prompt": "a single small burning crimson ember flame wisp with black smoke edge, pixel art",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "fx_altar": {
+  "prompt": "a tall ornate altar pedestal, side view game prop, the left half white marble with golden angel feathers, the right half black obsidian with crimson demon horns and glowing red cracks, a large glowing prismatic rainbow crystal floating above the top, pixel art, full object fits inside the canvas",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ }
+}

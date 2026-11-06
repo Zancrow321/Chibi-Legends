@@ -90,6 +90,7 @@ static func add_exp(amount: float) -> int:
 		ups += 1
 	save()
 	if ups > 0:
+		GodItems.refresh_all()  # GOD-Werte wachsen mit
 		Gacha.on_level_up(ups)
 		SeasonPass.track("level", ups)
 		for t in ThemeOutfits.on_level(level):
@@ -119,7 +120,7 @@ static func bag_full() -> bool:
 ## Puts an item into the bag; false when the bag is full.
 static func add_item(item: Dictionary) -> bool:
 	ensure()
-	if bag_full():
+	if bag_full() and not item.has("god"):  # GOD-Teile gehen nie verloren
 		return false
 	item["uid"] = "i%d" % _next_uid
 	_next_uid += 1
@@ -178,13 +179,17 @@ static func toggle_equip(uid: String) -> void:
 	else:
 		equipped[place_for(it)] = uid
 	save()
+	if it.has("god"):  # GOD-Look und -Effekte sofort an der Figur
+		var tree := Engine.get_main_loop() as SceneTree
+		if tree != null:
+			tree.call_group("fighter_sprite", "refresh_god")
 
 
 ## Umschmieden one affix of an item for Splitter. Returns the new stat id
 ## ("" = not enough Splitter or nothing to reroll).
 static func reforge(uid: String, stat: String) -> String:
 	var it := item(uid)
-	if it.is_empty():
+	if it.is_empty() or it.has("god"):  # GOD-Werte stehen fest
 		return ""
 	var cost := Loot.reforge_cost(it)
 	if splitter < cost:
@@ -199,7 +204,7 @@ static func reforge(uid: String, stat: String) -> String:
 ## Breaks an item into Splitter (never one that is worn).
 static func salvage(uid: String) -> int:
 	var it := item(uid)
-	if it.is_empty() or is_equipped(uid):
+	if it.is_empty() or is_equipped(uid) or it.has("god"):  # GOD-Teile sind einzigartig
 		return 0
 	var gain := int(Loot.salvage_value(it))
 	for g in it.get("sockets", []):  # gems go back into the pouch

@@ -56,7 +56,9 @@
     "luftkapitaen": "Luftkapitäns-Mantel",
     "messingkaempfer": "Messingfaust-Weste",
     "dampfdame": "Erfinderinnen-Korsett",
-    "kesselflicker": "Kesselflicker-Overall"
+    "kesselflicker": "Kesselflicker-Overall",
+    "god_seraph": "GOD · Seraph",
+    "god_abgrund": "GOD · Abgrund"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -106,7 +108,9 @@
     "kesselflicker": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
     "luftkapitaen": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)",
     "zahnradtechniker": "Spielerstufe 26 (Steampunk)",
-    "dampfdame": "Spielerstufe 30 (Steampunk)"
+    "dampfdame": "Spielerstufe 30 (Steampunk)",
+    "god_seraph": "GOD-Teil: weltweit nur einmal (Gewand des Ersten Lichts)",
+    "god_abgrund": "GOD-Teil: weltweit nur einmal (Panzer des Höllenfürsten)"
    }
   },
   "pants": {
@@ -161,7 +165,9 @@
     "luftkapitaen": "Reithose",
     "messingkaempfer": "Gestreifte Hose",
     "dampfdame": "Tournürenrock",
-    "kesselflicker": "Overall-Hose"
+    "kesselflicker": "Overall-Hose",
+    "god_seraph": "GOD · Seraph",
+    "god_abgrund": "GOD · Abgrund"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -211,7 +217,9 @@
     "kesselflicker": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
     "luftkapitaen": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)",
     "zahnradtechniker": "Spielerstufe 26 (Steampunk)",
-    "dampfdame": "Spielerstufe 30 (Steampunk)"
+    "dampfdame": "Spielerstufe 30 (Steampunk)",
+    "god_seraph": "GOD-Teil: weltweit nur einmal (Beinkleid der Gnade)",
+    "god_abgrund": "GOD-Teil: weltweit nur einmal (Kettenbeinkleid)"
    }
   },
   "shoes": {
@@ -266,7 +274,9 @@
     "luftkapitaen": "Hohe Reitstiefel",
     "messingkaempfer": "Schnallenstiefel",
     "dampfdame": "Schnürstiefeletten",
-    "kesselflicker": "Werkstattstiefel"
+    "kesselflicker": "Werkstattstiefel",
+    "god_seraph": "GOD · Seraph",
+    "god_abgrund": "GOD · Abgrund"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -316,7 +326,9 @@
     "kesselflicker": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
     "luftkapitaen": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)",
     "zahnradtechniker": "Spielerstufe 26 (Steampunk)",
-    "dampfdame": "Spielerstufe 30 (Steampunk)"
+    "dampfdame": "Spielerstufe 30 (Steampunk)",
+    "god_seraph": "GOD-Teil: weltweit nur einmal (Schritte des Morgens)",
+    "god_abgrund": "GOD-Teil: weltweit nur einmal (Aschewandler)"
    }
   },
   "hair": {
@@ -351,7 +363,9 @@
     "zylinder": "Zylinder",
     "gothlocken": "Silberlocken mit Spitzenband",
     "fliegerbrille": "Fliegerbrille",
-    "melone": "Melone mit Zahnrad"
+    "melone": "Melone mit Zahnrad",
+    "god_sonnenkrone": "GOD · Sonnenkrone",
+    "god_hoernerkrone": "GOD · Hörnerkrone"
    },
    "unlock": {
     "wuschel": "Saisonpass, Stufe 5",
@@ -377,7 +391,9 @@
     "zylinder": "Gacha-Banner „Der schwarze Mond“ (Kampfstil Schwarzmond)",
     "gothlocken": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)",
     "fliegerbrille": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
-    "melone": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)"
+    "melone": "Gacha-Banner „Kein Meer zu weit“ (Kampfstil Spannkraft)",
+    "god_sonnenkrone": "GOD-Teil: weltweit nur einmal (Sonnenkrone des Seraphen)",
+    "god_hoernerkrone": "GOD-Teil: weltweit nur einmal (Hörnerkrone des Abgrunds)"
    }
   },
   "weapon": {
@@ -407,7 +423,27 @@
     "donnerhammer": "Donnerhammer",
     "bluetenklinge": "Blütenklinge",
     "runenhammer": "Runenhammer",
-    "leerenklinge": "Leerenklinge"
+    "leerenklinge": "Leerenklinge",
+    "god_hoellenschlund": "GOD · Höllenschlund",
+    "god_mondfresser": "GOD · Mondfresser",
+    "god_glockenschwinge": "GOD · Glockenschwinge",
+    "god_engelsruf": "GOD · Engelsruf",
+    "god_flutseraph": "GOD · Flutseraph",
+    "god_engelsfrost": "GOD · Engelsfrost",
+    "god_sonnengericht": "GOD · Sonnengericht",
+    "god_cherubsfeder": "GOD · Cherubsfeder",
+    "god_heiligenkreis": "GOD · Heiligenkreis",
+    "god_himmelsschleier": "GOD · Himmelsschleier",
+    "god_richterhammer": "GOD · Richterhammer",
+    "god_paradiesbluete": "GOD · Paradiesblüte",
+    "god_erzengelhammer": "GOD · Erzengelhammer",
+    "god_seelennaht": "GOD · Seelennaht",
+    "god_blutpakt": "GOD · Blutpakt",
+    "god_hoellenkette": "GOD · Höllenkette",
+    "god_weltenbrand": "GOD · Weltenbrand",
+    "god_aschesturm": "GOD · Aschesturm",
+    "god_totenlicht": "GOD · Totenlicht",
+    "god_nichtsklinge": "GOD · Nichtsklinge"
    },
    "unlock": {
     "wachhund": "Gacha-Banner „Die letzte Linie“ (Kampfstil Bollwerk)",
@@ -432,7 +468,27 @@
     "donnerhammer": "Gacha-Banner „Der Hammer der Wolken“ (Kampfstil Gewitterhammer)",
     "bluetenklinge": "Gacha-Banner „Wenn die Kirschen blühen“ (Kampfstil Kirschsturm)",
     "runenhammer": "Gacha-Banner „Geschrieben in Stein“ (Kampfstil Runenschmied)",
-    "leerenklinge": "Gacha-Banner „Der Schnitt ins Nichts“ (Kampfstil Leerenschnitt)"
+    "leerenklinge": "Gacha-Banner „Der Schnitt ins Nichts“ (Kampfstil Leerenschnitt)",
+    "god_hoellenschlund": "GOD-Teil: weltweit nur einmal (Höllenschlund)",
+    "god_mondfresser": "GOD-Teil: weltweit nur einmal (Mondfresser)",
+    "god_glockenschwinge": "GOD-Teil: weltweit nur einmal (Glockenschwinge)",
+    "god_engelsruf": "GOD-Teil: weltweit nur einmal (Engelsruf)",
+    "god_flutseraph": "GOD-Teil: weltweit nur einmal (Flutseraph)",
+    "god_engelsfrost": "GOD-Teil: weltweit nur einmal (Engelsfrost)",
+    "god_sonnengericht": "GOD-Teil: weltweit nur einmal (Sonnengericht)",
+    "god_cherubsfeder": "GOD-Teil: weltweit nur einmal (Cherubsfeder)",
+    "god_heiligenkreis": "GOD-Teil: weltweit nur einmal (Heiligenkreis)",
+    "god_himmelsschleier": "GOD-Teil: weltweit nur einmal (Himmelsschleier)",
+    "god_richterhammer": "GOD-Teil: weltweit nur einmal (Richterhammer)",
+    "god_paradiesbluete": "GOD-Teil: weltweit nur einmal (Paradiesblüte)",
+    "god_erzengelhammer": "GOD-Teil: weltweit nur einmal (Erzengelhammer)",
+    "god_seelennaht": "GOD-Teil: weltweit nur einmal (Seelennaht)",
+    "god_blutpakt": "GOD-Teil: weltweit nur einmal (Blutpakt)",
+    "god_hoellenkette": "GOD-Teil: weltweit nur einmal (Höllenkette)",
+    "god_weltenbrand": "GOD-Teil: weltweit nur einmal (Weltenbrand)",
+    "god_aschesturm": "GOD-Teil: weltweit nur einmal (Aschesturm)",
+    "god_totenlicht": "GOD-Teil: weltweit nur einmal (Totenlicht)",
+    "god_nichtsklinge": "GOD-Teil: weltweit nur einmal (Nichtsklinge)"
    }
   }
  },
@@ -751,6 +807,254 @@
   },
   "leerenklinge": {
    "texture": "res://assets/creator/weapons/formen/leerenklinge.png",
+   "scale": 1,
+   "grip": [
+    10.2,
+    54.2
+   ],
+   "tip": [
+    60.7,
+    4.2
+   ]
+  },
+  "god_hoellenschlund": {
+   "texture": "res://assets/creator/weapons/god/god_hoellenschlund.png",
+   "scale": 1.7,
+   "grip": [
+    5.8,
+    33.2
+   ],
+   "tip": [
+    38.5,
+    0.5
+   ]
+  },
+  "god_mondfresser": {
+   "texture": "res://assets/creator/weapons/god/god_mondfresser.png",
+   "scale": 1.6,
+   "grip": [
+    7.1,
+    37.6
+   ],
+   "tip": [
+    41.5,
+    1.5
+   ],
+   "twohand": true
+  },
+  "god_glockenschwinge": {
+   "texture": "res://assets/creator/weapons/god/god_glockenschwinge.png",
+   "scale": 1.6,
+   "grip": [
+    7.2,
+    37.2
+   ],
+   "tip": [
+    42.5,
+    10.5
+   ],
+   "twohand": true
+  },
+  "god_engelsruf": {
+   "texture": "res://assets/creator/weapons/god/god_engelsruf.png",
+   "scale": 1,
+   "grip": [
+    14.1,
+    22.5
+   ],
+   "tip": [
+    47.5,
+    4.5
+   ],
+   "hold": "gun"
+  },
+  "god_flutseraph": {
+   "texture": "res://assets/creator/weapons/god/god_flutseraph.png",
+   "scale": 1,
+   "grip": [
+    54.0,
+    10.1
+   ],
+   "tip": [
+    4.0,
+    60.5
+   ]
+  },
+  "god_engelsfrost": {
+   "texture": "res://assets/creator/weapons/god/god_engelsfrost.png",
+   "scale": 1,
+   "grip": [
+    9.8,
+    51.8
+   ],
+   "tip": [
+    58.4,
+    5.9
+   ]
+  },
+  "god_sonnengericht": {
+   "texture": "res://assets/creator/weapons/god/god_sonnengericht.png",
+   "scale": 1,
+   "grip": [
+    20.5,
+    43.6
+   ],
+   "tip": [
+    60.2,
+    4.6
+   ],
+   "twohand": true
+  },
+  "god_cherubsfeder": {
+   "texture": "res://assets/creator/weapons/god/god_cherubsfeder.png",
+   "scale": 1,
+   "grip": [
+    10.5,
+    48.4
+   ],
+   "tip": [
+    57.1,
+    8.4
+   ]
+  },
+  "god_heiligenkreis": {
+   "texture": "res://assets/creator/weapons/god/god_heiligenkreis.png",
+   "scale": 1,
+   "grip": [
+    10.3,
+    53.3
+   ],
+   "tip": [
+    60.2,
+    4.6
+   ]
+  },
+  "god_himmelsschleier": {
+   "texture": "res://assets/creator/weapons/god/god_himmelsschleier.png",
+   "scale": 1,
+   "grip": [
+    20.5,
+    43.5
+   ],
+   "tip": [
+    59.5,
+    5.0
+   ],
+   "twohand": true
+  },
+  "god_richterhammer": {
+   "texture": "res://assets/creator/weapons/god/god_richterhammer.png",
+   "scale": 1,
+   "grip": [
+    16.5,
+    48.5
+   ],
+   "tip": [
+    51.6,
+    9.1
+   ],
+   "twohand": true
+  },
+  "god_paradiesbluete": {
+   "texture": "res://assets/creator/weapons/god/god_paradiesbluete.png",
+   "scale": 1,
+   "grip": [
+    54.0,
+    10.0
+   ],
+   "tip": [
+    4.0,
+    60.5
+   ]
+  },
+  "god_erzengelhammer": {
+   "texture": "res://assets/creator/weapons/god/god_erzengelhammer.png",
+   "scale": 1,
+   "grip": [
+    18.0,
+    46.2
+   ],
+   "tip": [
+    52.2,
+    9.3
+   ],
+   "twohand": true
+  },
+  "god_seelennaht": {
+   "texture": "res://assets/creator/weapons/god/god_seelennaht.png",
+   "scale": 1,
+   "grip": [
+    9.4,
+    54.3
+   ],
+   "tip": [
+    60.2,
+    3.8
+   ]
+  },
+  "god_blutpakt": {
+   "texture": "res://assets/creator/weapons/god/god_blutpakt.png",
+   "scale": 1,
+   "grip": [
+    9.7,
+    54.7
+   ],
+   "tip": [
+    60.8,
+    4.2
+   ]
+  },
+  "god_hoellenkette": {
+   "texture": "res://assets/creator/weapons/god/god_hoellenkette.png",
+   "scale": 1,
+   "grip": [
+    19.1,
+    45.8
+   ],
+   "tip": [
+    53.1,
+    10.3
+   ]
+  },
+  "god_weltenbrand": {
+   "texture": "res://assets/creator/weapons/god/god_weltenbrand.png",
+   "scale": 1,
+   "grip": [
+    18.0,
+    46.0
+   ],
+   "tip": [
+    52.9,
+    10.2
+   ],
+   "twohand": true
+  },
+  "god_aschesturm": {
+   "texture": "res://assets/creator/weapons/god/god_aschesturm.png",
+   "scale": 1,
+   "grip": [
+    9.5,
+    53.5
+   ],
+   "tip": [
+    60.4,
+    4.8
+   ]
+  },
+  "god_totenlicht": {
+   "texture": "res://assets/creator/weapons/god/god_totenlicht.png",
+   "scale": 1,
+   "grip": [
+    19.7,
+    43.0
+   ],
+   "tip": [
+    55.2,
+    7.2
+   ]
+  },
+  "god_nichtsklinge": {
+   "texture": "res://assets/creator/weapons/god/god_nichtsklinge.png",
    "scale": 1,
    "grip": [
     10.2,

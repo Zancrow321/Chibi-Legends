@@ -91,6 +91,12 @@ jobs:
           grep -q "RUESTUNG-TEST OK" ruestung.log
           ! grep -E "SCRIPT ERROR|Parse Error" ruestung.log
 
+      - name: GOD-Logiktest (einzigartige Teile, Flügel, Effekte)
+        run: |
+          godot --headless -s res://tools/god_items/test_god.gd 2>&1 | tee god.log | grep -E "GOD|SCRIPT ERROR" || true
+          grep -q "GOD-TEST OK" god.log
+          ! grep -E "SCRIPT ERROR|Parse Error|GOD-TEST FEHLER" god.log
+
       - name: Kleidungs-Logiktest (Anime- und japanische Outfits)
         run: |
           godot --headless -s res://tools/japan_outfits/test_outfits.gd 2>&1 | tee kleidung.log | grep -E "KLEIDUNG|SCRIPT ERROR" || true

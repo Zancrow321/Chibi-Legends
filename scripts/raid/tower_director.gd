@@ -205,6 +205,8 @@ func _report_floor(n: int) -> void:
 	var r: Dictionary = await Net.call_fn("cl_tower", {"floor_reached": n})
 	if r.ok:
 		place = int(r.data.place)
+		if n >= 20 and n % 10 == 0:
+			GodItems.try_roll("tower", str(n))
 
 
 ## Guard defeated: the floor ends through the normal enemy count.

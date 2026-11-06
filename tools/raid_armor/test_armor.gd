@@ -15,8 +15,8 @@ func check(cond: bool, what: String) -> void:
 func _initialize() -> void:
 	Profile.reset()
 	seed(11)
-	check(Loot.RARITIES.size() == 6 and Loot.RARITIES[Loot.MYTHIC].id == "mythisch" and Loot.RARITIES[Loot.UNCOMMON].id == "ungewoehnlich", "sechs Seltenheiten")
-	check(Loot.SOCKETS.size() == 6, "Sockel für jede Seltenheit")
+	check(Loot.RARITIES.size() == 7 and Loot.RARITIES[Loot.GOD].id == "gott" and Loot.RARITIES[Loot.MYTHIC].id == "mythisch" and Loot.RARITIES[Loot.UNCOMMON].id == "ungewoehnlich", "sechs Seltenheiten")
+	check(Loot.SOCKETS.size() == Loot.RARITIES.size(), "Sockel für jede Seltenheit")
 	# alte Spielstände: 0 bleibt, 1..3 rücken eins hoch
 	check(Loot.migrate_rarity(0) == 0 and Loot.migrate_rarity(1) == Loot.RARE and Loot.migrate_rarity(2) == Loot.EPIC and Loot.migrate_rarity(3) == Loot.LEGENDARY, "Umrechnung alter Seltenheiten")
 	# Tabellen: alle Stufen kommen vor, Mythisch ist selten
@@ -31,7 +31,7 @@ func _initialize() -> void:
 	print("RUESTUNG Raid-Rüstung: ", raid)
 	check(raid.all(func(n): return n > 0), "jede Seltenheit der Raid-Rüstung kann fallen")
 	# Teile: Name, Slot, kein Set, Mythisch mit 5 Werten, 2 Sockeln und Mod
-	for r in Loot.RARITIES.size():
+	for r in Loot.MYTHIC + 1:  # GOD-Teile sind keine Raid-Rüstung
 		for s in RaidArmor.PIECES:
 			var it := RaidArmor.roll(10, "glutatem", r, s)
 			check(it.raid == RaidArmor.ID and it.slot == s and not it.has("set"), "Raid-Teil %s/%d" % [s, r])
