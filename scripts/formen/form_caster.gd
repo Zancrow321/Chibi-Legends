@@ -668,7 +668,7 @@ func _spawn_shots() -> void:
 
 
 func _shot(p: Dictionary, angle: float, zid: String) -> void:
-	var h := _hazard("shot", _hand(), zid)
+	var h := _fhazard("shot", _hand(), zid)
 	var speed := float(p.get("speed", 420))
 	h.vel = Vector2(cos(angle) * player.facing, sin(angle)) * speed
 	h.params = p
@@ -679,7 +679,7 @@ func _shot(p: Dictionary, angle: float, zid: String) -> void:
 	world.attacks.add_child(h)
 
 
-func _hazard(k: String, pos: Vector2, zid := "") -> FormHazard:
+func _fhazard(k: String, pos: Vector2, zid := "") -> FormHazard:
 	var h := FormHazard.new()
 	h.world = world
 	h.caster = self
@@ -748,7 +748,7 @@ func _pillar_at(x: float, p: Dictionary) -> void:
 	var gy := GlutHazard.ground_y(x, player.global_position.y - 20.0)
 	if gy > 9000.0:
 		return
-	var h := _hazard("pillar", Vector2(x, gy))
+	var h := _fhazard("pillar", Vector2(x, gy))
 	h.width = float(p.get("width", 30))
 	h.height = float(p.get("height", 90))
 	h.damage = _dmg(float(p.get("damage", 12)))
@@ -803,7 +803,7 @@ func _impact() -> void:
 
 func _spawn_waves_at(p: Vector2, dmg: float, zid: String) -> void:
 	for d in [-1.0, 1.0]:
-		var h := _hazard("wave", p + Vector2(d * 6.0, 0), zid)
+		var h := _fhazard("wave", p + Vector2(d * 6.0, 0), zid)
 		h.dir = d
 		h.damage = dmg
 		h.life = 1.1
@@ -936,7 +936,7 @@ func _spawn_zone(x: float, w: float, life: float, tick_s: float, dmg: float, pul
 	var gy := GlutHazard.ground_y(x, player.global_position.y - 20.0)
 	if gy > 9000.0:
 		gy = player.global_position.y
-	var h := _hazard("zone", Vector2(x, gy))
+	var h := _fhazard("zone", Vector2(x, gy))
 	h.width = w
 	h.life = life
 	h.damage = dmg
@@ -1019,7 +1019,7 @@ func _spawn_rain() -> void:
 	var big := bool(_p("big", false))
 	for i in n:
 		var x := cx + (randf() - 0.5) * w
-		var h := _hazard("drop", Vector2(x - player.facing * 20.0, player.global_position.y - 190.0 - randf() * 50.0))
+		var h := _fhazard("drop", Vector2(x - player.facing * 20.0, player.global_position.y - 190.0 - randf() * 50.0))
 		h.vel = Vector2(player.facing * 60.0, 520.0 + randf() * 140.0)
 		h.size = 1.5 if big else 0.8
 		h.damage = _dmg(float(_p("damage", 6)))
