@@ -21,7 +21,7 @@ func _initialize() -> void:
 		if fails > 0:
 			break
 	# Liste wie auf dem Server
-	check(GodItems.ORDER.size() == 18 and GodItems.ITEMS.size() == 18, "18 Teile")
+	check(GodItems.ORDER.size() == 48 and GodItems.ITEMS.size() == 48, "48 Teile")
 	var sql := FileAccess.get_file_as_string("res://supabase/migrations/0004_god_items.sql")
 	for id in GodItems.ORDER:
 		check(GodItems.ITEMS.has(id), "Teil %s" % id)
@@ -43,7 +43,7 @@ func _initialize() -> void:
 			check(CreatorCatalog.data["styles"].has(d.style), "Stil %s" % d.style)
 		if d.has("weapon"):
 			check(CreatorCatalog.data["weapons"].has(d.weapon), "Waffe %s" % d.weapon)
-	check(series[GodItems.HOLY] == 9 and series[GodItems.DEMON] == 9, "9 + 9")
+	check(series[GodItems.HOLY] == 24 and series[GodItems.DEMON] == 24, "24 + 24")
 	check(styles.size() == CreatorCatalog.data["styles"].size(), "eine GOD-Waffe pro Kampfstil")
 	for f in ["fluegel_heilig", "fluegel_daemon", "heiligenschein", "feder", "glutfetzen"]:
 		check(GodFx.tex(f) != null, "Effekt-Bild %s" % f)
@@ -71,7 +71,7 @@ func _initialize() -> void:
 	check(GodItems.full_series(GodItems.ORDER.slice(0, 5)) == GodItems.HOLY and GodItems.full_series(GodItems.ORDER.slice(0, 4)) == "", "Erhebung erst mit 5")
 	# Abgleich mit dem Server: fremde und Test-Teile gehen, eigene kommen
 	GodItems.grant_all_test()
-	check(GodItems.owned().size() == 18, "Testbesitz alle")
+	check(GodItems.owned().size() == 48, "Testbesitz alle")
 	var gained := GodItems.sync(["god_gewand", "god_mondfresser"])
 	check(GodItems.owned().size() == 2 and "god_mondfresser" in GodItems.owned() and gained.size() == 1, "Abgleich (%s)" % str(GodItems.owned()))
 	check(not "god_gewand" in GodItems.worn() or Profile.equipped_item("oberteil").has("god"), "Ausrüstung bleibt gültig")

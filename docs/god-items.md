@@ -1,6 +1,6 @@
 # GOD-Stufe: weltweit einzigartige Teile
 
-GOD ist die siebte Seltenheit über Mythisch (`Loot.GOD`). Es gibt 18 GOD-Teile, jedes **genau einmal auf der Welt**.
+GOD ist die siebte Seltenheit über Mythisch (`Loot.GOD`). Es gibt 48 GOD-Teile, jedes **genau einmal auf der Welt**: 10 Kleidungsteile und eine Waffe für jeden der 38 Kampfstile.
 
 ## Teile
 
@@ -30,6 +30,12 @@ GOD ist die siebte Seltenheit über Mythisch (`Loot.GOD`). Es gibt 18 GOD-Teile,
 
 Alle fünf Kleidungsteile einer Serie zusammen geben die **Erhebung**: Lichtsäule (Heilig) oder Höllentor (Dämon).
 Beide Flügelpaare gleichzeitig (zwei Talisman-Plätze) geht auch: „Gefallener Engel“.
+
+## Waffen der 30 Baukasten-Stile
+
+Je Stil eine GOD-Waffe, 15 heilig, 15 dämonisch (Liste: `tools/god_items/style_weapons.py`).
+Stile mit Waffe bekommen deren GOD-Fassung (PixelLab-Bearbeitung der Stil-Waffe, gleiche Form und gleicher Griff);
+Stile ohne Waffe bekommen GOD-Handschuhe mit Faust-Aura in den Stilfarben.
 
 ## Regeln
 

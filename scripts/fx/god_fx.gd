@@ -331,6 +331,10 @@ func _make_steps(holy: bool) -> void:
 
 func _make_fists(id: String) -> void:
 	var c: Array = FIST_COLORS.get(id, [HOLY_HOT, HOLY])
+	var aura: Array = GodItems.info(id).get("aura", [])
+	if aura.size() == 2:  # Baukasten-Stile: Stilfarben, heiß gemacht für den Bloom
+		var m := Color(str(aura[0]))
+		c = [Color(m.r * 2.6, m.g * 2.6, m.b * 2.6), Color(str(aura[1]))]
 	for hand in ["hand_front", "hand_back"]:
 		var glow := Sprite2D.new()
 		glow.texture = dot()

@@ -4,17 +4,17 @@ reset role;
 grant select on all tables in schema public to anon, authenticated;
 insert into auth.users values ('00000000-0000-0000-0000-000000000007'), ('00000000-0000-0000-0000-000000000008')
   on conflict do nothing;
--- 18 Teile, alle frei (Tests vorher vergeben keins)
+-- 48 Teile, alle frei (Tests vorher vergeben keins)
 do $$ begin
-  assert (select count(*) from god_items) = 18, '18 GOD-Teile';
-  assert (select count(*) from god_items where owner is null) = 18, 'alle frei';
+  assert (select count(*) from god_items) = 48, '48 GOD-Teile';
+  assert (select count(*) from god_items where owner is null) = 48, 'alle frei';
 end $$;
 set role authenticated;
 select set_config('test.uid', '00000000-0000-0000-0000-000000000007', false) \g /dev/null
 do $$ declare r jsonb; begin
   perform cl_set_name('Seraphin');
   assert jsonb_array_length(cl_god_mine()) = 0, 'noch nichts';
-  assert jsonb_array_length(cl_god_hall()) = 18, 'Halle zeigt alle';
+  assert jsonb_array_length(cl_god_hall()) = 48, 'Halle zeigt alle';
   -- ohne Sieg kein Wurf
   begin perform cl_god_roll('raid', 'x'); assert false, 'Raid ohne Sieg'; exception when raise_exception then null; end;
   begin perform cl_god_roll('tower', '15'); assert false, 'Etage 15 zählt nicht'; exception when raise_exception then null; end;
@@ -42,32 +42,32 @@ reset role;
 update god_items set owner = null, source = null, obtained_at = null;
 insert into profiles (id) values ('00000000-0000-0000-0000-000000000008') on conflict do nothing;
 do $$ declare i int; got text; n int := 0; begin
-  for i in 1 .. 12 loop
+  for i in 1 .. 30 loop
     got := cl_god_give('00000000-0000-0000-0000-000000000007', 'test');
     if got is not null then n := n + 1; end if;
   end loop;
-  for i in 1 .. 12 loop
+  for i in 1 .. 30 loop
     got := cl_god_give('00000000-0000-0000-0000-000000000008', 'test');
     if got is not null then n := n + 1; end if;
   end loop;
-  assert n = 18, 'genau 18 vergeben, nicht ' || n;
+  assert n = 48, 'genau 48 vergeben, nicht ' || n;
   assert cl_god_give('00000000-0000-0000-0000-000000000008', 'test') is null, 'alle weg';
-  assert (select count(distinct item) from god_items where owner is not null) = 18, 'keins doppelt';
+  assert (select count(distinct item) from god_items where owner is not null) = 48, 'keins doppelt';
 end $$;
 set role authenticated;
 select set_config('test.uid', '00000000-0000-0000-0000-000000000008', false) \g /dev/null
 do $$ declare h jsonb; begin
   perform cl_set_name('Abgrund');
-  assert jsonb_array_length(cl_god_mine()) = 6, 'zweite Person hat den Rest (6)';
+  assert jsonb_array_length(cl_god_mine()) = 18, 'zweite Person hat den Rest (18)';
   h := cl_god_hall();
-  assert (select count(*) from jsonb_array_elements(h) e where e ->> 'owner' = 'Seraphin') = 12, 'Halle nennt Besitzer';
-  assert (select count(*) from jsonb_array_elements(h) e where (e ->> 'mine')::boolean) = 6, 'eigene markiert';
+  assert (select count(*) from jsonb_array_elements(h) e where e ->> 'owner' = 'Seraphin') = 30, 'Halle nennt Besitzer';
+  assert (select count(*) from jsonb_array_elements(h) e where (e ->> 'mine')::boolean) = 18, 'eigene markiert';
 end $$;
 -- Konto weg: Teile werden wieder frei
 reset role;
 delete from profiles where id = '00000000-0000-0000-0000-000000000008';
 do $$ begin
-  assert (select count(*) from god_items where owner is null) = 6, 'Teile des gelöschten Kontos frei';
+  assert (select count(*) from god_items where owner is null) = 18, 'Teile des gelöschten Kontos frei';
 end $$;
 update god_items set owner = null, source = null, obtained_at = null;
 \echo GOD-TEST OK

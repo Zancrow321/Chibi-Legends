@@ -137,9 +137,9 @@ func _input(event: InputEvent) -> void:
 			KEY_RIGHT, KEY_D:
 				_pick(posmod(sel + 1, n))
 			KEY_UP, KEY_W:
-				_pick(posmod(sel - 5, n))
+				_pick(posmod(sel - 8, n))
 			KEY_DOWN, KEY_S:
-				_pick(posmod(sel + 5, n))
+				_pick(posmod(sel + 8, n))
 			KEY_ENTER, KEY_SPACE, KEY_J:
 				_toggle_try()
 			KEY_F9:
@@ -235,7 +235,8 @@ func _draw() -> void:
 	_ink(Vector2(0, 54), "G O D - H A L L E", 40, Loot.god_color(_t), HORIZONTAL_ALIGNMENT_CENTER, W)
 	_ink(Vector2(0, 80), "Jedes Teil existiert genau einmal auf der Welt. Wer es hat, hat es allein.", 16, Color("e8e0f0"), HORIZONTAL_ALIGNMENT_CENTER, W)
 	# zwei Spalten: Heilig links, Dämon rechts, Waffen darunter
-	var cell := minf(76.0, (W * 0.5 - 220.0) / 5.0)
+	var per_row := 8
+	var cell := minf(60.0, (W * 0.5 - 170.0) / per_row)
 	var cols := [[], []]
 	for i in GodItems.ORDER.size():
 		var id: String = GodItems.ORDER[i]
@@ -243,11 +244,11 @@ func _draw() -> void:
 	for side in 2:
 		var series: String = GodItems.HOLY if side == 0 else GodItems.DEMON
 		var sd: Dictionary = GodItems.SERIES[series]
-		var x0 := 40.0 if side == 0 else W - 40.0 - 5 * cell
+		var x0 := 30.0 if side == 0 else W - 30.0 - per_row * cell
 		_ink(Vector2(x0, 122), str(sd.title), 22, sd.color)
 		for j in cols[side].size():
 			var i: int = cols[side][j]
-			var r := Rect2(x0 + (j % 5) * cell, 136 + (j / 5) * (cell + 8), cell - 8, cell - 8)
+			var r := Rect2(x0 + (j % per_row) * cell, 136 + (j / per_row) * (cell + 4), cell - 6, cell - 6)
 			_item_box(r, i)
 			var idx := i
 			_hits.append([r, func(): _pick(idx)])

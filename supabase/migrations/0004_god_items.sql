@@ -1,4 +1,4 @@
--- Chibi Legends: GOD-Stufe (über Mythisch). Jedes GOD-Teil gibt es weltweit
+-- Chibi Legends: GOD-Stufe (über Mythisch), 48 Teile. Jedes GOD-Teil gibt es weltweit
 -- genau EINMAL. Der Server würfelt nach einem echten Sieg (Raid-Boss,
 -- Weltboss, Turm-Bestmarke ab Etage 20 in Zehnerschritten), ob man eins
 -- bekommt, und vergibt dann ein noch freies Teil. Die Zeile in god_items
@@ -44,7 +44,14 @@ language sql immutable set search_path = public as $$
       'god_sonnenkrone', 'god_gewand', 'god_beinkleid', 'god_morgenschritte', 'god_seraphfluegel',
       'god_hoernerkrone', 'god_hoellenpanzer', 'god_kettenbeinkleid', 'god_aschewandler', 'god_verdammnisschwingen',
       'god_glockenschwinge', 'god_engelsruf', 'god_sonnenfaeuste', 'god_himmelswirbel',
-      'god_hoellenschlund', 'god_mondfresser', 'god_hoellenfaust', 'god_teufelsfeder'),
+      'god_hoellenschlund', 'god_mondfresser', 'god_hoellenfaust', 'god_teufelsfeder',
+      -- Waffen der 30 Baukasten-Stile
+      'god_flutseraph', 'god_himmelsdonner', 'god_engelsfrost', 'god_sonnengericht', 'god_cherubsfeder',
+      'god_sternenchor', 'god_prisma', 'god_tausendgebete', 'god_heiligenkreis', 'god_himmelsschleier',
+      'god_richterhammer', 'god_paradiesbluete', 'god_ewigestunde', 'god_wahrheitsspiegel', 'god_erzengelhammer',
+      'god_hoellenfels', 'god_seelennaht', 'god_verderbnisranke', 'god_blutpakt', 'god_hoellenkette',
+      'god_hoellenpauke', 'god_daemonenfuchs', 'god_hoellendrache', 'god_seelenfaden', 'god_weltenbrand',
+      'god_aschesturm', 'god_totenlicht', 'god_leviathan', 'god_hoellenklaue', 'god_nichtsklinge'),
     -- Chance je Sieg
     'chance', jsonb_build_object('raid', 0.004, 'world', 0.03, 'tower', 0.01),
     'tower_min', 20, 'tower_step', 10
