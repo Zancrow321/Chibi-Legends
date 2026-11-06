@@ -111,3 +111,24 @@ Eigene Entwürfe, keine Kostüme aus bestimmten Serien. PixelLab: 78 Generierung
 - Lehre: Liegende Posen (`lie_0`, `getup_*`) und Siegesposen (`win_*`, `taunt_*`, im letzten Raster nur
   4 Figuren) lässt PixelLab öfter unbekleidet oder verschiebt sie. Ein Raster nur aus den schlechten
   Posen klappt deutlich besser als das ganze Raster neu.
+
+## Themen-Kollektion Cyberpunk (2026-11-06)
+
+Sechs Outfits und zwei Kopfteile, frei über neue Bestmarken im Turm der Prüfungen
+(`scripts/game/theme_outfits.gd`, `ThemeOutfits.TOWER`). PixelLab: 47 Generierungen.
+
+| Etage | Teil |
+| --- | --- |
+| 5 | Daten-Hoodie (`datenhoodie`) |
+| 10 | Neonläufer (`neonlaeufer`) |
+| 15 | Neon-Irokese (`neonkamm`, Kopfteil) |
+| 20 | Synth-Idol (`synthidol`) |
+| 25 | Chrom-Söldner (`chromsoeldner`) |
+| 30 | Neon-Visier (`neonvisier`, Kopfteil) |
+| 40 | Straßenklinge (`strassenklinge`) |
+| 50 | Konzern-Agent (`konzern`) |
+
+- Neon-Leuchten: `catalog.json` → `neon` (id → Farbe). `LayeredBody` setzt dann den Glüh-Shader
+  der Raid-Rüstung auf die Leuchtstreifen in dieser Farbe (Bloom).
+- Weitere Themen: Beschreibungen in `tools/japan_outfits/gen_outfits.py` ergänzen, dann
+  `draft`, `outfit`, `head`, `install`, `fix_frames.py`, `check_dressed.py` wie oben.

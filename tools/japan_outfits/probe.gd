@@ -1,10 +1,15 @@
 extends SceneTree
 ## Schaubild der Anime- und japanischen Kleidung im Spiel (LayeredBody mit Bloom).
-##   xvfb-run godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/japan_outfits/probe.gd -- <out_dir>
+##   xvfb-run godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/japan_outfits/probe.gd -- <out_dir> [cyber]
 
 const LOOKS := [
 	["hanabi", "kitsune", 0], ["mondhakama", "chonmage", 0], ["kranich", "kasa", 0], ["gakuran", "stachel", 0],
 	["matrose", "zwillinge", 0], ["yukata", "dutt", 0], ["shinobi", "hachimaki", 0], ["miko", "lang", 0],
+]
+
+const CYBER_LOOKS := [
+	["neonlaeufer", "neonvisier", 0], ["chromsoeldner", "kurz", 0], ["datenhoodie", "wuschel", 0], ["synthidol", "zwillinge", 0],
+	["konzern", "lang", 0], ["strassenklinge", "neonkamm", 0], ["neonlaeufer", "neonkamm", 0], ["datenhoodie", "neonvisier", 0],
 ]
 
 var out := "user://kleidung_shots"
@@ -18,6 +23,7 @@ func _initialize() -> void:
 		out = args[0]
 	DirAccess.make_dir_recursive_absolute(out)
 	CreatorCatalog.ensure()
+	var looks: Array = CYBER_LOOKS if args.size() > 1 and args[1] == "cyber" else LOOKS
 	var stage := Node2D.new()
 	root.add_child(stage)
 	var bg := ColorRect.new()
@@ -25,12 +31,12 @@ func _initialize() -> void:
 	bg.size = Vector2(1280, 720)
 	stage.add_child(bg)
 	stage.add_child(Bloom.new())
-	for i in LOOKS.size():
-		var lk: Array = LOOKS[i]
+	for i in looks.size():
+		var lk: Array = looks[i]
 		var b := LayeredBody.new()
 		b.look = {"hair": lk[1], "top": lk[0], "pants": lk[0], "shoes": lk[0], "weapon": "", "skin": 1,
 			"colors": {"hair": lk[2], "top": 0, "pants": 0, "shoes": 0}}
-		b.position = Vector2(85 + (i % 4) * 300 + (i / 4) * 150, 330 + (i / 4) * 330)
+		b.position = Vector2(110 + (i % 4) * 290 + (i / 4) * 150, 330 + (i / 4) * 330)
 		b.scale = Vector2(4, 4)
 		stage.add_child(b)
 		b.play("idle")

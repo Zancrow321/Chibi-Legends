@@ -150,6 +150,12 @@ func _apply_raid_glow() -> void:
 		m.set_shader_parameter("shimmer", 1.0 if r == Loot.MYTHIC else 0.0)
 		if on:
 			m.set_shader_parameter("glow_color", RaidArmor.glow_color(r))
+		else:
+			# Neon-Kleidung (catalog.json "neon": id -> Farbe): Leuchtstreifen glühen im Bloom
+			var neon := str(CreatorCatalog.data.get("neon", {}).get(str(look.get(slot, "")), ""))
+			if neon != "":
+				m.set_shader_parameter("glow", 0.9)
+				m.set_shader_parameter("glow_color", Color(neon))
 	var best := RaidArmor.glow_level(look)
 	if best < Loot.EPIC:
 		if _sparks != null:

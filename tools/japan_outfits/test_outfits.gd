@@ -5,6 +5,7 @@ extends SceneTree
 
 const OUTFITS := ["hanabi", "mondhakama", "kranich", "gakuran", "matrose", "yukata", "shinobi", "miko"]
 const HEADS := ["hachimaki", "chonmage", "kitsune", "kasa"]
+const CYBER := ["neonlaeufer", "chromsoeldner", "datenhoodie", "synthidol", "konzern", "strassenklinge"]
 
 var fails := 0
 
@@ -47,5 +48,20 @@ func _initialize() -> void:
 				for slot in ["top", "pants", "shoes"]:
 					check(CreatorUnlocks.is_unlocked(slot, str(r.id)), "Pass schaltet %s/%s frei" % [slot, r.id])
 	check(found == 5, "5 Outfits im Saisonpass (%d)" % found)
+	# Cyberpunk: Ebenen, Neon-Leuchten, Freischalten über Turm-Bestmarken
+	for o in CYBER:
+		for slot in ["top", "pants", "shoes"]:
+			check(CreatorCatalog.slot_texture(slot, o) != null, "Cyber-Ebene %s/%s" % [slot, o])
+			check(CreatorUnlocks.hint(slot, o).begins_with("Turm der Prüfungen"), "Cyber-Hinweis %s/%s" % [slot, o])
+	for h in ["neonvisier", "neonkamm"]:
+		check(CreatorCatalog.slot_texture("hair", h) != null and CreatorCatalog.hair_meta.has(h), "Cyber-Kopfteil %s" % h)
+	check(CreatorCatalog.data.get("neon", {}).has("neonlaeufer"), "Neon-Farbe Neonläufer")
+	var ids := ThemeOutfits.TOWER.values().map(func(p): return str(p[1]))
+	for o in CYBER:
+		check(o in ids, "Turm gibt %s" % o)
+	check(ThemeOutfits.tower_floor(3) == "", "Etage 3 ohne Neon-Belohnung")
+	check(ThemeOutfits.tower_floor(5) != "" and CreatorUnlocks.is_unlocked("pants", "datenhoodie"), "Etage 5 schaltet Daten-Hoodie frei")
+	check(ThemeOutfits.tower_floor(5) == "", "nur einmal")
+	check(ThemeOutfits.tower_floor(15) != "" and CreatorUnlocks.is_unlocked("hair", "neonkamm"), "Etage 15 Neon-Irokese")
 	print("KLEIDUNG-TEST OK" if fails == 0 else "KLEIDUNG-TEST FEHLER: %d" % fails)
 	quit()

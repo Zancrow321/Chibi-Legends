@@ -54,6 +54,30 @@ HEADS = {
 
 RAW = Path("/tmp/japan_outfits")
 
+# Weitere Themen-Kollektionen: OUTFITS/HEADS werden erweitert, RAW bleibt gemeinsam.
+OUTFITS.update({
+    "neonlaeufer": "a cyberpunk runner outfit: black cropped techwear jacket with glowing cyan seams and a high "
+                   "collar, black cargo pants with hanging straps and cyan stripes, chunky white sneakers with "
+                   "glowing cyan soles",
+    "chromsoeldner": "a cyberpunk mercenary outfit: dark olive armored tactical vest over a black shirt, chrome "
+                     "metal cybernetic plating on both forearms, dark grey cargo pants with knee pads, heavy black "
+                     "combat boots with yellow warning stripes",
+    "datenhoodie": "a cyberpunk hacker outfit: oversized purple hoodie with a glowing magenta circuit pattern, "
+                   "black jogger pants with a magenta stripe, black high-top sneakers with glowing magenta LED strips",
+    "synthidol": "a cyberpunk pop idol outfit: glossy white and pink short jacket with holographic iridescent "
+                 "panels, neon pink pleated short skirt over black tights, white platform boots with pink glowing soles",
+    "konzern": "a cyberpunk corporate agent outfit: sleek black long trench coat with thin glowing red trim, "
+               "white shirt with a slim black tie, black slacks, polished black shoes",
+    "strassenklinge": "a cyberpunk street samurai outfit: red and black armored bomber jacket with one angular "
+                      "shoulder plate and glowing orange seams, black wide cargo hakama pants, black tech boots "
+                      "with glowing orange soles",
+})
+HEADS.update({
+    "neonvisier": "short white undercut hair with a sleek glowing cyan visor band over the eyes, the rest of the "
+                  "face stays visible",
+    "neonkamm": "a tall neon pink mohawk with glowing light strips along the shaved sides, the face stays visible",
+})
+
 
 def desc(oid):
     return "Dress all figures in the exact same outfit: " + OUTFITS[oid] + ". " + STYLE + ". " + ol.KEEP

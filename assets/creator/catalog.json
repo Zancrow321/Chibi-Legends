@@ -30,7 +30,13 @@
     "matrose": "Matrosen-Bluse",
     "yukata": "Sommer-Yukata",
     "shinobi": "Shinobi-Anzug",
-    "miko": "Schreingewand"
+    "miko": "Schreingewand",
+    "neonlaeufer": "Neonläufer-Jacke",
+    "chromsoeldner": "Chrom-Söldner-Weste",
+    "datenhoodie": "Daten-Hoodie",
+    "synthidol": "Synth-Idol-Jacke",
+    "konzern": "Konzern-Trenchcoat",
+    "strassenklinge": "Straßenklinge-Bomber"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -54,7 +60,13 @@
     "matrose": "Saisonpass Premium, Stufe 16",
     "yukata": "Saisonpass, Stufe 7",
     "shinobi": "Gacha-Banner „Ein Versprechen wird Stärke“ (Kampfstil Wirbelwille)",
-    "miko": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)"
+    "miko": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)",
+    "datenhoodie": "Turm der Prüfungen: Etage 5 (Neon-Belohnung)",
+    "neonlaeufer": "Turm der Prüfungen: Etage 10 (Neon-Belohnung)",
+    "synthidol": "Turm der Prüfungen: Etage 20 (Neon-Belohnung)",
+    "chromsoeldner": "Turm der Prüfungen: Etage 25 (Neon-Belohnung)",
+    "strassenklinge": "Turm der Prüfungen: Etage 40 (Neon-Belohnung)",
+    "konzern": "Turm der Prüfungen: Etage 50 (Neon-Belohnung)"
    }
   },
   "pants": {
@@ -83,7 +95,13 @@
     "matrose": "Faltenrock",
     "yukata": "Yukata-Saum",
     "shinobi": "Shinobi-Hose",
-    "miko": "Rote Hakama"
+    "miko": "Rote Hakama",
+    "neonlaeufer": "Neonläufer-Cargohose",
+    "chromsoeldner": "Söldner-Cargohose",
+    "datenhoodie": "Daten-Jogger",
+    "synthidol": "Neon-Faltenrock",
+    "konzern": "Konzern-Anzughose",
+    "strassenklinge": "Straßenklinge-Hakama"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -107,7 +125,13 @@
     "matrose": "Saisonpass Premium, Stufe 16",
     "yukata": "Saisonpass, Stufe 7",
     "shinobi": "Gacha-Banner „Ein Versprechen wird Stärke“ (Kampfstil Wirbelwille)",
-    "miko": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)"
+    "miko": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)",
+    "datenhoodie": "Turm der Prüfungen: Etage 5 (Neon-Belohnung)",
+    "neonlaeufer": "Turm der Prüfungen: Etage 10 (Neon-Belohnung)",
+    "synthidol": "Turm der Prüfungen: Etage 20 (Neon-Belohnung)",
+    "chromsoeldner": "Turm der Prüfungen: Etage 25 (Neon-Belohnung)",
+    "strassenklinge": "Turm der Prüfungen: Etage 40 (Neon-Belohnung)",
+    "konzern": "Turm der Prüfungen: Etage 50 (Neon-Belohnung)"
    }
   },
   "shoes": {
@@ -136,7 +160,13 @@
     "matrose": "Kniestrümpfe mit Halbschuhen",
     "yukata": "Holz-Geta",
     "shinobi": "Tabi-Stiefel (Shinobi)",
-    "miko": "Zori mit Tabi"
+    "miko": "Zori mit Tabi",
+    "neonlaeufer": "Neon-Sneaker",
+    "chromsoeldner": "Warnstreifen-Stiefel",
+    "datenhoodie": "LED-High-Tops",
+    "synthidol": "Plateau-Stiefel",
+    "konzern": "Konzern-Schuhe",
+    "strassenklinge": "Glutsohlen-Stiefel"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -160,7 +190,13 @@
     "matrose": "Saisonpass Premium, Stufe 16",
     "yukata": "Saisonpass, Stufe 7",
     "shinobi": "Gacha-Banner „Ein Versprechen wird Stärke“ (Kampfstil Wirbelwille)",
-    "miko": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)"
+    "miko": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)",
+    "datenhoodie": "Turm der Prüfungen: Etage 5 (Neon-Belohnung)",
+    "neonlaeufer": "Turm der Prüfungen: Etage 10 (Neon-Belohnung)",
+    "synthidol": "Turm der Prüfungen: Etage 20 (Neon-Belohnung)",
+    "chromsoeldner": "Turm der Prüfungen: Etage 25 (Neon-Belohnung)",
+    "strassenklinge": "Turm der Prüfungen: Etage 40 (Neon-Belohnung)",
+    "konzern": "Turm der Prüfungen: Etage 50 (Neon-Belohnung)"
    }
   },
   "hair": {
@@ -185,7 +221,9 @@
     "hachimaki": "Hachimaki-Stirnband",
     "chonmage": "Samurai-Knoten",
     "kitsune": "Fuchsmaske",
-    "kasa": "Strohhut (Kasa)"
+    "kasa": "Strohhut (Kasa)",
+    "neonvisier": "Neon-Visier",
+    "neonkamm": "Neon-Irokese"
    },
    "unlock": {
     "wuschel": "Saisonpass, Stufe 5",
@@ -201,7 +239,9 @@
     "raid_mythisch": "Raid Glutschmiede: Essenwacht-Oberteil (Mythisch)",
     "hachimaki": "Gacha-Banner „Ein Versprechen wird Stärke“ (Kampfstil Wirbelwille)",
     "kitsune": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)",
-    "kasa": "Gacha-Banner „Der schwarze Mond“ (Kampfstil Schwarzmond)"
+    "kasa": "Gacha-Banner „Der schwarze Mond“ (Kampfstil Schwarzmond)",
+    "neonkamm": "Turm der Prüfungen: Etage 15 (Neon-Belohnung)",
+    "neonvisier": "Turm der Prüfungen: Etage 30 (Neon-Belohnung)"
    }
   },
   "weapon": {
@@ -718,5 +758,14 @@
    "weapon": "wachhund"
   }
  },
- "start_items_note": "Teile ohne unlock-Eintrag sind von Anfang an frei. CreatorUnlocks.unlock(slot, id) schaltet frei."
+ "start_items_note": "Teile ohne unlock-Eintrag sind von Anfang an frei. CreatorUnlocks.unlock(slot, id) schaltet frei.",
+ "neon": {
+  "neonlaeufer": "36e2ff",
+  "datenhoodie": "ff3dd4",
+  "synthidol": "ff5ab4",
+  "konzern": "ff2a2a",
+  "strassenklinge": "ff8a1e",
+  "neonvisier": "36e2ff",
+  "neonkamm": "ff3dd4"
+ }
 }
