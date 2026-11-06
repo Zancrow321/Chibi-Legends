@@ -46,8 +46,7 @@ var menu: GlutatemMenu
 var _gauge_shown := 0.0
 
 const CUTIN_TIME := 1.0
-## How long a find stays in the Beute-Leiste (left edge).
-const FEED_TIME := 4.5
+const FEED_TIME := TrainingRoom.FEED_TIME
 
 
 func _ready() -> void:
