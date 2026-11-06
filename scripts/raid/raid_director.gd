@@ -131,7 +131,7 @@ func player_down() -> bool:
 
 ## Online: the server pays the marks and decides the bonus loot.
 func _claim_online(at: Vector2, secs: int) -> void:
-	var r: Dictionary = await Online.call_fn("cl_claim_boss", {"boss": BOSS_ID, "fight_seconds": secs, "level": Profile.level})
+	var r: Dictionary = await Net.call_fn("cl_claim_boss", {"boss": BOSS_ID, "fight_seconds": secs, "level": Profile.level})
 	if not r.ok:
 		world.toast("Server: %s · Beute diesmal offline" % r.error)
 		_local_loot(at, secs)
@@ -146,7 +146,7 @@ func _claim_online(at: Vector2, secs: int) -> void:
 	world.toast("Essenwächter besiegt in %d:%02d (Versuch %d) · +%d Raid-Marken" % [secs / 60, secs % 60, attempts, int(d.marks)])
 	var i := 0
 	for drop in d.drops:
-		world._spawn_drop(Online.build_item(drop, world.player.style.id), at + Vector2(-26 + 52 * i, -40))
+		world._spawn_drop(Net.build_item(drop, world.player.style.id), at + Vector2(-26 + 52 * i, -40))
 		i += 1
 	_spawn_gem(at)
 
@@ -167,7 +167,7 @@ func boss_defeated(b: Boss) -> void:
 		world.glut_fx.word(at + Vector2(0, -140), "RAID GESCHAFFT!", Color("ffd25c"), 40)
 	var secs := int(fight_time)
 	SeasonPass.track("boss")
-	if Online.is_online():
+	if Net.is_online():
 		_claim_online(at, secs)
 	else:
 		_local_loot(at, secs)
