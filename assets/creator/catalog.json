@@ -22,7 +22,15 @@
     "raid_selten": "Essenwacht-Hüter (Harnisch)",
     "raid_episch": "Essenwacht-Glutritter (Harnisch)",
     "raid_legendaer": "Essenwacht-Schmiedekönig (Harnisch)",
-    "raid_mythisch": "Essenwacht-Sternenglut (Harnisch)"
+    "raid_mythisch": "Essenwacht-Sternenglut (Harnisch)",
+    "hanabi": "Hanabi-Kimono",
+    "mondhakama": "Mond-Hakama (Kosode)",
+    "kranich": "Kranich-Haori",
+    "gakuran": "Gakuran",
+    "matrose": "Matrosen-Bluse",
+    "yukata": "Sommer-Yukata",
+    "shinobi": "Shinobi-Anzug",
+    "miko": "Schreingewand"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -38,7 +46,15 @@
     "raid_selten": "Raid Glutschmiede: Essenwacht-Oberteil (Selten)",
     "raid_episch": "Raid Glutschmiede: Essenwacht-Oberteil (Episch)",
     "raid_legendaer": "Raid Glutschmiede: Essenwacht-Oberteil (Legendär)",
-    "raid_mythisch": "Raid Glutschmiede: Essenwacht-Oberteil (Mythisch)"
+    "raid_mythisch": "Raid Glutschmiede: Essenwacht-Oberteil (Mythisch)",
+    "hanabi": "Saisonpass Premium, Stufe 12",
+    "mondhakama": "Gacha-Banner „Der schwarze Mond“ (Kampfstil Schwarzmond)",
+    "kranich": "Saisonpass Premium, Stufe 22",
+    "gakuran": "Saisonpass Premium, Stufe 6",
+    "matrose": "Saisonpass Premium, Stufe 16",
+    "yukata": "Saisonpass, Stufe 7",
+    "shinobi": "Gacha-Banner „Ein Versprechen wird Stärke“ (Kampfstil Wirbelwille)",
+    "miko": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)"
    }
   },
   "pants": {
@@ -59,7 +75,15 @@
     "raid_selten": "Essenwacht-Hüter (Beinschienen)",
     "raid_episch": "Essenwacht-Glutritter (Beinschienen)",
     "raid_legendaer": "Essenwacht-Schmiedekönig (Beinschienen)",
-    "raid_mythisch": "Essenwacht-Sternenglut (Beinschienen)"
+    "raid_mythisch": "Essenwacht-Sternenglut (Beinschienen)",
+    "hanabi": "Hanabi-Leggings",
+    "mondhakama": "Mond-Hakama",
+    "kranich": "Graue Hakama",
+    "gakuran": "Gakuran-Hose",
+    "matrose": "Faltenrock",
+    "yukata": "Yukata-Saum",
+    "shinobi": "Shinobi-Hose",
+    "miko": "Rote Hakama"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -75,7 +99,15 @@
     "raid_selten": "Raid Glutschmiede: Essenwacht-Hose (Selten)",
     "raid_episch": "Raid Glutschmiede: Essenwacht-Hose (Episch)",
     "raid_legendaer": "Raid Glutschmiede: Essenwacht-Hose (Legendär)",
-    "raid_mythisch": "Raid Glutschmiede: Essenwacht-Hose (Mythisch)"
+    "raid_mythisch": "Raid Glutschmiede: Essenwacht-Hose (Mythisch)",
+    "hanabi": "Saisonpass Premium, Stufe 12",
+    "mondhakama": "Gacha-Banner „Der schwarze Mond“ (Kampfstil Schwarzmond)",
+    "kranich": "Saisonpass Premium, Stufe 22",
+    "gakuran": "Saisonpass Premium, Stufe 6",
+    "matrose": "Saisonpass Premium, Stufe 16",
+    "yukata": "Saisonpass, Stufe 7",
+    "shinobi": "Gacha-Banner „Ein Versprechen wird Stärke“ (Kampfstil Wirbelwille)",
+    "miko": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)"
    }
   },
   "shoes": {
@@ -96,7 +128,15 @@
     "raid_selten": "Essenwacht-Hüter (Stiefel)",
     "raid_episch": "Essenwacht-Glutritter (Stiefel)",
     "raid_legendaer": "Essenwacht-Schmiedekönig (Stiefel)",
-    "raid_mythisch": "Essenwacht-Sternenglut (Stiefel)"
+    "raid_mythisch": "Essenwacht-Sternenglut (Stiefel)",
+    "hanabi": "Geta mit Tabi",
+    "mondhakama": "Waraji-Sandalen",
+    "kranich": "Zori-Sandalen",
+    "gakuran": "Halbschuhe",
+    "matrose": "Kniestrümpfe mit Halbschuhen",
+    "yukata": "Holz-Geta",
+    "shinobi": "Tabi-Stiefel (Shinobi)",
+    "miko": "Zori mit Tabi"
    },
    "unlock": {
     "steilpfad": "Gacha: Grenzbrecher (Banner „Über jedes Limit“)",
@@ -112,7 +152,15 @@
     "raid_selten": "Raid Glutschmiede: Essenwacht-Schuhe (Selten)",
     "raid_episch": "Raid Glutschmiede: Essenwacht-Schuhe (Episch)",
     "raid_legendaer": "Raid Glutschmiede: Essenwacht-Schuhe (Legendär)",
-    "raid_mythisch": "Raid Glutschmiede: Essenwacht-Schuhe (Mythisch)"
+    "raid_mythisch": "Raid Glutschmiede: Essenwacht-Schuhe (Mythisch)",
+    "hanabi": "Saisonpass Premium, Stufe 12",
+    "mondhakama": "Gacha-Banner „Der schwarze Mond“ (Kampfstil Schwarzmond)",
+    "kranich": "Saisonpass Premium, Stufe 22",
+    "gakuran": "Saisonpass Premium, Stufe 6",
+    "matrose": "Saisonpass Premium, Stufe 16",
+    "yukata": "Saisonpass, Stufe 7",
+    "shinobi": "Gacha-Banner „Ein Versprechen wird Stärke“ (Kampfstil Wirbelwille)",
+    "miko": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)"
    }
   },
   "hair": {
@@ -133,7 +181,11 @@
     "raid_selten": "Essenwacht-Hüter-Helm",
     "raid_episch": "Essenwacht-Glutritter-Helm",
     "raid_legendaer": "Essenwacht-Schmiedekönig-Helm",
-    "raid_mythisch": "Essenwacht-Sternenglut-Helm"
+    "raid_mythisch": "Essenwacht-Sternenglut-Helm",
+    "hachimaki": "Hachimaki-Stirnband",
+    "chonmage": "Samurai-Knoten",
+    "kitsune": "Fuchsmaske",
+    "kasa": "Strohhut (Kasa)"
    },
    "unlock": {
     "wuschel": "Saisonpass, Stufe 5",
@@ -146,7 +198,10 @@
     "raid_selten": "Raid Glutschmiede: Essenwacht-Oberteil (Selten)",
     "raid_episch": "Raid Glutschmiede: Essenwacht-Oberteil (Episch)",
     "raid_legendaer": "Raid Glutschmiede: Essenwacht-Oberteil (Legendär)",
-    "raid_mythisch": "Raid Glutschmiede: Essenwacht-Oberteil (Mythisch)"
+    "raid_mythisch": "Raid Glutschmiede: Essenwacht-Oberteil (Mythisch)",
+    "hachimaki": "Gacha-Banner „Ein Versprechen wird Stärke“ (Kampfstil Wirbelwille)",
+    "kitsune": "Gacha-Banner „Ein Takt, zwei Seelen“ (Kampfstil Gleichklang)",
+    "kasa": "Gacha-Banner „Der schwarze Mond“ (Kampfstil Schwarzmond)"
    }
   },
   "weapon": {
