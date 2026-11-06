@@ -271,7 +271,7 @@ func boss_defeated(b: Boss) -> void:
 	if online:
 		_claim(at)
 	else:
-		_local_loot(at)
+		_offline_loot(at)
 
 
 func _claim(at: Vector2) -> void:
@@ -298,7 +298,7 @@ func _claim(at: Vector2) -> void:
 	_spawn_gem(at)
 
 
-func _local_loot(at: Vector2) -> void:
+func _offline_loot(at: Vector2) -> void:
 	var share := float(my_damage) / maxf(1.0, float(max_hp))
 	var marks := 4 + int(round(minf(share, 0.5) * 8.0)) + 2
 	Profile.marks += marks
