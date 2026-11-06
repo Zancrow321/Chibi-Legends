@@ -31,7 +31,7 @@ func _initialize() -> void:
 		[t, "setup"], [t + 10, "shot:turm_01_eingang"], [t + 20, "walk_in"], [t + 30, "check_floor1"],
 		[t + 90, "shot:turm_02_etage1"], [t + 100, "clear"], [t + 106, "check_cleared"],
 		[t + 260, "check_floor2"],
-		[t + 270, "goto:5"], [t + 276, "clear"], [t + 420, "check_guard5"], [t + 520, "shot:turm_03_turmwache"],
+		[t + 270, "goto:5"], [t + 276, "clear"], [t + 420, "check_guard5"], [t + 500, "near_guard"], [t + 520, "shot:turm_03_turmwache"],
 		[t + 530, "kill_guard"], [t + 540, "check_guard_loot"], [t + 600, "shot:turm_04_etage_geschafft"],
 		[t + 700, "goto:12"], [t + 706, "clear"], [t + 850, "check_floor12"], [t + 920, "shot:turm_05_etage12"],
 		[t + 930, "goto:15"], [t + 936, "clear"], [t + 1080, "check_guard15"],
@@ -156,7 +156,12 @@ func _do(cmd: String) -> void:
 			p = null
 			tw = null
 			change_scene_to_file("res://scenes/main.tscn")
+		"near_guard":
+			if tw.boss != null:
+				p.global_position = Vector2(tw.boss.global_position.x - 150.0, 299)
+				p.facing = 1
 		"shot":
+			_hide_select(root)
 			_shot(parts[1])
 		"quit":
 			print("TURM-TEST OK" if errors.is_empty() else "TURM-TEST FEHLER: %s" % ", ".join(errors))

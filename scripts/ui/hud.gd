@@ -631,7 +631,7 @@ func _draw_notice(W: float) -> void:
 	var wv := room.waves
 	var msg2 := ""
 	if room.tower != null:
-		msg2 = room.tower.notice()
+		msg2 = "" if room.tower.is_fighting() else room.tower.notice()  # the boss bar takes the spot
 	elif wv != null and wv.wave >= 0:
 		var left := wv.alive.filter(func(e): return is_instance_valid(e) and e.state != "dead").size() + wv.pending()
 		msg2 = "Welle %d  ·  %d Gegner" % [wv.wave + 1 + wv.round_no * EnemyWaves.WAVES.size(), left] if left > 0 else "Welle geschafft!"
