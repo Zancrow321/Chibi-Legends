@@ -232,7 +232,8 @@ func receive_hit(damage: float, from_x: float, source: Node = null) -> bool:
 	add_gauge(5.0)
 	if hp <= 0.0:
 		hp = max_hp
-		world.toast("Getroffen! Im Training geht es mit voller HP weiter")
+		if not world.on_player_down():
+			world.toast("Getroffen! Im Training geht es mit voller HP weiter")
 	return true
 
 

@@ -663,7 +663,7 @@ func _draw_right_column(W: float) -> void:
 	var x := W - 352.0
 	var w := 336.0
 	_panel(Rect2(x, 16, w, 26), PANEL, 13)
-	_text(Vector2(x + 14, 35), "Akademie  ·  Trainingswald", 17, TEXT)
+	_text(Vector2(x + 14, 35), "Akademie  ·  " + str(GameFlow.area_info(GameFlow.area).title), 17, TEXT)
 	# minimap
 	var mm := Rect2(x, 50, w, 70)
 	_panel(mm, PANEL, 10, Color(TRIM, 0.5))
@@ -687,7 +687,8 @@ func _draw_right_column(W: float) -> void:
 	# quest: one line in the fight, the full list with H
 	if not show_help:
 		_panel(Rect2(x, 128, w, 26), PANEL, 13)
-		_text(Vector2(x + 14, 147), "Quest: Alle Reaktionen (%d/4)" % room.reactions_found.size(), 15, MUTED)
+		var quest := "Quest: Besiege den Essenwächter" if room.is_raid else "Quest: Alle Reaktionen (%d/4)" % room.reactions_found.size()
+		_text(Vector2(x + 14, 147), quest, 15, MUTED)
 		return
 	var q := Rect2(x, 166, w, 168)
 	_panel(q, PANEL, 10)

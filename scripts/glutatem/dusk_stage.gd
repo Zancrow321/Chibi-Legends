@@ -27,6 +27,11 @@ const LAYERS := [["sky", 0.0, -5], ["mountains", 0.06, -4], ["forest_far", 0.16,
 const SWAY := {"trees_near": [2.0, 0.0, 0.55], "forest_mid": [1.0, 0.55, 0.87]}
 
 static var enabled := true
+## Glutschmiede (raid): red-hot night, embers instead of fireflies,
+## orange crystals and darker, reddened parallax layers.
+const FORGE_DUSK := Color(0.38, 0.22, 0.24)
+const FORGE_LAYER_TINT := Color(0.78, 0.45, 0.4)
+var forge := false
 
 var room: TrainingRoom
 
@@ -62,8 +67,9 @@ func _ready() -> void:
 	_halo = load("res://assets/lightlook/halo.png")
 	_hide_old_background()
 
+	forge = room.is_raid
 	var cm := CanvasModulate.new()
-	cm.color = DUSK
+	cm.color = FORGE_DUSK if forge else DUSK
 	room.add_child(cm)
 	var sun := DirectionalLight2D.new()
 	sun.color = Color(1.0, 0.62, 0.42)
@@ -114,7 +120,7 @@ func _ready() -> void:
 	for x in LANTERNS:
 		_lantern(x)
 	for c in CRYSTALS:
-		_crystal(c[0], c[1])
+		_crystal(c[0], Color(1.0, 0.55, 0.25) if forge else c[1])
 	for i in FIREFLIES:
 		_firefly(i)
 	_forge()
@@ -212,9 +218,9 @@ func _crystal(x: float, color: Color) -> void:
 
 func _firefly(i: int) -> void:
 	var base := Vector2(fposmod(i * 233.0 + 140.0, TrainingRoom.WIDTH), 200.0 + fposmod(i * 37.0, 70.0))
-	var s := _halo_sprite(Color(0.85, 1.0, 0.5, 0.9), 0.09)
+	var s := _halo_sprite(Color(1.0, 0.6, 0.3, 0.9) if forge else Color(0.85, 1.0, 0.5, 0.9), 0.09)
 	room.add_child(s)
-	var l := _light(Color(0.75, 1.0, 0.45), 0.6, 0.16)
+	var l := _light(Color(1.0, 0.5, 0.25) if forge else Color(0.75, 1.0, 0.45), 0.6, 0.16)
 	room.add_child(l)
 	_flies.append({"sprite": s, "light": l, "base": base, "phase": i * 1.7})
 
@@ -253,6 +259,8 @@ func _build_parallax() -> void:
 		s.scale = Vector2(2, 2)
 		if SWAY.has(spec[0]):
 			s.material = sway_material(SWAY[spec[0]])
+		if forge and spec[0] != "foreground":
+			s.modulate = FORGE_LAYER_TINT
 		cl.add_child(s)
 		_layers.append([s, spec[1]])
 		if spec[0] == "trees_near":
@@ -345,6 +353,10 @@ func _process(delta: float) -> void:
 			room.glut_fx.embers(Vector2(FORGE_X, fy - 4), 1, 6.0, 45.0, 1.3)
 		if randf() < 0.12:
 			room.glut_fx.smoke(Vector2(FORGE_X + randf_range(-4, 4), fy - 14), 7.0, Vector2(randf_range(-4, 4), -16), 1.8)
+	# Glutschmiede: embers drift up from the glowing floor seams
+	if forge and room.glut_fx != null and randf() < 0.5:
+		var ex := c.x + randf_range(-vis.x * 0.3, vis.x * 0.3)
+		room.glut_fx.embers(Vector2(ex, _ground_y(ex) - 2.0), 1, 10.0, randf_range(30.0, 70.0), 1.6)
 	# flashes fade (they run during hit-stop too)
 	for fl in _flashes:
 		fl.t += delta

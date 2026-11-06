@@ -6,7 +6,8 @@ extends RefCounted
 ## AreaTransition uses to switch between the two.
 ##
 ## Web URL: ?modus=dungeon starts straight in the training forest,
-## ?modus=overworld (default) in the academy courtyard.
+## ?modus=overworld (default) in the academy courtyard, ?modus=raid in the
+## Glutschmiede raid (boss Essenwächter).
 
 const OVERWORLD := "overworld"
 const DUNGEON := "dungeon"
@@ -16,7 +17,7 @@ const DUNGEON := "dungeon"
 const AREAS := {
 	"akademie_hof": {"title": "Akademie-Hof", "sub": "Overworld · Treffpunkt der Schüler", "kind": OVERWORLD, "accent": Color("4da6ff")},
 	"trainingswald": {"title": "Trainingswald", "sub": "Kampfareal · Stufe 1", "kind": DUNGEON, "accent": Color("e83b3b"), "door": "tor_wald"},
-	"glutschmiede": {"title": "Glutschmiede", "sub": "Kampfareal · versiegelt", "kind": DUNGEON, "accent": Color("ff8a2a"), "door": "tor_glut", "locked": true},
+	"glutschmiede": {"title": "Glutschmiede", "sub": "Raid · Essenwächter", "kind": DUNGEON, "accent": Color("ff8a2a"), "door": "tor_glut", "raid": true},
 }
 
 static var mode := OVERWORLD
@@ -29,6 +30,11 @@ static var _url_read := false
 
 static func is_overworld() -> bool:
 	return mode == OVERWORLD
+
+
+## Raid areas have a boss instead of dummies and waves (RaidDirector).
+static func is_raid() -> bool:
+	return mode == DUNGEON and bool(area_info(area).get("raid", false))
 
 
 static func area_info(id: String) -> Dictionary:
@@ -56,6 +62,9 @@ static func read_url() -> void:
 		if kv.size() == 2 and kv[0] == "modus":
 			if kv[1] == "dungeon" or kv[1] == "kampf":
 				area = "trainingswald"
+				mode = DUNGEON
+			elif kv[1] == "raid":
+				area = "glutschmiede"
 				mode = DUNGEON
 			elif kv[1] == "overworld" or kv[1] == "hof":
 				area = "akademie_hof"

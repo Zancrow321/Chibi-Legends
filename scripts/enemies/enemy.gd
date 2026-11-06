@@ -55,6 +55,12 @@ const TYPES := {
 		"range": 78.0, "damage": 14.0, "windup": 0.55, "cooldown": 2.0, "exp": 22,
 		"hurt": Vector2(44, 34), "color": Color("ff9a2a"), "hit": 12, "scale": 1.5,
 	},
+	# raid boss of the Glutschmiede (scripts/raid/boss.gd); hp and Wucht scale with RaidScaling
+	"essenwaechter": {
+		"name": "Essenwächter", "kind": "boss", "hp": 2600.0, "speed": 52.0, "aggro": 9999.0,
+		"range": 110.0, "damage": 80.0, "windup": 0.9, "cooldown": 1.6, "exp": 400,
+		"hurt": Vector2(72, 104), "color": Color("ff8a2a"), "hit": 6, "elite": true, "wucht": 260.0,
+	},
 }
 
 static var _frames: Dictionary = {}
