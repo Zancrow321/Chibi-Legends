@@ -126,7 +126,7 @@ func _ready() -> void:
 
 
 ## Enemies live in their own layer (behind the player and the attacks).
-func add_enemy(e: Enemy) -> void:
+func add_enemy(e: Node2D) -> void:
 	_enemy_layer.add_child(e)
 
 
