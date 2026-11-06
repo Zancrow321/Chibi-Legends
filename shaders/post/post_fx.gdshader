@@ -178,7 +178,7 @@ void fragment() {
 	// low HP: the colour drains
 	if (danger > 0.0) {
 		float l3 = dot(col, vec3(0.299, 0.587, 0.114));
-		col = mix(col, vec3(l3) * vec3(1.05, 0.92, 0.92), danger * 0.45);
+		col = mix(col, vec3(l3) * vec3(1.08, 0.9, 0.9), danger * 0.6);
 	}
 
 	// vignette, and at low HP an edge that breathes red
@@ -187,9 +187,11 @@ void fragment() {
 	float vig = smoothstep(0.35, 0.85, vlen) * vignette;
 	col = mix(col, vignette_color, vig);
 	if (danger > 0.0) {
-		float pulse = 0.65 + 0.35 * sin(TIME * 6.0);
-		float edge = smoothstep(0.42, 0.95, vlen) * danger * pulse;
-		col = mix(col, vec3(0.55, 0.02, 0.05), edge * 0.75);
+		// heartbeat: two quick beats, then a pause
+		float beat = fract(TIME * 1.1);
+		float pulse = 0.6 + 0.4 * max(exp(-beat * 18.0), 0.7 * exp(-abs(beat - 0.22) * 18.0));
+		float edge = smoothstep(0.25, 0.8, vlen) * danger * pulse;
+		col = mix(col, vec3(0.6, 0.02, 0.06), clamp(edge * 1.1, 0.0, 0.9));
 	}
 
 	// manga impact frame: ink and paper (inverted on the first flash)
