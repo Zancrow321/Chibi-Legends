@@ -85,6 +85,22 @@ OUTFITS.update({
     "nordwanderer": "a nordic traveler outfit: dark green wool cloak without hood (head uncovered) with a bronze brooch, cream linen "
                     "shirt, brown wool trousers, worn leather turnshoes with wraps",
 })
+OUTFITS.update({
+    "jadegelehrter": "a wuxia scholar outfit: flowing jade green hanfu robe with wide sleeves and white inner collar, "
+                     "a black sash belt with a jade pendant, loose white trousers, black cloth shoes",
+    "drachenwache": "a wuxia imperial guard outfit: red lacquered lamellar armor vest with gold trim over a black "
+                    "robe, red cloth arm guards, black wide trousers, black boots with red trim",
+    "lotusfaust": "a wuxia martial artist outfit: sleeveless white mandarin collar top with frog buttons, red "
+                  "silk sash, black loose kung fu trousers tied at the ankles, black slippers",
+    "pflaumentaenzerin": "a wuxia dancer outfit: pink and white layered silk ruqun dress with long flowing "
+                         "ribbon sleeves and a plum blossom pattern, pale pink skirt to the ankles, white embroidered shoes",
+    "schattenmeister": "a wuxia assassin outfit: dark navy fitted robe with silver cloud embroidery, black arm "
+                       "wraps, a dark grey sash, black trousers tucked into black wrapped boots",
+})
+HEADS.update({
+    "gelehrtenknoten": "long black hair with a neat top bun held by a small jade crown and hairpin",
+    "drachenkrone": "black hair in a high ponytail with a golden dragon headpiece, the face stays visible",
+})
 HEADS.update({
     "hoernerhelm": "short blonde hair under an open iron helmet with two short curved horns, nothing hangs over the face or chest, the face "
                    "stays visible",

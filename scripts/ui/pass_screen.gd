@@ -405,7 +405,7 @@ func _draw_challenges(R: Rect2) -> void:
 			draw_string(font, rr.position + Vector2(cw - 150, 28), rew, HORIZONTAL_ALIGNMENT_LEFT, -1, 15, INK)
 			_reward_icon({"kind": "crystals"}, rr.position + Vector2(cw - 18, 22), 9.0)
 			if d.has("part"):
-				draw_string(font, rr.position + Vector2(cw - 150, 46), "+ " + CreatorCatalog.item_name(d.part[0], d.part[1]), HORIZONTAL_ALIGNMENT_LEFT, 140, 13, RED)
+				draw_string(font, rr.position + Vector2(cw - 150, 46), "+ " + CreatorCatalog.item_name("top" if d.part[0] == "outfit" else d.part[0], d.part[1]), HORIZONTAL_ALIGNMENT_LEFT, 140, 13, RED)
 			var br := Rect2(rr.end.x - 140, rr.end.y - 32, 126, 26)
 			if c.claimed:
 				var stamp := _tex("stamp_done")
