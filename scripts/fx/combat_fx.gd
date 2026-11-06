@@ -64,14 +64,20 @@ func blast(pos: Vector2, col: Color, radius: float, profile: String) -> void:
 func _screen_fx(pos: Vector2, profile: String, is_blast := false) -> void:
 	match profile:
 		"heavy":
+			PostFx.exposure_punch(0.35)
 			if is_blast:
 				PostFx.shockwave(pos, 0.5, 0.6, 0.4)
 		"reaction":
 			PostFx.shockwave(pos, 1.0, 0.9, 0.5)
 			PostFx.aberrate(2.5)
+			PostFx.exposure_punch(0.7)
 		"super_final":
 			PostFx.shockwave(pos, 2.0, 1.4, 0.7)
 			PostFx.aberrate(5.0)
+			PostFx.exposure_punch(1.0)
+			PostFx.zoom_blur(pos, 0.7)
+			if is_blast:
+				PostFx.impact_frame(0.07)
 
 
 func _apply(p: Dictionary, dir: float) -> void:
@@ -134,6 +140,11 @@ func punch(amount: float) -> void:
 func dim(target: float) -> void:
 	_dim_target = target
 	PostFx.hold_aberration(1.5 if target > 0.6 else 0.0)  # supers hold the screen
+	var focus := Vector2.ZERO
+	var pl: Variant = room.get("player") if room != null else null
+	if pl is Node2D:
+		focus = (pl as Node2D).global_position + Vector2(0, -24)
+	PostFx.hold_zoom_blur(focus, 0.45 if target > 0.6 and pl is Node2D else 0.0)
 
 
 func is_frozen() -> bool:
