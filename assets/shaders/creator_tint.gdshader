@@ -17,6 +17,11 @@ uniform float val = 1.0;
 uniform float glow = 0.0;
 uniform vec4 glow_color : source_color = vec4(1.0, 0.6, 0.1, 1.0);
 uniform float shimmer = 0.0;
+// Helm, der den ganzen Kopf bedeckt: der Kopf des Körpers wird ausgeblendet
+// (Kreis um head_c, Sheet-Pixel), damit er nirgends unter dem Helm rausschaut.
+uniform bool head_hide = false;
+uniform vec2 head_c = vec2(0.0);
+uniform float head_r = 10.0;
 
 vec3 rgb2hsv(vec3 c) {
 	vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
@@ -35,6 +40,9 @@ vec3 hsv2rgb(vec3 c) {
 
 void fragment() {
 	vec4 col = texture(TEXTURE, UV);
+	if (head_hide && distance(floor(UV / TEXTURE_PIXEL_SIZE) + 0.5, head_c) < head_r) {
+		col.a = 0.0;
+	}
 	vec3 h = rgb2hsv(col.rgb);
 	bool outline = h.z < 0.16;
 	if (!outline) {
