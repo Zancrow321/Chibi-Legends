@@ -84,6 +84,14 @@ func _initialize() -> void:
 	queue.append([2, "quit"])
 
 
+var _missing := 0
+
+
+func _asset(path: String) -> void:
+	if not ResourceLoader.exists(path):
+		_missing += 1
+
+
 func _check_data() -> void:
 	CreatorCatalog.ensure()
 	var cat: Dictionary = CreatorCatalog.data
@@ -101,13 +109,15 @@ func _check_data() -> void:
 			var zd := st.zug(z)
 			_check(str(zd.get("kind", "")) in KINDS, "%s/%s: Art" % [sid, z])
 			_check(zd.get("alts", []).size() == 3, "%s/%s: 3 Alternativen" % [sid, z])
-			_check(ResourceLoader.exists("res://assets/combat/vfx/%s/%s.png" % [sid, z]), "%s/%s: Effekt-Sprite" % [sid, z])
-			_check(ResourceLoader.exists("res://assets/combat/icons/%s/%s.png" % [sid, z]), "%s/%s: Icon" % [sid, z])
-		_check(ResourceLoader.exists("res://assets/combat/icons/%s/meisterzug.png" % sid), "%s: Meisterzug-Icon" % sid)
+			_asset("res://assets/combat/vfx/%s/%s.png" % [sid, z])
+			_asset("res://assets/combat/icons/%s/%s.png" % [sid, z])
+		_asset("res://assets/combat/icons/%s/meisterzug.png" % sid)
 		for v in st.variants():
 			_check(str(v.get("kind", "")) in SUPERS, "%s/%s: Meisterzug-Art" % [sid, v.id])
-			_check(ResourceLoader.exists("res://assets/combat/vfx/%s/%s.png" % [sid, v.id]), "%s/%s: Meisterzug-Sprite" % [sid, v.id])
-			_check(ResourceLoader.exists("res://assets/combat/icons/%s/%s.png" % [sid, v.id]), "%s/%s: Meisterzug-Icon" % [sid, v.id])
+			_asset("res://assets/combat/vfx/%s/%s.png" % [sid, v.id])
+			_asset("res://assets/combat/icons/%s/%s.png" % [sid, v.id])
+		_check(_missing == 0, "%s: %d Bilder fehlen" % [sid, _missing])
+		_missing = 0
 		_check(cat.get("styles", {}).has(sid), "%s: im Creator-Katalog" % sid)
 		var w := str(cat.get("styles", {}).get(sid, {}).get("weapon", ""))
 		_check(w == "" or cat.get("weapons", {}).has(w), "%s: Waffe %s existiert" % [sid, w])
