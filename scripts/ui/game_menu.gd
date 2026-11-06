@@ -255,6 +255,10 @@ func _salvage_selected() -> void:
 	var it := _sel_item()
 	if it.is_empty():
 		return
+	if GodItems.is_god(it):
+		_say("GOD-Teile lassen sich nicht zerlegen. Es gibt nur dieses eine.")
+		Sfx.play("ui_error")
+		return
 	if Profile.is_equipped(it.uid):
 		_say("Erst ablegen, dann zerlegen")
 		return
@@ -327,6 +331,10 @@ func _salvage_bulk() -> void:
 func _reforge_selected() -> void:
 	var it := _sel_item()
 	if it.is_empty():
+		return
+	if GodItems.is_god(it):
+		_say("GOD-Werte stehen fest und wachsen mit deiner Stufe")
+		Sfx.play("ui_error")
 		return
 	if not GameFlow.is_overworld():
 		_say("Umschmieden kannst du bei Schmiedin Hino im Akademie-Hof")
@@ -754,6 +762,8 @@ func _slot_card(r: Rect2, slot: String, it: Dictionary) -> void:
 
 func _icon_box(r: Rect2, it: Dictionary, slot := "") -> void:
 	if not it.is_empty():  # rarity frame (PixelLab), animated from Episch
+		if int(it.rarity) >= Loot.GOD:  # GOD: prismatic rays behind the frame
+			_god_box(r)
 		ItemFrame.box(self, r, it, _t)
 		_badges(r, it)
 		return
@@ -764,6 +774,26 @@ func _icon_box(r: Rect2, it: Dictionary, slot := "") -> void:
 	if slot != "":
 		var ghost := {"slot": "talisman" if slot == "talisman2" else slot, "rarity": 0, "icon": 0}
 		_ghost(r, ghost)
+
+
+## GOD-Kasten: Regenbogen-Rahmen, zwei gegenläufige Strahlenkränze, Glitzer.
+func _god_box(r: Rect2) -> void:
+	var c := r.get_center()
+	for k in 12:
+		var a := _t * (1.4 if k % 2 == 0 else -0.8) + k * TAU / 12.0
+		var col := Loot.god_color(_t, k / 12.0)
+		draw_line(c, c + Vector2.from_angle(a) * r.size.x * (0.62 + 0.08 * sin(_t * 6.0 + k)), Color(col, 0.55), r.size.x * 0.07)
+	draw_circle(c, r.size.x * (0.3 + 0.03 * sin(_t * 5.0)), Color(1, 1, 0.92, 0.55))
+	for k in 4:  # Rahmen läuft durch alle Farben
+		var p0: Vector2 = [r.position, Vector2(r.end.x, r.position.y), r.end, Vector2(r.position.x, r.end.y)][k]
+		var p1: Vector2 = [Vector2(r.end.x, r.position.y), r.end, Vector2(r.position.x, r.end.y), r.position][k]
+		draw_line(p0, p1, Loot.god_color(_t * 2.0, k * 0.25), 3.0)
+	for k in 3:  # Glitzer
+		var f := fposmod(_t * 0.7 + k * 0.37, 1.0)
+		var sp := r.position + Vector2(fposmod(k * 0.61 + _t * 0.13, 1.0), f) * r.size
+		var sz := r.size.x * 0.09 * sin(f * PI)
+		draw_line(sp - Vector2(sz, 0), sp + Vector2(sz, 0), Color(1, 1, 1, 0.9), 1.5)
+		draw_line(sp - Vector2(0, sz), sp + Vector2(0, sz), Color(1, 1, 1, 0.9), 1.5)
 
 
 ## Small marks on an item box: sockets (bottom left), set (green corner),
@@ -901,6 +931,13 @@ func _draw_inventory(R: Rect2) -> void:
 	_ink(Vector2(tx, card.position.y + 94), "%s · Gegenstandsstufe %d" % [Profile.SLOT_NAMES[it.slot], int(it.ilvl)], 14, Color(INK, 0.7))
 	_plus_pips(Vector2(tx, card.position.y + 104), it)
 	var y := card.position.y + 152.0
+	if GodItems.is_god(it):
+		var gs: Dictionary = GodItems.SERIES.get(str(it.get("series", "")), {})
+		var gline := "Weltweit einzigartig · %s" % str(gs.get("title", ""))
+		if bool(it.get("test", false)):
+			gline += " · Testbesitz"
+		_ink(Vector2(tx, card.position.y + 134), gline, 13, Loot.god_color(_t).darkened(0.45))
+		y += 8.0
 	var place := Profile.place_of(it.uid)
 	var worn := Profile.equipped_item(place if place != "" else Profile.place_for(it))
 	var same: bool = not worn.is_empty() and worn.uid == it.uid

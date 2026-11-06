@@ -29,6 +29,16 @@ var facing := 1:
 		if _rig:
 			_rig.scale.x = facing
 
+## GOD-Teile, die diese Figur trägt (ids, GodItems): erzwingen ihren Look
+## (Kleidung, Krone, Stil-Waffe) und bringen GodFx mit. god_style = Kampfstil.
+var god: Array = []:
+	set(v):
+		god = v
+		if is_inside_tree():
+			_apply_look()
+var god_style := ""
+var god_fx: GodFx
+
 var pose := "idle_0"
 var anim := ""
 
@@ -117,33 +127,80 @@ func _apply_tint(node: CanvasItem, c: Dictionary) -> void:
 			m.set_shader_parameter("target", Color(hex))
 
 
+## Look mit den Teilen der getragenen GOD-Items.
+var _eff := {}
+
+
+func _effective() -> Dictionary:
+	var l := look.duplicate()
+	if god.is_empty():
+		return l
+	var over := GodItems.look_override(god, god_style)
+	for k in over:
+		if k == "weapon":
+			var st: Dictionary = CreatorCatalog.data.get("styles", {}).get(god_style, {})
+			if str(l.get("weapon", "")) != "" and str(l.get("weapon", "")) == str(st.get("weapon", "")):
+				l["weapon"] = over[k]
+		else:
+			l[k] = over[k]
+	return l
+
+
 func _apply_look() -> void:
 	if _body == null:
 		return
+	_eff = _effective()
+	var lk := _eff
 	var d: Dictionary = CreatorCatalog.data
-	var colors: Dictionary = look.get("colors", {})
-	_apply_tint(_body, d["skins"][clampi(int(look.get("skin", 1)), 0, d["skins"].size() - 1)])
+	var colors: Dictionary = lk.get("colors", {})
+	_apply_tint(_body, d["skins"][clampi(int(lk.get("skin", 1)), 0, d["skins"].size() - 1)])
 	for slot in CLOTH_ORDER:
 		var s: Sprite2D = _cloth[slot]
-		s.texture = CreatorCatalog.slot_texture(slot, str(look.get(slot, "")))
+		s.texture = CreatorCatalog.slot_texture(slot, str(lk.get(slot, "")))
 		_apply_tint(s, d["colors"][clampi(int(colors.get(slot, 0)), 0, d["colors"].size() - 1)])
-	var hid := str(look.get("hair", ""))
+	var hid := str(lk.get("hair", ""))
 	_hair.texture = CreatorCatalog.slot_texture("hair", hid)
 	if CreatorCatalog.hair_meta.has(hid):
 		var n: Array = CreatorCatalog.hair_meta[hid]["neck"]
 		_hair.offset = -Vector2(n[0], n[1])
 	_apply_tint(_hair, d["colors"][clampi(int(colors.get("hair", 0)), 0, d["colors"].size() - 1)])
-	_load_weapon(str(look.get("weapon", "")))
+	_load_weapon(str(lk.get("weapon", "")))
 	_apply_raid_glow()
+	_apply_god()
 	set_pose(pose)
+
+
+## GOD-Kleidung glüht in Serienfarbe mit Lichtwelle, dazu GodFx (Flügel ...).
+func _apply_god() -> void:
+	var parts := {"top": _cloth["top"], "pants": _cloth["pants"], "shoes": _cloth["shoes"], "hair": _hair}
+	for slot in parts:
+		var id := str(_eff.get(slot, ""))
+		if not id.begins_with("god_"):
+			continue
+		var m := (parts[slot] as CanvasItem).material as ShaderMaterial
+		var holy := id in ["god_seraph", "god_sonnenkrone"]
+		m.set_shader_parameter("glow", 1.6)
+		m.set_shader_parameter("shimmer", 1.6)
+		m.set_shader_parameter("glow_color", Color("ffc93a") if holy else Color("ff1e3c"))
+	if god.is_empty():
+		if god_fx != null:
+			god_fx.queue_free()
+			god_fx = null
+		return
+	if god_fx == null:
+		god_fx = GodFx.new()
+		god_fx.body = self
+		add_child(god_fx)
+	god_fx.setup(god, god_style)
 
 
 ## Raid-Rüstung Essenwacht: ab Episch leuchten die Glut-Adern, Mythisch hat
 ## dazu eine wandernde Lichtwelle und aufsteigende Funken.
 func _apply_raid_glow() -> void:
+	var lk := _eff
 	var parts := {"top": _cloth["top"], "pants": _cloth["pants"], "shoes": _cloth["shoes"], "hair": _hair}
 	for slot in parts:
-		var r := RaidArmor.part_rarity(str(look.get(slot, "")))
+		var r := RaidArmor.part_rarity(str(lk.get(slot, "")))
 		var m := (parts[slot] as CanvasItem).material as ShaderMaterial
 		var on := r >= Loot.EPIC
 		m.set_shader_parameter("glow", [0.0, 0.0, 0.0, 1.0, 0.75, 1.3][r] if on else 0.0)
@@ -152,11 +209,11 @@ func _apply_raid_glow() -> void:
 			m.set_shader_parameter("glow_color", RaidArmor.glow_color(r))
 		else:
 			# Neon-Kleidung (catalog.json "neon": id -> Farbe): Leuchtstreifen glühen im Bloom
-			var neon := str(CreatorCatalog.data.get("neon", {}).get(str(look.get(slot, "")), ""))
+			var neon := str(CreatorCatalog.data.get("neon", {}).get(str(lk.get(slot, "")), ""))
 			if neon != "":
 				m.set_shader_parameter("glow", 0.9)
 				m.set_shader_parameter("glow_color", Color(neon))
-	var best := RaidArmor.glow_level(look)
+	var best := RaidArmor.glow_level(lk)
 	if best < Loot.EPIC:
 		if _sparks != null:
 			_sparks.emitting = false
@@ -198,7 +255,8 @@ func set_weapon(wid: String) -> void:
 	look["weapon"] = wid
 	if _body == null:
 		return
-	_load_weapon(wid)
+	_eff = _effective()
+	_load_weapon(str(_eff.get("weapon", wid)))
 	set_pose(pose)
 
 
@@ -240,7 +298,7 @@ func set_pose(name: String) -> void:
 		(_cloth[slot] as Sprite2D).region_rect = r
 	var f: Dictionary = CreatorCatalog.frames[name]
 	# Frisur: am Hals-Anker, gedreht um die Kopfneigung gegenüber idle_0
-	var hid := str(look.get("hair", ""))
+	var hid := str(_eff.get("hair", look.get("hair", "")))
 	var covers := false
 	if CreatorCatalog.hair_meta.has(hid):
 		var meta: Dictionary = CreatorCatalog.hair_meta[hid]
@@ -286,6 +344,30 @@ func set_pose(name: String) -> void:
 
 func _cell(p: Array) -> Vector2:
 	return Vector2(p[0], p[1]) - ORIGIN
+
+
+## Anker der aktuellen Pose im Rig (head, hand_front, hand_back, back,
+## feet_front, feet_back), für GodFx.
+func anchor(name: String) -> Vector2:
+	var f: Dictionary = CreatorCatalog.frames.get(pose, {})
+	if f.is_empty():
+		return Vector2.ZERO
+	if name.begins_with("feet_"):
+		return _cell(f["feet"][name.substr(5)])
+	return _cell(f[name]["pos"])
+
+
+func anchor_angle(name: String) -> float:
+	var f: Dictionary = CreatorCatalog.frames.get(pose, {})
+	return float(f.get(name, {}).get("angle", 0.0))
+
+
+func rig() -> Node2D:
+	return _rig
+
+
+func weapon_sprite() -> Sprite2D:
+	return _weapon if _weapon != null and _weapon.texture != null else null
 
 
 func _process(delta: float) -> void:

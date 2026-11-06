@@ -1,0 +1,404 @@
+{
+	"_doc": "Baukasten-Kampfstil Papierkranich (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "papierkranich",
+	"name": "Papierkranich",
+	"element": "seele",
+	"caster": "form",
+	"subtitle": "Papierbann-Magie · Kraniche, Siegel und Bannkreise",
+	"moveset": "res://assets/combat/movesets/lauffeuer.json",
+	"armed": false,
+	"colors": {
+		"main": "fff4e0",
+		"accent": "e83b3b",
+		"light": "ffffff",
+		"dark": "2a2418",
+		"white": "ffffff"
+	},
+	"kern": {
+		"type": "marken",
+		"name": "Siegel",
+		"zuender": "siegelbruch",
+		"desc": "Treffer kleben Papiersiegel auf Gegner (bis 3). Siegelbruch zündet alle Siegel: +9 Schaden je Siegel."
+	},
+	"loadout": {
+		"neutral": "papierklinge",
+		"forward": "kranichflug",
+		"up": "siegelsaeule",
+		"down": "siegelbruch"
+	},
+	"zuege": {
+		"papierklinge": {
+			"name": "Papierklinge",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Drei Schnitte mit scharf gefaltetem Papier.",
+			"params": {
+				"hits": 3,
+				"damage": 5,
+				"len": 48
+			},
+			"enhanced": {
+				"hits_add": 2,
+				"len_add": 12
+			},
+			"alts": [
+				{
+					"id": "papierwirbel",
+					"name": "Papierwirbel",
+					"sp": 2,
+					"desc": "Fünf schnelle Schnitte.",
+					"params": {
+						"hits": 5,
+						"damage": 3.5
+					}
+				},
+				{
+					"id": "faltwand",
+					"name": "Faltwand",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				},
+				{
+					"id": "aufwind",
+					"name": "Papieraufwind",
+					"sp": 2,
+					"desc": "Schleudert hoch.",
+					"params": {
+						"launch": 280
+					}
+				}
+			]
+		},
+		"kranichflug": {
+			"name": "Kranichflug",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Drei Papierkraniche fliegen auf Gegner zu.",
+			"params": {
+				"count": 3,
+				"spread": 30,
+				"damage": 5,
+				"speed": 340,
+				"dist": 360,
+				"homing": 0.7,
+				"size": 0.9
+			},
+			"enhanced": {
+				"count_add": 2,
+				"damage_add": 2
+			},
+			"alts": [
+				{
+					"id": "grosser_kranich",
+					"name": "Großer Kranich",
+					"sp": 2,
+					"desc": "Ein großer Kranich.",
+					"params": {
+						"count": 1,
+						"size": 1.5,
+						"damage": 14
+					}
+				},
+				{
+					"id": "schneller_kranich",
+					"name": "Schneller Kranich",
+					"sp": 2,
+					"desc": "Schnell und gerade.",
+					"params": {
+						"homing": 0.1,
+						"speed": 560
+					}
+				},
+				{
+					"id": "zuendkranich",
+					"name": "Zündkranich",
+					"sp": 2,
+					"desc": "Explodiert beim Ziel.",
+					"params": {
+						"burst": true
+					}
+				}
+			]
+		},
+		"siegelsaeule": {
+			"name": "Siegelsäule",
+			"kind": "saeule",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				9,
+				14,
+				16
+			],
+			"desc": "Ein Bannsiegel vor dir schießt eine Lichtsäule hoch.",
+			"params": {
+				"at": 56,
+				"width": 28,
+				"height": 100,
+				"damage": 12,
+				"launch": 360
+			},
+			"enhanced": {
+				"launch_add": 100,
+				"width_add": 10
+			},
+			"alts": [
+				{
+					"id": "drei_siegel",
+					"name": "Drei Siegel",
+					"sp": 2,
+					"desc": "Drei Säulen.",
+					"params": {
+						"count": 3,
+						"step": 40,
+						"damage": 7
+					}
+				},
+				{
+					"id": "papierflug",
+					"name": "Papierflug",
+					"sp": 2,
+					"desc": "Du fliegst mit hoch.",
+					"params": {
+						"ride": true,
+						"at": 8
+					}
+				},
+				{
+					"id": "breites_siegel",
+					"name": "Breites Siegel",
+					"sp": 2,
+					"desc": "Breiter.",
+					"params": {
+						"width": 58,
+						"launch": 210
+					}
+				}
+			]
+		},
+		"bannkreis": {
+			"name": "Bannkreis",
+			"kind": "feld",
+			"dir": "down",
+			"sp": 1,
+			"cd": 2.0,
+			"frames": [
+				10,
+				8,
+				16
+			],
+			"desc": "Ein Bannkreis aus Papierstreifen vor dir.",
+			"params": {
+				"at": 60,
+				"width": 90,
+				"life": 2.5,
+				"tick": 0.35,
+				"damage": 3
+			},
+			"enhanced": {
+				"life_add": 1.5,
+				"damage_add": 1
+			},
+			"alts": [
+				{
+					"id": "grosser_bann",
+					"name": "Großer Bann",
+					"sp": 2,
+					"desc": "Breiter.",
+					"params": {
+						"width": 140
+					}
+				},
+				{
+					"id": "bannsog",
+					"name": "Bannsog",
+					"sp": 2,
+					"desc": "Zieht Gegner hinein.",
+					"params": {
+						"pull": 70
+					}
+				},
+				{
+					"id": "schutzbann",
+					"name": "Schutzbann",
+					"sp": 2,
+					"desc": "Um dich herum.",
+					"params": {
+						"at": 0
+					}
+				}
+			]
+		},
+		"siegelbruch": {
+			"name": "Siegelbruch",
+			"kind": "hieb",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Du klatschst in die Hände: alle Siegel zünden, und ein Papiersturm trifft vor dir.",
+			"params": {
+				"hits": 1,
+				"damage": 12,
+				"len": 90,
+				"h": 50
+			},
+			"enhanced": {
+				"damage_add": 8,
+				"len_add": 20
+			},
+			"alts": [
+				{
+					"id": "doppelbruch",
+					"name": "Doppelbruch",
+					"sp": 2,
+					"desc": "Zwei Stöße.",
+					"params": {
+						"hits": 2,
+						"damage": 8
+					}
+				},
+				{
+					"id": "naher_bruch",
+					"name": "Naher Bruch",
+					"sp": 2,
+					"desc": "Kürzer, härter.",
+					"params": {
+						"len": 50,
+						"damage": 18
+					}
+				},
+				{
+					"id": "rundbruch",
+					"name": "Rundbruch",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				}
+			]
+		},
+		"faltschritt": {
+			"name": "Faltschritt",
+			"kind": "schritt",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				4,
+				6,
+				12
+			],
+			"desc": "Du faltest dich zusammen und erscheinst hinter dem Gegner.",
+			"params": {
+				"dist": 130,
+				"damage": 9
+			},
+			"enhanced": {
+				"damage_add": 6,
+				"dist_add": 40
+			},
+			"alts": [
+				{
+					"id": "papiertor",
+					"name": "Papiertor",
+					"sp": 2,
+					"desc": "Nach vorn ohne Ziel.",
+					"params": {
+						"behind": false,
+						"dist": 110
+					}
+				},
+				{
+					"id": "schnittfalte",
+					"name": "Schnittfalte",
+					"sp": 2,
+					"desc": "Härter.",
+					"params": {
+						"damage": 15
+					}
+				},
+				{
+					"id": "weite_falte",
+					"name": "Weite Falte",
+					"sp": 2,
+					"desc": "Weiter.",
+					"params": {
+						"dist": 180
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "tausend_kraniche",
+				"name": "Tausend Kraniche",
+				"kind": "regen",
+				"sp": 0,
+				"desc": "Tausend Papierkraniche stürzen auf alle Gegner.",
+				"params": {
+					"damage": 9,
+					"count": 24
+				}
+			},
+			{
+				"id": "grosses_siegel",
+				"name": "Großes Siegel",
+				"kind": "feld",
+				"sp": 2,
+				"desc": "Ein riesiges Siegel bannt den ganzen Bildschirm.",
+				"params": {
+					"damage": 4,
+					"pull": 50
+				}
+			},
+			{
+				"id": "papiersturm",
+				"name": "Papiersturm",
+				"kind": "ansturm",
+				"sp": 2,
+				"desc": "Du wirbelst als Papiersturm von Ziel zu Ziel.",
+				"params": {
+					"damage": 11,
+					"slashes": 8
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

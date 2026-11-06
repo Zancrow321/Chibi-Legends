@@ -28,6 +28,8 @@ static func draw_icon(ci: CanvasItem, c: Vector2, item: Dictionary, s: float) ->
 	var v := int(item.get("icon", 0)) % 3
 	var kind := str(item.get("slot", "waffe"))
 	var t: Texture2D = ItemSets.texture(str(item.set), kind) if item.has("set") else null  # set pieces have their own look
+	if item.has("god"):  # GOD: eigenes PixelLab-Icon je Teil
+		t = GodItems.texture(str(item.god))
 	if item.has("raid"):  # raid armour: one PixelLab icon per piece and rarity
 		t = RaidArmor.texture(kind, int(item.get("rarity", 0)))
 	if t == null:

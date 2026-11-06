@@ -1,0 +1,403 @@
+{
+	"_doc": "Baukasten-Kampfstil Sturmfeder (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "sturmfeder",
+	"name": "Sturmfeder",
+	"element": "wind",
+	"caster": "form",
+	"subtitle": "Federfächer der Bergwinde · jeder Treffer hat einen Nachwind",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"armed": true,
+	"colors": {
+		"main": "9cf2b4",
+		"accent": "6fd0ff",
+		"light": "e0fff0",
+		"dark": "10242a",
+		"white": "ffffff"
+	},
+	"kern": {
+		"type": "echo",
+		"name": "Nachwind",
+		"desc": "Jeder Zug, der trifft, ruft einen Nachwind: 0,4 s später trifft dieselben Gegner ein Windstoß mit 40 % Schaden."
+	},
+	"loadout": {
+		"neutral": "windschnitt",
+		"forward": "federklingen",
+		"up": "windhose",
+		"down": "fallwind"
+	},
+	"zuege": {
+		"windschnitt": {
+			"name": "Windschnitt",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Drei Windschnitte mit dem großen Federfächer.",
+			"params": {
+				"hits": 3,
+				"damage": 5,
+				"len": 54
+			},
+			"enhanced": {
+				"hits_add": 2,
+				"len_add": 14
+			},
+			"alts": [
+				{
+					"id": "boeen",
+					"name": "Böen",
+					"sp": 2,
+					"desc": "Fünf schnelle Schnitte.",
+					"params": {
+						"hits": 5,
+						"damage": 3.5
+					}
+				},
+				{
+					"id": "rueckenwind",
+					"name": "Rückenwind",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				},
+				{
+					"id": "aufwind",
+					"name": "Aufwind",
+					"sp": 2,
+					"desc": "Letzter Schnitt schleudert hoch.",
+					"params": {
+						"launch": 300
+					}
+				}
+			]
+		},
+		"federklingen": {
+			"name": "Federklingen",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Zwei scharfe Federn fliegen nach vorn.",
+			"params": {
+				"count": 2,
+				"spread": 12,
+				"damage": 7,
+				"speed": 560,
+				"dist": 320,
+				"size": 0.8
+			},
+			"enhanced": {
+				"count_add": 2,
+				"damage_add": 2
+			},
+			"alts": [
+				{
+					"id": "federfaecher",
+					"name": "Federfächer",
+					"sp": 2,
+					"desc": "Fünf Federn breit gestreut.",
+					"params": {
+						"count": 5,
+						"spread": 50,
+						"damage": 4
+					}
+				},
+				{
+					"id": "windbumerang",
+					"name": "Windbumerang",
+					"sp": 2,
+					"desc": "Eine Feder kehrt zurück.",
+					"params": {
+						"count": 1,
+						"boomerang": true,
+						"damage": 11
+					}
+				},
+				{
+					"id": "suchfeder",
+					"name": "Suchfeder",
+					"sp": 2,
+					"desc": "Federn suchen ihr Ziel.",
+					"params": {
+						"homing": 0.6,
+						"speed": 420
+					}
+				}
+			]
+		},
+		"windhose": {
+			"name": "Windhose",
+			"kind": "wirbel",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.3,
+			"frames": [
+				6,
+				30,
+				12
+			],
+			"desc": "Eine Windhose hebt dich und alles um dich herum an.",
+			"params": {
+				"radius": 40,
+				"hits": 5,
+				"damage": 3.5,
+				"pull": 60,
+				"lift": 160,
+				"drift": 0
+			},
+			"enhanced": {
+				"hits_add": 3,
+				"radius_add": 12
+			},
+			"alts": [
+				{
+					"id": "wandernde_hose",
+					"name": "Wandernde Hose",
+					"sp": 2,
+					"desc": "Zieht nach vorn.",
+					"params": {
+						"drift": 90,
+						"lift": 60
+					}
+				},
+				{
+					"id": "grosse_hose",
+					"name": "Große Hose",
+					"sp": 2,
+					"desc": "Größer, weniger Treffer.",
+					"params": {
+						"radius": 60,
+						"hits": 3,
+						"damage": 6
+					}
+				},
+				{
+					"id": "sturmauge",
+					"name": "Sturmauge",
+					"sp": 2,
+					"desc": "Kein Aufstieg, starker Sog.",
+					"params": {
+						"lift": 0,
+						"pull": 120
+					}
+				}
+			]
+		},
+		"fallwind": {
+			"name": "Fallwind",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Ein Fallwind drückt dich in den Boden, Windwellen laufen los.",
+			"params": {
+				"damage": 11,
+				"radius": 46,
+				"waves": true,
+				"wave_damage": 8
+			},
+			"enhanced": {
+				"wave_damage_add": 5,
+				"radius_add": 16
+			},
+			"alts": [
+				{
+					"id": "druckstoss",
+					"name": "Druckstoß",
+					"sp": 2,
+					"desc": "Großer Radius.",
+					"params": {
+						"radius": 74,
+						"waves": false,
+						"damage": 14
+					}
+				},
+				{
+					"id": "nachwehen",
+					"name": "Nachwehen",
+					"sp": 2,
+					"desc": "Zweiter Windstoß.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "wirbelgrube",
+					"name": "Wirbelgrube",
+					"sp": 2,
+					"desc": "Ein Wirbel bleibt 2 s.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"federschritt": {
+			"name": "Federschritt",
+			"kind": "schritt",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				4,
+				6,
+				12
+			],
+			"desc": "Leicht wie eine Feder erscheinst du hinter dem Gegner.",
+			"params": {
+				"dist": 130,
+				"damage": 9
+			},
+			"enhanced": {
+				"damage_add": 6,
+				"dist_add": 40
+			},
+			"alts": [
+				{
+					"id": "windtor",
+					"name": "Windtor",
+					"sp": 2,
+					"desc": "Nach vorn ohne Ziel.",
+					"params": {
+						"behind": false,
+						"dist": 110
+					}
+				},
+				{
+					"id": "schneidwind",
+					"name": "Schneidwind",
+					"sp": 2,
+					"desc": "Härter beim Auftauchen.",
+					"params": {
+						"damage": 15
+					}
+				},
+				{
+					"id": "hoher_schritt",
+					"name": "Hoher Schritt",
+					"sp": 2,
+					"desc": "Weiter.",
+					"params": {
+						"dist": 180
+					}
+				}
+			]
+		},
+		"orkanstoss": {
+			"name": "Orkanstoß",
+			"kind": "strahl",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.6,
+			"frames": [
+				12,
+				30,
+				16
+			],
+			"desc": "Ein gebündelter Windstoß aus dem Fächer schiebt alles weg.",
+			"params": {
+				"len": 200,
+				"width": 22,
+				"damage": 3,
+				"tick": 0.08,
+				"push": 60
+			},
+			"enhanced": {
+				"width_add": 12,
+				"damage_add": 1
+			},
+			"alts": [
+				{
+					"id": "windlanze",
+					"name": "Windlanze",
+					"sp": 2,
+					"desc": "Länger und schmaler.",
+					"params": {
+						"len": 280,
+						"width": 12
+					}
+				},
+				{
+					"id": "aufboe",
+					"name": "Aufböe",
+					"sp": 2,
+					"desc": "Schräg nach oben.",
+					"params": {
+						"up": true
+					}
+				},
+				{
+					"id": "sogwind",
+					"name": "Sogwind",
+					"sp": 2,
+					"desc": "Zieht statt zu schieben.",
+					"params": {
+						"push": -60
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "taifun",
+				"name": "Taifun",
+				"kind": "feld",
+				"sp": 0,
+				"desc": "Ein Taifun erfasst den Bildschirm und wirbelt alle zur Mitte.",
+				"params": {
+					"damage": 4,
+					"pull": 110
+				}
+			},
+			{
+				"id": "federsturm",
+				"name": "Federsturm",
+				"kind": "regen",
+				"sp": 2,
+				"desc": "Tausend Federklingen regnen auf alle Gegner.",
+				"params": {
+					"damage": 9,
+					"count": 24
+				}
+			},
+			{
+				"id": "himmelsschnitt",
+				"name": "Himmelsschnitt",
+				"kind": "ansturm",
+				"sp": 2,
+				"desc": "Sieben Windschnitte, du fliegst von Ziel zu Ziel.",
+				"params": {
+					"damage": 12,
+					"slashes": 7
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

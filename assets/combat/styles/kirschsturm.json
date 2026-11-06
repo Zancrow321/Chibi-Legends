@@ -1,0 +1,403 @@
+{
+	"_doc": "Baukasten-Kampfstil Kirschsturm (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "kirschsturm",
+	"name": "Kirschsturm",
+	"element": "wind",
+	"caster": "form",
+	"subtitle": "Blütenklinge · Kirschblüten im Wind · Blütenfolge",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"armed": true,
+	"colors": {
+		"main": "ff9ad8",
+		"accent": "ffe0f0",
+		"light": "ffe8f4",
+		"dark": "2a1020",
+		"white": "ffffff"
+	},
+	"kern": {
+		"type": "rhythmus",
+		"name": "Blütenfolge",
+		"desc": "Verschiedene Züge in einer Kombo lassen Blüten aufgehen (Knospe, Blüte, Vollblüte). Bei Vollblüte bekommt der nächste Zug einen Extra-Schnitt und +10 Leiste."
+	},
+	"loadout": {
+		"neutral": "bluetenschnitt",
+		"forward": "bluetenblaetter",
+		"up": "bluetenschritt",
+		"down": "fallende_bluete"
+	},
+	"zuege": {
+		"bluetenschnitt": {
+			"name": "Blütenschnitt",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Drei leichte Schnitte, Blütenblätter wirbeln.",
+			"params": {
+				"hits": 3,
+				"damage": 5,
+				"len": 52
+			},
+			"enhanced": {
+				"hits_add": 2,
+				"len_add": 12
+			},
+			"alts": [
+				{
+					"id": "bluetenwirbel",
+					"name": "Blütenwirbel",
+					"sp": 2,
+					"desc": "Fünf Schnitte.",
+					"params": {
+						"hits": 5,
+						"damage": 3.5
+					}
+				},
+				{
+					"id": "zwei_zweige",
+					"name": "Zwei Zweige",
+					"sp": 2,
+					"desc": "Vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						]
+					}
+				},
+				{
+					"id": "fruehlingswind",
+					"name": "Frühlingswind",
+					"sp": 2,
+					"desc": "Schleudert hoch.",
+					"params": {
+						"launch": 280
+					}
+				}
+			]
+		},
+		"bluetenblaetter": {
+			"name": "Blütenblätter",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Fünf scharfe Blütenblätter fliegen nach vorn.",
+			"params": {
+				"count": 5,
+				"spread": 30,
+				"damage": 4,
+				"speed": 480,
+				"dist": 280,
+				"size": 0.7
+			},
+			"enhanced": {
+				"count_add": 2,
+				"damage_add": 1
+			},
+			"alts": [
+				{
+					"id": "blattstrom",
+					"name": "Blattstrom",
+					"sp": 2,
+					"desc": "Drei schnelle, enge Blätter.",
+					"params": {
+						"count": 3,
+						"spread": 6,
+						"damage": 6,
+						"speed": 620
+					}
+				},
+				{
+					"id": "suchblatt",
+					"name": "Suchblatt",
+					"sp": 2,
+					"desc": "Blätter suchen ihr Ziel.",
+					"params": {
+						"homing": 0.6,
+						"speed": 360
+					}
+				},
+				{
+					"id": "grosses_blatt",
+					"name": "Großes Blatt",
+					"sp": 2,
+					"desc": "Ein großes Blatt, durchschlägt.",
+					"params": {
+						"count": 1,
+						"size": 1.4,
+						"pierce": true,
+						"damage": 14
+					}
+				}
+			]
+		},
+		"bluetenschritt": {
+			"name": "Blütenschritt",
+			"kind": "schritt",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.1,
+			"frames": [
+				4,
+				6,
+				12
+			],
+			"desc": "Du verschwindest in Blüten und erscheinst hinter dem Gegner.",
+			"params": {
+				"dist": 140,
+				"damage": 10
+			},
+			"enhanced": {
+				"damage_add": 6,
+				"dist_add": 40
+			},
+			"alts": [
+				{
+					"id": "bluetentor",
+					"name": "Blütentor",
+					"sp": 2,
+					"desc": "Nach vorn ohne Ziel.",
+					"params": {
+						"behind": false,
+						"dist": 120
+					}
+				},
+				{
+					"id": "dornenschnitt",
+					"name": "Dornenschnitt",
+					"sp": 2,
+					"desc": "Härter.",
+					"params": {
+						"damage": 16
+					}
+				},
+				{
+					"id": "weiter_schritt",
+					"name": "Weiter Schritt",
+					"sp": 2,
+					"desc": "Weiter.",
+					"params": {
+						"dist": 190
+					}
+				}
+			]
+		},
+		"fallende_bluete": {
+			"name": "Fallende Blüte",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Du sinkst wie eine Blüte und schlägst hart ein.",
+			"params": {
+				"damage": 12,
+				"radius": 44,
+				"waves": true,
+				"wave_damage": 8
+			},
+			"enhanced": {
+				"radius_add": 16,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "bluetenkrater",
+					"name": "Blütenkrater",
+					"sp": 2,
+					"desc": "Großer Radius.",
+					"params": {
+						"radius": 70,
+						"waves": false
+					}
+				},
+				{
+					"id": "nachbluete",
+					"name": "Nachblüte",
+					"sp": 2,
+					"desc": "Zweiter Stoß.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "bluetenteppich",
+					"name": "Blütenteppich",
+					"sp": 2,
+					"desc": "Blüten bleiben 2 s.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"bluetenregen": {
+			"name": "Blütenregen",
+			"kind": "regen",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.6,
+			"frames": [
+				12,
+				10,
+				16
+			],
+			"desc": "Scharfe Blüten regnen vor dir herab.",
+			"params": {
+				"count": 7,
+				"width": 110,
+				"at": 90,
+				"damage": 5
+			},
+			"enhanced": {
+				"count_add": 4,
+				"width_add": 40
+			},
+			"alts": [
+				{
+					"id": "dichter_regen",
+					"name": "Dichter Regen",
+					"sp": 2,
+					"desc": "Mehr, schmaler.",
+					"params": {
+						"count": 11,
+						"width": 70,
+						"damage": 3.5
+					}
+				},
+				{
+					"id": "fernregen",
+					"name": "Fernregen",
+					"sp": 2,
+					"desc": "Weiter vorn.",
+					"params": {
+						"at": 170
+					}
+				},
+				{
+					"id": "grosse_blueten",
+					"name": "Große Blüten",
+					"sp": 2,
+					"desc": "Drei große.",
+					"params": {
+						"count": 3,
+						"damage": 12,
+						"big": true
+					}
+				}
+			]
+		},
+		"fruehlingswirbel": {
+			"name": "Frühlingswirbel",
+			"kind": "wirbel",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.3,
+			"frames": [
+				6,
+				30,
+				12
+			],
+			"desc": "Ein Wirbel aus Blüten und Klinge um dich.",
+			"params": {
+				"radius": 42,
+				"hits": 6,
+				"damage": 3,
+				"pull": 40,
+				"drift": 40
+			},
+			"enhanced": {
+				"hits_add": 3,
+				"radius_add": 12
+			},
+			"alts": [
+				{
+					"id": "standwirbel",
+					"name": "Standwirbel",
+					"sp": 2,
+					"desc": "Am Platz, mehr Sog.",
+					"params": {
+						"drift": 0,
+						"pull": 100
+					}
+				},
+				{
+					"id": "weiter_wirbel",
+					"name": "Weiter Wirbel",
+					"sp": 2,
+					"desc": "Größer.",
+					"params": {
+						"radius": 64,
+						"hits": 4
+					}
+				},
+				{
+					"id": "aufwirbel",
+					"name": "Aufwirbel",
+					"sp": 2,
+					"desc": "Steigt auf.",
+					"params": {
+						"lift": 160
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "hanami",
+				"name": "Blütenfest",
+				"kind": "ansturm",
+				"sp": 0,
+				"desc": "Acht Schnitte unter fallenden Blüten.",
+				"params": {
+					"damage": 12,
+					"slashes": 8
+				}
+			},
+			{
+				"id": "kirschgewitter",
+				"name": "Kirschgewitter",
+				"kind": "regen",
+				"sp": 2,
+				"desc": "Ein Sturm aus Blütenklingen fällt auf alle.",
+				"params": {
+					"damage": 9,
+					"count": 24
+				}
+			},
+			{
+				"id": "letzte_bluete",
+				"name": "Letzte Blüte",
+				"kind": "nova",
+				"sp": 2,
+				"desc": "Ein riesiger Kirschbaum erblüht um dich und explodiert.",
+				"params": {
+					"damage": 74,
+					"radius": 150
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

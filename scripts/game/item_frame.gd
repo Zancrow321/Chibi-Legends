@@ -33,8 +33,9 @@ static func _load(name: String) -> Texture2D:
 	return _tex[name]
 
 
+## GOD pieces sit in the golden frame (their prismatic look is drawn on top).
 static func slot_texture(rarity: int) -> Texture2D:
-	return _load(str(Loot.RARITIES[clampi(rarity, 0, Loot.MYTHIC)].id))
+	return _load(str(Loot.RARITIES[clampi(rarity, 0, Loot.MYTHIC) if rarity <= Loot.MYTHIC else Loot.LEGENDARY].id))
 
 
 static func rim_texture(rarity: int) -> Texture2D:
@@ -61,7 +62,7 @@ static func halo(ci: CanvasItem, r: Rect2, rarity: int, t: float) -> void:
 ## The slot frame with its inner background (behind the icon).
 static func slot(ci: CanvasItem, r: Rect2, rarity: int, t := 0.0) -> void:
 	var tex := slot_texture(rarity)
-	var col := Loot.RARITIES[clampi(rarity, 0, Loot.MYTHIC)].color as Color
+	var col := Loot.RARITIES[clampi(rarity, 0, Loot.RARITIES.size() - 1)].color as Color
 	if tex == null:
 		ci.draw_rect(r.grow(2), INK)
 		ci.draw_rect(r, col.lerp(PAPER, 0.7))

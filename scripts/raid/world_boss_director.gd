@@ -296,6 +296,7 @@ func _claim(at: Vector2) -> void:
 		world._spawn_drop(Net.build_item(drop, world.player.style.id), at + Vector2(-26 + 52 * i, -40))
 		i += 1
 	_spawn_gem(at)
+	GodItems.try_roll("world", str(boss_id))
 
 
 func _offline_loot(at: Vector2) -> void:

@@ -24,6 +24,9 @@ const RARITIES := [
 	{"id": "episch", "name": "Episch", "color": Color("a884f3"), "rolls": 3, "power": 1.55},
 	{"id": "legendaer", "name": "Legendär", "color": Color("f9c22b"), "rolls": 4, "power": 2.0},
 	{"id": "mythisch", "name": "Mythisch", "color": Color("e83b3b"), "rolls": 5, "power": 2.5},
+	# GOD: über Mythisch, fällt nie zufällig. Jedes GOD-Teil gibt es weltweit
+	# genau einmal, der Server vergibt es (GodItems, supabase 0004_god_items.sql).
+	{"id": "gott", "name": "GOD", "color": Color("fff1b8"), "rolls": 6, "power": 3.2},
 ]
 const COMMON := 0
 const UNCOMMON := 1
@@ -31,6 +34,8 @@ const RARE := 2
 const EPIC := 3
 const LEGENDARY := 4
 const MYTHIC := 5
+## Weltweit einzigartige Teile (GodItems); keine Drop-Tabelle reicht bis hier.
+const GOD := 6
 ## Save format of the rarity indices (Profile "rarity_version").
 const RARITY_VERSION := 2
 
@@ -66,13 +71,13 @@ const NAMES := {
 }
 ## Aufwerten (upgrade): every step adds PLUS_STEP of all affixes; the cap
 ## grows with the rarity. Stored as "plus" on the item (0 = none).
-const MAX_PLUS := [3, 4, 5, 6, 8, 10]
+const MAX_PLUS := [3, 4, 5, 6, 8, 10, 10]
 const PLUS_STEP := 0.06
 ## Sammel-Zerlegen breaks everything up to this rarity (not worn, not locked).
 const BULK_MAX := RARE
 
 ## Sockets per rarity: [min, max].
-const SOCKETS := [[0, 0], [0, 0], [0, 1], [1, 1], [1, 2], [2, 2]]
+const SOCKETS := [[0, 0], [0, 0], [0, 1], [1, 1], [1, 2], [2, 2], [3, 3]]
 
 const MYTHIC_LINES := [
 	"Ein Stern ist hineingefallen und brennt noch.",
@@ -223,7 +228,7 @@ static func plus_mult(it: Dictionary) -> float:
 
 
 static func max_plus(it: Dictionary) -> int:
-	return int(MAX_PLUS[clampi(int(it.get("rarity", 0)), 0, MYTHIC)])
+	return int(MAX_PLUS[clampi(int(it.get("rarity", 0)), 0, MAX_PLUS.size() - 1)])
 
 
 static func can_upgrade(it: Dictionary) -> bool:
@@ -240,6 +245,11 @@ static func upgrade_cost(it: Dictionary) -> int:
 static func display_name(it: Dictionary) -> String:
 	var p := int(it.get("plus", 0))
 	return str(it.get("name", "")) + (" +%d" % p if p > 0 else "")
+
+
+## GOD-Teile schimmern in allen Farben: Farbe zum Zeitpunkt t (Sekunden).
+static func god_color(t: float, phase := 0.0) -> Color:
+	return Color.from_hsv(fposmod(t * 0.12 + phase, 1.0), 0.35, 1.0)
 
 
 static func score(it: Dictionary) -> float:

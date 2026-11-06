@@ -1,0 +1,396 @@
+{
+	"_doc": "Baukasten-Kampfstil Eisenkette (scripts/formen). Konzept und Liste: docs/formen-liste.md, Baukasten: docs/formen-baukasten.md. kind = Art des Zuges, params = Grundform, eine Alternative ueberschreibt einzelne Werte, enhanced = verstaerkt (L halten, 1 Stufe Legendenleiste): _add addiert, _mul multipliziert. Erzeugt von tools/formen/build.py, dort aendern.",
+	"id": "eisenkette",
+	"name": "Eisenkette",
+	"element": "",
+	"caster": "form",
+	"subtitle": "Kettensichel-Kunst · Haken, Kreisel, Anker · Kettenglieder",
+	"moveset": "res://assets/combat/movesets/glutatem.json",
+	"armed": true,
+	"colors": {
+		"main": "b8c0cc",
+		"accent": "ff8a2a",
+		"light": "e8ecf2",
+		"dark": "1a1c22",
+		"white": "ffffff"
+	},
+	"kern": {
+		"type": "rhythmus",
+		"name": "Kettenglied",
+		"desc": "Verschiedene Züge in einer Kombo fügen Kettenglieder an (1 bis 3). Beim dritten Glied bekommt der nächste Zug einen Extra-Schlag und +10 Leiste."
+	},
+	"loadout": {
+		"neutral": "sichelschwung",
+		"forward": "kettenwurf",
+		"up": "kettenkreisel",
+		"down": "ankerfall"
+	},
+	"zuege": {
+		"sichelschwung": {
+			"name": "Sichelschwung",
+			"kind": "hieb",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 0.7,
+			"frames": [
+				8,
+				12,
+				14
+			],
+			"desc": "Drei Schwünge mit der Kettensichel.",
+			"params": {
+				"hits": 3,
+				"damage": 5,
+				"len": 58
+			},
+			"enhanced": {
+				"hits_add": 2,
+				"len_add": 14
+			},
+			"alts": [
+				{
+					"id": "kettenhagel",
+					"name": "Kettenhagel",
+					"sp": 2,
+					"desc": "Fünf kurze Schwünge.",
+					"params": {
+						"hits": 5,
+						"damage": 3.5,
+						"len": 46
+					}
+				},
+				{
+					"id": "weiter_bogen",
+					"name": "Weiter Bogen",
+					"sp": 2,
+					"desc": "Weiter Bogen, vorn und hinten.",
+					"params": {
+						"sides": [
+							1,
+							-1
+						],
+						"len": 64
+					}
+				},
+				{
+					"id": "hakenzug",
+					"name": "Hakenzug",
+					"sp": 2,
+					"desc": "Zieht den Gegner heran.",
+					"params": {
+						"pull": 100
+					}
+				}
+			]
+		},
+		"kettenwurf": {
+			"name": "Kettenwurf",
+			"kind": "geschoss",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				10,
+				6,
+				16
+			],
+			"desc": "Die Sichel fliegt an der Kette nach vorn und kehrt zurück.",
+			"params": {
+				"damage": 11,
+				"speed": 520,
+				"dist": 220,
+				"boomerang": true
+			},
+			"enhanced": {
+				"dist_add": 80,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "doppelwurf",
+					"name": "Doppelwurf",
+					"sp": 2,
+					"desc": "Zwei Würfe kurz nacheinander.",
+					"params": {
+						"count": 2,
+						"delay": 0.15,
+						"damage": 7
+					}
+				},
+				{
+					"id": "gerader_wurf",
+					"name": "Gerader Wurf",
+					"sp": 2,
+					"desc": "Weit und durchschlagend, ohne Rückkehr.",
+					"params": {
+						"boomerang": false,
+						"pierce": true,
+						"dist": 340
+					}
+				},
+				{
+					"id": "schwerer_anker",
+					"name": "Schwerer Anker",
+					"sp": 2,
+					"desc": "Groß und langsam.",
+					"params": {
+						"size": 1.6,
+						"speed": 360,
+						"damage": 16
+					}
+				}
+			]
+		},
+		"kettenkreisel": {
+			"name": "Kettenkreisel",
+			"kind": "wirbel",
+			"dir": "up",
+			"sp": 1,
+			"cd": 1.3,
+			"frames": [
+				6,
+				30,
+				12
+			],
+			"desc": "Die Kette kreist um dich und trifft mehrmals.",
+			"params": {
+				"radius": 46,
+				"hits": 5,
+				"damage": 3.5,
+				"pull": 40,
+				"lift": 80
+			},
+			"enhanced": {
+				"hits_add": 3,
+				"radius_add": 14
+			},
+			"alts": [
+				{
+					"id": "weiter_kreis",
+					"name": "Weiter Kreis",
+					"sp": 2,
+					"desc": "Größerer Kreis.",
+					"params": {
+						"radius": 66,
+						"hits": 4
+					}
+				},
+				{
+					"id": "wanderkreisel",
+					"name": "Wanderkreisel",
+					"sp": 2,
+					"desc": "Wandert nach vorn.",
+					"params": {
+						"drift": 90,
+						"lift": 0
+					}
+				},
+				{
+					"id": "hochkreisel",
+					"name": "Hochkreisel",
+					"sp": 2,
+					"desc": "Steigt hoch auf.",
+					"params": {
+						"lift": 200
+					}
+				}
+			]
+		},
+		"ankerfall": {
+			"name": "Ankerfall",
+			"kind": "sturz",
+			"dir": "down",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				8,
+				8,
+				18
+			],
+			"desc": "Du schlägst den Sichelanker von oben in den Boden.",
+			"params": {
+				"damage": 14,
+				"radius": 44,
+				"waves": true,
+				"wave_damage": 8
+			},
+			"enhanced": {
+				"radius_add": 16,
+				"damage_add": 5
+			},
+			"alts": [
+				{
+					"id": "tiefer_anker",
+					"name": "Tiefer Anker",
+					"sp": 2,
+					"desc": "Großer Aufprall.",
+					"params": {
+						"radius": 72,
+						"waves": false
+					}
+				},
+				{
+					"id": "kettenbeben",
+					"name": "Kettenbeben",
+					"sp": 2,
+					"desc": "Zweiter Stoß.",
+					"params": {
+						"aftershock": true
+					}
+				},
+				{
+					"id": "kettenfeld",
+					"name": "Kettenfeld",
+					"sp": 2,
+					"desc": "Ketten schlagen 2 s aus dem Boden.",
+					"params": {
+						"crater": 2.0
+					}
+				}
+			]
+		},
+		"kettenschild": {
+			"name": "Kettenschild",
+			"kind": "konter",
+			"dir": "neutral",
+			"sp": 1,
+			"cd": 1.2,
+			"frames": [
+				4,
+				24,
+				14
+			],
+			"desc": "Die wirbelnde Kette fängt Angriffe ab und schlägt zurück.",
+			"params": {
+				"stance": 0.45,
+				"counter_damage": 21
+			},
+			"enhanced": {
+				"counter_damage_add": 10
+			},
+			"alts": [
+				{
+					"id": "abprall",
+					"name": "Abprall",
+					"sp": 2,
+					"desc": "Wirft Geschosse zurück.",
+					"params": {
+						"reflect": true
+					}
+				},
+				{
+					"id": "lange_wehr",
+					"name": "Lange Wehr",
+					"sp": 2,
+					"desc": "Längeres Fenster.",
+					"params": {
+						"stance": 0.75,
+						"counter_damage": 14
+					}
+				},
+				{
+					"id": "fesselkonter",
+					"name": "Fesselkonter",
+					"sp": 2,
+					"desc": "Nach dem Konter 4 s +20 %.",
+					"params": {
+						"buff": 4
+					}
+				}
+			]
+		},
+		"kettenzug": {
+			"name": "Kettenzug",
+			"kind": "sturm",
+			"dir": "forward",
+			"sp": 1,
+			"cd": 1.0,
+			"frames": [
+				5,
+				12,
+				12
+			],
+			"desc": "Die Kette hakt sich ein und zieht dich nach vorn.",
+			"params": {
+				"dist": 150,
+				"damage": 10
+			},
+			"enhanced": {
+				"dist_mul": 1.5,
+				"damage_add": 4
+			},
+			"alts": [
+				{
+					"id": "pendelzug",
+					"name": "Pendelzug",
+					"sp": 2,
+					"desc": "Hin und zurück.",
+					"params": {
+						"back": true
+					}
+				},
+				{
+					"id": "funkenschleife",
+					"name": "Funkenschleife",
+					"sp": 2,
+					"desc": "Funkenspur bleibt.",
+					"params": {
+						"trail": true
+					}
+				},
+				{
+					"id": "rammzug",
+					"name": "Rammzug",
+					"sp": 2,
+					"desc": "Kurz und hart.",
+					"params": {
+						"dist": 90,
+						"damage": 16
+					}
+				}
+			]
+		}
+	},
+	"meisterzug": {
+		"name": "Meisterzug",
+		"sp": 4,
+		"cost": 300,
+		"desc": "Super für 3 Stufen der Legendenleiste. Die drei Varianten sind verschiedene Supers.",
+		"variants": [
+			{
+				"id": "kettenkaefig",
+				"name": "Kettenkäfig",
+				"kind": "feld",
+				"sp": 0,
+				"desc": "Ketten spannen sich über den Bildschirm und schnüren alle ein.",
+				"params": {
+					"damage": 4,
+					"pull": 80
+				}
+			},
+			{
+				"id": "tausend_glieder",
+				"name": "Tausend Glieder",
+				"kind": "ansturm",
+				"sp": 2,
+				"desc": "Die Sichel jagt in sieben Würfen von Ziel zu Ziel.",
+				"params": {
+					"damage": 12,
+					"slashes": 7
+				}
+			},
+			{
+				"id": "ankersturz",
+				"name": "Ankersturz",
+				"kind": "saeulen",
+				"sp": 2,
+				"desc": "Neun Anker schlagen in einer Reihe vor dir ein.",
+				"params": {
+					"damage": 12,
+					"count": 9
+				}
+			}
+		]
+	},
+	"_sp_total": 50
+}

@@ -95,7 +95,16 @@ func set_look(look: Dictionary) -> void:
 	var st: Dictionary = CreatorCatalog.data.get("styles", {}).get(str(l.get("style", "")), {})
 	if bool(st.get("unarmed", false)):
 		l["weapon"] = ""
+	body.god_style = str(l.get("style", ""))
 	body.look = l
+	refresh_god()
+
+
+## GOD-Teile (getragen oder in der Anprobe) an die Figur: Look + Effekte.
+func refresh_god() -> void:
+	var worn := GodItems.worn()
+	if worn != body.god:
+		body.god = worn
 
 
 ## Big weapons (scale 2 and up, or "twohand": true) stand in the two-hand guard.
