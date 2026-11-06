@@ -23,6 +23,8 @@ var best := 0
 var week_best := 0
 var run_splitter := 0
 var run_items := 0
+## Place in this week's online leaderboard (0 = offline / not yet known).
+var place := 0
 var _t := 0.0
 
 
@@ -162,11 +164,16 @@ func _floor_cleared() -> void:
 	if is_guard_floor(floor_no):
 		# gear whose item level climbs with the tower, at least rare
 		var lv := Profile.level + floor_no / GUARD_EVERY
-		var item := Loot.roll(lv, maxi(Loot.EPIC, Loot.roll_rarity(true)), "", world.player.style.id)
-		world._spawn_drop(item, at)
 		run_items += 1
 		SeasonPass.track("boss")
-		RaidLoot.on_kill("turmwache")  # one Raid-Mark per guard
+		if Net.is_online():
+			_guard_online(lv, at)
+		else:
+			var item := Loot.roll(lv, maxi(Loot.EPIC, Loot.roll_rarity(true)), "", world.player.style.id)
+			world._spawn_drop(item, at)
+			RaidLoot.on_kill("turmwache")  # one Raid-Mark per guard
+	if Net.is_online() and floor_no > week_best:
+		_report_floor(floor_no)
 	if floor_no > best:
 		best = floor_no
 	if floor_no > week_best:
@@ -175,6 +182,26 @@ func _floor_cleared() -> void:
 	world.toast("Etage %d geschafft! +%d Splitter" % [floor_no, reward])
 	if world.glut_fx != null:
 		world.glut_fx.word(world.player.global_position + Vector2(0, -90), "ETAGE GESCHAFFT!", Color("fff4d0"), 28)
+
+
+## Online: the server rolls the guard's piece and pays the mark.
+func _guard_online(lv: int, at: Vector2) -> void:
+	var r: Dictionary = await Net.call_fn("cl_claim_boss", {"boss": "turmwache", "fight_seconds": int(fight_time), "level": lv})
+	if not r.ok:
+		world._spawn_drop(Loot.roll(lv, maxi(Loot.EPIC, Loot.roll_rarity(true)), "", world.player.style.id), at)
+		RaidLoot.on_kill("turmwache")
+		return
+	Profile.marks = int(r.data.total_marks)
+	Profile.save()
+	for drop in r.data.drops:
+		world._spawn_drop(Net.build_item(drop, world.player.style.id), at)
+
+
+## Online: new weekly best goes to the leaderboard; shows the place.
+func _report_floor(n: int) -> void:
+	var r: Dictionary = await Net.call_fn("cl_tower", {"floor_reached": n})
+	if r.ok:
+		place = int(r.data.place)
 
 
 ## Guard defeated: the floor ends through the normal enemy count.
@@ -223,6 +250,8 @@ func _reset_run() -> void:
 func notice() -> String:
 	match state:
 		"wait":
+			if place > 0:
+				return "Turm der Prüfungen  ·  Rekord: Etage %d  ·  Woche: Platz %d  →" % [best, place]
 			return "Turm der Prüfungen  ·  Rekord: Etage %d  →" % best
 		"fight":
 			var left := alive.filter(func(e): return is_instance_valid(e) and e.state != "dead").size()
