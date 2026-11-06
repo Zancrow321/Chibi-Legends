@@ -10,7 +10,10 @@ extends Control
 ##   Optionen:  volume, effect strength, graphics, damage numbers, shake,
 ##              fullscreen (GameSettings, saved at once).
 ## Pauses the game while open. Keys: Q/E tab, arrows/WASD choose, Space/Enter
-## use, X salvage, G set a gem, Esc close. Mouse works everywhere.
+## use, X salvage, G set a gem, F Aufwerten (+1..+10), L lock, Z
+## Sammel-Zerlegen, Esc close. Mouse works everywhere.
+## Every item box sits in the PixelLab frame of its rarity (ItemFrame),
+## animated from Episch; the item card gets the matching rim.
 
 const TABS := ["Charakter", "Inventar", "Steine", "Optionen"]
 const OPTIONS_TAB := 3
@@ -38,6 +41,7 @@ var _toast_t := 0.0
 var _confirm_salvage := ""
 var _reforge_stat := ""  # affix picked for Umschmieden on the item card
 var _gsel := 0  # Steine tab: gem cell (row = kind, column = tier)
+var _confirm_bulk := false  # Sammel-Zerlegen asked once
 
 
 func _ready() -> void:
@@ -172,6 +176,12 @@ func _key(k: Key) -> void:
 				_reforge_selected()
 			KEY_G:
 				_socket_selected()
+			KEY_F:
+				_upgrade_selected()
+			KEY_L:
+				_lock_selected()
+			KEY_Z:
+				_salvage_bulk()
 	elif tab == 2:
 		match k:
 			KEY_LEFT, KEY_A:
@@ -206,6 +216,7 @@ func _set_tab(i: int) -> void:
 	if i != tab:
 		tab = i
 		_confirm_salvage = ""
+		_confirm_bulk = false
 		Sfx.play("ui_click", -4.0)
 
 
@@ -219,6 +230,7 @@ func _say(s: String) -> void:
 func _move_sel(d: int) -> void:
 	_sel = clampi(_sel + d, 0, COLS * ROWS - 1)
 	_confirm_salvage = ""
+	_confirm_bulk = false
 	_reforge_stat = ""
 	Sfx.play("ui_click", -10.0)
 
@@ -250,6 +262,10 @@ func _salvage_selected() -> void:
 	if Profile.is_equipped(it.uid):
 		_say("Erst ablegen, dann zerlegen")
 		return
+	if it.get("locked", false):
+		_say("Gesperrt: erst entsperren (L)")
+		Sfx.play("ui_error")
+		return
 	if _confirm_salvage != it.uid and int(it.rarity) >= Loot.EPIC:
 		_confirm_salvage = it.uid
 		_say("Nochmal drücken: %s wirklich zerlegen?" % it.name)
@@ -259,6 +275,55 @@ func _salvage_selected() -> void:
 	_sel = mini(_sel, maxi(0, Profile.items.size() - 1))
 	_say("+%d Splitter" % gain)
 	Sfx.play("hit_light", -4.0)
+
+
+## Aufwerten: +1 step for Splitter (anywhere), up to the rarity's cap.
+func _upgrade_selected() -> void:
+	var it := _sel_item()
+	if it.is_empty():
+		return
+	if not Loot.can_upgrade(it):
+		_say("%s ist schon auf Höchststufe" % Loot.display_name(it))
+		Sfx.play("ui_error")
+		return
+	var cost := Loot.upgrade_cost(it)
+	if Profile.splitter < cost:
+		_say("Zu wenig Splitter (%d nötig)" % cost)
+		Sfx.play("ui_error")
+		return
+	Profile.upgrade(it.uid)
+	get_tree().call_group("profile_user", "apply_profile")
+	_say("Aufgewertet: %s  (−%d Splitter)" % [Loot.display_name(it), cost])
+	Sfx.play("hit_heavy" if int(it.plus) >= Loot.max_plus(it) else "hit_blade", -4.0)
+
+
+func _lock_selected() -> void:
+	var it := _sel_item()
+	if it.is_empty():
+		return
+	var on := Profile.toggle_lock(it.uid)
+	_confirm_salvage = ""
+	_say("%s gesperrt" % it.name if on else "%s entsperrt" % it.name)
+	Sfx.play("ui_click", -4.0)
+
+
+## Sammel-Zerlegen: everything up to Loot.BULK_MAX that is not worn or
+## locked, asks once.
+func _salvage_bulk() -> void:
+	var n := Profile.bulk_candidates().size()
+	if n == 0:
+		_say("Nichts zum Zerlegen (angelegt und gesperrt bleibt)")
+		Sfx.play("ui_error")
+		return
+	if not _confirm_bulk:
+		_confirm_bulk = true
+		_say("Nochmal drücken: %d Gegenstände bis %s zerlegen?" % [n, Loot.RARITIES[Loot.BULK_MAX].name])
+		return
+	_confirm_bulk = false
+	var res := Profile.salvage_bulk()
+	_sel = mini(_sel, maxi(0, Profile.items.size() - 1))
+	_say("%d zerlegt: +%d Splitter" % [res[0], res[1]])
+	Sfx.play("hit_heavy", -6.0)
 
 
 ## Umschmieden: only in the courtyard (Schmiedin Hino), rerolls the picked
@@ -288,7 +353,7 @@ func _reforge_selected() -> void:
 	var new_stat := Profile.reforge(it.uid, stat)
 	_reforge_stat = new_stat
 	get_tree().call_group("profile_user", "apply_profile")
-	_say("Umgeschmiedet: %s  (−%d Splitter)" % [Loot.stat_line(new_stat, float(it.stats[new_stat])), cost])
+	_say("Umgeschmiedet: %s  (−%d Splitter)" % [Loot.stat_line(new_stat, Loot.affix(it, new_stat)), cost])
 	Sfx.play("hit_blade")
 
 
@@ -553,7 +618,7 @@ func _draw() -> void:
 	var fy := R.end.y + 14.0
 	var keys := [["Q/E", "Reiter"], ["Esc", "Schließen"]]
 	if tab == 1:
-		keys = [["Q/E", "Reiter"], ["Pfeile", "Wählen"], ["Leer", "Anlegen"], ["G", "Stein einsetzen"], ["X", "Zerlegen"], ["R", "Sortieren"], ["Esc", "Schließen"]]
+		keys = [["Q/E", "Reiter"], ["Pfeile", "Wählen"], ["Leer", "Anlegen"], ["F", "Aufwerten"], ["G", "Stein"], ["L", "Sperren"], ["X", "Zerlegen"], ["Z", "Sammeln"], ["R", "Sortieren"], ["Esc", "Schließen"]]
 	elif tab == 2:
 		keys = [["Q/E", "Reiter"], ["Pfeile", "Wählen"], ["F", "Verschmelzen (Hof)"], ["Esc", "Schließen"]]
 	elif tab == OPTIONS_TAB:
@@ -632,18 +697,22 @@ func _draw_character(R: Rect2) -> void:
 		["Schadensminderung", _pct(minf(Loot.DEF_CAP, Profile.bonus("def")))],
 		["Leistenladung", "+" + _pct(Profile.bonus("gauge"))],
 		["Abklingzeit", "−" + _pct(1.0 - ItemSets.cooldown_factor())],
+		["Lauftempo", "+" + _pct(minf(Loot.SPEED_CAP, Profile.bonus("speed")))],
+		["Lebensraub", _pct(minf(Loot.LIFESTEAL_CAP, Profile.bonus("lifesteal")))],
+		["Elementarschaden", "+" + _pct(Profile.bonus("elem"))],
 		["Ausrüstungswert", str(Profile.gear_score())],
 		["Splitter", str(Profile.splitter)],
 		["Edelsteine", str(Gems.total())],
 		["Gegenstände", "%d / %d" % [Profile.items.size(), Profile.BAG_SIZE]],
 	]
-	var y := sr.position.y + 66.0
+	var y := sr.position.y + 62.0
+	var step := minf(32.0, (sr.size.y - 100.0) / rows.size())
 	for i in rows.size():
 		if i % 2 == 0:
-			draw_rect(Rect2(sr.position.x + 8, y - 20, sr.size.x - 16, 30), Color(INK, 0.06))
-		_ink(Vector2(sr.position.x + 18, y), rows[i][0], 16, Color(INK, 0.8))
-		_ink(Vector2(sr.position.x + 18, y), rows[i][1], 17, INK, HORIZONTAL_ALIGNMENT_RIGHT, sr.size.x - 36)
-		y += 32.0
+			draw_rect(Rect2(sr.position.x + 8, y - step * 0.62, sr.size.x - 16, step), Color(INK, 0.06))
+		_ink(Vector2(sr.position.x + 18, y), rows[i][0], 15, Color(INK, 0.8))
+		_ink(Vector2(sr.position.x + 18, y), rows[i][1], 16, INK, HORIZONTAL_ALIGNMENT_RIGHT, sr.size.x - 36)
+		y += step
 	_ink(Vector2(sr.position.x + 16, sr.end.y - 22), "Pro Stufe: +3 % Leben, +2 % Schaden", 13, Color(INK, 0.6))
 
 	# gear slots
@@ -682,33 +751,27 @@ func _slot_card(r: Rect2, slot: String, it: Dictionary) -> void:
 	if it.is_empty():
 		_ink(Vector2(tx, r.position.y + 50), "leer", 16, Color(INK, 0.45))
 		return
-	draw_string(font, Vector2(tx, r.position.y + 42), it.name, HORIZONTAL_ALIGNMENT_LEFT, tw, 14, col.darkened(0.3))
+	draw_string(font, Vector2(tx, r.position.y + 42), Loot.display_name(it), HORIZONTAL_ALIGNMENT_LEFT, tw, 14, col.darkened(0.3))
 	var y := r.position.y + 60.0
 	for st in it.stats:
-		draw_string(font, Vector2(tx, y), Loot.stat_line(st, float(it.stats[st])), HORIZONTAL_ALIGNMENT_LEFT, tw, 11, INK)
+		draw_string(font, Vector2(tx, y), Loot.stat_line(st, Loot.affix(it, st)), HORIZONTAL_ALIGNMENT_LEFT, tw, 11, INK)
 		y += 13.0
 		if y > r.end.y - 4:
 			break
 
 
 func _icon_box(r: Rect2, it: Dictionary, slot := "") -> void:
-	var col := Loot.color(it) if not it.is_empty() else Color(INK, 0.25)
+	if not it.is_empty():  # rarity frame (PixelLab), animated from Episch
+		if int(it.rarity) >= Loot.GOD:  # GOD: prismatic rays behind the frame
+			_god_box(r)
+		ItemFrame.box(self, r, it, _t)
+		_badges(r, it)
+		return
+	var col := Color(INK, 0.25)
 	draw_rect(r.grow(2), INK)
 	draw_rect(r, col.lerp(PAPER, 0.7))
 	_halftone(r, Color(col, 0.5), 5)
-	if not it.is_empty():
-		if int(it.rarity) >= Loot.EPIC:  # epic and better glow
-			draw_circle(r.get_center(), r.size.x * (0.36 + 0.03 * sin(_t * 4.0)), Color(col, 0.35))
-		if int(it.rarity) >= Loot.GOD:  # GOD: prismatic burst, two counter-turning ray rings
-			_god_box(r)
-		elif int(it.rarity) >= Loot.MYTHIC:  # mythic: turning star rays
-			for k in 6:
-				var a := _t * 0.9 + k * TAU / 6.0
-				var tip := r.get_center() + Vector2.from_angle(a) * r.size.x * 0.5
-				draw_line(r.get_center(), tip, Color(col.lightened(0.3), 0.35 + 0.15 * sin(_t * 5.0 + k)), r.size.x * 0.06)
-		ItemIcon.draw_icon(self, r.get_center(), it, r.size.x / 22.0)
-		_badges(r, it)
-	elif slot != "":
+	if slot != "":
 		var ghost := {"slot": "talisman" if slot == "talisman2" else slot, "rarity": 0, "icon": 0}
 		_ghost(r, ghost)
 
@@ -750,6 +813,15 @@ func _badges(r: Rect2, it: Dictionary) -> void:
 		var p := r.position
 		draw_colored_polygon(PackedVector2Array([p, p + Vector2(d * 1.8, 0), p + Vector2(0, d * 1.8)]), col)
 		draw_polyline(PackedVector2Array([p + Vector2(d * 1.8, 0), p + Vector2(0, d * 1.8)]), INK, 1.5)
+	var p := int(it.get("plus", 0))
+	if p > 0:  # upgrade step, top right
+		var txt := "+%d" % p
+		var fs := int(clampf(r.size.x * 0.24, 11.0, 22.0))
+		var tp := Vector2(r.end.x - 3.0 - font.get_string_size(txt, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x, r.position.y + fs + 1.0)
+		draw_string_outline(font, tp, txt, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, 4, INK)
+		draw_string(font, tp, txt, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Color("f9c22b") if p >= Loot.max_plus(it) else PAPER)
+	if it.get("locked", false):
+		_lock(Vector2(r.get_center().x, r.position.y + d * 0.9), d * 0.75)
 	if it.has("mod"):
 		var mr := Rect2(r.end - Vector2(d * 2.0, d * 2.0), Vector2(d * 2.0, d * 2.0))
 		var t := ItemMods.texture(str(it.mod))
@@ -758,6 +830,16 @@ func _badges(r: Rect2, it: Dictionary) -> void:
 		else:
 			draw_circle(mr.get_center(), d * 0.8, Color("f9c22b"))
 			draw_arc(mr.get_center(), d * 0.8, 0, TAU, 12, INK, 1.5)
+
+
+## Small padlock (locked items).
+func _lock(c: Vector2, s: float) -> void:
+	draw_arc(c + Vector2(0, -s * 0.35), s * 0.55, PI, TAU, 10, INK, s * 0.55)
+	draw_arc(c + Vector2(0, -s * 0.35), s * 0.55, PI, TAU, 10, Color("c7dcd0"), s * 0.25)
+	var b := Rect2(c + Vector2(-s * 0.8, -s * 0.3), Vector2(s * 1.6, s * 1.2))
+	draw_rect(b.grow(1.5), INK)
+	draw_rect(b, Color("f9c22b"))
+	draw_circle(b.get_center(), s * 0.18, INK)
 
 
 ## Faint outline of an empty slot's item kind.
@@ -785,7 +867,7 @@ func _draw_inventory(R: Rect2) -> void:
 		else:
 			_icon_box(r, it)
 			if Profile.is_equipped(it.uid):
-				var b := Rect2(r.end.x - 20, r.position.y - 6, 22, 18)
+				var b := Rect2(r.position.x - 4, r.position.y - 6, 22, 18)
 				draw_rect(b.grow(1), INK)
 				draw_rect(b, GOOD)
 				draw_string(font, b.position + Vector2(0, 14), "A", HORIZONTAL_ALIGNMENT_CENTER, 22, 13, PAPER)
@@ -802,6 +884,9 @@ func _draw_inventory(R: Rect2) -> void:
 				Sfx.play("ui_click", -10.0)])
 	var sort_r := Rect2(gx, gy + ROWS * CELL + 4, 170, 34)
 	_button(sort_r, "Sortieren", "R", _sort)
+	var bulk := Profile.bulk_candidates().size()
+	var bulk_label := "Alle ≤ %s (%d)" % [Loot.RARITIES[Loot.BULK_MAX].name, bulk] if not _confirm_bulk else "Sicher? Nochmal"
+	_button(Rect2(sort_r.end.x + 12, sort_r.position.y, COLS * CELL - 8 - 182, 34), bulk_label, "Z", _salvage_bulk, _confirm_bulk)
 	# item card
 	var cx := gx + COLS * CELL + 22.0
 	var card := Rect2(cx, inner.position.y + 8, inner.end.x - cx, inner.size.y - 8)
@@ -823,30 +908,49 @@ func _draw_inventory(R: Rect2) -> void:
 		return
 	var col := Loot.color(it)
 	var rar := Loot.rarity_info(it)
+	var rint := int(it.get("rarity", 0))
 	_paper(card)
-	draw_rect(Rect2(card.position + Vector2(3, 3), Vector2(card.size.x - 6, 92)), col.lerp(PAPER, 0.6))
-	_halftone(Rect2(card.position + Vector2(3, 3), Vector2(card.size.x - 6, 92)), Color(col, 0.55), 5)
-	var ic := Rect2(card.position.x + 20, card.position.y + 20, 96, 96)
+	draw_rect(Rect2(card.position + Vector2(3, 3), Vector2(card.size.x - 6, 112)), col.lerp(PAPER, 0.6))
+	_halftone(Rect2(card.position + Vector2(3, 3), Vector2(card.size.x - 6, 112)), Color(col, 0.55), 5)
+	ItemFrame.card(self, card.grow(5), rint, _t)  # thin rarity rim around the whole card
+	var ic := Rect2(card.position.x + 22, card.position.y + 22, 96, 96)
 	_icon_box(ic, it)
 	var tx := ic.end.x + 18.0
-	_tagged(Vector2(tx, card.position.y + 18), rar.name, col.darkened(0.15), 14)
-	_ink(Vector2(tx, card.position.y + 70), it.name, 24)
+	_tagged(Vector2(tx, card.position.y + 22), rar.name, col.darkened(0.15), 14)
+	# lock toggle in the header
+	var lr := Rect2(card.end.x - 50, card.position.y + 18, 32, 32)
+	draw_rect(lr.grow(2), INK)
+	draw_rect(lr, Color("f9c22b").lerp(PAPER, 0.3) if it.get("locked", false) else PAPER)
+	if it.get("locked", false):
+		_lock(lr.get_center() + Vector2(0, 2), 9.0)
+	else:
+		_lock(lr.get_center() + Vector2(0, 2), 9.0)
+		draw_rect(lr, Color(PAPER, 0.55))
+	_hits.append([lr, func(_p): _lock_selected()])
+	_ink(Vector2(tx, card.position.y + 72), Loot.display_name(it), 24, INK, HORIZONTAL_ALIGNMENT_LEFT, card.end.x - tx - 20)
 	_ink(Vector2(tx, card.position.y + 94), "%s · Gegenstandsstufe %d" % [Profile.SLOT_NAMES[it.slot], int(it.ilvl)], 14, Color(INK, 0.7))
+	_plus_pips(Vector2(tx, card.position.y + 104), it)
+	var y := card.position.y + 152.0
 	if GodItems.is_god(it):
 		var gs: Dictionary = GodItems.SERIES.get(str(it.get("series", "")), {})
 		var gline := "Weltweit einzigartig · %s" % str(gs.get("title", ""))
 		if bool(it.get("test", false)):
 			gline += " · Testbesitz"
-		_ink(Vector2(tx, card.position.y + 114), gline, 13, Loot.god_color(_t).darkened(0.45))
-	var y := card.position.y + 150.0
+		_ink(Vector2(tx, card.position.y + 134), gline, 13, Loot.god_color(_t).darkened(0.45))
+		y += 8.0
 	var place := Profile.place_of(it.uid)
 	var worn := Profile.equipped_item(place if place != "" else Profile.place_for(it))
 	var same: bool = not worn.is_empty() and worn.uid == it.uid
 	var target := _reforge_target(it)
 	var hof := GameFlow.is_overworld()
+	var lines := 0
 	for st in Loot.STATS:
-		var v := float(it.stats.get(st, 0.0))
-		var w := float(worn.stats.get(st, 0.0)) if not worn.is_empty() and not same else v
+		if Loot.affix(it, st) > 0.0 or (not worn.is_empty() and not same and Loot.affix(worn, st) > 0.0):
+			lines += 1
+	var line_h := 25.0 if lines <= 6 else 21.0  # more stats: tighter rows
+	for st in Loot.STATS:
+		var v := Loot.affix(it, st)
+		var w := Loot.affix(worn, st) if not worn.is_empty() and not same else v
 		if v == 0.0 and w == 0.0:
 			continue
 		if v > 0.0:
@@ -862,7 +966,7 @@ func _draw_inventory(R: Rect2) -> void:
 		if not same and not worn.is_empty() and absf(v - w) > 0.0005:
 			var d := v - w
 			_ink(Vector2(card.position.x + 24, y), ("%+.1f %%" % (d * 100.0)).replace(".", ","), 16, GOOD if d > 0 else BAD, HORIZONTAL_ALIGNMENT_RIGHT, card.size.x - 48)
-		y += 25.0
+		y += line_h
 	y = _card_extras(card, it, y)
 	if it.has("line"):
 		_ink(Vector2(card.position.x + 24, y + 4), "„%s“" % it.line, 13, col.darkened(0.35))
@@ -874,13 +978,30 @@ func _draw_inventory(R: Rect2) -> void:
 	else:
 		_ink(Vector2(card.position.x + 24, y + 10), "Vergleich mit: %s" % worn.name, 15, Color(INK, 0.7))
 	var by := card.end.y - 54.0
+	var half := (card.size.x - 52.0) * 0.5
+	var up_label := "Aufwerten −%d" % Loot.upgrade_cost(it) if Loot.can_upgrade(it) else "Höchststufe +%d" % Loot.max_plus(it)
+	_button(Rect2(card.position.x + 20, by - 48, half, 38), up_label, "F", _upgrade_selected, Loot.can_upgrade(it) and Profile.splitter >= Loot.upgrade_cost(it))
 	if hof and target != "":
-		_button(Rect2(card.position.x + 20, by - 48, card.size.x - 40, 38), "Umschmieden −%d Splitter" % Loot.reforge_cost(it), "U", _reforge_selected)
+		_button(Rect2(card.position.x + 32 + half, by - 48, half, 38), "Umschmieden −%d" % Loot.reforge_cost(it), "U", _reforge_selected)
 	elif target != "":
-		_ink(Vector2(card.position.x + 24, by - 18), "Umschmieden: bei Schmiedin Hino im Hof", 13, Color(INK, 0.55))
+		_ink(Vector2(card.position.x + 32 + half, by - 30), "Umschmieden:", 13, Color(INK, 0.55))
+		_ink(Vector2(card.position.x + 32 + half, by - 14), "bei Hino im Hof", 13, Color(INK, 0.55))
 	_button(Rect2(card.position.x + 20, by, 190, 38), "Ablegen" if same else "Anlegen", "Leer", _equip_selected, not same)
 	var gain := int(Loot.salvage_value(it))
-	_button(Rect2(card.position.x + 226, by, card.size.x - 246, 38), "Zerlegen +%d" % gain if _confirm_salvage != it.uid else "Sicher? Nochmal", "X", _salvage_selected)
+	var sl := "Gesperrt" if it.get("locked", false) else ("Zerlegen +%d" % gain if _confirm_salvage != it.uid else "Sicher? Nochmal")
+	_button(Rect2(card.position.x + 226, by, card.size.x - 246, 38), sl, "X", _salvage_selected)
+
+
+## Upgrade steps as small diamonds under the item type (filled = reached).
+func _plus_pips(p: Vector2, it: Dictionary) -> void:
+	var n := Loot.max_plus(it)
+	var have := int(it.get("plus", 0))
+	for i in n:
+		var c := p + Vector2(6 + i * 13, 6)
+		var pts := PackedVector2Array([c + Vector2(0, -5), c + Vector2(5, 0), c + Vector2(0, 5), c + Vector2(-5, 0)])
+		draw_colored_polygon(pts, Color("f9c22b") if i < have else Color(INK, 0.15))
+		pts.append(pts[0])
+		draw_polyline(pts, INK, 1.5)
 
 
 ## Sockets (click: set a gem / at Hino take it out), set and legendary mod

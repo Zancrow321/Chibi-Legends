@@ -47,9 +47,16 @@ const STATS := {
 	"gauge": {"name": "Leistenladung", "min": 0.04, "max": 0.10},
 	"critdmg": {"name": "Krit-Schaden", "min": 0.05, "max": 0.12},
 	"def": {"name": "Schadensminderung", "min": 0.01, "max": 0.025},
+	"speed": {"name": "Lauftempo", "min": 0.02, "max": 0.045},
+	"lifesteal": {"name": "Lebensraub", "min": 0.005, "max": 0.012},
+	"elem": {"name": "Elementarschaden", "min": 0.04, "max": 0.09},
 }
 ## Defence never goes above this, however much gear stacks.
 const DEF_CAP := 0.5
+## Caps of the newer stats: Lauftempo (run speed), Lebensraub (share of
+## dealt damage healed), Elementarschaden only counts on element hits.
+const SPEED_CAP := 0.3
+const LIFESTEAL_CAP := 0.08
 
 ## Which stat each kind always rolls first.
 const MAIN_STAT := {"waffe": "atk", "oberteil": "hp", "hose": "def", "schuhe": "gauge", "accessoire": "crit", "talisman": "critdmg"}
@@ -62,6 +69,13 @@ const NAMES := {
 	"accessoire": ["Stirnband", "Rindenreif", "Moosschal", "Glutgürtel", "Dornenkette", "Laubbrosche"],
 	"talisman": ["Holzamulett", "Glutperle", "Mooskristall", "Sumpfauge", "Tigerzahn", "Igelfeder"],
 }
+## Aufwerten (upgrade): every step adds PLUS_STEP of all affixes; the cap
+## grows with the rarity. Stored as "plus" on the item (0 = none).
+const MAX_PLUS := [3, 4, 5, 6, 8, 10, 10]
+const PLUS_STEP := 0.06
+## Sammel-Zerlegen breaks everything up to this rarity (not worn, not locked).
+const BULK_MAX := RARE
+
 ## Sockets per rarity: [min, max].
 const SOCKETS := [[0, 0], [0, 0], [0, 1], [1, 1], [1, 2], [2, 2], [3, 3]]
 
@@ -204,6 +218,35 @@ static func color(it: Dictionary) -> Color:
 	return rarity_info(it).color
 
 
+## An affix with the upgrade steps applied (what really counts).
+static func affix(it: Dictionary, s: String) -> float:
+	return float(it.get("stats", {}).get(s, 0.0)) * plus_mult(it)
+
+
+static func plus_mult(it: Dictionary) -> float:
+	return 1.0 + PLUS_STEP * int(it.get("plus", 0))
+
+
+static func max_plus(it: Dictionary) -> int:
+	return int(MAX_PLUS[clampi(int(it.get("rarity", 0)), 0, MAX_PLUS.size() - 1)])
+
+
+static func can_upgrade(it: Dictionary) -> bool:
+	return int(it.get("plus", 0)) < max_plus(it)
+
+
+## Splitter for the next upgrade step; grows with rarity and step.
+static func upgrade_cost(it: Dictionary) -> int:
+	var p := int(it.get("plus", 0))
+	return int(12.0 * pow(1.6, float(it.get("rarity", 0))) * (1.0 + p * 0.75) + float(it.get("ilvl", 1)) * 0.5)
+
+
+## "Glutzahn +3"
+static func display_name(it: Dictionary) -> String:
+	var p := int(it.get("plus", 0))
+	return str(it.get("name", "")) + (" +%d" % p if p > 0 else "")
+
+
 ## GOD-Teile schimmern in allen Farben: Farbe zum Zeitpunkt t (Sekunden).
 static func god_color(t: float, phase := 0.0) -> Color:
 	return Color.from_hsv(fposmod(t * 0.12 + phase, 1.0), 0.35, 1.0)
@@ -212,7 +255,7 @@ static func god_color(t: float, phase := 0.0) -> Color:
 static func score(it: Dictionary) -> float:
 	var total := 0.0
 	for s in it.get("stats", {}):
-		total += float(it.stats[s]) * 1000.0
+		total += affix(it, s) * 1000.0
 	for g in it.get("sockets", []):
 		if str(g) != "":
 			total += Gems.value(str(g)) * 1000.0
@@ -221,8 +264,14 @@ static func score(it: Dictionary) -> float:
 	return total
 
 
+## Upgrades give back half of what they cost.
 static func salvage_value(it: Dictionary) -> float:
-	return 5.0 * pow(2.4, float(it.get("rarity", 0))) + float(it.get("ilvl", 1))
+	var back := 0.0
+	var probe := {"rarity": it.get("rarity", 0), "ilvl": it.get("ilvl", 1)}
+	for p in int(it.get("plus", 0)):
+		probe["plus"] = p
+		back += upgrade_cost(probe) * 0.5
+	return 5.0 * pow(2.4, float(it.get("rarity", 0))) + float(it.get("ilvl", 1)) + back
 
 
 ## "+5,2 % Schaden"

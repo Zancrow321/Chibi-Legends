@@ -43,6 +43,12 @@ jobs:
           grep -q "ITEM-TEST OK" items.log
           ! grep -E "SCRIPT ERROR|Parse Error|ITEM-TEST FEHLER" items.log
 
+      - name: Ausrüstungs-Logiktest (Rahmen, Aufwerten, Sperren, Sammel-Zerlegen)
+        run: |
+          godot --headless -s res://tools/item_frames/test_gear.gd 2>&1 | tee gear.log | grep -E "AUSRUESTUNG|SCRIPT ERROR" || true
+          grep -q "AUSRUESTUNG-TEST OK" gear.log
+          ! grep -E "SCRIPT ERROR|Parse Error|AUSRUESTUNG-TEST FEHLER" gear.log
+
       - name: Effekt-Skin-Logiktest (Kampfstil-Skins)
         run: |
           godot --headless -s res://tools/skins/test_skins.gd 2>&1 | tee skins.log | grep -E "SKIN|SCRIPT ERROR" || true
@@ -102,6 +108,21 @@ jobs:
           godot --headless -s res://tools/japan_outfits/test_outfits.gd 2>&1 | tee kleidung.log | grep -E "KLEIDUNG|SCRIPT ERROR" || true
           grep -q "KLEIDUNG-TEST OK" kleidung.log
           ! grep -E "SCRIPT ERROR|Parse Error" kleidung.log
+
+      - name: Rahmen-Probe (Bilder auf ci-bilder/rahmen)
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        continue-on-error: true
+        run: |
+          mkdir -p rahmen-probe
+          timeout 150 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/item_frames/probe.gd -- "$PWD/rahmen-probe" > rahmen-probe.log 2>&1 || true
+          grep -A3 -E "RAHMEN|SCRIPT ERROR" rahmen-probe.log | head -40 || true
+          cd rahmen-probe
+          ls *.png > /dev/null 2>&1 || exit 0
+          git init -q . && git checkout -q -b bilder
+          git add *.png
+          git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -qm "Rahmen-Probe ${{ github.event.pull_request.head.sha }}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" bilder:refs/heads/ci-bilder/rahmen
+          rm -rf .git
 
       - name: Kampfstil-Test (30 Baukasten-Stile, alle Züge und Meisterzüge)
         run: |

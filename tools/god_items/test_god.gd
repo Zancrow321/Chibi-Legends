@@ -33,7 +33,7 @@ func _initialize() -> void:
 		series[d.series] += 1
 		check(GodItems.texture(id) != null, "Icon %s" % id)
 		var it := GodItems.make(id)
-		check(it.rarity == Loot.GOD and it.stats.size() == 6 and it.sockets.size() == 3, "Werte/Sockel %s" % id)
+		check(it.rarity == Loot.GOD and it.stats.size() == Loot.STATS.size() and it.sockets.size() == 3, "Werte/Sockel %s" % id)
 		check(it.stats[Loot.MAIN_STAT[it.slot]] >= 0.07, "starker Hauptwert %s" % id)
 		if d.has("part"):
 			check(CreatorCatalog.slot_texture(d.part[0], d.part[1]) != null, "Look %s" % id)

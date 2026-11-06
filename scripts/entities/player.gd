@@ -424,7 +424,7 @@ func _physics_step(delta: float) -> void:
 			ghost_timer = 0.04
 			world.spawn_ghost(self)
 	else:
-		var target_speed := dir * RUN_SPEED * (glut.move_speed() if glut != null else 1.0)
+		var target_speed := dir * RUN_SPEED * (glut.move_speed() if glut != null else 1.0) * (1.0 + minf(Loot.SPEED_CAP, Profile.bonus("speed")))
 		if busy and on_floor:
 			target_speed *= ATTACK_DRIFT
 			if not move.is_empty() and MoveSet.phase_at(move, move_t) != "recovery":

@@ -53,6 +53,10 @@ var last_reaction := ""
 var reactions_found: Dictionary = {}
 var toast_text := ""
 var toast_time := 0.0
+## Beute-Leiste (Hud): [item, seconds shown], newest last, at most 4.
+var loot_feed: Array = []
+## How long a find stays in the Beute-Leiste.
+const FEED_TIME := 4.5
 var _hits: Array = []  # [time, damage]
 var _enemy_layer: Node2D
 var _clock := 0.0
@@ -227,6 +231,9 @@ func _process(delta: float) -> void:
 		_slow_until = 0
 		Engine.time_scale = CombatDebug.time_factor
 	toast_time = maxf(0.0, toast_time - delta)
+	for e in loot_feed:
+		e[1] += delta
+	loot_feed = loot_feed.filter(func(e): return e[1] < FEED_TIME)
 	camera.global_position = player.global_position + Vector2(player.facing * 30.0, -40.0)
 	if Input.is_action_just_pressed("cycle_fx"):
 		FxSettings.cycle()
@@ -447,8 +454,14 @@ func deal_hit(target: Node2D, base: float, element: String, from_x: float, knock
 	var res := Reactions.resolve(target.status, element, base)
 	var crit := randf() < 0.05 + Profile.bonus("crit")
 	var dmg := int(round(res.damage * randf_range(0.92, 1.08) * _combo_scale(target) * (1.0 + Profile.bonus("atk")) * (1.5 + Profile.bonus("critdmg") if crit else 1.0)))
+	if element != "":  # Elementarschaden from gear counts on element hits only
+		dmg = int(round(dmg * (1.0 + Profile.bonus("elem"))))
 	if target.has_method("damage_factor"):
 		dmg = int(round(dmg * target.damage_factor()))  # boss: shield 0, Bruch +50 %
+	if target != player and player != null and player.hp > 0.0:  # Lebensraub
+		var steal := minf(Loot.LIFESTEAL_CAP, Profile.bonus("lifesteal"))
+		if steal > 0.0:
+			player.hp = minf(player.max_hp, player.hp + dmg * steal)
 	var col: Color = GameData.ELEMENTS[element].color if element != "" else Color("ff4b3e")
 	hit_landed.emit(target.get_hurt_rect().get_center(), col, res.reaction != "")
 	# still staggered from the last hit = a real combo (no gap to escape)
@@ -554,6 +567,13 @@ func dps() -> float:
 	for h in _hits:
 		sum += h[1]
 	return sum / DPS_WINDOW
+
+
+## Shows a picked-up item in the Beute-Leiste (framed by rarity).
+func loot_feed_add(item: Dictionary) -> void:
+	loot_feed.append([item, 0.0])
+	while loot_feed.size() > 4:
+		loot_feed.pop_front()
 
 
 func toast(text: String) -> void:

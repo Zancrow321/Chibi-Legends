@@ -46,6 +46,7 @@ var menu: GlutatemMenu
 var _gauge_shown := 0.0
 
 const CUTIN_TIME := 1.0
+const FEED_TIME := TrainingRoom.FEED_TIME
 
 
 func _ready() -> void:
@@ -228,11 +229,36 @@ func _draw() -> void:
 	_draw_combo(W, H)
 	if _cutin_t >= 0.0:
 		_draw_cutin(W, H)
+	_draw_loot_feed(H)
 	if room.toast_time > 0.0:
 		var a := minf(1.0, room.toast_time * 3.0)
 		var tw := font.get_string_size(room.toast_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 22).x + 48
 		_panel(Rect2(W / 2 - tw / 2, H * 0.24, tw, 44), Color(0.09, 0.07, 0.16, 0.9 * a), 22, Color(TRIM, a))
 		_text(Vector2(W / 2 - tw / 2, H * 0.24 + 29), room.toast_text, 22, Color(TEXT, a), HORIZONTAL_ALIGNMENT_CENTER, tw)
+
+
+## Beute-Leiste: the last finds slide in at the left edge, each in the
+## frame of its rarity (ItemFrame), animated from Episch.
+func _draw_loot_feed(H: float) -> void:
+	var y := H * 0.36
+	for e in room.loot_feed:
+		var it: Dictionary = e[0]
+		var age := float(e[1])
+		var slide := clampf(age * 6.0, 0.0, 1.0)
+		var fade := clampf((FEED_TIME - age) * 2.5, 0.0, 1.0)
+		var x := -260.0 * (1.0 - slide * (2.0 - slide)) + 14.0
+		var col := Loot.color(it)
+		var w := 250.0
+		var card := Rect2(x, y, w, 58)
+		draw_rect(card.grow(2), Color(0, 0, 0, 0.55 * fade))
+		draw_rect(card, Color(PANEL, 0.9 * fade))
+		draw_rect(Rect2(card.position, Vector2(4, card.size.y)), Color(col, fade))
+		var box := Rect2(x + 10, y + 5, 48, 48)
+		if fade > 0.05:
+			ItemFrame.box(self, box, it, _t)
+		_text(Vector2(x + 68, y + 25), Loot.display_name(it), 17, Color(col.lightened(0.25), fade), HORIZONTAL_ALIGNMENT_LEFT, w - 74)
+		_text(Vector2(x + 68, y + 46), Loot.rarity_info(it).name + " · " + Profile.SLOT_NAMES.get(str(it.get("slot", "")), ""), 13, Color(MUTED, fade), HORIZONTAL_ALIGNMENT_LEFT, w - 74)
+		y += 66.0
 
 
 ## Combo counter at the right edge while a combo runs.
