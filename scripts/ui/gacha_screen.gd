@@ -617,8 +617,9 @@ func _draw_rates(W: float, H: float, b: Dictionary, sid: String) -> void:
 		draw_string(font, Vector2(x, y), l, HORIZONTAL_ALIGNMENT_LEFT, r.size.x - 72, 15, INK)
 		y += 26
 	var parts: Array = Gacha.banner_parts(b)
-	if not parts.is_empty():
-		var names: Array = parts.map(func(p): return CreatorCatalog.item_name(p.slot, p.id))
+	var skin_names: Array = StyleSkin.skins(str(b.get("style", ""))).filter(func(k): return k.get("unlock", {}).get("banner", false)).map(func(k): return "Skin " + str(k.name))
+	if not parts.is_empty() or not skin_names.is_empty():
+		var names: Array = parts.map(func(p): return CreatorCatalog.item_name(p.slot, p.id)) + skin_names
 		draw_string(font, Vector2(x, y + 6), "Banner-Teile (Episch): " + ", ".join(names), HORIZONTAL_ALIGNMENT_LEFT, r.size.x - 72, 15, RED)
 	draw_string(font, Vector2(x, r.end.y - 24), "Gezogen bisher: %d  ·  R oder Esc schließt" % Gacha.pulls_total, HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(INK, 0.6))
 	_hits.clear()
@@ -720,6 +721,12 @@ func _draw_card(i: int) -> void:
 			else:
 				draw_circle(ic, isz * 0.3, Color(str(r.get("color", "ffffff"))))
 				draw_arc(ic, isz * 0.3, 0, TAU, 32, INK, 3.0)
+		"skin":
+			var em2 := StyleSkin.icon(str(r.get("style", "")), str(r.id))
+			if em2 != null:
+				draw_texture_rect(em2, Rect2(ic - Vector2(isz, isz) * 0.5, Vector2(isz, isz)), false)
+			else:
+				draw_circle(ic, isz * 0.3, StyleSkin.map_color(StyleSkin.info(str(r.get("style", "")), str(r.id)), Color("ff9a2a")))
 		"part":
 			var t2 := _tex("icon_outfit")
 			if t2 != null:

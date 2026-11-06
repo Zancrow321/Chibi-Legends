@@ -3,7 +3,8 @@ extends Control
 ## Style menu (Tab): the seven skills of the fighting style, for each the
 ## Grundform and its three alternatives (exactly one is active, chosen
 ## before the fight), the four slots of the special button and the
-## Meisterzug variant. Pauses the game while open.
+## Meisterzug variant, plus the style's effect skin (only looks). Pauses the
+## game while open.
 ## Keys: up/down skill, left/right alternative, 1-4 slot, Tab/Esc close.
 ## Mouse: click a skill, an alternative or a slot.
 
@@ -20,7 +21,7 @@ var room: TrainingRoom
 var font: Font
 var is_open := false
 var _row := 0
-var _rows: Array = []  # zug ids + "meisterzug"
+var _rows: Array = []  # zug ids + "meisterzug" + "skin"
 var _row_rects: Array = []
 var _card_rects: Array = []  # [Rect2, alt id]
 var _slot_rects: Array = []  # [Rect2, dir]
@@ -45,6 +46,7 @@ func open() -> void:
 	visible = true
 	_rows = _style().zug_order.duplicate()
 	_rows.append("meisterzug")
+	_rows.append("skin")
 	get_tree().paused = true
 
 
@@ -99,6 +101,12 @@ func _input(event: InputEvent) -> void:
 
 func _options(id: String) -> Array:
 	var st := _style()
+	if id == "skin":
+		var sk: Array = [{"id": StyleSkin.DEFAULT, "name": "Standard", "desc": "Die Originalfarben des Stils.", "sp": 0}]
+		for k in StyleSkin.skins(st.id):
+			sk.append({"id": str(k.id), "name": str(k.name), "desc": str(k.get("desc", "")), "sp": 0,
+				"hint": StyleSkin.hint(st.id, str(k.id))})
+		return sk
 	if id == "meisterzug":
 		var out: Array = []
 		for v in st.variants():
@@ -112,6 +120,8 @@ func _options(id: String) -> Array:
 
 
 func _active(id: String) -> String:
+	if id == "skin":
+		return StyleSkin.active_id(_style().id)
 	if id == "meisterzug":
 		return _style().super_variant
 	return _style().active_alt.get(id, "")
@@ -119,6 +129,13 @@ func _active(id: String) -> String:
 
 func _pick(alt_id: String) -> void:
 	var id: String = _rows[_row]
+	if id == "skin":
+		var h := StyleSkin.hint(_style().id, alt_id)
+		if h != "":
+			room.toast("Gesperrt: " + h)
+			return
+		StyleSkin.set_active(_style().id, alt_id)
+		return
 	if id == "meisterzug":
 		_style().set_variant(alt_id)
 	else:
@@ -128,6 +145,8 @@ func _pick(alt_id: String) -> void:
 func _cycle_alt(d: int) -> void:
 	var id: String = _rows[_row]
 	var opts := _options(id)
+	if id == "skin":  # only skins the player owns
+		opts = opts.filter(func(o): return str(o.get("hint", "")) == "")
 	var i := 0
 	for j in opts.size():
 		if opts[j].id == _active(id):
@@ -137,7 +156,7 @@ func _cycle_alt(d: int) -> void:
 
 func _assign(dir: String) -> void:
 	var id: String = _rows[_row]
-	if id == "meisterzug":
+	if id == "meisterzug" or id == "skin":
 		return
 	_style().assign(id, dir)
 
@@ -178,7 +197,7 @@ func _draw() -> void:
 	var st := _style()
 	draw_rect(Rect2(Vector2.ZERO, size), Color(0.02, 0.0, 0.03, 0.6))
 	var w := minf(1080.0, size.x - 40.0)
-	var h := minf(620.0, size.y - 40.0)
+	var h := minf(680.0, size.y - 30.0)
 	var box := Rect2((size.x - w) / 2.0, (size.y - h) / 2.0, w, h)
 	_panel(box, PANEL, 16, Color(TRIM, 0.7))
 	# header with an ember glow line
@@ -193,22 +212,27 @@ func _draw() -> void:
 	var lx := x0 + 24
 	var ly := y0 + 100
 	var lw := 300.0
-	var rh := 62.0
+	var rh := minf(62.0, (h - 146.0) / _rows.size() - 6.0)
 	for i in _rows.size():
 		var id: String = _rows[i]
 		var r := Rect2(lx, ly + i * (rh + 6), lw, rh)
 		_row_rects.append(r)
 		var sel := i == _row
 		_panel(r, CARD.lightened(0.08) if sel else CARD, 10, Color(HOT, 0.9) if sel else Color(1, 1, 1, 0.08))
-		GlutIcons.draw(self, Rect2(r.position + Vector2(8, 8), Vector2(46, 46)), id, _t)
-		var nm: String = st.data.get("meisterzug", {}).get("name", "Meisterzug") if id == "meisterzug" else st.zug(id).name
-		_text(r.position + Vector2(64, 26), nm, 19, TEXT)
+		if id == "skin":
+			var si := StyleSkin.icon(st.id, _active("skin"))
+			if si != null:
+				draw_texture_rect(si, Rect2(r.position + Vector2(8, 8), Vector2(rh - 16, rh - 16)), false)
+		else:
+			GlutIcons.draw(self, Rect2(r.position + Vector2(8, 8), Vector2(rh - 16, rh - 16)), id, _t)
+		var nm: String = "Effekt-Skin" if id == "skin" else st.data.get("meisterzug", {}).get("name", "Meisterzug") if id == "meisterzug" else st.zug(id).name
+		_text(r.position + Vector2(rh + 2, rh * 0.42), nm, 19, TEXT)
 		var sub := ""
 		for o in _options(id):
 			if o.id == _active(id):
 				sub = o.name
-		_text(r.position + Vector2(64, 49), sub, 14, HOT if _active(id) != "" or id == "meisterzug" else MUTED)
-		var badge: String = "P" if id == "meisterzug" else SLOT_KEYS.get(st.slot_of(id), "")
+		_text(r.position + Vector2(rh + 2, rh * 0.8), sub, 14, HOT if _active(id) != "" or id == "meisterzug" else MUTED)
+		var badge: String = "P" if id == "meisterzug" else "" if id == "skin" else SLOT_KEYS.get(st.slot_of(id), "")
 		if badge != "":
 			var bw := font.get_string_size(badge, HORIZONTAL_ALIGNMENT_LEFT, -1, 15).x + 14
 			_panel(Rect2(r.end.x - bw - 8, r.position.y + 8, bw, 22), Color("2a1a14"), 6, Color(TRIM, 0.8))
@@ -218,10 +242,12 @@ func _draw() -> void:
 	var rx := lx + lw + 24
 	var rw := box.end.x - 24 - rx
 	var ry := y0 + 100
-	var title: String = st.data.get("meisterzug", {}).get("name", "Meisterzug") if id2 == "meisterzug" else st.zug(id2).name
+	var title: String = "Effekt-Skin" if id2 == "skin" else st.data.get("meisterzug", {}).get("name", "Meisterzug") if id2 == "meisterzug" else st.zug(id2).name
 	_text(Vector2(rx, ry + 26), title, 26, TEXT)
 	var info := ""
-	if id2 == "meisterzug":
+	if id2 == "skin":
+		info = "Nur Optik: färbt alle Effekte des Stils um (Funken, Wellen, Meisterzug). Keine Werte."
+	elif id2 == "meisterzug":
 		info = "Super für 3 Stufen der Legendenleiste (P). Die Alternativen sind drei verschiedene Supers."
 	else:
 		var z := st.zug(id2)
@@ -239,6 +265,9 @@ func _draw() -> void:
 		var act: bool = o.id == _active(id2)
 		var glow := 0.5 + 0.5 * sin(_t * 5.0)
 		_panel(cr, Color(0.22, 0.1, 0.06, 0.95) if act else CARD, 12, Color(HOT, 0.75 + 0.25 * glow) if act else Color(1, 1, 1, 0.1), 3 if act else 2)
+		if id2 == "skin":
+			_skin_card(cr, o, act)
+			continue
 		_text(cr.position + Vector2(16, 28), o.name, 19, TEXT if act else Color(TEXT, 0.85))
 		var sp := "%d SP" % int(o.sp)
 		_text_r(Vector2(cr.end.x - 16, cr.position.y + 28), sp, 15, TRIM)
@@ -249,7 +278,9 @@ func _draw() -> void:
 	# slots
 	_slot_rects.clear()
 	var sy := ry + 66 + 2 * (ch + 14) + 6
-	if id2 != "meisterzug":
+	if id2 == "skin":
+		_skin_palette(Rect2(rx, sy, rw, 96))
+	elif id2 != "meisterzug":
 		_text(Vector2(rx, sy + 18), "Slot der Spezial-Taste (1-4):", 16, TEXT)
 		var sw := (rw - 3 * 10) / 4.0
 		for i in FightingStyle.DIRS.size():
@@ -265,4 +296,41 @@ func _draw() -> void:
 	else:
 		_text(Vector2(rx, sy + 18), "Die Legendenleiste füllt sich mit jedem Treffer und beim Kontern.", 16, MUTED)
 	# footer
-	_text(Vector2(x0, box.end.y - 16), "↑↓ Skill   ←→ Alternative   1-4 Slot   Maus geht auch   Tab / Esc schließen", 15, MUTED, HORIZONTAL_ALIGNMENT_CENTER, w)
+	_text(Vector2(x0, box.end.y - 16), "↑↓ Skill   ←→ Alternative / Skin   1-4 Slot   Maus geht auch   Tab / Esc schließen", 15, MUTED, HORIZONTAL_ALIGNMENT_CENTER, w)
+
+
+## One skin card: recoloured Meisterzug icon, name, text, lock hint.
+func _skin_card(cr: Rect2, o: Dictionary, act: bool) -> void:
+	var st := _style()
+	var locked := str(o.get("hint", "")) != ""
+	var ic := StyleSkin.icon(st.id, str(o.id))
+	var isz := cr.size.y - 24.0
+	if ic != null:
+		draw_texture_rect(ic, Rect2(cr.position + Vector2(12, 12), Vector2(isz, isz)), false, Color(0.35, 0.35, 0.4, 0.8) if locked else Color.WHITE)
+	var tx := cr.position.x + isz + 26.0
+	var tw := cr.end.x - tx - 14.0
+	_text(Vector2(tx, cr.position.y + 28), o.name, 19, MUTED if locked else TEXT)
+	if act:
+		_panel(Rect2(cr.end.x - 66, cr.position.y + 10, 52, 22), HOT, 6)
+		draw_string(font, Vector2(cr.end.x - 66, cr.position.y + 27), "aktiv", HORIZONTAL_ALIGNMENT_CENTER, 52, 14, Color("2a0c08"))
+	elif locked:
+		_text_r(Vector2(cr.end.x - 14, cr.position.y + 28), "gesperrt", 14, Color("e85a5a"))
+	draw_multiline_string(font, Vector2(tx, cr.position.y + 52), o.desc, HORIZONTAL_ALIGNMENT_LEFT, tw, 14, 3, Color(MUTED.lightened(0.2), 1.0))
+	if locked:
+		draw_string(font, Vector2(tx, cr.end.y - 12), str(o.hint), HORIZONTAL_ALIGNMENT_LEFT, tw, 13, TRIM)
+
+
+## The style's effect colours, as they look with the active skin.
+func _skin_palette(r: Rect2) -> void:
+	var st := _style()
+	var sk := StyleSkin.current(st.id)
+	_text(Vector2(r.position.x, r.position.y + 18), "Effektfarben mit diesem Skin:", 16, TEXT)
+	var cols: Array = st.data.get("colors", {}).values()
+	if cols.is_empty():
+		return
+	var n := cols.size()
+	var w := minf(64.0, (r.size.x - (n - 1) * 8.0) / n)
+	for i in n:
+		var c := StyleSkin.map_color(sk, Color(str(cols[i])))
+		var cr := Rect2(r.position.x + i * (w + 8.0), r.position.y + 30, w, 40)
+		_panel(cr, Color(minf(c.r, 1.0), minf(c.g, 1.0), minf(c.b, 1.0)), 8, Color(1, 1, 1, 0.25))

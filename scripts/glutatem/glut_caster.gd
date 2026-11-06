@@ -73,7 +73,14 @@ func setup(p: Player, st: FightingStyle) -> void:
 	player = p
 	style = st
 	world = p.world
-	fx = world.glut_fx
+	# own effect layer for the player's style, so an effect skin (StyleSkin)
+	# recolours only the player's fire and not the enemies' flames
+	# (child of the shared layer: same bloom boost, same depth)
+	fx = GlutFx.new()
+	fx.room = world
+	fx.stage = world.stage
+	world.glut_fx.add_child(fx)
+	fx.z_as_relative = false
 	GlutIcons.style_id = st.id
 	for z in style.zug_order:
 		cooldowns[z] = 0.0

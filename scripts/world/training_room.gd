@@ -116,6 +116,8 @@ func _ready() -> void:
 		stage.room = self
 		add_child(stage)
 		glut_fx.stage = stage
+		if player.glut != null:
+			player.glut.fx.stage = stage  # the player's own effect layer
 	if is_tower:
 		tower = TowerDirector.new()
 		tower.world = self

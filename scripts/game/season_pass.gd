@@ -283,6 +283,9 @@ static func give(r: Dictionary) -> String:
 				return "Neues Outfit im Creator: " + CreatorCatalog.item_name("top", str(r.id))
 			CreatorUnlocks.unlock(str(r.slot), str(r.id))
 			return "Neu im Creator: " + CreatorCatalog.item_name(str(r.slot), str(r.id))
+		"skin":
+			StyleSkin.unlock(str(r.style), str(r.id))
+			return "Effekt-Skin %s für %s (Tab)" % [StyleSkin.skin_name(str(r.style), str(r.id)), Gacha.style_name(str(r.style))]
 		"color":
 			CreatorCatalog.ensure()
 			for i in CreatorCatalog.data.get("colors", []).size():
@@ -309,4 +312,6 @@ static func label(r: Dictionary) -> String:
 			return CreatorCatalog.item_name(str(r.slot), str(r.id))
 		"color":
 			return "Farbstoff"
+		"skin":
+			return "Skin " + StyleSkin.skin_name(str(r.style), str(r.id))
 	return ""

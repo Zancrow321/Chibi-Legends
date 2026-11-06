@@ -294,8 +294,16 @@ static func _legendary(banner: Dictionary) -> Dictionary:
 
 static func _epic(banner: Dictionary) -> Dictionary:
 	var parts: Array = banner_parts(banner).filter(func(p): return not CreatorUnlocks.is_unlocked(p.slot, p.id))
+	# effect skins of the banner's style are Episch prizes too (only looks)
+	var sid := str(banner.get("style", ""))
+	for sk in StyleSkin.banner_skins(sid):
+		parts.append({"slot": "skin", "id": str(sk.id)})
 	if not parts.is_empty() and randf() < 0.7:
 		var p: Dictionary = parts[randi() % parts.size()]
+		if p.slot == "skin":
+			StyleSkin.unlock(sid, p.id)
+			return {"rarity": 1, "kind": "skin", "style": sid, "id": p.id, "new": true,
+				"name": StyleSkin.skin_name(sid, p.id), "text": "Effekt-Skin für %s (Tab)" % style_name(sid)}
 		CreatorUnlocks.unlock(p.slot, p.id)
 		return {"rarity": 1, "kind": "part", "slot": p.slot, "id": p.id, "new": true,
 			"name": CreatorCatalog.item_name(p.slot, p.id), "text": "Neues Teil für den Creator"}
@@ -353,9 +361,10 @@ static func _gear(r: int, loot_rarity: int) -> Dictionary:
 	return {"rarity": r, "kind": "splitter", "name": "%d Splitter" % sp, "splitter": sp, "text": "Tasche voll: %s zerlegt" % it.name}
 
 
-## Test hook (F9 in the shrine): own every style, plenty of crystals.
+## Test hook (F9 in the shrine): own every style and effect skin, plenty of crystals.
 static func unlock_all() -> void:
 	ensure()
+	StyleSkin.unlock_all()
 	for b in banners():
 		if not owned.has(str(b.style)):
 			owned[str(b.style)] = 1
