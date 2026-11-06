@@ -878,7 +878,7 @@ func _draw_inventory(R: Rect2) -> void:
 	_paper(card)
 	draw_rect(Rect2(card.position + Vector2(3, 3), Vector2(card.size.x - 6, 112)), col.lerp(PAPER, 0.6))
 	_halftone(Rect2(card.position + Vector2(3, 3), Vector2(card.size.x - 6, 112)), Color(col, 0.55), 5)
-	ItemFrame.card(self, card.grow(8), rint, _t, 1.0)  # rarity rim around the whole card
+	ItemFrame.card(self, card.grow(5), rint, _t)  # thin rarity rim around the whole card
 	var ic := Rect2(card.position.x + 22, card.position.y + 22, 96, 96)
 	_icon_box(ic, it)
 	var tx := ic.end.x + 18.0
