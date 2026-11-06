@@ -47,9 +47,12 @@ func _ready() -> void:
 		return
 
 	DuskStage.enabled = view_mode == 3  # the room builds the dusk light look itself
+	var post: PostFx = null
 	if view_mode == 0 or view_mode == 3:
-		_add_post_fx("dusk" if view_mode == 3 else "flat")
+		post = _add_post_fx(String(PostFx.AREA_MOODS.get(GameFlow.area, "dusk")) if view_mode == 3 else "flat")
 	var room := TrainingRoom.new()
+	if post != null:
+		post.hp_source = func(): return room.player.hp / maxf(room.player.max_hp, 1.0) if is_instance_valid(room) and room.player != null else 1.0
 	var numbers := DamageNumbers.new()
 	match view_mode:
 		1:
@@ -115,10 +118,11 @@ func _ready() -> void:
 
 ## Screen shader over the world (grading, shockwaves, heat haze). Added first,
 ## so fire and stages can register heat sources in their _ready.
-func _add_post_fx(mood: String) -> void:
+func _add_post_fx(mood: String) -> PostFx:
 	var post := PostFx.new()
 	post.mood = mood
 	add_child(post)
+	return post
 
 
 ## Game menu (Esc): Charakter, Inventar, Optionen. Over the HUDs, under the creator.

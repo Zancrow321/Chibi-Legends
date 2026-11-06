@@ -82,6 +82,23 @@ jobs:
           git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" bilder:refs/heads/ci-bilder/ruestung
           rm -rf .git
 
+      - name: PostFx-Probe (Vorher/Nachher-Bilder auf ci-bilder/postfx)
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        continue-on-error: true
+        run: |
+          mkdir -p postfx-probe
+          for tag in vorher nachher; do
+            timeout 180 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/postfx/probe.gd -- "$PWD/postfx-probe" $tag > postfx-$tag.log 2>&1 || true
+            grep -A3 -E "POSTFX|SCRIPT ERROR|SHADER ERROR" postfx-$tag.log | head -40 || true
+          done
+          cd postfx-probe
+          ls *.png > /dev/null 2>&1 || exit 0
+          git init -q . && git checkout -q -b bilder
+          git add *.png
+          git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -qm "PostFx-Probe ${{ github.event.pull_request.head.sha }}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" bilder:refs/heads/ci-bilder/postfx
+          rm -rf .git
+
       - name: Raid-Probe (Bilder)
         if: github.event_name == 'pull_request'
         continue-on-error: true

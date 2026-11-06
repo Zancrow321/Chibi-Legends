@@ -11,6 +11,20 @@ Fremd-Shader. Sie laufen im Compatibility-Renderer (WebGL 2, Browser).
 | Wind in Baum-Ebenen (pixelgenau, Böen) | `shaders/fx/wind_sway.gdshader` | Parallax-Bäume Wald + Hof |
 | Lichtstrahlen + Bodennebel (gestuft, Pixel-Blöcke) | `shaders/fx/atmosphere.gdshader`, `scripts/fx/atmosphere.gd` | Wald (Dämmerung), Hof (nur Nebel) |
 
+## Post-Processing (Bildlook je Gebiet)
+Ein einziger Bildschirm-Durchgang (`post_fx.gdshader`), billig genug für den Browser:
+- **Filmischer Farblook je Gebiet** (`PostFx.MOODS`, Zuordnung `AREA_MOODS`): weiche S-Kurve mit
+  sanfter Schulter (HDR-Glühen clippt nicht flach weiß), Split-Toning (Farbe in Schatten/Lichter),
+  Vibrance, Himmelslicht von oben und Dunst am Boden.
+  Trainingswald `dusk` (violette Schatten, orange Lichter, blauer Bodennebel), Akademie-Hof `day`
+  (Sonnenlicht, hellblaue Luft), Glutschmiede `ember` (rote Schatten, Rauch), Turm `arcane` (violett/cyan).
+- **Vignette + Bayer-Dithering** in Kunstpixeln gegen Farbstreifen.
+- **Wenig Leben** (< 30 %): Farbe wird blasser, der Rand pulsiert rot (`hp_source`).
+- **Große Treffer**: kurzer Helligkeits-Stoß (`exposure_punch`), Farbversatz, Schockwelle.
+- **Super-Finisher**: Manga-Einschlagbild (Tusche/Papier, erste Frames invertiert, `impact_frame`)
+  und radiale Zoom-Unschärfe (`zoom_blur`); während der Super-Pause leichte Zoom-Unschärfe um den Spieler.
+- `PostFx.legacy = true` zeigt den alten Look (nur für den Vorher/Nachher-Test `tools/postfx/probe.gd`).
+
 ## Auslöser
 - `CombatFx.hit/blast`: Reaktionen und Meisterzug-Finisher erzeugen Schockwelle + Farbversatz,
   schwere Feuertreffer kurzes Hitzeflimmern. `CombatFx.flash` gibt Farbversatz, `dim` (Super-Pause) hält ihn.
