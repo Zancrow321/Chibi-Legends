@@ -178,5 +178,35 @@
    "type": "generations",
    "generations": 1.0
   }
+ },
+ "guild_hall_0": {
+  "prompt": "small guild house of a magic academy seen from the front, warm timber frame walls on a stone base, wide wooden double door, dark red tiled roof with upturned eaves, two tall cloth banners hanging at both sides of the door in red and gold with an empty round crest, a lantern above the door, stone plinth steps, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 7,
+  "init_image_strength": 40,
+  "init_image": "raw/sketch/shrine.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "guild_hall_1": {
+  "prompt": "small guild house of a magic academy seen from the front, warm timber frame walls on a stone base, wide wooden double door, dark red tiled roof with upturned eaves, two tall cloth banners hanging at both sides of the door in red and gold with an empty round crest, a lantern above the door, stone plinth steps, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 21,
+  "init_image_strength": 60,
+  "init_image": "raw/sketch/shrine.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
+ },
+ "guild_hall_2": {
+  "prompt": "small guild house of a magic academy seen from the front, warm timber frame walls on a stone base, wide wooden double door, dark red tiled roof with upturned eaves, two tall cloth banners hanging at both sides of the door in red and gold with an empty round crest, a lantern above the door, stone plinth steps, 2D side-scroller platformer background prop, flat side view elevation seen straight from the front at eye level, orthographic, no top surfaces visible, no perspective, horizontal bottom edge standing on the ground line, pixel art game asset, bright saturated colors, cel shading with hard edges, bold dark outline, original fantasy magic academy design, clean readable silhouette, whole object fits inside the canvas",
+  "seed": 33,
+  "init_image_strength": 85,
+  "init_image": "raw/sketch/shrine.png",
+  "usage": {
+   "type": "generations",
+   "generations": 1.0
+  }
  }
 }

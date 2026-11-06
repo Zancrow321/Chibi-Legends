@@ -74,6 +74,9 @@ func connect_account() -> void:
 			Profile.save()
 			_set_state("online")
 			print("Online: angemeldet (%s)" % str(profile.get("name", "")))
+			var g := await call_fn("cl_guild_mine")
+			if g.ok:
+				GuildState.set_from(g.data)
 			return
 		ok = false
 	print("Online: offline weiter (%s)" % last_error)

@@ -130,6 +130,7 @@ func _add_menu() -> GameMenu:
 	layer.add_child(GachaScreen.new())  # Sternschrein (gacha for fighting styles)
 	layer.add_child(PassScreen.new())  # Herausforderungen + Saison-Pass (P)
 	layer.add_child(MarksShop.new())  # Raid-Marken-Tausch at Schmiedin Hino
+	layer.add_child(GuildScreen.new())  # Gildenhaus in the courtyard
 	add_child(layer)
 	return menu
 

@@ -61,6 +61,12 @@ jobs:
           grep -q "ONLINE-CLIENT OK" online.log
           ! grep -E "SCRIPT ERROR|Parse Error" online.log
 
+      - name: Gilden-Bildschirm baut (Vorschau ohne Server)
+        run: |
+          timeout 120 godot --headless --fixed-fps 60 -s res://tools/guild/probe.gd 2>&1 | tee gilden.log | grep -E "GILDEN|SCRIPT ERROR" || true
+          grep -q "GILDEN-PROBE OK" gilden.log
+          ! grep -E "SCRIPT ERROR|Parse Error" gilden.log
+
       - name: Turm-Logiktest (Endloser Turm)
         run: |
           timeout 300 godot --headless --fixed-fps 60 -s res://tools/tower/probe.gd 2>&1 | tee turm.log | grep -E "TURM|SCRIPT ERROR" || true
@@ -95,6 +101,7 @@ jobs:
           mkdir -p raid-probe
           timeout 300 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/raid/probe.gd -- "$PWD/raid-probe" > raid-probe.log 2>&1 || true
           timeout 300 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/tower/probe.gd -- "$PWD/raid-probe" > turm-probe.log 2>&1 || true
+          timeout 120 xvfb-run -a godot --path . --rendering-driver opengl3 --fixed-fps 60 -s res://tools/guild/probe.gd -- "$PWD/raid-probe" > gilden-probe.log 2>&1 || true
           ls -la raid-probe
 
       - name: Raid-Bilder auf den Branch ci-bilder/raid legen
@@ -154,6 +161,7 @@ jobs:
           echo "--- Raid-Probe Regeln:"; grep -E "^RAID" raid-probe.log || true
           echo "--- Turm-Probe Fehler:"; grep -A3 -E "SCRIPT ERROR|ERROR:" turm-probe.log | head -40 || true
           echo "--- Turm-Probe Regeln:"; grep -E "^TURM" turm-probe.log || true
+          echo "--- Gilden-Probe:"; grep -E "SCRIPT ERROR|ERROR:|GILDEN" -A2 gilden-probe.log | head -30 || true
 
       - uses: actions/upload-pages-artifact@v3
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
