@@ -1,0 +1,22 @@
+ERROR: Condition "status < 0" is true. Returning: ERR_CANT_OPEN
+   at: init_output_device (drivers/alsa/audio_driver_alsa.cpp:97)
+WARNING: All audio drivers failed, falling back to the dummy driver.
+     at: initialize (servers/audio/audio_server.cpp:258)
+
+POSTFX 1_wald mood=dusk danger=0.0 impact=0.0
+POSTFX shot 1_wald nachher
+POSTFX 2_wenig_leben mood=dusk danger=0.72 impact=0.0
+POSTFX shot 2_wenig_leben nachher
+POSTFX 3_super_a mood=dusk danger=0.0 impact=0.03666666666667
+POSTFX shot 3_super_a nachher
+POSTFX 3_super_b mood=dusk danger=0.0 impact=0.0
+POSTFX shot 3_super_b nachher
+POSTFX 3_super_c mood=dusk danger=0.0 impact=0.0
+POSTFX shot 3_super_c nachher
+POSTFX 4_hof mood=day danger=0.0 impact=0.0
+POSTFX shot 4_hof nachher
+POSTFX 5_raid mood=ember danger=0.0 impact=0.0
+POSTFX shot 5_raid nachher
+POSTFX 6_turm mood=arcane danger=0.0 impact=0.0
+POSTFX shot 6_turm nachher
+POSTFX-PROBE OK nachher
