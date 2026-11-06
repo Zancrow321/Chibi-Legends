@@ -129,6 +129,35 @@ func player_down() -> bool:
 	return true
 
 
+## Online: the server pays the marks and decides the bonus loot.
+func _claim_online(at: Vector2, secs: int) -> void:
+	var r: Dictionary = await Online.call_fn("cl_claim_boss", {"boss": BOSS_ID, "fight_seconds": secs, "level": Profile.level})
+	if not r.ok:
+		world.toast("Server: %s · Beute diesmal offline" % r.error)
+		_local_loot(at, secs)
+		return
+	var d: Dictionary = r.data
+	Profile.marks = int(d.total_marks)
+	Profile.save()
+	last_loot = {"bonus": d.bonus, "chance": d.chance, "marks": int(d.marks)}
+	if not d.bonus:
+		world.toast("Heute schon oft besiegt: keine Bonus-Beute, aber +%d Raid-Marken" % int(d.marks))
+		return
+	world.toast("Essenwächter besiegt in %d:%02d (Versuch %d) · +%d Raid-Marken" % [secs / 60, secs % 60, attempts, int(d.marks)])
+	var i := 0
+	for drop in d.drops:
+		world._spawn_drop(Online.build_item(drop, world.player.style.id), at + Vector2(-26 + 52 * i, -40))
+		i += 1
+	_spawn_gem(at)
+
+
+func _spawn_gem(at: Vector2) -> void:
+	var gem := ""
+	while gem == "":
+		gem = Gems.roll_drop(true)
+	world._spawn_drop({"gem": gem, "rarity": Gems.tier_of(gem)}, at + Vector2(0, -60))
+
+
 func boss_defeated(b: Boss) -> void:
 	won = true
 	var at := b.global_position
@@ -138,6 +167,14 @@ func boss_defeated(b: Boss) -> void:
 		world.glut_fx.word(at + Vector2(0, -140), "RAID GESCHAFFT!", Color("ffd25c"), 40)
 	var secs := int(fight_time)
 	SeasonPass.track("boss")
+	if Online.is_online():
+		_claim_online(at, secs)
+	else:
+		_local_loot(at, secs)
+
+
+## Offline: same rules on this device (RaidLoot).
+func _local_loot(at: Vector2, secs: int) -> void:
 	# Raid-Marken always; the bonus loot gets rarer with every kill today
 	var roll := RaidLoot.on_kill(BOSS_ID)
 	last_loot = roll
@@ -151,7 +188,4 @@ func boss_defeated(b: Boss) -> void:
 	var item := Loot.roll(Profile.level, maxi(Loot.EPIC, Loot.roll_rarity(true)), "", world.player.style.id)
 	world._spawn_drop(item, at + Vector2(-26, -40))
 	world._spawn_drop(RaidArmor.roll(Profile.level, world.player.style.id), at + Vector2(26, -40))
-	var gem := ""
-	while gem == "":
-		gem = Gems.roll_drop(true)
-	world._spawn_drop({"gem": gem, "rarity": Gems.tier_of(gem)}, at + Vector2(0, -60))
+	_spawn_gem(at)

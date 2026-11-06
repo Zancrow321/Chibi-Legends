@@ -103,6 +103,9 @@ func _pick(k: int, r: int) -> void:
 
 ## Trades for the selected piece; true when it worked.
 func trade() -> bool:
+	if Online.is_online():
+		_trade_online()
+		return true
 	var why := RaidLoot.buy(Profile.KINDS[kind], RARITIES[rar])
 	if why != "":
 		_say(why)
@@ -112,6 +115,30 @@ func trade() -> bool:
 	_say("%s geschmiedet!" % last_item.name)
 	Sfx.play("rare_drop", -2.0)
 	return true
+
+
+## Online: the server takes the marks and rolls the piece.
+func _trade_online() -> void:
+	var price := RaidLoot.price(RARITIES[rar])
+	if Profile.marks < price:
+		_say("Zu wenig Raid-Marken (%d nötig)" % price)
+		Sfx.play("ui_error")
+		return
+	if Profile.bag_full():
+		_say("Die Tasche ist voll")
+		Sfx.play("ui_error")
+		return
+	var r: Dictionary = await Online.call_fn("cl_buy", {"kind": Profile.KINDS[kind], "rarity": RARITIES[rar], "level": Profile.level})
+	if not r.ok:
+		_say("Server: %s" % r.error)
+		Sfx.play("ui_error")
+		return
+	Profile.marks = int(r.data.total_marks)
+	var it := Online.build_item(r.data.drop)
+	Profile.add_item(it)  # saves
+	last_item = it
+	_say("%s geschmiedet!" % it.name)
+	Sfx.play("rare_drop", -2.0)
 
 
 func _say(s: String) -> void:

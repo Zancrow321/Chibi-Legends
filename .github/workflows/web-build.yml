@@ -55,6 +55,12 @@ jobs:
           grep -q "LOOT-TEST OK" loot.log
           ! grep -E "SCRIPT ERROR|Parse Error" loot.log
 
+      - name: Online-Client-Test (Seed-Beute, offline headless)
+        run: |
+          godot --headless -s res://tools/online/test_online.gd 2>&1 | tee online.log | grep -E "ONLINE|SCRIPT ERROR" || true
+          grep -q "ONLINE-CLIENT OK" online.log
+          ! grep -E "SCRIPT ERROR|Parse Error" online.log
+
       - name: Turm-Logiktest (Endloser Turm)
         run: |
           timeout 300 godot --headless --fixed-fps 60 -s res://tools/tower/probe.gd 2>&1 | tee turm.log | grep -E "TURM|SCRIPT ERROR" || true
@@ -171,3 +177,13 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  datenbank:
+    # Online-Basis: Supabase-Schema auf einem Wegwerf-Postgres prüfen.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Postgres bereitstellen
+        run: ls /usr/lib/postgresql/*/bin/initdb || (sudo apt-get update -q && sudo apt-get install -y -q postgresql)
+      - name: Datenbank-Test (Schema, Rechte, Raid-Regeln)
+        run: supabase/test/run.sh

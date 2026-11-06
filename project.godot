@@ -17,6 +17,7 @@ config/icon="res://assets/branding/icon_128.png"
 
 GameInput="*res://scripts/autoload/game_input.gd"
 AreaTransition="*res://scripts/autoload/area_transition.gd"
+Online="*res://scripts/autoload/online.gd"
 
 [display]
 

@@ -273,6 +273,13 @@ func _draw_route(W: float) -> void:
 		draw_circle(Vector2(cx - 10, cy - 5), 6, UiSkin.INK)
 		draw_circle(Vector2(cx - 10, cy - 5), 4.5, c[1])
 		cx -= 30.0
+	# account: online (server decides loot) or offline (local rules)
+	var on := Online.is_online()
+	var st := "Online" if on else ("Verbinde…" if Online.state == "connecting" else "Offline")
+	var sw := font.get_string_size(st, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x
+	_ink_text(Vector2(r.end.x - 8.0 - sw, cy + 20.0), st, 13, Color(UiSkin.INK, 0.7))
+	draw_circle(Vector2(r.end.x - 18.0 - sw, cy + 15.0), 4, UiSkin.INK)
+	draw_circle(Vector2(r.end.x - 18.0 - sw, cy + 15.0), 3, Color("1ebc73") if on else Color("8a8590"))
 
 
 ## Bubble over the spot in reach: "[E] Sprechen", tail pointing at it.
